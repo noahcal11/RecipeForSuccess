@@ -14,11 +14,11 @@ on:
   workflow_dispatch:
 
 # Specifies default options for every job in the workflow
-# defaults:
-  # run:
+defaults:
+  run:
     # Sets the default working directory for referencing file locations
-    # working-directory: .
-
+    working-directory: .
+    
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
