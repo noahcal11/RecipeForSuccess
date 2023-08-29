@@ -14,10 +14,10 @@ on:
   workflow_dispatch:
 
 # Specifies default options for every job in the workflow
-defaults:
-  run:
+# defaults:
+  # run:
     # Sets the default working directory for referencing file locations
-    working-directory: web
+    # working-directory: .
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -64,4 +64,4 @@ jobs:
           # Used to specify a package manager for caching in the default directory. Supported values: npm, yarn, pnpm.
           cache: npm # optional
           # Used to specify the path to a dependency file: package-lock.json, yarn.lock, etc. Supports wildcards or a list of file names for caching multiple dependencies.
-          cache-dependency-path: /RecipeForSuccess/package-lock.json # optional
+          cache-dependency-path: package-lock.json # optional
