@@ -1,4 +1,5 @@
-const  express = require('express');
+// "npm start" to start the server
+const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const process = require('process');

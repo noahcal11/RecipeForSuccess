@@ -6,7 +6,7 @@ const RecipeSchema = new Schema({
     desc: {type: String},
     total_time: {type: Number, required: true},
     yields: {type: String, required: true},
-    steps: {type:Array, required: true, unique: true},
+    steps: {type:Array, required: true},
     ingredients: {type:Array, required: true},
     image: {type:String},
     cuisine: {type: String},

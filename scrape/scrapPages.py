@@ -1,12 +1,19 @@
 from recipe_scrapers import scrape_me
 import requests
 import time
-
-link_lst = ["https://www.allrecipes.com/recipe/14385/pasta-salad/","https://www.allrecipes.com/recipe/253157/weeknight-skillet-slaw/","https://www.allrecipes.com/grilled-tomahawk-steak-recipe-7508957","https://www.allrecipes.com/chicken-bhuna-recipe-7485475","https://www.allrecipes.com/family-friendly-fish-pie-recipe-7485208","https://www.allrecipes.com/recipe/83646/corned-beef-roast/"]
+import csv
+with open('links.csv', 'r') as read_obj:
+  
+    # Return a reader object which will
+    # iterate over lines in the given csvfile
+    csv_reader = csv.reader(read_obj)
+  
+    # convert string to list
+    link_lst = list(csv_reader)[0]
 
 print("Start Scrapping")
 
-def scrape(link):
+for i,link in enumerate(link_lst):
     t0 = time.time()
     print(str(i)+"/"+str(len(link_lst))+" Complete")
     scraper = scrape_me(link)
@@ -18,7 +25,7 @@ def scrape(link):
         steps = scraper.instructions().split("\n")
         ingredients = scraper.ingredients()
     except:
-        return
+        continue
 
     try:
         desc = scraper.description()
@@ -57,9 +64,6 @@ def scrape(link):
         sleep = 0
 
     time.sleep(sleep)
-
-for i,link in enumerate(link_lst):
-    scrape(link)
     
 print(str(len(link_lst))+"/"+str(len(link_lst))+" Complete, Closing Server")
 requests.get("http://localhost:3001/quit")
