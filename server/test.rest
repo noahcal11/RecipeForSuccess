@@ -11,9 +11,9 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:3001/user/new
-Content-Type: application/json
+GET http://localhost:3001/user/get/?email=t
+# Content-Type: application/json
 
-{
-    "email": "t", "username": "k", "password": "d"
-}
+# {
+#     "email": "t", "username": "k", "password": "d"
+# }
