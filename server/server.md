@@ -2,6 +2,9 @@
 
 This is where all the api endpoints can be setup as well as the different schema for different databases. 
 
+<h3>run.sh</h3>
+This is a bash script that will open the server, scrape the links from scrapeLinks.py, and then close the server. This will be the main way that we scrape websites.
+
 <h3>server.js</h3>
 This is where the express server and the api endpoints are housed. The express server runs on port 3001. The current API endpoints are 
 

@@ -4,9 +4,6 @@ This folder contains everything that is needed for:
 - Web Scraping Recipe Websites
 - Getting scraped data into MongoDB
 
-<h3>run.sh</h3>
-This is a bash script that will open the server, scrape the links from scrapeLinks.py, and then close the server. This will be the main way that we scrape websites.
-
 <h3>scrapPages.py</h3>
 This is where the scraping of the webpages happens, currently there is a 1 second delay between each page so that we do no overload the people we are scraping from.
 
