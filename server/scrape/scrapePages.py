@@ -2,14 +2,14 @@ from recipe_scrapers import scrape_me
 import requests
 import time
 import csv
-with open('links.csv', 'r') as read_obj:
+with open('scrape/links.csv', 'r') as read_obj:
   
     # Return a reader object which will
     # iterate over lines in the given csvfile
     csv_reader = csv.reader(read_obj)
   
     # convert string to list
-    link_lst = list(csv_reader)[0]
+    link_lst = list(set(list(csv_reader)[0]))
 
 print("Start Scrapping")
 
@@ -59,7 +59,7 @@ for i,link in enumerate(link_lst):
         'category':category,
         'link': link})
 
-    sleep= 1-(time.time()-t0)
+    sleep= .99-(time.time()-t0)
     if sleep < 0:
         sleep = 0
 
