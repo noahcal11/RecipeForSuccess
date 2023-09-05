@@ -14,6 +14,13 @@ const RecipeSchema = new Schema({
     link: {type: String, required: true, unique: true}
 })
 
-const Recipe = mongoose.model("Recipe",RecipeSchema);
+const UserSchema = new Schema({
+    email: {type:String, required: true, unique: true},
+    username: {type:String, required: true},
+    password: {type:String, required: true}
+})
 
-module.exports = Recipe;
+const Recipe = mongoose.model("Recipe",RecipeSchema);
+const User = mongoose.model("User",UserSchema);
+
+module.exports = {Recipe,User};
