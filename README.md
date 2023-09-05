@@ -10,4 +10,14 @@ Express\
 React\
 Node.js
 ## How to get started
+   1. Fork the repository
+   2. Run "npm install" in both server and app folders\
+
+**To run server**
+   1. cd into server
+   2. Run "npm start"
+
+**To run app**
+   1. cd into app
+   2. Run "npx expo start -w"
 ## How to contribute
