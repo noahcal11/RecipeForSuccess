@@ -70,7 +70,7 @@ jobs:
     
 
     - name: Deploy to Cloud Run
-      uses: google-github-actions/deploy-cloudrun@v2
+      uses: google-github-actions/deploy-cloudrun@v1
       with:
         image: gcr.io/recipe-396801/server:latest
         service: recipe-api
