@@ -73,6 +73,7 @@ jobs:
       with:
         image: gcr.io/recipe-396801/server:latest
         region: us-east1
+        service: hello-cloud-run
         platform: managed
         allow-unauthenticated: true
         env_vars: |
