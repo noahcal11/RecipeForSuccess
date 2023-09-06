@@ -7,7 +7,8 @@ require('dotenv').config();
 
 const app = express();
 
-const PORT = process.env.PORT || 3001;
+const PORT = 8080;
+const HOST = '0.0.0.0';
 
 app.use(express.json());
 app.use(cors());
@@ -75,4 +76,4 @@ app.get('/quit',async (req,res) => {
     process.exit(0);
 });
 
-app.listen(3001, () => console.log("Server started on port 3001"));
+app.listen(PORT, HOST => console.log("Server started on port 8080"));

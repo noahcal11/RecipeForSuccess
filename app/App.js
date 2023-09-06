@@ -14,14 +14,14 @@ export default function App() {
   // }, [])
 
   const GetRecipes = () => {
-    fetch("http://localhost:3001/recipe/get")
+    fetch("http://localhost:8080/recipe/get")
       .then(res => res.json())
       .then(data => setRecipes(data))
       .catch(err => console.error(err))
   }
 
   const getUser = async email => {
-    const data = await fetch(API_BASE+"http://localhost:3001/user/get?email=" + email, {method: "GET"})
+    const data = await fetch(API_BASE+"http://localhost:8080/user/get?email=" + email, {method: "GET"})
       .then(res => res.json());
     console.log(data.user)
     if (password === data.password) {
