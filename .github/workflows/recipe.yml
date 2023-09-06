@@ -17,5 +17,5 @@ jobs:
         run: |
           echo ${GITHUB_WORKSPACE}
           cd app
-          npm install -g eas-cli
+          npm i eas-cli
           eas build -p android --profile preview --non-interactive
