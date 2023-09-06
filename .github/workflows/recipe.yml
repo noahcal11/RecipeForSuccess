@@ -70,12 +70,10 @@ jobs:
     
 
     - name: Deploy to Cloud Run
-      uses: google-github-actions/deploy-cloudrun@main
+      uses: google-github-actions/deploy-cloudrun
       with:
         image: gcr.io/recipe-396801/server:latest
-        service: hello-cloud-run
-        platform: managed
-        allow-unauthenticated: true
+        service: recipe-api
         env_vars: |
             MDB_USERNAME=${{ secrets.MDB_USERNAME }}
             MDB_PASSWORD=${{ secrets.MDB_PASSWORD }}
