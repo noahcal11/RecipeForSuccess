@@ -68,7 +68,7 @@ jobs:
           HTTP_PORT=8080
     
 
-      - name: Deploy to Cloud Run
+    - name: Deploy to Cloud Run
       uses: google-github-actions/deploy-cloudrun@main
       with:
         image: gcr.io/recipe-396801/server:latest
