@@ -19,7 +19,7 @@ jobs:
 
       - name: Test
         run: echo "No Tests Yet!"
-on:
-  push:
-    branches:
-      - main
+  on:
+    push:
+      branches:
+        - main
