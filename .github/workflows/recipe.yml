@@ -7,9 +7,8 @@ jobs:
     name: Install and build
     runs-on: ubuntu-latest
     steps:
+        working-directory: ./app
       - uses: actions/checkout@v3
-      - name: cd app
-        run: cd app
       - uses: actions/setup-node@v3
         with:
           node-version: 18.x
