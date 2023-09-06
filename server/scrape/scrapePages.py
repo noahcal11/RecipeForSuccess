@@ -47,7 +47,7 @@ for i,link in enumerate(link_lst):
     except:
         category = None
 
-    requests.post("http://localhost:3001/recipe/new",json={
+    requests.post("http://localhost:8080/recipe/new",json={
         'title':title,
         'desc':desc,
         'total_time':total_time,
@@ -66,4 +66,4 @@ for i,link in enumerate(link_lst):
     time.sleep(sleep)
     
 print(str(len(link_lst))+"/"+str(len(link_lst))+" Complete, Closing Server")
-requests.get("http://localhost:3001/quit")
+requests.get("http://localhost:8080/quit")
