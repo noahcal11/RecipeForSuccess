@@ -6,8 +6,10 @@ jobs:
   build:
     name: Install and build
     runs-on: ubuntu-latest
-    steps:
+    defaults:
+      run:
         working-directory: ./app
+    steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
