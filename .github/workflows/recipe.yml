@@ -18,7 +18,7 @@ jobs:
           eas build -p android --profile preview --non-interactive
 
       - name: Test
-        run: echo "No Tests Yet"
+        run: echo "No Tests Yet!"
 on:
   push:
     branches:
