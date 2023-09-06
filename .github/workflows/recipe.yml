@@ -9,7 +9,7 @@ jobs:
   build:
     name: Install and build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     defaults:
       run:
         working-directory: ./app
