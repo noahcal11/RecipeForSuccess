@@ -9,9 +9,9 @@ export default function App() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  useEffect(() => {
-    GetRecipes();
-  }, [])
+  // useEffect(() => {
+  //   GetRecipes();
+  // }, [])
 
   const GetRecipes = () => {
     fetch("http://localhost:3001/recipe/get")
@@ -61,7 +61,7 @@ export default function App() {
               setPopupActive(!popupActive)
             }}
           >
-            <Text style={styles.loginText}>x</Text>
+            <Text style={styles.x}>x</Text>
           </TouchableOpacity>
         </View>
       :<TouchableOpacity
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     width: 200,
     height: 50,
-    alignSelf:  'left'
+    alignSelf:  'center'
   },
   loginText: {
     color: 'white',
@@ -99,10 +99,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     width: 200,
     padding: 12,
-    alignSelf: 'left'
+    alignSelf: 'center'
   },
   x: {
-    position: 'absolute',
-    padding: 2
+    alignSelf: 'center',
+    padding: 2,
+    color: 'black',
+    fontSize: 20
   }
 });

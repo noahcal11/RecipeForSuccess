@@ -3,7 +3,7 @@ on: [push]
 permissions:
   contents: write
 jobs:
-  build-and-deploy:
+  build:
     concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
     runs-on: ubuntu-latest
     steps:
@@ -15,9 +15,11 @@ jobs:
           echo ${GITHUB_WORKSPACE}
           cd app
           npm ci
-          npm run web
+          eas build -p android --profile preview --non-interactive
 
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: build # The folder the action should deploy.
+      - name: Test
+        run: echo "No Tests Yet"
+on:
+  push:
+    branches:
+      - main
