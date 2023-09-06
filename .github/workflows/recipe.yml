@@ -18,4 +18,5 @@ jobs:
           echo ${GITHUB_WORKSPACE}
           cd app
           npm i eas-cli
+          eas login --username js2062@messiah.edu --password EXPO_PASSWORD
           eas build -p android --profile preview --non-interactive
