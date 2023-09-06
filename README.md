@@ -11,7 +11,7 @@ React\
 Node.js
 ## How to get started
    1. Fork the repository
-   2. Run "npm install" in both server and app folders\
+   2. Run "npm install" in both server and app folders
 
 **To run server**
    1. cd into server
@@ -21,3 +21,4 @@ Node.js
    1. cd into app
    2. Run "npx expo start -w"
 ## How to contribute
+Each team member will have their own fork of the repository to complete their work. Everyone will work within their own fork on their stories and submit a pull request when completed. To remain updated, users open their forked repo on GitHub web, click fetch upstream to pull chages from the original repo, and go to GitHub Desktop and fetch & pull to update. As the owner of the repository, Noah C. will create a branch rather than a fork.
