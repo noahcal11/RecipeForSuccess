@@ -1,8 +1,8 @@
 name: Test, Build and Deploy App and Server
-# on:
-#   push:
-#     branches:
-#       - staging
+on:
+  push:
+    branches:
+      - main
 permissions:
   contents: write
 jobs:
