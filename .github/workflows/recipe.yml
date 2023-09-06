@@ -1,5 +1,3 @@
-# https://www.linkedin.com/pulse/deploying-containerized-web-apps-google-cloud-run-using-akinde/
-# https://github.com/google-github-actions
 name: Test, Build and Deploy App and Server
 on:
   push:
@@ -70,13 +68,15 @@ jobs:
         build-args: |
           HTTP_PORT=8080
     
+
     - name: Deploy to Cloud Run
-      uses: google-github-actions/deploy-cloudrun@v1
+      uses: google-github-actions/deploy-cloudrun@main
       with:
         image: gcr.io/recipe-396801/server:latest
-        service: recipe-api
+        region: us-east1
+        service: hello-cloud-run
         platform: managed
+        allow-unauthenticated: true
         env_vars: |
             MDB_USERNAME=${{ secrets.MDB_USERNAME }}
             MDB_PASSWORD=${{ secrets.MDB_PASSWORD }}
-     
