@@ -19,7 +19,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
     - name: Test
-      run: echo 'No Tests Yet!''
+      run: echo 'No Tests Yet!'
   
   build-app:
     name: Install and Build App
@@ -54,7 +54,7 @@ jobs:
       uses: google-github-actions/auth@v1
       with:
         project_id: recipe-396801
-        token_format: ${{ secrets.GCP_SA_KEY }}
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
 
     - name: Configure docker for GCP
       run: gcloud auth configure-docker
