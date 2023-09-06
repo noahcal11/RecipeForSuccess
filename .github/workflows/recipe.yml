@@ -10,12 +10,12 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
 
+      - name: Test
+        run: echo "No Tests Yet!"
+
       - name: Install and Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
         run: |
           echo ${GITHUB_WORKSPACE}
           cd app
-          npm ci
+          npm i eas-cli
           eas build -p android --profile preview --non-interactive
-
-      - name: Test
-        run: echo "No Tests Yet!"
