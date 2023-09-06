@@ -21,3 +21,4 @@ Node.js
    1. cd into app
    2. Run "npx expo start -w"
 ## How to contribute
+Each team member will have their own fork of the repository to complete their work. Everyone will work within their own fork on their stories and submit a pull request when completed.
