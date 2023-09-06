@@ -38,6 +38,7 @@ jobs:
   build-server:
     name: Build and Deploy Server
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/staging'
     defaults:
       run:
         working-directory: server
