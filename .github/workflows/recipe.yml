@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./app
+        working-directory: app
     steps:
     - name: Test
       run: No Tests Yet!
@@ -25,7 +25,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     defaults:
       run:
-        working-directory: ./app
+        working-directory: app
     steps:
       - uses: actions/checkout@v3
       - name: Setup Expo and EAS
@@ -43,13 +43,13 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./server
+        working-directory: server
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
 
     - name: Set up Google Cloud SDK
-      uses: google-github-actions/setup-gcloud@master
+      uses: google-github-actions/setup-gcloud@v1
       with:
         project_id: recipe-396801
         service_account_key: ${{ secrets.GCP_SA_KEY }}
