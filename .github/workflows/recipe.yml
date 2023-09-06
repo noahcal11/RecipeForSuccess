@@ -1,10 +1,5 @@
 name: Test, Build and Deploy App and Server
-on:
-  push:
-    branches:
-      - main
-      - staging
-      - production
+on: push
 permissions:
   contents: write
 
@@ -24,7 +19,7 @@ jobs:
   build-app:
     name: Install and Build App
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/staging'
     defaults:
       run:
         working-directory: app
