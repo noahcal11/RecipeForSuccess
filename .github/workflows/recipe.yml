@@ -62,7 +62,7 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v2
       with:
-        context: .
+        context: ./server
         push: true
         tags: gcr.io/recipe-396801/server:latest
         build-args: |
