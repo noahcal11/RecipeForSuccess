@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, Text, Image, View, TouchableOpacity, TextInput } from 'react-native';
 import { useEffect,useState } from 'react';
 
 export default function App() {
@@ -31,8 +31,15 @@ export default function App() {
   }
 
   return (
+    <View style={styles.background}>
     <View style={styles.container}>
-      <Text>{recipes}</Text>
+      <View style={styles.top}>
+        <Image style={styles.logo} src={'https://reactnative.dev/img/tiny_logo.png'}></Image>
+        <Text>{recipes}</Text>
+        <Text style={styles.text}>Welcome to Recipe For Success</Text>
+        <Text style={styles.undertext}>Get started by logging in:</Text>
+      </View>
+      <View style={styles.bottom}>
       {popupActive ?
         <View>
           <TextInput
@@ -73,19 +80,51 @@ export default function App() {
           <Text style={styles.loginText}>Login</Text>
         </TouchableOpacity>}
       <StatusBar style="auto" />
+      </View>
+    </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  background: {
+    backgroundColor: '#ddd',
+    flex: 1
+  },
   container: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    marginHorizontal: 30,
+    marginVertical: 40,
+    borderRadius: 40
+  },
+  top: {
+    flex: 1,
+    justifyContent: 'center'
+  },
+  bottom: {
+    flex: 1,
+    justifyContent: 'center'
+  },
+  logo: {
+    justifyContent: 'center'
+  },
+  text: {
+    textAlign: 'center',
+    fontSize: 40,
+    padding: 10
+  },
+  undertext: {
+    textAlign: 'center',
+    fontSize: 20,
+    padding: 10
   },
   login: {
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'red',
+    borderRadius: 30,
     width: 200,
     height: 50,
     alignSelf:  'center'
@@ -96,9 +135,11 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: 'grey',
+    borderRadius: 30,
     fontSize: 16,
     width: 200,
     padding: 12,
+    marginBottom: 20,
     alignSelf: 'center'
   },
   x: {
