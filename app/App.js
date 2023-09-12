@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, Image, View, TouchableOpacity, TextInput } from 'react-native';
 import { useEffect,useState } from 'react';
+import bcrypt from 'bcryptjs';
 
 export default function App() {
   const [recipes, setRecipes] = useState([]);
@@ -27,12 +28,23 @@ export default function App() {
       console.log("Email is not registered!");
       return;
     }
-    if (password === data[0].password) {
-      setUser(data[0].username)
-      console.log("Login Successful!")
-    } else {
-      console.log("Incorrect Password")
-    }
+    bcrypt.compare(password, data[0].hash,
+      async function (err, isMatch) {
+
+          // Comparing the original password to
+          // encrypted password
+          if (isMatch) {
+              console.log('Login Successful');
+          }
+
+          if (!isMatch) {
+
+              // If password doesn't match the following
+              // message will be sent
+              console.log('Wrong Password');
+              setPassword("");
+          }
+    });
   }
 
   return (

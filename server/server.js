@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const process = require('process');
+const bcrypt = require('bcryptjs')
 require('dotenv').config();
 
 const app = express();
@@ -76,7 +77,6 @@ app.delete('/recipe/delete/:id', async (req, res) => {
   res.json(recipe);
 });
 
-
 // User Section
 app.get('/user/get/:email',async (req,res) => {
     const users = await User.find({email:req.params.email});
@@ -84,14 +84,29 @@ app.get('/user/get/:email',async (req,res) => {
 });
 
 app.post('/user/new', (req,res) => {
-    const user = new User({
-        email: req.body.email,
-        username: req.body.username,
-        password: req.body.password
-    })
-    user.save();
+    const password = req.body.password;
+    
+    // Encryption of the string password
+    bcrypt.genSalt(10, function (err, Salt) {
+    
+        // The bcrypt is used for encrypting password.
+        bcrypt.hash(password, Salt, function (err, hash) {
+    
+            if (err) {
+                return console.log('Cannot encrypt');
+            }
+    
+            console.log(hash);
+            const user = new User({
+                email: req.body.email,
+                username: req.body.username,
+                hash: hash
+        })
+        user.save();
 
-    res.json(user);
+        res.json(user);
+        })
+    })
 });  
 
 app.delete('/user/delete/:id', async (req, res) => {
