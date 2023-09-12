@@ -19,4 +19,4 @@ GET http://localhost:8080/user/get/64f4e5a1762df530423c1410
 # }
 
 ###
-GET http://localhost:8080/recipe/get/all
+GET http://localhost:8080/recipe/get/?general=ham

@@ -21,12 +21,17 @@ export default function App() {
   }
 
   const getUser = async email => {
-    const data = await fetch(API_BASE+"http://localhost:8080/user/get?email=" + email, {method: "GET"})
+    const data = await fetch("http://localhost:8080/user/get/" + email, {method: "GET"})
       .then(res => res.json());
-    console.log(data.user)
-    if (password === data.password) {
-      setUser(data.user)
-      console.log(data.user)
+    if (data.length == 0) {
+      console.log("Email is not registered!");
+      return;
+    }
+    if (password === data[0].password) {
+      setUser(data[0].username)
+      console.log("Login Successful!")
+    } else {
+      console.log("Incorrect Password")
     }
   }
 

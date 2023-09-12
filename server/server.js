@@ -78,8 +78,8 @@ app.delete('/recipe/delete/:id', async (req, res) => {
 
 
 // User Section
-app.get('/user/get/:id',async (req,res) => {
-    const users = await User.findById(req.params.id);
+app.get('/user/get/:email',async (req,res) => {
+    const users = await User.find({email:req.params.email});
     res.json(users);
 });
 
