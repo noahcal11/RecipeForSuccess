@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@expo/webpack-config": "^19.0.0",
+    "bcryptjs": "^2.4.3",
     "eas-cli": "^5.2.0",
     "expo": "~49.0.8",
     "expo-cli": "^6.3.10",

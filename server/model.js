@@ -17,7 +17,7 @@ const RecipeSchema = new Schema({
 const UserSchema = new Schema({
     email: {type:String, required: true, unique: true},
     username: {type:String, required: true},
-    password: {type:String, required: true}
+    hash: {type:String, required: true}
 })
 
 const Recipe = mongoose.model("Recipe",RecipeSchema);
