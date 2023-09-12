@@ -26,6 +26,7 @@ export default function App() {
       .then(res => res.json());
     if (data.length == 0) {
       console.log("Email is not registered!");
+      setPassword("")
       return;
     }
     bcrypt.compare(password, data[0].hash,
@@ -34,7 +35,8 @@ export default function App() {
           // Comparing the original password to
           // encrypted password
           if (isMatch) {
-              console.log('Login Successful');
+              setUser(data[0].username)
+              console.log('Welcome ' + data[0].username +'!');
           }
 
           if (!isMatch) {
@@ -151,7 +153,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   input: {
-    backgroundColor: 'grey',
+    backgroundColor: '#D1D1D1',
     borderRadius: 30,
     fontSize: 16,
     width: 200,

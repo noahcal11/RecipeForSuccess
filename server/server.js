@@ -96,17 +96,16 @@ app.post('/user/new', (req,res) => {
                 return console.log('Cannot encrypt');
             }
     
-            console.log(hash);
             const user = new User({
                 email: req.body.email,
                 username: req.body.username,
                 hash: hash
-        })
-        user.save();
-
-        res.json(user);
-        })
-    })
+            })
+            
+            user.save();
+            res.json(user);
+        });
+    });
 });  
 
 app.delete('/user/delete/:id', async (req, res) => {
