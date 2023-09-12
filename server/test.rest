@@ -1,6 +1,6 @@
 # make sure the server is running: "npm start" to get it running
 # gets every record be careful
-GET http://localhost:8080/recipe/get
+GET http://localhost:8080/recipe/get/64f4fcd794cecacd7ee62c11
 ###
 # this will give a MongoServerError: E11000 duplicate key error collection if it is already in the database
 POST http://localhost:8080/recipe/new
@@ -11,9 +11,12 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8080/user/get/
-# Content-Type: application/json
+POST http://localhost:8080/user/new
+Content-Type: application/json
 
-# {
-#     "email": "t", "username": "k", "password": "d"
-# }
+{
+    "email": "help@jea.com", "username": "tester", "password": "12345678"
+}
+
+###
+GET http://localhost:8080/recipe/get/?general=ham
