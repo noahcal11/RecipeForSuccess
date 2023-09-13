@@ -109,30 +109,30 @@ skills_knife_lst = [
 ]
 
 for i,link in enumerate(link_lst):
+    if i == 2:
+        break
     t0 = time.time()
     print(str(i)+"/"+str(len(link_lst))+" Complete")
     scraper = scrape_me(link)
 
-    try:
-        title = scraper.title()
-        total_time = scraper.total_time()
-        yields = scraper.yields()
-        steps = scraper.instructions().split("\n")
+    title = scraper.title()
+    total_time = scraper.total_time()
+    yields = scraper.yields()
+    steps = scraper.instructions().split("\n")
 
-        skills = []
-        for step in instructions:
-            words = step.split(" ")
-            for word in words:
-                if word.lower() in skill_knife_lst:
-                    skills.append(word)
-                if word.lower() in skill_cooking_lst:
-                    skills.append(word)
-                if word.lower() in skill_ingredients_lst:
-                    skills.append(word)
-        print(skills, link)
-        ingredients = scraper.ingredients()
-    except:
-        continue
+    skills = []
+    for step in steps:
+        words = step.split(" ")
+        for word in words:
+            if word.lower() in skills_knife_lst:
+                skills.append(word.lower())
+            if word.lower() in skills_cooking_lst:
+                skills.append(word.lower())
+            if word.lower() in skills_ingredients_lst:
+                skills.append(word.lower())
+        skills = list(set(skills))
+    print(list(set(skills)), steps, link)
+    ingredients = scraper.ingredients()
 
     try:
         desc = scraper.description()
@@ -164,9 +164,11 @@ for i,link in enumerate(link_lst):
         'image':image,
         'cuisine':cuisine,
         'category':category,
-        'link': link})
+        'link': link,
+        'skills':skills
+        })
 
-    break
+    
     sleep= .99-(time.time()-t0)
     if sleep < 0:
         sleep = 0
