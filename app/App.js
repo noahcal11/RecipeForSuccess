@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, Image, View, TouchableOpacity, TextInput } from 'react-native';
 import { useEffect,useState } from 'react';
+// import { Link } from '@react-navigation/native';
 
 export default function App() {
   const [recipes, setRecipes] = useState([]);
@@ -34,12 +35,16 @@ export default function App() {
     <View style={styles.background}>
     <View style={styles.container}>
       <View style={styles.top}>
-        <Image style={styles.logo} src={'https://reactnative.dev/img/tiny_logo.png'}></Image>
+        <Image style={styles.logo} source={require("./assets/favicon.png")}></Image>
         <Text>{recipes}</Text>
-        <Text style={styles.text}>Welcome to Recipe For Success</Text>
+        {/* <Text style={styles.text}>Welcome to Recipe For Success</Text> */}
         <Text style={styles.undertext}>Get started by logging in:</Text>
       </View>
       <View style={styles.bottom}>
+        <TouchableOpacity
+         style={styles.login}>
+          <Text style={styles.loginText}>Register</Text>
+        </TouchableOpacity>
       {popupActive ?
         <View>
           <TextInput
@@ -79,6 +84,15 @@ export default function App() {
         >
           <Text style={styles.loginText}>Login</Text>
         </TouchableOpacity>}
+        <Text
+          style={styles.undertext}>
+            Forgot password?</Text>
+        <Text style={styles.undertext}>Follow us:</Text>
+        <View style={styles.socials}>
+          <Image></Image>
+          <Image></Image>
+          <Image></Image>
+        </View>
       <StatusBar style="auto" />
       </View>
     </View>
@@ -101,18 +115,21 @@ const styles = StyleSheet.create({
   },
   top: {
     flex: 1,
+    marginTop: 40,
     justifyContent: 'center'
   },
   bottom: {
-    flex: 1,
+    flex: 3,
     justifyContent: 'center'
   },
   logo: {
-    justifyContent: 'center'
+    height: 100,
+    width: 100,
+    alignSelf: 'center'
   },
   text: {
     textAlign: 'center',
-    fontSize: 40,
+    fontSize: 30,
     padding: 10
   },
   undertext: {
@@ -125,6 +142,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'red',
     borderRadius: 30,
+    marginBottom: 20,
     width: 200,
     height: 50,
     alignSelf:  'center'
