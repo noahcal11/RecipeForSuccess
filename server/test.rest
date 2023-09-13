@@ -15,8 +15,8 @@ POST http://localhost:8080/user/new
 Content-Type: application/json
 
 {
-    "email": "help@jea.com", "username": "tester", "password": "12345678"
+    "email": "test@test.com", "username": "tester", "password": "password"
 }
 
 ###
-GET http://localhost:8080/recipe/get/?general=ham
+GET http://localhost:8080/recipe/get/?general=carrot
