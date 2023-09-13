@@ -34,10 +34,11 @@ app.get('/recipe/get',async (req,res) => {
         const ingredients = req.query.ingredients;
         const total_time = req.query.total_time;
         // const yields = parseInt(req.query.yields.split(" servings")[0]);
-        // const cuisine = req.query.cuisine;
-        // const category = req.query.category;
+        const cuisine = req.query.cuisine;
+        const category = req.query.category;
         const recipes = await Recipe.find({
-            total_time: {$lte: total_time},
+            total_time: total_time ? {$lte: total_time} : {$lte: 65535},
+            cuisine: cuisine ? new RegExp(`\\b${cuisine}\\b`, "i") : new RegExp(`.*|`, "i"),
             // yields: {$gte: yields},
             $or: [
                 {title: new RegExp(`\\b${title}\\b`, "i")},

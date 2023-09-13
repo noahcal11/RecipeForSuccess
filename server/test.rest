@@ -19,4 +19,4 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8080/recipe/get/?general=ham
+GET http://localhost:8080/recipe/get/?general=carrot

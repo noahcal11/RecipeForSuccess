@@ -35,8 +35,8 @@ export default function App() {
           // Comparing the original password to
           // encrypted password
           if (isMatch) {
-              setUser(data[0].username)
-              console.log('Welcome ' + data[0].username +'!');
+              await setUser(data[0].username)
+              console.log('Welcome ' + user +'!');
           }
 
           if (!isMatch) {
