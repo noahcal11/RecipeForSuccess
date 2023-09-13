@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, Image, View, TouchableOpacity, TextInput } from 'react-native';
 import { useEffect,useState } from 'react';
-// import { Link } from '@react-navigation/native';
+import bcrypt from 'bcryptjs';
 
 export default function App() {
   const [recipes, setRecipes] = useState([]);
@@ -22,13 +22,29 @@ export default function App() {
   }
 
   const getUser = async email => {
-    const data = await fetch(API_BASE+"http://localhost:8080/user/get?email=" + email, {method: "GET"})
+    const data = await fetch("http://localhost:8080/user/get/" + email, {method: "GET"})
       .then(res => res.json());
-    console.log(data.user)
-    if (password === data.password) {
-      setUser(data.user)
-      console.log(data.user)
+    if (data.length == 0) {
+      console.log("Email is not registered!");
+      return;
     }
+    bcrypt.compare(password, data[0].hash,
+      async function (err, isMatch) {
+
+          // Comparing the original password to
+          // encrypted password
+          if (isMatch) {
+              console.log('Login Successful');
+          }
+
+          if (!isMatch) {
+
+              // If password doesn't match the following
+              // message will be sent
+              console.log('Wrong Password');
+              setPassword("");
+          }
+    });
   }
 
   return (
