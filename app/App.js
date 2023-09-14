@@ -41,10 +41,10 @@ export default function App() {
         <Text style={styles.undertext}>Get started by logging in:</Text>
       </View>
       <View style={styles.bottom}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
          style={styles.login}>
           <Text style={styles.loginText}>Register</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       {popupActive ?
         <View>
           <TextInput
@@ -84,9 +84,10 @@ export default function App() {
         >
           <Text style={styles.loginText}>Login</Text>
         </TouchableOpacity>}
-        <Text
-          style={styles.undertext}>
-            Forgot password?</Text>
+        <View style={styles.createlinks}>
+          <Text style={styles.create}>Create Account</Text>
+          <Text style={styles.create}>Forgot password?</Text>
+        </View>
         <Text style={styles.undertext}>Follow us:</Text>
         <View style={styles.socials}>
           <Image></Image>
@@ -131,6 +132,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 30,
     padding: 10
+  },
+  createlinks: {
+    flexDirection: 'row',
+  },
+  create: {
+    flex: 1,
+    fontSize: 15,
+    justifyContent: 'center',
+    textAlign: 'center'
   },
   undertext: {
     textAlign: 'center',
