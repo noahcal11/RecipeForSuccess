@@ -2,6 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, Image, View, TouchableOpacity, TextInput } from 'react-native';
 import { useEffect,useState } from 'react';
 import bcrypt from 'bcryptjs';
+import {process} from 'process';
+require('dotenv').config();
 
 export default function App() {
   const [recipes, setRecipes] = useState([]);
@@ -10,19 +12,21 @@ export default function App() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.API_TOKEN
+
   // useEffect(() => {
   //   GetRecipes();
   // }, [])
 
   const GetRecipes = () => {
-    fetch("http://localhost:8080/recipe/get")
+    fetch(API_BASE+"/recipe/get")
       .then(res => res.json())
       .then(data => setRecipes(data))
       .catch(err => console.error(err))
   }
 
   const getUser = async email => {
-    const data = await fetch("http://localhost:8080/user/get/" + email, {method: "GET"})
+    const data = await fetch(API_BASE+"/user/get/" + email, {method: "GET"})
       .then(res => res.json());
     if (data.length == 0) {
       console.log("Email is not registered!");
