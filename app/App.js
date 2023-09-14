@@ -7,7 +7,9 @@ export default function App() {
   const [recipes, setRecipes] = useState([]);
   const [user, setUser] = useState("");
   const [popupActive,setPopupActive] = useState(false);
+  const [popupType, setPopupType] = useState('Login');
   const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   // useEffect(() => {
@@ -19,6 +21,86 @@ export default function App() {
       .then(res => res.json())
       .then(data => setRecipes(data))
       .catch(err => console.error(err))
+  }
+
+  function displayPopup(type) {
+    switch(type) {
+      case 'Login':
+        return(
+        <View>
+          <TextInput
+            style={styles.input}
+            onChangeText={setEmail}
+            value={email}
+            placeholder="Email"
+          />
+          <TextInput
+            style={styles.input}
+            onChangeText={setPassword}
+            value={password}
+            placeholder="Password"
+          />
+          <TouchableOpacity
+            style={styles.login}
+            onPress={() => {
+              getUser(email,password)
+            }}
+          >
+            <Text style={styles.loginText}>Login</Text>
+          </TouchableOpacity>
+        </View>
+        );
+      case 'Create':
+        return(
+          <View>
+          <TextInput
+            style={styles.input}
+            onChangeText={setEmail}
+            value={email}
+            placeholder="Email"
+          />
+          <TextInput 
+            style={styles.input}
+            onChangeText={setUsername}
+            value={username}
+            placeholder="Username"
+          />
+          <TextInput
+            style={styles.input}
+            onChangeText={setPassword}
+            value={password}
+            placeholder="Password"
+          />
+          <TouchableOpacity
+            style={styles.login}
+            onPress={() => {
+              getUser(email,password)
+            }}
+          >
+            <Text style={styles.loginText}>Register</Text>
+          </TouchableOpacity>
+          </View>
+        );
+      case 'Forgot':
+        return(
+          <View>
+          <TextInput
+            style={styles.input}
+            onChangeText={setEmail}
+            value={email}
+            placeholder="Email"
+          />
+          <TouchableOpacity
+            style={styles.login}
+            onPress={() => {
+              getUser(email,password)
+            }}
+          >
+            <Text style={styles.loginText}>Send Email</Text>
+          </TouchableOpacity>
+          </View>
+        );
+          }
   }
 
   const getUser = async email => {
@@ -62,27 +144,8 @@ export default function App() {
           <Text style={styles.loginText}>Register</Text>
         </TouchableOpacity> */}
       {popupActive ?
-        <View>
-          <TextInput
-            style={styles.input}
-            onChangeText={setEmail}
-            value={email}
-            placeholder="Email"
-          />
-          <TextInput
-            style={styles.input}
-            onChangeText={setPassword}
-            value={password}
-            placeholder="Password"
-          />
-          <TouchableOpacity
-            style={styles.login}
-            onPress={() => {
-              getUser(email,password)
-            }}
-          >
-            <Text style={styles.loginText}>Login</Text>
-          </TouchableOpacity>
+        <View> 
+          {displayPopup(popupType)}
           <TouchableOpacity
             style={styles.x}
             onPress={() => {
@@ -96,20 +159,37 @@ export default function App() {
           style={styles.login}
           onPress={() => {
             setPopupActive(!popupActive)
+            setPopupType('Login')
           }}
         >
           <Text style={styles.loginText}>Login</Text>
         </TouchableOpacity>}
         <View style={styles.createlinks}>
-          <Text style={styles.create}>Create Account</Text>
-          <Text style={styles.create}>Forgot password?</Text>
+          <TouchableOpacity
+            style={styles.create}
+            onPress={() => {
+              setPopupActive(true)
+              setPopupType('Create')
+          }}>
+            <Text style={styles.create}>Create Account</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.create}
+            onPress={() => {
+              setPopupActive(true)
+              setPopupType('Forgot')
+          }}>
+            <Text style={styles.create}>Forgot password?</Text>
+          </TouchableOpacity>
         </View>
-        <Text style={styles.undertext}>Follow us:</Text>
-        <View style={styles.socials}>
-          <Image></Image>
-          <Image></Image>
-          <Image></Image>
-        </View>
+        <Text style={styles.undertext}>Don't have an account?</Text>
+        <TouchableOpacity
+         style={styles.guestLink}
+         onPress={() => {
+
+         }}>
+          <Text style={styles.guestText}>Continue As Guest</Text>
+        </TouchableOpacity>
       <StatusBar style="auto" />
       </View>
     </View>
@@ -191,5 +271,18 @@ const styles = StyleSheet.create({
     padding: 2,
     color: 'black',
     fontSize: 20
+  },
+  guestLink: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#ddd',
+    height: 50,
+    width: 150,
+    borderRadius: 30
+  },
+  guestText: {
+    color: 'black',
+    fontSize: 14
   }
 });
