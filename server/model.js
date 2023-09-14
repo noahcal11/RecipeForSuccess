@@ -11,13 +11,18 @@ const RecipeSchema = new Schema({
     image: {type:String},
     cuisine: {type: String},
     category: {type: String},
-    link: {type: String, required: true, unique: true}
+    link: {type: String, required: true, unique: true},
+    author: {type: String, required:false},
+    skills: {type:Array, required:false}
 })
 
 const UserSchema = new Schema({
     email: {type:String, required: true, unique: true},
     username: {type:String, required: true},
-    hash: {type:String, required: true}
+    hash: {type:String, required: true},
+    skill_cooking: {type:Number},
+    skill_knife: {type:Number},
+    skill_ingredients: {type:Number}
 })
 
 const Recipe = mongoose.model("Recipe",RecipeSchema);

@@ -13,13 +13,15 @@ const PORT = 8080;
 app.use(express.json());
 app.use(cors());
 
+console.log(process.env.API_TOKEN)
+
 mongoose.connect("mongodb+srv://"+process.env.MDB_USERNAME+":"+process.env.MDB_PASSWORD+"@cluster0.iwfcbm2.mongodb.net/recipes").then(() => console.log("Connected")).catch(console.error())
 
 const { Recipe,User } = require('./model');
 
 // Recipe Section
 
-app.get('/recipe/get',async (req,res) => {   
+app.get('/'+process.env.API_TOKEN+'/recipe/get',async (req,res) => {   
     const general = req.query.general;
     if (general != null) {
         const recipes = await Recipe.find({$or: [
@@ -34,10 +36,11 @@ app.get('/recipe/get',async (req,res) => {
         const ingredients = req.query.ingredients;
         const total_time = req.query.total_time;
         // const yields = parseInt(req.query.yields.split(" servings")[0]);
-        // const cuisine = req.query.cuisine;
-        // const category = req.query.category;
+        const cuisine = req.query.cuisine;
+        const category = req.query.category;
         const recipes = await Recipe.find({
-            total_time: {$lte: total_time},
+            total_time: total_time ? {$lte: total_time} : {$lte: 65535},
+            cuisine: cuisine ? new RegExp(`\\b${cuisine}\\b`, "i") : new RegExp(`.*|`, "i"),
             // yields: {$gte: yields},
             $or: [
                 {title: new RegExp(`\\b${title}\\b`, "i")},
@@ -49,12 +52,12 @@ app.get('/recipe/get',async (req,res) => {
     }
 });
 
-app.get('/recipe/get/all',async (req,res) => {
+app.get('/'+process.env.API_TOKEN+'/recipe/get/all',async (req,res) => {
     const recipes = await Recipe.find({});
     res.json(recipes);
 });
 
-app.post('/recipe/new', (req,res) => {
+app.post('/'+process.env.API_TOKEN+'/recipe/new', (req,res) => {
     const recipe = new Recipe({
         title: req.body.title,
         desc: req.body.desc,
@@ -72,18 +75,18 @@ app.post('/recipe/new', (req,res) => {
     res.json(recipe);
 });  
 
-app.delete('/recipe/delete/:id', async (req, res) => {
+app.delete('/'+process.env.API_TOKEN+'/recipe/delete/:id', async (req, res) => {
   const recipe = await Recipe.findByIdAndDelete(req.params.id);
   res.json(recipe);
 });
 
 // User Section
-app.get('/user/get/:email',async (req,res) => {
+app.get('/'+process.env.API_TOKEN+'/user/get/:email',async (req,res) => {
     const users = await User.find({email:req.params.email});
     res.json(users);
 });
 
-app.post('/user/new', (req,res) => {
+app.post('/'+process.env.API_TOKEN+'/user/new', (req,res) => {
     const password = req.body.password;
     
     // Encryption of the string password
@@ -96,27 +99,26 @@ app.post('/user/new', (req,res) => {
                 return console.log('Cannot encrypt');
             }
     
-            console.log(hash);
             const user = new User({
                 email: req.body.email,
                 username: req.body.username,
                 hash: hash
-        })
-        user.save();
-
-        res.json(user);
-        })
-    })
+            })
+            
+            user.save();
+            res.json(user);
+        });
+    });
 });  
 
-app.delete('/user/delete/:id', async (req, res) => {
+app.delete('/'+process.env.API_TOKEN+'/user/delete/:id', async (req, res) => {
   const user = await User.findByIdAndDelete(req.params.id);
   res.json(user);
 });
 
 
 // Other Section
-app.get('/quit',async (req,res) => {
+app.get('/'+process.env.API_TOKEN+'/quit',async (req,res) => {
     res.send("closing...");
     process.exit(0);
 });
