@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, Image, View, TouchableOpacity, TextInput } from 'react-native';
 import { useEffect,useState } from 'react';
+import bcrypt from 'bcryptjs';
 
 export default function App() {
   const [recipes, setRecipes] = useState([]);
@@ -21,25 +22,47 @@ export default function App() {
   }
 
   const getUser = async email => {
-    const data = await fetch(API_BASE+"http://localhost:8080/user/get?email=" + email, {method: "GET"})
+    const data = await fetch("http://localhost:8080/user/get/" + email, {method: "GET"})
       .then(res => res.json());
-    console.log(data.user)
-    if (password === data.password) {
-      setUser(data.user)
-      console.log(data.user)
+    if (data.length == 0) {
+      console.log("Email is not registered!");
+      setPassword("")
+      return;
     }
+    bcrypt.compare(password, data[0].hash,
+      async function (err, isMatch) {
+
+          // Comparing the original password to
+          // encrypted password
+          if (isMatch) {
+              await setUser(data[0].username)
+              console.log('Welcome ' + user +'!');
+          }
+
+          if (!isMatch) {
+
+              // If password doesn't match the following
+              // message will be sent
+              console.log('Wrong Password');
+              setPassword("");
+          }
+    });
   }
 
   return (
     <View style={styles.background}>
     <View style={styles.container}>
       <View style={styles.top}>
-        <Image style={styles.logo} src={'https://reactnative.dev/img/tiny_logo.png'}></Image>
+        <Image style={styles.logo} source={require("./assets/favicon.png")}></Image>
         <Text>{recipes}</Text>
-        <Text style={styles.text}>Welcome to Recipe For Success</Text>
+        {/* <Text style={styles.text}>Welcome to Recipe For Success</Text> */}
         <Text style={styles.undertext}>Get started by logging in:</Text>
       </View>
       <View style={styles.bottom}>
+        <TouchableOpacity
+         style={styles.login}>
+          <Text style={styles.loginText}>Register</Text>
+        </TouchableOpacity>
       {popupActive ?
         <View>
           <TextInput
@@ -79,6 +102,15 @@ export default function App() {
         >
           <Text style={styles.loginText}>Login</Text>
         </TouchableOpacity>}
+        <Text
+          style={styles.undertext}>
+            Forgot password?</Text>
+        <Text style={styles.undertext}>Follow us:</Text>
+        <View style={styles.socials}>
+          <Image></Image>
+          <Image></Image>
+          <Image></Image>
+        </View>
       <StatusBar style="auto" />
       </View>
     </View>
@@ -101,18 +133,21 @@ const styles = StyleSheet.create({
   },
   top: {
     flex: 1,
+    marginTop: 40,
     justifyContent: 'center'
   },
   bottom: {
-    flex: 1,
+    flex: 3,
     justifyContent: 'center'
   },
   logo: {
-    justifyContent: 'center'
+    height: 100,
+    width: 100,
+    alignSelf: 'center'
   },
   text: {
     textAlign: 'center',
-    fontSize: 40,
+    fontSize: 30,
     padding: 10
   },
   undertext: {
@@ -125,6 +160,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#F74F4F',
     borderRadius: 30,
+    marginBottom: 20,
     width: 200,
     height: 50,
     alignSelf:  'center'
@@ -134,7 +170,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   input: {
-    backgroundColor: 'grey',
+    backgroundColor: '#D1D1D1',
     borderRadius: 30,
     fontSize: 16,
     width: 200,
