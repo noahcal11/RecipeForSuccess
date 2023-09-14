@@ -2,8 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, Image, View, TouchableOpacity, TextInput } from 'react-native';
 import { useEffect,useState } from 'react';
 import bcrypt from 'bcryptjs';
-import {process} from 'process';
-require('dotenv').config();
+
+console.log(process.env);
 
 export default function App() {
   const [recipes, setRecipes] = useState([]);
@@ -12,7 +12,7 @@ export default function App() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.API_TOKEN
+  const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
   // useEffect(() => {
   //   GetRecipes();
@@ -27,7 +27,7 @@ export default function App() {
 
   const getUser = async email => {
     const data = await fetch(API_BASE+"/user/get/" + email, {method: "GET"})
-      .then(res => res.json());
+      .then(res => res.json())
     if (data.length == 0) {
       console.log("Email is not registered!");
       setPassword("")
@@ -60,7 +60,7 @@ export default function App() {
         <Image style={styles.logo} source={require("./assets/favicon.png")}></Image>
         <Text>{recipes}</Text>
         {/* <Text style={styles.text}>Welcome to Recipe For Success</Text> */}
-        <Text style={styles.undertext}>Get started by logging in:</Text>
+        <Text style={styles.undertext}>{process.env.REACT_APP_API_TOKEN}</Text>
       </View>
       <View style={styles.bottom}>
         <TouchableOpacity
