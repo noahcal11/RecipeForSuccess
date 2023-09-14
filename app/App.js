@@ -3,6 +3,8 @@ import { StyleSheet, Text, Image, View, TouchableOpacity, TextInput } from 'reac
 import { useEffect,useState } from 'react';
 import bcrypt from 'bcryptjs';
 
+console.log(process.env);
+
 export default function App() {
   const [recipes, setRecipes] = useState([]);
   const [user, setUser] = useState("");
@@ -12,12 +14,14 @@ export default function App() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
+
   // useEffect(() => {
   //   GetRecipes();
   // }, [])
 
   const GetRecipes = () => {
-    fetch("http://localhost:8080/recipe/get")
+    fetch(API_BASE+"/recipe/get")
       .then(res => res.json())
       .then(data => setRecipes(data))
       .catch(err => console.error(err))
@@ -104,8 +108,8 @@ export default function App() {
   }
 
   const getUser = async email => {
-    const data = await fetch("http://localhost:8080/user/get/" + email, {method: "GET"})
-      .then(res => res.json());
+    const data = await fetch(API_BASE+"/user/get/" + email, {method: "GET"})
+      .then(res => res.json())
     if (data.length == 0) {
       console.log("Email is not registered!");
       setPassword("")
@@ -138,7 +142,7 @@ export default function App() {
         <Image style={styles.logo} source={require("./assets/favicon.png")}></Image>
         <Text>{recipes}</Text>
         {/* <Text style={styles.text}>Welcome to Recipe For Success</Text> */}
-        <Text style={styles.undertext}>Get started by logging in:</Text>
+        <Text style={styles.undertext}>{process.env.REACT_APP_API_TOKEN}</Text>
       </View>
       <View style={styles.bottom}>
         {/* <TouchableOpacity
