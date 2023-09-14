@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
   login: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'red',
+    backgroundColor: '#F74F4F',
     borderRadius: 30,
     width: 200,
     height: 50,
