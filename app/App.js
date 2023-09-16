@@ -3,8 +3,6 @@ import { StyleSheet, Text, Image, View, TouchableOpacity, TextInput } from 'reac
 import { useEffect,useState } from 'react';
 import bcrypt from 'bcryptjs';
 
-console.log(process.env);
-
 export default function App() {
   const [recipes, setRecipes] = useState([]);
   const [user, setUser] = useState("");
@@ -142,7 +140,7 @@ export default function App() {
         <Image style={styles.logo} source={require("./assets/favicon.png")}></Image>
         <Text>{recipes}</Text>
         {/* <Text style={styles.text}>Welcome to Recipe For Success</Text> */}
-        <Text style={styles.undertext}>{process.env.REACT_APP_API_TOKEN}</Text>
+        <Text style={styles.undertext}>Welcome</Text>
       </View>
       <View style={styles.bottom}>
         {/* <TouchableOpacity
