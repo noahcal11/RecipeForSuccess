@@ -76,7 +76,7 @@ export default function App() {
           <TouchableOpacity
             style={styles.login}
             onPress={() => {
-              getUser(email,password)
+              createUser(email,username,password)
             }}
           >
             <Text style={styles.loginText}>Register</Text>
@@ -131,6 +131,18 @@ export default function App() {
               setPassword("");
           }
     });
+  }
+
+  const createUser = async (email,username,password) => {
+    const data = await fetch(API_BASE+"/user/new", {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: "POST",
+      body: JSON.stringify({"email": email, "username": username, "password":password})
+      })
+      .then(res => res.json());
   }
 
   return (
