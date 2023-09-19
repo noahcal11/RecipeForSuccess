@@ -3,8 +3,6 @@ import { StyleSheet, Text, Image, View, TouchableOpacity, TextInput } from 'reac
 import { useEffect,useState } from 'react';
 import bcrypt from 'bcryptjs';
 
-console.log(process.env);
-
 export default function App() {
   const [recipes, setRecipes] = useState([]);
   const [user, setUser] = useState("");
@@ -78,7 +76,7 @@ export default function App() {
           <TouchableOpacity
             style={styles.login}
             onPress={() => {
-              getUser(email,password)
+              createUser(email,username,password)
             }}
           >
             <Text style={styles.loginText}>Register</Text>
@@ -135,6 +133,18 @@ export default function App() {
     });
   }
 
+  const createUser = async (email,username,password) => {
+    const data = await fetch(API_BASE+"/user/new", {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: "POST",
+      body: JSON.stringify({"email": email, "username": username, "password":password})
+      })
+      .then(res => res.json());
+  }
+
   return (
     <View style={styles.background}>
     <View style={styles.container}>
@@ -142,7 +152,7 @@ export default function App() {
         <Image style={styles.logo} source={require("./assets/favicon.png")}></Image>
         <Text>{recipes}</Text>
         {/* <Text style={styles.text}>Welcome to Recipe For Success</Text> */}
-        <Text style={styles.undertext}>{process.env.REACT_APP_API_TOKEN}</Text>
+        <Text style={styles.undertext}>Welcome</Text>
       </View>
       <View style={styles.bottom}>
         {/* <TouchableOpacity
