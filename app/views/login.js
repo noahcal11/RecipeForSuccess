@@ -3,124 +3,124 @@ import { StyleSheet, Text, Image, View, TouchableOpacity, TextInput } from 'reac
 import { useState } from 'react';
 import bcrypt from 'bcryptjs';
 
-const [user, setUser] = useState("");
-const [popupActive,setPopupActive] = useState(false);
-const [popupType, setPopupType] = useState('Login');
-const [email, setEmail] = useState('');
-const [username, setUsername] = useState('');
-const [password, setPassword] = useState('');
-
-const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
-
-const getUser = async email => {
-    const data = await fetch(API_BASE+"/user/get/" + email, {method: "GET"})
-      .then(res => res.json())
-    if (data.length == 0) {
-      console.log("Email is not registered!");
-      setPassword("")
-      return;
-    }
-    bcrypt.compare(password, data[0].hash,
-      async function (err, isMatch) {
-
-          // Comparing the original password to
-          // encrypted password
-          if (isMatch) {
-              await setUser(data[0].username)
-              console.log('Welcome ' + user +'!');
-          }
-
-          if (!isMatch) {
-
-              // If password doesn't match the following
-              // message will be sent
-              console.log('Wrong Password');
-              setPassword("");
-          }
-    });
-  }
-
-function displayPopup(type) {
-    switch(type) {
-      case 'Login':
-        return(
-        <View>
-          <TextInput
-            style={styles.input}
-            onChangeText={setEmail}
-            value={email}
-            placeholder="Email"
-          />
-          <TextInput
-            style={styles.input}
-            onChangeText={setPassword}
-            value={password}
-            placeholder="Password"
-          />
-          <TouchableOpacity
-            style={styles.login}
-            onPress={() => {
-              getUser(email,password)
-            }}
-          >
-            <Text style={styles.loginText}>Login</Text>
-          </TouchableOpacity>
-        </View>
-        );
-      case 'Create':
-        return(
-          <View>
-          <TextInput
-            style={styles.input}
-            onChangeText={setEmail}
-            value={email}
-            placeholder="Email"
-          />
-          <TextInput 
-            style={styles.input}
-            onChangeText={setUsername}
-            value={username}
-            placeholder="Username"
-          />
-          <TextInput
-            style={styles.input}
-            onChangeText={setPassword}
-            value={password}
-            placeholder="Password"
-          />
-          <TouchableOpacity
-            style={styles.login}
-            onPress={() => {
-              getUser(email,password)
-            }}
-          >
-            <Text style={styles.loginText}>Register</Text>
-          </TouchableOpacity>
-          </View>
-        );
-      case 'Forgot':
-        return(
-          <View>
-          <TextInput
-            style={styles.input}
-            onChangeText={setEmail}
-            value={email}
-            placeholder="Email"
-          />
-          <TouchableOpacity
-            style={styles.login}
-            onPress={() => {
-              getUser(email,password)
-            }}
-          >
-            <Text style={styles.loginText}>Send Email</Text>
-          </TouchableOpacity>
-          </View>
-        );
-      }
-  }
-
 export default function Login({ recipes }) {
+  const [user, setUser] = useState("");
+  const [popupActive,setPopupActive] = useState(false);
+  const [popupType, setPopupType] = useState('Login');
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
+
+  const getUser = async email => {
+      const data = await fetch(API_BASE+"/user/get/" + email, {method: "GET"})
+        .then(res => res.json())
+      if (data.length == 0) {
+        console.log("Email is not registered!");
+        setPassword("")
+        return;
+      }
+      bcrypt.compare(password, data[0].hash,
+        async function (err, isMatch) {
+
+            // Comparing the original password to
+            // encrypted password
+            if (isMatch) {
+                await setUser(data[0].username)
+                console.log('Welcome ' + user +'!');
+            }
+
+            if (!isMatch) {
+
+                // If password doesn't match the following
+                // message will be sent
+                console.log('Wrong Password');
+                setPassword("");
+            }
+      });
+    }
+
+  function displayPopup(type) {
+      switch(type) {
+        case 'Login':
+          return(
+          <View>
+            <TextInput
+              style={styles.input}
+              onChangeText={setEmail}
+              value={email}
+              placeholder="Email"
+            />
+            <TextInput
+              style={styles.input}
+              onChangeText={setPassword}
+              value={password}
+              placeholder="Password"
+            />
+            <TouchableOpacity
+              style={styles.login}
+              onPress={() => {
+                getUser(email,password)
+              }}
+            >
+              <Text style={styles.loginText}>Login</Text>
+            </TouchableOpacity>
+          </View>
+          );
+        case 'Create':
+          return(
+            <View>
+            <TextInput
+              style={styles.input}
+              onChangeText={setEmail}
+              value={email}
+              placeholder="Email"
+            />
+            <TextInput 
+              style={styles.input}
+              onChangeText={setUsername}
+              value={username}
+              placeholder="Username"
+            />
+            <TextInput
+              style={styles.input}
+              onChangeText={setPassword}
+              value={password}
+              placeholder="Password"
+            />
+            <TouchableOpacity
+              style={styles.login}
+              onPress={() => {
+                getUser(email,password)
+              }}
+            >
+              <Text style={styles.loginText}>Register</Text>
+            </TouchableOpacity>
+            </View>
+          );
+        case 'Forgot':
+          return(
+            <View>
+            <TextInput
+              style={styles.input}
+              onChangeText={setEmail}
+              value={email}
+              placeholder="Email"
+            />
+            <TouchableOpacity
+              style={styles.login}
+              onPress={() => {
+                getUser(email,password)
+              }}
+            >
+              <Text style={styles.loginText}>Send Email</Text>
+            </TouchableOpacity>
+            </View>
+          );
+        }
+    }
+
     return (
     <View style={styles.background}>
         <View style={styles.container}>
@@ -128,7 +128,7 @@ export default function Login({ recipes }) {
                 <Image style={styles.logo} source={require("../assets/favicon.png")}></Image>
                 <Text>{recipes}</Text>
                 {/* <Text style={styles.text}>Welcome to Recipe For Success</Text> */}
-                <Text style={styles.undertext}>{process.env.REACT_APP_API_TOKEN}</Text>
+                <Text style={styles.undertext}>"welcome"</Text>
             </View>
             <View style={styles.bottom}>
             {/* <TouchableOpacity
