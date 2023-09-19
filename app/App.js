@@ -171,7 +171,8 @@ export default function App() {
             <Text style={styles.x}>x</Text>
           </TouchableOpacity>
         </View>
-      :<TouchableOpacity
+      :<View>
+        <TouchableOpacity
           style={styles.login}
           onPress={() => {
             setPopupActive(!popupActive)
@@ -179,8 +180,8 @@ export default function App() {
           }}
         >
           <Text style={styles.loginText}>Login</Text>
-        </TouchableOpacity>}
-        <View style={styles.createlinks}>
+        </TouchableOpacity>
+        <View style={styles.horizontal}>
           <TouchableOpacity
             style={styles.create}
             onPress={() => {
@@ -198,6 +199,7 @@ export default function App() {
             <Text style={styles.create}>Forgot password?</Text>
           </TouchableOpacity>
         </View>
+      </View>}
         <Text style={styles.undertext}>Don't have an account?</Text>
         <TouchableOpacity
          style={styles.guestLink}
@@ -245,7 +247,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     padding: 10
   },
-  createlinks: {
+  horizontal: {
     flexDirection: 'row',
   },
   create: {
