@@ -28,14 +28,18 @@ const styles = StyleSheet.create({
 
 
   footerContainer: {
-    backgroundColor: '#333',
+    backgroundColor: '#F74F4F',
     padding: 10,
     alignItems: 'center',
   },
   footerText: {
-    color: 'black',
+    color: 'white',
     fontSize: 16,
   },
+
+
+  
+  
 
 //Login button
   loginButton: {
@@ -65,12 +69,24 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   menuText: {
-    fontSize: 20,
+    fontSize: 30,
     color: 'black',
   },
   title: {
     fontSize: 20,
     color: 'black',
+  },
+
+//Banner.js styling
+  banner: {
+    backgroundColor: 'salmon', // Set the background color of the banner
+    paddingVertical: 10, // Adjust vertical padding as needed
+    alignItems: 'center', // Center the title horizontally
+  },
+  title: {
+    fontSize: 24, // Adjust the font size as needed
+    color: 'black', // Set the text color
+    fontWeight: 'bold', // Adjust font weight as needed
   },
 });
 
