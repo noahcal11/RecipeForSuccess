@@ -158,15 +158,15 @@ export default function Login({ recipes }) {
                     </TouchableOpacity>}
                     <View style={styles.createlinks}>
                         <TouchableOpacity
-                            style={styles.create}
+                            style={styles.createAcct}
                             onPress={() => {
                             setPopupActive(true)
-                            setPopupType('Create')
+                            setPopupType('createAcct')
                         }}>
-                        <Text style={styles.create}>Create Account</Text>
+                        <Text style={styles.createAcct}>Create Account</Text>
                         </TouchableOpacity>
                         <TouchableOpacity 
-                            style={styles.create}
+                            style={styles.createAcct}
                             onPress={() => {
                             setPopupActive(true)
                             setPopupType('Forgot')
