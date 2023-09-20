@@ -81,7 +81,7 @@ for i,link in enumerate(link_lst):
             if word.lower() in skills_ingredients_lst:
                 skills.append(word.lower())
         skills = list(set(skills))
-    print(list(set(skills)), steps, link)
+    print(skills, steps, link)
     ingredients = scraper.ingredients()
 
     try:
