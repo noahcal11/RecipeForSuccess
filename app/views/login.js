@@ -2,6 +2,9 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, Image, View, TouchableOpacity, TextInput } from 'react-native';
 import { useState } from 'react';
 import bcrypt from 'bcryptjs';
+import EStyleSheet from 'react-native-extended-stylesheet';
+
+EStyleSheet.build();
 
 export default function Login({ recipes }) {
   const [user, setUser] = useState("");
@@ -189,7 +192,7 @@ export default function Login({ recipes }) {
     )
 }
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
     background: {
       backgroundColor: '#ddd',
       flex: 1
@@ -218,7 +221,7 @@ const styles = StyleSheet.create({
     },
     text: {
       textAlign: 'center',
-      fontSize: 30,
+      fontSize: '2rem',
       padding: 10
     },
     createlinks: {
@@ -226,13 +229,13 @@ const styles = StyleSheet.create({
     },
     create: {
       flex: 1,
-      fontSize: 15,
+      fontSize: '1rem',
       justifyContent: 'center',
       textAlign: 'center'
     },
     undertext: {
       textAlign: 'center',
-      fontSize: 20,
+      fontSize: '1.25rem',
       padding: 10
     },
     login: {
@@ -247,12 +250,12 @@ const styles = StyleSheet.create({
     },
     loginText: {
       color: 'white',
-      fontSize: 16,
+      fontSize: '1rem',
     },
     input: {
       backgroundColor: '#D1D1D1',
       borderRadius: 30,
-      fontSize: 16,
+      fontSize: '1rem',
       width: 200,
       padding: 12,
       marginBottom: 20,
@@ -262,7 +265,7 @@ const styles = StyleSheet.create({
       alignSelf: 'center',
       padding: 2,
       color: 'black',
-      fontSize: 20
+      fontSize: '1.1rem'
     },
     guestLink: {
       alignSelf: 'center',
@@ -275,6 +278,6 @@ const styles = StyleSheet.create({
     },
     guestText: {
       color: 'black',
-      fontSize: 14
+      fontSize: '0.85rem'
     }
   });
