@@ -18,8 +18,8 @@ const SearchBar = () => {
 const styles = StyleSheet.create({
   searchContainer: {
     position: 'absolute',
-    top: 10, // Adjust the top position for the top-right corner
-    right: 10, // Adjust the right position for the top-right corner
+    top: 2, // Adjust the top position for the top-right corner
+    right: 5, // Adjust the right position for the top-right corner
   },
   searchInput: {
     width: 150, // Adjust the width as needed
