@@ -22,7 +22,7 @@ export default function Login({navigation}) {
       },
       method: "POST",
       body: JSON.stringify({email: email, username: username, password: password})
-    }).then(navigation.navigate('Home',{name:username}));
+    }).then(navigation.navigate('Home',{username:username}));
   }
 
   const getUser = async email => {
@@ -39,8 +39,8 @@ export default function Login({navigation}) {
             // Comparing the original password to
             // encrypted password
             if (isMatch) {
-                await setUser(data[0].username)
-                navigation.navigate('Home',{name:username})
+                await setUsername(data[0].username)
+                navigation.navigate('Home',{username:data[0].username})
             }
 
             if (!isMatch) {
@@ -189,7 +189,7 @@ export default function Login({navigation}) {
                     <TouchableOpacity
                     style={styles.guestLink}
                     onPress={() => {
-                      navigation.navigate('Home',{name:"Guest"})
+                      navigation.navigate('Home',{username:"Guest"})
                     }}>
                         <Text style={styles.guestText}>Continue As Guest</Text>
                     </TouchableOpacity>

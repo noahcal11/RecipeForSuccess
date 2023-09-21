@@ -2,8 +2,8 @@ import { StyleSheet, Text, Image, View, TouchableOpacity, TextInput } from 'reac
 
 export default function Home({ navigation,route }) {
     return(
-        <div>
-            <Text>Welcome {route.params.name}!</Text>
+        <View>
+            <Text>Welcome {route.params.username}!</Text>
             <TouchableOpacity
                 onPress={() => {
                     navigation.navigate("Login")
@@ -11,6 +11,6 @@ export default function Home({ navigation,route }) {
                 >
                 <Text>Go Back</Text>
             </TouchableOpacity>
-        </div>
+        </View>
     )
 }
