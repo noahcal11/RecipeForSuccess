@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import styles from '../Genstyle';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
 const Footer = () => {
     return (
@@ -9,6 +9,17 @@ const Footer = () => {
       </View>
     );
   };
-
   
   export default Footer;
+
+  const styles = EStyleSheet.create({
+    footerContainer: {
+      backgroundColor: '#F74F4F',
+      padding: 10,
+      alignItems: 'center',
+    },
+    footerText: {
+      color: 'white',
+      fontSize: 16,
+    },
+  })

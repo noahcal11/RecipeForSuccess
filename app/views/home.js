@@ -1,8 +1,16 @@
 import { StatusBar } from 'expo-status-bar'; 
-import { StyleSheet, Text, Image, View, TouchableOpacity, TextInput } from 'react-native';
+import { Text, Image, View, TouchableOpacity, TextInput } from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
+import NavigationBar from '../Components/NavBar';
+import SearchBar from '../Components/SearchBar';
+import Banner from '../Components/Banner';
+
+EStyleSheet.build();
 
 export default function Home(){
     return(
-        <Text>Lorum impsum hello world im gay</Text>
+        <View>
+            <Banner title="Home" />
+        </View>
     );
 }

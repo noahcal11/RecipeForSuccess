@@ -1,5 +1,6 @@
 import { useEffect,useState } from 'react';
 import Login from "./views/login";
+import Home from './views/home';
 
 export default function App() {
   const [recipes, setRecipes] = useState([]);
@@ -18,7 +19,8 @@ export default function App() {
   }
 
   return (
-    <Login recipes={recipes} />
+    // <Login recipes={recipes} />
+    <Home />
   );
 
 };
