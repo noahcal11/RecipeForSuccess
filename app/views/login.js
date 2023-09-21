@@ -142,7 +142,7 @@ export default function Login({navigation}) {
             <View style={styles.top}>
                 <Image style={styles.logo} source={require("../assets/favicon.png")}></Image>
                 {/* <Text style={styles.text}>Welcome to Recipe For Success</Text> */}
-                <Text style={styles.undertext}>Welcome</Text>
+                <Text style={styles.undertext}>Welcome to Recipe For Success</Text>
             </View>
             <View style={styles.bottom}>
             {/* <TouchableOpacity
@@ -175,9 +175,9 @@ export default function Login({navigation}) {
                             style={styles.createAcct}
                             onPress={() => {
                             setPopupActive(true)
-                            setPopupType('createAcct')
+                            setPopupType('Create')
                         }}>
-                        <Text style={styles.createAcct}>Create Account</Text>
+                        <Text style={styles.createText}>Create Account</Text>
                         </TouchableOpacity>
                         <TouchableOpacity 
                             style={styles.createAcct}
@@ -185,7 +185,7 @@ export default function Login({navigation}) {
                             setPopupActive(true)
                             setPopupType('Forgot')
                         }}>
-                            <Text style={styles.create}>Forgot password?</Text>
+                            <Text style={styles.createText}>Forgot password?</Text>
                         </TouchableOpacity>
                     </View>
                     <Text style={styles.undertext}>Don't have an account?</Text>
@@ -238,8 +238,13 @@ const styles = EStyleSheet.create({
     createlinks: {
       flexDirection: 'row',
     },
-    create: {
+    createAcct: {
       flex: 1,
+      fontSize: '1rem',
+      justifyContent: 'center',
+      textAlign: 'center'
+    },
+    createText: {
       fontSize: '1rem',
       justifyContent: 'center',
       textAlign: 'center'
