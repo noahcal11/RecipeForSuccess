@@ -21,11 +21,10 @@ const styles = EStyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 10,
     backgroundColor: 'salmon',
   },
   menuIcon: {
-    padding: 10,
+    paddingLeft: 10,
   },
   menuText: {
     fontSize: 30,
