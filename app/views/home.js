@@ -1,8 +1,16 @@
-import { StatusBar } from 'expo-status-bar'; 
 import { StyleSheet, Text, Image, View, TouchableOpacity, TextInput } from 'react-native';
 
-export default function Home(){
+export default function Home({ navigation,route }) {
     return(
-        <Text>Lorum impsum hello world im gay</Text>
+        <View>
+            <Text>Welcome {route.params.username}!</Text>
+            <TouchableOpacity
+                onPress={() => {
+                    navigation.navigate("Login")
+                }}
+                >
+                <Text>Go Back</Text>
+            </TouchableOpacity>
+        </View>
     );
 }

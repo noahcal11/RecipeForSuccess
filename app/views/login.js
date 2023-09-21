@@ -6,7 +6,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 EStyleSheet.build();
 
-export default function Login({ recipes }) {
+export default function Login({navigation}) {
   const [user, setUser] = useState("");
   const [popupActive,setPopupActive] = useState(false);
   const [popupType, setPopupType] = useState('Login');
@@ -15,6 +15,18 @@ export default function Login({ recipes }) {
   const [password, setPassword] = useState('');
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
+  // const API_BASE = "http://localhost:8080/"+process.env.REACT_APP_API_TOKEN
+
+  const createUser = async (email,username,password) => {
+    const data = await fetch(API_BASE+"/user/new", {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: "POST",
+      body: JSON.stringify({email: email, username: username, password: password})
+    }).then(navigation.navigate('Home',{username:username}));
+  }
 
   const getUser = async email => {
       const data = await fetch(API_BASE+"/user/get/" + email, {method: "GET"})
@@ -30,8 +42,8 @@ export default function Login({ recipes }) {
             // Comparing the original password to
             // encrypted password
             if (isMatch) {
-                await setUser(data[0].username)
-                console.log('Welcome ' + user +'!');
+                await setUsername(data[0].username)
+                navigation.navigate('Home',{username:data[0].username})
             }
 
             if (!isMatch) {
@@ -95,7 +107,7 @@ export default function Login({ recipes }) {
             <TouchableOpacity
               style={styles.login}
               onPress={() => {
-                getUser(email,password)
+                createUser(email,username,password)
               }}
             >
               <Text style={styles.loginText}>Register</Text>
@@ -129,9 +141,8 @@ export default function Login({ recipes }) {
         <View style={styles.container}>
             <View style={styles.top}>
                 <Image style={styles.logo} source={require("../assets/favicon.png")}></Image>
-                <Text>{recipes}</Text>
                 {/* <Text style={styles.text}>Welcome to Recipe For Success</Text> */}
-                <Text style={styles.undertext}>"welcome"</Text>
+                <Text style={styles.undertext}>Welcome</Text>
             </View>
             <View style={styles.bottom}>
             {/* <TouchableOpacity
@@ -181,7 +192,7 @@ export default function Login({ recipes }) {
                     <TouchableOpacity
                     style={styles.guestLink}
                     onPress={() => {
-
+                      navigation.navigate('Home',{username:"Guest"})
                     }}>
                         <Text style={styles.guestText}>Continue As Guest</Text>
                     </TouchableOpacity>
