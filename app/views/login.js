@@ -3,7 +3,7 @@ import { StyleSheet, Text, Image, View, TouchableOpacity, TextInput } from 'reac
 import { useState } from 'react';
 import bcrypt from 'bcryptjs';
 
-export default function Login({ recipes }) {
+export default function Login({navigation}) {
   const [user, setUser] = useState("");
   const [popupActive,setPopupActive] = useState(false);
   const [popupType, setPopupType] = useState('Login');
@@ -126,9 +126,8 @@ export default function Login({ recipes }) {
         <View style={styles.container}>
             <View style={styles.top}>
                 <Image style={styles.logo} source={require("../assets/favicon.png")}></Image>
-                <Text>{recipes}</Text>
                 {/* <Text style={styles.text}>Welcome to Recipe For Success</Text> */}
-                <Text style={styles.undertext}>"welcome"</Text>
+                <Text style={styles.undertext}>Welcome</Text>
             </View>
             <View style={styles.bottom}>
             {/* <TouchableOpacity
@@ -178,7 +177,7 @@ export default function Login({ recipes }) {
                     <TouchableOpacity
                     style={styles.guestLink}
                     onPress={() => {
-
+                      navigation.navigate('Home')
                     }}>
                         <Text style={styles.guestText}>Continue As Guest</Text>
                     </TouchableOpacity>
