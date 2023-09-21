@@ -1,6 +1,10 @@
 import { useEffect,useState } from 'react';
 import Login from "./views/login";
-import Home from './views/home';
+import Home from "./views/home";
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [recipes, setRecipes] = useState([]);
@@ -19,8 +23,14 @@ export default function App() {
   }
 
   return (
-    // <Login recipes={recipes} />
-    <Home />
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{
+        headerShown: false
+      }}>
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Home" component={Home} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 
 };
