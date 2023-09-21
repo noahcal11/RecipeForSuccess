@@ -1,9 +1,9 @@
 import { StyleSheet, Text, Image, View, TouchableOpacity, TextInput } from 'react-native';
 
-export default function Home({ navigation }) {
+export default function Home({ navigation,route }) {
     return(
         <div>
-            <Text>This is a Home Page</Text>
+            <Text>Welcome {route.params.name}!</Text>
             <TouchableOpacity
                 onPress={() => {
                     navigation.navigate("Login")

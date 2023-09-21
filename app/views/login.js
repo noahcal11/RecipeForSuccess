@@ -12,6 +12,18 @@ export default function Login({navigation}) {
   const [password, setPassword] = useState('');
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
+  // const API_BASE = "http://localhost:8080/"+process.env.REACT_APP_API_TOKEN
+
+  const createUser = async (email,username,password) => {
+    const data = await fetch(API_BASE+"/user/new", {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: "POST",
+      body: JSON.stringify({email: email, username: username, password: password})
+    }).then(navigation.navigate('Home',{name:username}));
+  }
 
   const getUser = async email => {
       const data = await fetch(API_BASE+"/user/get/" + email, {method: "GET"})
@@ -28,7 +40,7 @@ export default function Login({navigation}) {
             // encrypted password
             if (isMatch) {
                 await setUser(data[0].username)
-                console.log('Welcome ' + user +'!');
+                navigation.navigate('Home',{name:username})
             }
 
             if (!isMatch) {
@@ -92,7 +104,7 @@ export default function Login({navigation}) {
             <TouchableOpacity
               style={styles.login}
               onPress={() => {
-                getUser(email,password)
+                createUser(email,username,password)
               }}
             >
               <Text style={styles.loginText}>Register</Text>
@@ -177,7 +189,7 @@ export default function Login({navigation}) {
                     <TouchableOpacity
                     style={styles.guestLink}
                     onPress={() => {
-                      navigation.navigate('Home')
+                      navigation.navigate('Home',{name:"Guest"})
                     }}>
                         <Text style={styles.guestText}>Continue As Guest</Text>
                     </TouchableOpacity>
