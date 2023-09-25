@@ -26,7 +26,7 @@ const SearchBar = () => {
           {!isTextInputVisible ? (
             <Svg width={30} height={30}>
               <Image
-                href={require('./zoom-bold.svg')}
+                href={require('../assets/zoom-bold.png')}
                 width={30}
                 height={30}
                 />
