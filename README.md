@@ -22,3 +22,4 @@ Node.js
    2. Run "npx expo start -a" or "npx expo start -w" for Android or web (respectively)
 ## How to contribute
 Each team member will have their own fork of the repository to complete their work. Everyone will work within their own fork on their stories and submit a pull request when completed. To remain updated, users open their forked repo on GitHub web, click fetch upstream to pull chages from the original repo, and go to GitHub Desktop and fetch & pull to update. As the owner of the repository, Noah C. will create a branch rather than a fork.
+  

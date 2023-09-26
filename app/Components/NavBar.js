@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import styles from '../Genstyle'; // Import of general style sheet
+import EStyleSheet from 'react-native-extended-stylesheet';
 
 const NavigationBar = ({ onPressMenu }) => {
   return (
@@ -10,9 +10,24 @@ const NavigationBar = ({ onPressMenu }) => {
       <TouchableOpacity onPress={onPressMenu} style={styles.menuIcon}>
         <Text style={styles.menuText}>☰</Text>
       </TouchableOpacity>
-      <Text style={styles.title}>My App</Text>
     </View>
   );
 };
 
 export default NavigationBar;
+
+const styles = EStyleSheet.create({
+  navBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: 'salmon',
+  },
+  menuIcon: {
+    paddingLeft: 10,
+  },
+  menuText: {
+    fontSize: 30,
+    color: 'black',
+  },
+});

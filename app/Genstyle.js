@@ -2,9 +2,12 @@
 
 // styles.js
 
-import { StyleSheet } from 'react-native';
+// import { StyleSheet } from 'react-native';
+import EStyleSheet from "react-native-extended-stylesheet";
 
-const styles = StyleSheet.create({
+EStyleSheet.build();
+
+const global = EStyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -24,23 +27,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 
-  //Footer
-
-
-  footerContainer: {
-    backgroundColor: '#F74F4F',
-    padding: 10,
-    alignItems: 'center',
-  },
-  footerText: {
-    color: 'white',
-    fontSize: 16,
-  },
-
-
-  
-  
-
 //Login button
   loginButton: {
     backgroundColor: '#F74F4F',
@@ -56,43 +42,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
   },
-
-
-  navBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 10,
-    backgroundColor: 'white',
-  },
-  menuIcon: {
-    padding: 10,
-  },
-  menuText: {
-    fontSize: 30,
-    color: 'black',
-  },
-  title: {
-    fontSize: 20,
-    color: 'black',
-  },
-
-//Banner.js styling
-  banner: {
-    backgroundColor: 'salmon', // Set the background color of the banner
-    paddingVertical: 10, // Adjust vertical padding as needed
-    alignItems: 'center', // Center the title horizontally
-  },
-  title: {
-    fontSize: 24, // Adjust the font size as needed
-    color: 'black', // Set the text color
-    fontWeight: 'bold', // Adjust font weight as needed
-  },
 });
 
-export default styles;
-
-
-
-//Image Styling
-
+export default global;
