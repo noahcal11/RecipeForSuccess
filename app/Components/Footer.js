@@ -10,6 +10,7 @@ const Footer = () => {
     );
   };
   
+  
   export default Footer;
 
   const styles = EStyleSheet.create({
