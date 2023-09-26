@@ -27,14 +27,14 @@ export default function Home({ navigation, route }){
     return(
         <View>
             <Banner title="Home" />
-            <Text style={{ textAlign: 'center', fontSize: '1.2rem' }}>Welcome, {route.params.username}!</Text>
+            <Text style={styles.welcomeText}>Welcome, {route.params.username}!</Text>
             <View style={styles.container}>
                 <View style={styles.popular}>
-                    <Text style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Popular Recipes</Text>
+                    <Text style={styles.categoryTitle}>Popular Recipes</Text>
                     <FlatList nestedScrollEnabled = {true}
                     data={popularRecs}
                     renderItem={({ item }) => (
-                        <View style={{ flex: 1, flexDirection: 'column', margin: '1rem'}}>
+                        <View style={styles.imageView}>
                             <Image style={styles.imageThumbnail} source={{ uri: item.src }} />
                             <Text>{item.id}</Text>
                         </View>
@@ -45,11 +45,11 @@ export default function Home({ navigation, route }){
                     <Text>View more</Text>
                 </View>
                 <View style={styles.desserts}>
-                    <Text style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Top Desserts</Text>
+                    <Text style={styles.categoryTitle}>Top Desserts</Text>
                     <FlatList nestedScrollEnabled = {true}
                     data={dessertRecs}
                     renderItem={({ item }) => (
-                        <View style={{ flex: 1, flexDirection: 'column', margin: '1rem'}}>
+                        <View style={styles.imageView}>
                             <Image style={styles.imageThumbnail} source={{ uri: item.src }} />
                             <Text>{item.id}</Text>
                         </View>
@@ -60,9 +60,7 @@ export default function Home({ navigation, route }){
                     <Text>View more</Text>
                 </View>
             </View>
-            <Text>Bottom text</Text>
-
-            {/* <TouchableOpacity
+            <TouchableOpacity
                 onPress={() => {
                     navigation.navigate("Login")
                 }}
@@ -76,17 +74,25 @@ export default function Home({ navigation, route }){
                 }}
                 >
                 <Text>Skills page</Text>
-            </TouchableOpacity> */}
-
+            </TouchableOpacity>
         </View>
     );
 }
 
 const styles = EStyleSheet.create({
+    welcomeText: {
+        textAlign: 'center',
+        fontSize: '1.2rem',
+    },
     container: {
         flex: 1,
         justifyContent: 'center',
         backgroundColor: 'white',
+    },
+    imageView: {
+        flex: 1,
+        flexDirection: 'column',
+        margin: '1rem',
     },
     imageThumbnail: {
         justifyContent: 'center',
@@ -96,6 +102,11 @@ const styles = EStyleSheet.create({
     popular: {
         padding: '1rem',
         backgroundColor: '#eee',
+    },
+    categoryTitle: {
+        textAlign: 'center',
+        fontSize: '1.5rem',
+        fontWeight: 'bold'
     },
     desserts: {
         padding: '1rem',
