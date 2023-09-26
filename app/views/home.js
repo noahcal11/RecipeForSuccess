@@ -22,7 +22,6 @@ export default function Home({ navigation, route }){
                 >
                 <Text>Skills page</Text>
             </TouchableOpacity>
-
         </View>
     );
 }
