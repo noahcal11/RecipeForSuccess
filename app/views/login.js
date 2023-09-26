@@ -142,7 +142,7 @@ export default function Login({navigation}) {
             <View style={styles.top}>
                 <Image style={styles.logo} source={require("../assets/favicon.png")}></Image>
                 {/* <Text style={styles.text}>Welcome to Recipe For Success</Text> */}
-                <Text style={styles.undertext}>Welcome</Text>
+                <Text style={styles.undertext}>Welcome to Recipe For Success</Text>
             </View>
             <View style={styles.bottom}>
             {/* <TouchableOpacity
@@ -175,9 +175,9 @@ export default function Login({navigation}) {
                             style={styles.createAcct}
                             onPress={() => {
                             setPopupActive(true)
-                            setPopupType('createAcct')
+                            setPopupType('Create')
                         }}>
-                        <Text style={styles.createAcct}>Create Account</Text>
+                        <Text style={styles.createText}>Create Account</Text>
                         </TouchableOpacity>
                         <TouchableOpacity 
                             style={styles.createAcct}
@@ -185,7 +185,7 @@ export default function Login({navigation}) {
                             setPopupActive(true)
                             setPopupType('Forgot')
                         }}>
-                            <Text style={styles.create}>Forgot password?</Text>
+                            <Text style={styles.createText}>Forgot password?</Text>
                         </TouchableOpacity>
                     </View>
                     <Text style={styles.undertext}>Don't have an account?</Text>
@@ -212,13 +212,13 @@ const styles = EStyleSheet.create({
       flex: 1,
       backgroundColor: '#fff',
       justifyContent: 'center',
-      marginHorizontal: 30,
-      marginVertical: 40,
-      borderRadius: 40
+      marginHorizontal: '2.2rem',
+      marginVertical: '2.2rem',
+      borderRadius: '2rem'
     },
     top: {
       flex: 1,
-      marginTop: 40,
+      marginTop: '2rem',
       justifyContent: 'center'
     },
     bottom: {
@@ -226,37 +226,43 @@ const styles = EStyleSheet.create({
       justifyContent: 'center'
     },
     logo: {
-      height: 100,
-      width: 100,
+      height: '5.5rem',
+      width: '5.5rem',
       alignSelf: 'center'
     },
     text: {
       textAlign: 'center',
       fontSize: '2rem',
-      padding: 10
+      padding: '1rem'
     },
     createlinks: {
       flexDirection: 'row',
     },
-    create: {
+    createAcct: {
       flex: 1,
       fontSize: '1rem',
       justifyContent: 'center',
       textAlign: 'center'
     },
+    createText: {
+      fontSize: '1rem',
+      justifyContent: 'center',
+      textAlign: 'center',
+      color: '#444'
+    },
     undertext: {
       textAlign: 'center',
       fontSize: '1.25rem',
-      padding: 10
+      padding: '1rem'
     },
     login: {
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: 'red',
-      borderRadius: 30,
-      marginBottom: 20,
-      width: 200,
-      height: 50,
+      borderRadius: '2rem',
+      marginBottom: '1rem',
+      width: '13rem',
+      height: '3rem',
       alignSelf:  'center'
     },
     loginText: {
@@ -265,27 +271,28 @@ const styles = EStyleSheet.create({
     },
     input: {
       backgroundColor: '#D1D1D1',
-      borderRadius: 30,
+      borderRadius: '2rem',
       fontSize: '1rem',
-      width: 200,
-      padding: 12,
-      marginBottom: 20,
+      width: '13rem',
+      height: '3rem',
+      padding: '1rem',
+      marginBottom: '1rem',
       alignSelf: 'center'
     },
     x: {
       alignSelf: 'center',
-      padding: 2,
+      padding: '0.2rem',
       color: 'black',
-      fontSize: '1.1rem'
+      fontSize: '1.2rem'
     },
     guestLink: {
       alignSelf: 'center',
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: '#ddd',
-      height: 50,
-      width: 150,
-      borderRadius: 30
+      height: '3rem',
+      width: '13rem',
+      borderRadius: '2rem'
     },
     guestText: {
       color: 'black',
