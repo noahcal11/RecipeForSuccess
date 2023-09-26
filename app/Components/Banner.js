@@ -27,21 +27,24 @@ export default BannerTitle;
 const styles = EStyleSheet.create({
   banner: {
     backgroundColor: 'salmon', // Set the background color of the banner
-    paddingVertical: 10, // Adjust vertical padding as needed
+    paddingVertical: '1rem', // Adjust vertical padding as needed
     flexDirection: 'row',
   },
   bannerTitle: {
-    fontSize: 24, // Adjust the font size as needed
+    fontSize: '1.5rem', // Adjust the font size as needed
     color: 'black', // Set the text color
     fontWeight: 'bold', // Adjust font weight as needed
     textAlign: 'center', // Center text
-    flex: 1,
-    paddingTop: 5,
+    flex: '-1rem',
+    paddingTop: '.25rem',
   },
   nav: {
-    flex: 1,
+    //flex: 1,
+    flex: '.1rem',
+    textAlign: 'left',
   },
   search: {
-    flex: 1,
+    //flex: 2,
+    flex: '.1rem',
   },
 });
