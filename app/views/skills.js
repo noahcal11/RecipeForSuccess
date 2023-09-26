@@ -10,6 +10,7 @@ export default function Skills({ navigation, route }){
         <View>
             <Banner title="Skills" />
 
+
             <View style={styles.centeredContainer}>
                 <View style={styles.textBox}>
                     {/* <Text>Welcome {route.params.username}!</Text> */}

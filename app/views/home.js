@@ -20,7 +20,7 @@ export default function Home({ navigation, route }){
                     navigation.navigate("Skills")
                 }}
                 >
-                <Text>Skills Page</Text>
+                <Text>Skills page</Text>
             </TouchableOpacity>
         </View>
     );
