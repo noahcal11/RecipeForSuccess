@@ -11,7 +11,7 @@ export default function Skills({ navigation, route }){
             <Banner title="Skills" />
 
 
-            <View style={styles.centeredContainer}>
+            <View>
                 <View style={styles.textBox}>
                     {/* <Text>Welcome {route.params.username}!</Text> */}
                     <Text>Hey USERNAME check out your skill levels here!</Text>
@@ -43,7 +43,7 @@ const styles = EStyleSheet.create({
     centeredContainer: {
         flex: 1,
         alignItems: 'center', // Center items horizontally
-        justifyContent: 'center', // Center items vertically
+        justifyContent: 'center' // Center items vertically
       },
     skillContainer: {
         alignItems: 'center',
@@ -57,7 +57,7 @@ const styles = EStyleSheet.create({
     textBox: {
         textAlign: 'center',
         flexDirection: 'row',
-        fontsize:'1rem',
+        fontSize:'1rem',
         fontWeight: 'bold',
     },
   });
