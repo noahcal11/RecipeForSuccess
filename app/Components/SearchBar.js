@@ -56,18 +56,26 @@ const SearchBar = () => {
   );
 };
 
+
 const styles = EStyleSheet.create({
   searchContainer: {
     position: 'absolute',
+    top: '0.2rem', // Adjust the top position for the top-right corner
+    right: '0.5rem', // Adjust the right position for the top-right corner
     top: '0.2rem', // Adjust the top position for the top-right corner
     right: '0.5rem', // Adjust the right position for the top-right corner
   },
   searchInput: {
     width: '6rem', // Adjust the width as needed
     height: '2rem',
+    width: '6rem', // Adjust the width as needed
+    height: '2rem',
     backgroundColor: 'white',
     borderWidth: '0.1rem',
+    borderWidth: '0.1rem',
     borderColor: 'gray',
+    borderRadius: '.25rem',
+    padding: '.25rem',
     borderRadius: '.25rem',
     padding: '.25rem',
   },
@@ -76,6 +84,23 @@ const styles = EStyleSheet.create({
     right:'-5rem'
   }
 });
+
+// const styles = StyleSheet.create({
+//     searchContainer: {
+//       position: 'absolute',
+//       top: 1, // Adjust the top position for the top-right corner
+//       right: 10, // Adjust the right position for the top-right corner
+//     },
+//     searchInput: {
+//       width: 100, // Adjust the width as needed
+//       height: 30,
+//       backgroundColor: 'white',
+//       borderWidth: 1,
+//       borderColor: 'gray',
+//       borderRadius: 5,
+//       padding: 5,
+//     }
+//   });
 
 // const styles = StyleSheet.create({
 //     searchContainer: {
