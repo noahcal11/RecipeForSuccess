@@ -10,33 +10,35 @@ export default function Home({ navigation, route }){
     const [popularRecs, setPopularRecs] = useState([]);
     const [dessertRecs, setDessertRecs] = useState([]);
 
-    useState(() => {
-        let items = Array.apply(null, Array(8)).map((v, i) => {
-            return { id: i, src: 'http://placehold.it/200x200?text=' + (i + 1) };
-        });
-        setPopularRecs(items);
-    }, []);
+    const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
+    const getRecipes = async () => {
+        const response = await fetch(API_BASE+"/recipe/get/all")
+        .then(res => res.json())
+        .then(data => {
+            setPopularRecs(data.slice(0,8));
+            console.log(data.slice(0,8));
+        })
+        .catch(error => console.error(error));
+    }
+    
     useState(() => {
-        let items = Array.apply(null, Array(4)).map((v, i) => {
-            return { id: i, src: 'http://placehold.it/200x200?text=' + (i + 1) };
-        });
-        setDessertRecs(items);
+        getRecipes();
     }, []);
 
     return(
         <View>
             <Banner title="Home" />
-            <Text style={styles.welcomeText}>Welcome, {route.params.username}!</Text>
-            <View style={styles.container}>
+            <View>
                 <View style={styles.popular}>
                     <Text style={styles.categoryTitle}>Popular Recipes</Text>
                     <FlatList nestedScrollEnabled = {true}
                     data={popularRecs}
                     renderItem={({ item }) => (
                         <View style={styles.imageView}>
-                            <Image style={styles.imageThumbnail} source={{ uri: item.src }} />
-                            <Text>{item.id}</Text>
+                            {/* image title link */}
+                            <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
+                            <Text>{item.title}</Text>
                         </View>
                     )}
                     numColumns={2}
