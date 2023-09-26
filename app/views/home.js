@@ -14,6 +14,14 @@ export default function Home({ navigation, route }){
                 >
                 <Text>Go Back</Text>
             </TouchableOpacity>
+
+            <TouchableOpacity
+                onPress={() => {
+                    navigation.navigate("Skills")
+                }}
+                >
+                <Text>Skills Page</Text>
+            </TouchableOpacity>
         </View>
     );
 }
