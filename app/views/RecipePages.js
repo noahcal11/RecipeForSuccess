@@ -10,6 +10,7 @@ import BannerTitle from '../Components/Banner';
 import RecipeIngredients from '../Components/IngredientsList';
 import RecipeDirections from '../Components/RecipeDirections';
 import RecipeDescription from '../Components/RecipeDescription';
+import { useState } from 'react';
 
 const ingredients = [
   '2 cups all-purpose flour',
@@ -32,11 +33,20 @@ const description = "This is a delicious recipe that you'll love to prepare.";
 
 
 const App = ({ navigation, route }) => {
+  const [recipe, setRecipe] = useState();
+  
+  const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
+
+  const getRecipes = async () => {
+      const response = await fetch(API_BASE+"/recipe/get/all")
+      .then(res => res.json())
+      .then(data => {
+          setPopularRecs(data.slice(0,8));
+      })
+      .catch(error => console.error(error));
+  }
+
   return (
-
-
-    
-    
     <View style={{ flex: 1 }}>
       {/* Search bar */}
       

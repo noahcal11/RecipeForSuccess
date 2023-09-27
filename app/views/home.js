@@ -13,7 +13,7 @@ export default function Home({ navigation, route }){
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
     const getRecipes = async () => {
-        const response = await fetch(API_BASE+"/recipe/get/?title=carrot")
+        const response = await fetch(API_BASE+"/recipe/get/all")
         .then(res => res.json())
         .then(data => {
             setPopularRecs(data.slice(0,8));
