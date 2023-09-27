@@ -52,11 +52,12 @@ const App = () => {
       <ScrollView style={{ flex: 1 }}>
 
 
-      <Svg width={300} height={300} >
+      <Svg width={300} height={300}  >
               <Image
                 href={require('../assets/peanut-butter-chocolate-swirl-cookies-2.png')}
                 width={300}
                 height={300}
+                
                 
                 />
             </Svg>
@@ -95,13 +96,7 @@ const App = () => {
 };
 
 
-const styles = StyleSheet.create({
-  image: {
-    width: '100%',
-    height: 200,
-    alignSelf: 'center', // Center the image horizontally within its container
-  },
-});
+
 
 export default App;
 //after i tried implementing the footer, the search bar stopped appearing
