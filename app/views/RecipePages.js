@@ -31,7 +31,7 @@ const directions = [
 const description = "This is a delicious recipe that you'll love to prepare.";
 
 
-const App = () => {
+const App = ({ navigation, route }) => {
   return (
 
 
@@ -61,6 +61,7 @@ const App = () => {
           Recipe Ingredients
         </Text>
         <RecipeIngredients ingredients={ingredients} />
+        <Text>{route.params._id}</Text>
       </View>
 
       {/* Recipe Directions */}
