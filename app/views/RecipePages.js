@@ -9,7 +9,7 @@ import NavigationBar from '../Components/NavBar';
 import BannerTitle from '../Components/Banner';
 import RecipeIngredients from '../Components/IngredientsList';
 import RecipeDirections from '../Components/RecipeDirections';
-//import RecipeDescription from '../Components/RecipeDescription';
+import RecipeDescription from '../Components/RecipeDescription';
 
 const ingredients = [
   '2 cups all-purpose flour',
@@ -48,12 +48,12 @@ const App = ({ navigation, route }) => {
       {/* Your app content */}
       <ScrollView style={{ flex: 1 }}>
       {/* Recipe Description */}
-      {/* <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
+      <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
         <Text style={{ fontSize: 18, marginBottom: 20 }}>
           Recipe Description
         </Text>
         <RecipeDescription description={description} />
-      </View> */}
+      </View> 
 
       {/* Recipe Ingredients */}
       <View style={{ paddingHorizontal: 20 }}>
