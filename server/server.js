@@ -26,7 +26,7 @@ app.get('/'+process.env.API_TOKEN+'/recipe/get',async (req,res) => {
             {title: new RegExp(`\\b${general}\\b`, "i")},
             {desc: new RegExp(`\\b${general}\\b`, "i")},
             {ingredients: new RegExp(`\\b${general}\\b`, "i")}
-        ]},['yields','title']);
+        ]},['image','title','link']);
         res.json(recipes);
     } else {
         const title = req.query.title;
@@ -45,7 +45,7 @@ app.get('/'+process.env.API_TOKEN+'/recipe/get',async (req,res) => {
                 {desc: new RegExp(`\\b${desc}\\b`, "i")},
                 {ingredients: new RegExp(`\\b${ingredients}\\b`, "i")}
             ]
-        });
+        },['image','title','link']);
         res.json(recipes);
     }
 });
