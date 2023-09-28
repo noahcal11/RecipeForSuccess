@@ -147,11 +147,13 @@ const styles = EStyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         margin: '1rem',
+        width: '9rem',
     },
     imageThumbnail: {
         justifyContent: 'center',
         alignItems: 'center',
         height: '5rem',
+        width: '9rem',
     },
     recipeSection: {
         padding: '1rem',
