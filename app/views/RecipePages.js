@@ -7,6 +7,7 @@ import BannerTitle from '../Components/Banner';
 import RecipeIngredients from '../Components/IngredientsList';
 import RecipeDirections from '../Components/RecipeDirections';
 import RecipeDescription from '../Components/RecipeDescription';
+import Svg, { Image } from 'react-native-svg';
 import { useState } from 'react';
 
 const App = ({ navigation, route }) => {
@@ -23,6 +24,8 @@ const App = ({ navigation, route }) => {
       .catch(error => console.error(error));
   }
 
+  const recipeImage = require('../assets/peanut-butter-chocolate-swirl-cookies-2.png');
+
   useState(() => {
     getRecipes();
   }, []);
@@ -36,6 +39,19 @@ const App = ({ navigation, route }) => {
         {/* Banner title */}
         <BannerTitle title={recipe.title} />
 
+      {/* Your app content */}
+      <ScrollView style={{ flex: 1 }}>
+
+
+      <Svg width={300} height={300}  >
+              <Image
+                href={require('../assets/peanut-butter-chocolate-swirl-cookies-2.png')}
+                width={300}
+                height={300}
+                
+                
+                />
+            </Svg>
         {/* Your app content */}
         <FlatList
           data={[recipe]}
@@ -75,5 +91,8 @@ const App = ({ navigation, route }) => {
     </View>
   );
 };
+
+
+
 
 export default App;
