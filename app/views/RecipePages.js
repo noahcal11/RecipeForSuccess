@@ -1,85 +1,98 @@
-// App.js
-
 import React from 'react';
-//import styles from './Genstyle';
-import { View, Text, ScrollView } from 'react-native';
-import SearchBar from '../Components/SearchBar'; // Import your search bar component
+import { View, Text, FlatList } from 'react-native';
+import SearchBar from '../Components/SearchBar';
 import Footer from '../Components/Footer';
 import NavigationBar from '../Components/NavBar';
 import BannerTitle from '../Components/Banner';
 import RecipeIngredients from '../Components/IngredientsList';
 import RecipeDirections from '../Components/RecipeDirections';
 import RecipeDescription from '../Components/RecipeDescription';
+import Svg, { Image } from 'react-native-svg';
+import { useState } from 'react';
 
-const ingredients = [
-  '2 cups all-purpose flour',
-  '1 cup sugar',
-  '1/2 teaspoon salt',
-  '2 eggs',
-  '1 cup milk',
-  // Add more ingredients here
-];
+const App = ({ navigation, route }) => {
+  const [recipe, setRecipe] = useState([]);
 
+  const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
-const directions = [
-  'Preheat the oven to 350°F (180°C).',
-  'In a large mixing bowl, combine the flour, sugar, and salt.',
-  'Add the eggs and milk and mix until smooth.',
-  // Add more directions here
-];
+  const getRecipes = async () => {
+    const response = await fetch(API_BASE+"/recipe/get/?title=ham")
+      .then(res => res.json())
+      .then(data => {
+        setRecipe(data[0]);
+      })
+      .catch(error => console.error(error));
+  }
 
-const description = "This is a delicious recipe that you'll love to prepare.";
+  const recipeImage = require('../assets/peanut-butter-chocolate-swirl-cookies-2.png');
 
+  useState(() => {
+    getRecipes();
+  }, []);
 
-const App = () => {
   return (
-
-
-    
-    
     <View style={{ flex: 1 }}>
       {/* Search bar */}
-      
       <SearchBar />
+      
       <View style={{ flex: 1 }}>
-      {/* Banner title */}
-      <BannerTitle title="Recipe Title" />
+        {/* Banner title */}
+        <BannerTitle title={recipe.title} />
 
       {/* Your app content */}
       <ScrollView style={{ flex: 1 }}>
-      {/* Recipe Description */}
-      <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
-        <Text style={{ fontSize: 18, marginBottom: 20 }}>
-          Recipe Description
-        </Text>
-        <RecipeDescription description={description} />
-      </View> 
 
-      {/* Recipe Ingredients */}
-      <View style={{ paddingHorizontal: 20 }}>
-        <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 20 }}>
-          Recipe Ingredients
-        </Text>
-        <RecipeIngredients ingredients={ingredients} />
+
+      <Svg width={300} height={300}  >
+              <Image
+                href={require('../assets/peanut-butter-chocolate-swirl-cookies-2.png')}
+                width={300}
+                height={300}
+                
+                
+                />
+            </Svg>
+        {/* Your app content */}
+        <FlatList
+          data={[recipe]}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <>
+              {/* Recipe Description */}
+              <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
+                <Text style={{ fontSize: 18, marginBottom: 20 }}>
+                  Recipe Description
+                </Text>
+                <RecipeDescription description={item.desc} />
+              </View>
+
+              {/* Recipe Ingredients */}
+              <View style={{ paddingHorizontal: 20 }}>
+                <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 20 }}>
+                  Recipe Ingredients
+                </Text>
+                <RecipeIngredients ingredients={item.ingredients} />
+              </View>
+
+              {/* Recipe Directions */}
+              <View style={{ paddingHorizontal: 20 }}>
+                <Text style={{ fontSize: 24, fontWeight: 'bold', marginVertical: 20 }}>
+                  Recipe Directions
+                </Text>
+                <RecipeDirections directions={item.steps} />
+              </View>
+            </>
+          )}
+        />
+
+        {/* Footer component */}
+        <Footer />
       </View>
-
-      {/* Recipe Directions */}
-      <View style={{ paddingHorizontal: 20 }}>
-        <Text style={{ fontSize: 24, fontWeight: 'bold', marginVertical: 20 }}>
-          Recipe Directions
-        </Text>
-        <RecipeDirections directions={directions} />
-      </View>
-    </ScrollView>
-     
-
-
-       {/* Footer component */}
-       <Footer />
-    </View>
     </View>
   );
 };
 
+
+
+
 export default App;
-//after i tried implementing the footer, the search bar stopped appearing
