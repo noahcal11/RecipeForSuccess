@@ -62,13 +62,15 @@ export default function Home({ navigation, route }){
                     <FlatList nestedScrollEnabled = {true}
                     data={popularRecs}
                     renderItem={({ item }) => (
-                        <View style={styles.imageView}>
-                            <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
-                            <Text>{item.title}</Text>
-                        </View>
+                        <TouchableOpacity onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}>
+                            <View style={styles.imageView} id={item._id}>
+                                <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
+                                <Text>{item.title}</Text>
+                            </View>
+                        </TouchableOpacity>
                     )}
                     numColumns={2}
-                    keyExtractor={(item, index) => index}
+                    keyExtractor={(item, index) => index.toString()}
                     />
                     <Text>View more</Text>
                 </View>
@@ -144,11 +146,13 @@ const styles = EStyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         margin: '1rem',
+        width: '9rem',
     },
     imageThumbnail: {
         justifyContent: 'center',
         alignItems: 'center',
         height: '5rem',
+        width: '9rem',
     },
     recipeSection: {
         padding: '1rem',
