@@ -26,7 +26,7 @@ app.get('/'+process.env.API_TOKEN+'/recipe/get',async (req,res) => {
             {title: new RegExp(`\\b${general}\\b`, "i")},
             {desc: new RegExp(`\\b${general}\\b`, "i")},
             {ingredients: new RegExp(`\\b${general}\\b`, "i")}
-        ]},['image','title','link']);
+        ]});
         res.json(recipes);
     } else {
         const title = req.query.title;
@@ -45,7 +45,41 @@ app.get('/'+process.env.API_TOKEN+'/recipe/get',async (req,res) => {
                 {desc: new RegExp(`\\b${desc}\\b`, "i")},
                 {ingredients: new RegExp(`\\b${ingredients}\\b`, "i")}
             ]
-        },['image','title','link']);
+        });
+        res.json(recipes);
+    }
+});
+
+app.get('/'+process.env.API_TOKEN+'/recipe/get',async (req,res) => {   
+    const id = req.query.id;
+    const general = req.query.general;
+    if (general != null) {
+        const recipes = await Recipe.find({$or: [
+            {title: new RegExp(`\\b${general}\\b`, "i")},
+            {desc: new RegExp(`\\b${general}\\b`, "i")},
+            {ingredients: new RegExp(`\\b${general}\\b`, "i")}
+        ]});
+        res.json(recipes);
+    } else if (id !== null) {
+        const recipes = await Recipe.findById(id)
+    } else {
+        const title = req.query.title;
+        const desc = req.query.desc;
+        const ingredients = req.query.ingredients;
+        const total_time = req.query.total_time;
+        // const yields = parseInt(req.query.yields.split(" servings")[0]);
+        const cuisine = req.query.cuisine;
+        const category = req.query.category;
+        const recipes = await Recipe.find({
+            total_time: total_time ? {$lte: total_time} : {$lte: 65535},
+            cuisine: cuisine ? new RegExp(`\\b${cuisine}\\b`, "i") : new RegExp(`.*|`, "i"),
+            // yields: {$gte: yields},
+            $or: [
+                {title: new RegExp(`\\b${title}\\b`, "i")},
+                {desc: new RegExp(`\\b${desc}\\b`, "i")},
+                {ingredients: new RegExp(`\\b${ingredients}\\b`, "i")}
+            ]
+        });
         res.json(recipes);
     }
 });
