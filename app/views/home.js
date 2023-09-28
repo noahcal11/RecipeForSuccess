@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar'; 
-import { Text, Image, View, TouchableOpacity, ScrollView, TextInput, FlatList } from 'react-native';
+import { Text, Image, View, TouchableOpacity, ScrollView, TextInput, FlatList, SectionList } from 'react-native';
 import Banner from '../Components/Banner';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState } from 'react';
@@ -9,6 +9,7 @@ EStyleSheet.build();
 export default function Home({ navigation, route }){
     const [popularRecs, setPopularRecs] = useState([]);
     const [dessertRecs, setDessertRecs] = useState([]);
+    const [breakfastRecs, setBreakfastRecs] = useState([]);
 
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
@@ -17,7 +18,6 @@ export default function Home({ navigation, route }){
         .then(res => res.json())
         .then(data => {
             setPopularRecs(data.slice(0,8));
-            console.log(data.slice(0,8));
         })
         .catch(error => console.error(error));
     }
@@ -30,13 +30,39 @@ export default function Home({ navigation, route }){
         <View>
             <Banner title="Home" />
             <View>
-                <View style={styles.popular}>
+                {/* <View style={styles.recipeSection}>
+                    <SectionList
+                        renderSectionHeader={({ section: { title } }) => <Text style={styles.categoryTitle}>{title}</Text>}
+                        sections={[
+                            { title: 'Popular Recipes', data: popularRecs, renderItem: ({ item }) => (
+                                <View style={styles.imageView}>
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
+                                    <Text>{item.title}</Text>
+                                </View>
+                            )},
+                            { title: 'Top Desserts', data: dessertRecs, renderItem: ({ item }) => (
+                                <View style={styles.imageView}>
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.src }} />
+                                    <Text>{item.id}</Text>
+                                </View>
+                            )},
+                            { title: 'Breakfast Creations', data: breakfastRecs, renderItem: ({ item }) => (
+                                <View style={styles.imageView}>
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.src }} />
+                                    <Text>{item.id}</Text>
+                                </View>
+                            )},
+                        ]}
+                        keyExtractor={(item, index) => index}
+                        ListFooterComponent={() => <Text>View more</Text>}
+                    />
+                </View> */}
+                <View style={styles.recipeSection}>
                     <Text style={styles.categoryTitle}>Popular Recipes</Text>
                     <FlatList nestedScrollEnabled = {true}
                     data={popularRecs}
                     renderItem={({ item }) => (
                         <View style={styles.imageView}>
-                            {/* image title link */}
                             <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
                             <Text>{item.title}</Text>
                         </View>
@@ -46,10 +72,25 @@ export default function Home({ navigation, route }){
                     />
                     <Text>View more</Text>
                 </View>
-                <View style={styles.desserts}>
+                <View style={styles.recipeSection}>
                     <Text style={styles.categoryTitle}>Top Desserts</Text>
                     <FlatList nestedScrollEnabled = {true}
                     data={dessertRecs}
+                    renderItem={({ item }) => (
+                        <View style={styles.imageView}>
+                            <Image style={styles.imageThumbnail} source={{ uri: item.src }} />
+                            <Text>{item.id}</Text>
+                        </View>
+                    )}
+                    numColumns={2}
+                    keyExtractor={(item, index) => index}
+                    />
+                    <Text>View more</Text>
+                </View>
+                <View style={styles.recipeSection}>
+                    <Text style={styles.categoryTitle}>Breakfast Creations</Text>
+                    <FlatList nestedScrollEnabled = {true}
+                    data={breakfastRecs}
                     renderItem={({ item }) => (
                         <View style={styles.imageView}>
                             <Image style={styles.imageThumbnail} source={{ uri: item.src }} />
@@ -109,7 +150,7 @@ const styles = EStyleSheet.create({
         alignItems: 'center',
         height: '5rem',
     },
-    popular: {
+    recipeSection: {
         padding: '1rem',
         backgroundColor: '#eee',
     },
@@ -118,8 +159,4 @@ const styles = EStyleSheet.create({
         fontSize: '1.5rem',
         fontWeight: 'bold'
     },
-    desserts: {
-        padding: '1rem',
-        backgroundColor: '#eee',
-    }
 });
