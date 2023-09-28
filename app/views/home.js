@@ -17,10 +17,10 @@ export default function Home({ navigation, route }){
         .then(res => res.json())
         .then(data => {
             setPopularRecs(data.slice(0,8));
-            console.log(data.slice(0,8));
         })
         .catch(error => console.error(error));
     }
+    
     
     useState(() => {
         getRecipes();
@@ -33,16 +33,17 @@ export default function Home({ navigation, route }){
                 <View style={styles.popular}>
                     <Text style={styles.categoryTitle}>Popular Recipes</Text>
                     <FlatList nestedScrollEnabled = {true}
-                    data={popularRecs}
-                    renderItem={({ item }) => (
-                        <View style={styles.imageView}>
-                            {/* image title link */}
-                            <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
-                            <Text>{item.title}</Text>
-                        </View>
-                    )}
-                    numColumns={2}
-                    keyExtractor={(item, index) => index}
+                        data={popularRecs}
+                        renderItem={({ item }) => (
+                            <TouchableOpacity onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}>
+                                <View style={styles.imageView} id={item._id}>
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
+                                    <Text>{item.title}</Text>
+                                </View>
+                            </TouchableOpacity>
+                        )}
+                        numColumns={2}
+                        keyExtractor={(item, index) => index.toString()}
                     />
                     <Text>View more</Text>
                 </View>
