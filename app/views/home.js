@@ -16,9 +16,7 @@ export default function Home({ navigation, route }){
     const getRecipes = async () => {
         const response = await fetch(API_BASE+"/recipe/get/all")
         .then(res => res.json())
-        .then(data => {
-            setPopularRecs(data.slice(0,8));
-        })
+        .then(data => setPopularRecs(data.slice(0,8)))
         .catch(error => console.error(error));
     }
     
