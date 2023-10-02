@@ -31,6 +31,7 @@ app.get('/'+process.env.API_TOKEN+'/recipe/get',async (req,res) => {
         res.json(recipes);
     } else if (id !== null) {
         const recipes = await Recipe.findById(id)
+        res.json(recipes);
     } else {
         const title = req.query.title;
         const desc = req.query.desc;
