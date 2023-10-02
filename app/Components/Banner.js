@@ -37,6 +37,7 @@ const styles = EStyleSheet.create({
     textAlign: 'center', // Center text
     flex: '-1rem',
     paddingTop: '.25rem',
+    paddingHorizontal: 50
   },
   nav: {
     //flex: 1,

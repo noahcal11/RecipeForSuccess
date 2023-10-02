@@ -17,12 +17,11 @@ export default function RecipePages({ navigation, route }) {
   const [recipe, setRecipe] = useState([]);
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
-
   const getRecipes = async () => {
-    const response = await fetch(API_BASE+"/recipe/get/?id="+route.params.id)
+    const response = await fetch(API_BASE+"/recipe/get/?id="+route.params._id)
       .then(res => res.json())
       .then(data => {
-        setRecipe(data);
+        setRecipe(data)
       })
       .catch(error => console.error(error));
   }
@@ -30,7 +29,6 @@ export default function RecipePages({ navigation, route }) {
   useState(() => {
     getRecipes();
   }, []);
-  console.log(recipe.image)
   return (
     <View style={styles.container}>
       {/* Search bar */}
