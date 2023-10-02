@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const process = require('process');
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
 require('dotenv').config();
 
 const app = express();
@@ -13,8 +13,6 @@ const PORT = 8080;
 app.use(express.json());
 app.use(cors());
 
-console.log(process.env.API_TOKEN)
-
 mongoose.connect("mongodb+srv://"+process.env.MDB_USERNAME+":"+process.env.MDB_PASSWORD+"@cluster0.iwfcbm2.mongodb.net/recipes").then(() => console.log("Connected")).catch(console.error())
 
 const { Recipe,User } = require('./model');
@@ -22,14 +20,17 @@ const { Recipe,User } = require('./model');
 // Recipe Section
 
 app.get('/'+process.env.API_TOKEN+'/recipe/get',async (req,res) => {   
+    const id = req.query.id;
     const general = req.query.general;
     if (general != null) {
         const recipes = await Recipe.find({$or: [
             {title: new RegExp(`\\b${general}\\b`, "i")},
             {desc: new RegExp(`\\b${general}\\b`, "i")},
             {ingredients: new RegExp(`\\b${general}\\b`, "i")}
-        ]},['yields','title']);
+        ]});
         res.json(recipes);
+    } else if (id !== null) {
+        const recipes = await Recipe.findById(id)
     } else {
         const title = req.query.title;
         const desc = req.query.desc;
@@ -104,7 +105,6 @@ app.post('/'+process.env.API_TOKEN+'/user/new', (req,res) => {
                 username: req.body.username,
                 hash: hash
             })
-            
             user.save();
             res.json(user);
         });
