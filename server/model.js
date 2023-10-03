@@ -20,9 +20,7 @@ const UserSchema = new Schema({
     email: {type:String, required: true, unique: true},
     username: {type:String, required: true},
     hash: {type:String, required: true},
-    skill_cooking: {type:Number},
-    skill_knife: {type:Number},
-    skill_ingredients: {type:Number}
+    skill_levels: {type:Array, default: [0,0,0]}
 })
 
 const Recipe = mongoose.model("Recipe",RecipeSchema);
