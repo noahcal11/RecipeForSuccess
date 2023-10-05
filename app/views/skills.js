@@ -15,7 +15,7 @@ function levelFunc(n) {
 }
 
 const testData = [
-    { bgcolor: "#6a1b9a", completed: 65 },
+    { bgcolor: "#6a1b9a", completed: 69 },
     { bgcolor: "#00695c", completed: 30 },
     { bgcolor: "#ef6c00", completed: 53 },
   ];
@@ -35,13 +35,8 @@ export default function Skills({ navigation, route }){
 
                         <View style={styles.textContainer}>
                             <Text style={styles.textBox}>Cooking Rating</Text>
-                        </View>
-                        
-                        <View>
-                            {testData.map((item, idx) => (
-                                <ProgressBar key={idx} bgcolor={item.bgcolor} completed={levelFunc(item.completed)[1]} />
-                            ))}
-                            <Text style={styles.textBox}> {`${cookingSkills[0].completed}%`} </Text>
+                            <ProgressBar bgcolor={testData[0].bgcolor} completed={levelFunc(testData[0].completed)[1]} />
+                            <Text style={styles.textBox}> {`${levelFunc(testData[0].completed)[1]}%`} </Text>
                         </View>
 
                         <View style={styles.textContainer}>
