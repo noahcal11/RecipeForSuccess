@@ -8,8 +8,14 @@ import ProgressBar from '../Components/ProgressBar'
 
 EStyleSheet.build();
 
+function levelFunc(n) {
+    let logBase2 = Math.floor(Math.log2(n));
+    let progress = Math.round((n - Math.pow(2, logBase2))/Math.pow(2, logBase2)*100);
+    return [logBase2, progress];
+}
+
 const testData = [
-    { bgcolor: "#6a1b9a", completed: 60 },
+    { bgcolor: "#6a1b9a", completed: 65 },
     { bgcolor: "#00695c", completed: 30 },
     { bgcolor: "#ef6c00", completed: 53 },
   ];
@@ -33,7 +39,7 @@ export default function Skills({ navigation, route }){
                         
                         <View>
                             {testData.map((item, idx) => (
-                                <ProgressBar key={idx} bgcolor={item.bgcolor} completed={item.completed} />
+                                <ProgressBar key={idx} bgcolor={item.bgcolor} completed={levelFunc(item.completed)[1]} />
                             ))}
                         </View>
 
