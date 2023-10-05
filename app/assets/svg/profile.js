@@ -1,6 +1,6 @@
 import * as React from "react";
 import Svg, { Path } from "react-native-svg";
-const ProfileComponent = (props) => (
+const ProfileIcon = (props) => (
   <Svg
     xmlns="http://www.w3.org/2000/svg"
     className="ionicon"
@@ -11,4 +11,4 @@ const ProfileComponent = (props) => (
     <Path d="M256 144c-19.72 0-37.55 7.39-50.22 20.82s-19 32-17.57 51.93C191.11 256 221.52 288 256 288s64.83-32 67.79-71.24c1.48-19.74-4.8-38.14-17.68-51.82C293.39 151.44 275.59 144 256 144z" />
   </Svg>
 );
-export default ProfileComponent;
+export default ProfileIcon;

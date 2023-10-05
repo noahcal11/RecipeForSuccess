@@ -104,7 +104,7 @@ export default function Home({ navigation, route }){
                     />
                     <Text>View more</Text>
                 </View>
-                <Footer></Footer>
+                
             </View>
             <TouchableOpacity
                 onPress={() => {

@@ -3,7 +3,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import SearchBar from './SearchBar';
-import ProfileComponent from '../assets/svg/profile';
+import ProfileIcon from '../assets/svg/profile';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 EStyleSheet.build();
@@ -12,7 +12,7 @@ const BannerTitle = ({ title }) => {
   return (
     <View style={styles.banner}>
       {<View style={styles.profile}>
-        <ProfileComponent />
+        <ProfileIcon></ProfileIcon>
       </View> }
       <Text style={styles.bannerTitle}>{title}</Text>
       <View style={styles.search}>
@@ -41,8 +41,7 @@ const styles = EStyleSheet.create({
     paddingHorizontal: 50
   },
   profile: {
-    flex: 1,
-    width: '6rem', // Adjust the width as needed
+    width: '3rem', // Adjust the width as needed
     height: '2rem',
   },
   search: {

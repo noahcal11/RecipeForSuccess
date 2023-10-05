@@ -4,8 +4,15 @@ import Banner from '../Components/Banner';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { SearchBar } from 'react-native-screens';
 import Footer from '../Components/Footer';
+import ProgressBar from '../Components/ProgressBar'
 
 EStyleSheet.build();
+
+const testData = [
+    { bgcolor: "#6a1b9a", completed: 60 },
+    { bgcolor: "#00695c", completed: 30 },
+    { bgcolor: "#ef6c00", completed: 53 },
+  ];
 
 export default function Skills({ navigation, route }){
     return(
@@ -19,10 +26,15 @@ export default function Skills({ navigation, route }){
                     </View>
 
                     <View style={{alignItems: 'center'}}>
-                        {/* https://github.com/FaiChou/react-native-star-view */}
 
                         <View style={styles.skillContainer}>
                             <Text style={styles.textBox}>Cooking Rating</Text>
+                        </View>
+                        
+                        <View>
+                            {testData.map((item, idx) => (
+                                <ProgressBar key={idx} bgcolor={item.bgcolor} completed={item.completed} />
+                            ))}
                         </View>
 
                         <View style={styles.skillContainer}>
@@ -56,6 +68,13 @@ const styles = EStyleSheet.create({
         marginVertical: '1rem', // You can adjust the margin as needed
         width: '15rem',
       },
+    starContainer: {
+        alignItems: 'center',
+        justifyContent: 'center', 
+        borderRadius: '2rem',
+        marginVertical: '1rem',
+        width: '15rem',
+    },
     textBox: {
         alignItems: 'center',
         justifyContent: 'center',
