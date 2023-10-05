@@ -26,6 +26,7 @@ export default BannerTitle;
 
 const styles = EStyleSheet.create({
   banner: {
+    height: '5rem',
     backgroundColor: 'salmon', // Set the background color of the banner
     paddingVertical: '1rem', // Adjust vertical padding as needed
     flexDirection: 'row',
@@ -37,8 +38,9 @@ const styles = EStyleSheet.create({
     fontWeight: 'bold', // Adjust font weight as needed
     textAlign: 'center', // Center text
     flex: '-1rem',
-    paddingTop: '.25rem',
-    paddingHorizontal: 50
+    paddingTop: '1rem',
+    paddingHorizontal: 50,
+    justifyContent: 'center',
   },
   profile: {
     width: '3rem', // Adjust the width as needed
