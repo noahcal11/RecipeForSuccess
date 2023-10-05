@@ -4,7 +4,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import CheckBox from '@react-native-community/checkbox';
 import { useState } from 'react';
 
-const RecipeProgression = ({ingredients, directions}) => {
+const RecipeProgression = ({ingredients, directions, state}) => {
     function steps() {
         const [stepNum, setStepNum] = useState(0);
         const [checkValue, setCheckValue] = useState(0);
@@ -56,7 +56,7 @@ const RecipeProgression = ({ingredients, directions}) => {
                         if(stepNum != directions.length) {
                             return(
                                 <TouchableOpacity
-                                    onPress={() => {{setStepNum(stepNum + 1)}}}
+                                    onPress={() => {{state.setPageState('survey')}}}
                                     style={styles.nextButton}>
                                         <Text style={styles.buttonText}>Next</Text>
                                 </TouchableOpacity>

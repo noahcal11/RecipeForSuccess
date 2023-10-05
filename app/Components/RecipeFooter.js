@@ -2,11 +2,11 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
-const RecipeFooter = () => {
+const RecipeFooter = ({state}) => {
     return (
       <View style={styles.footerContainer}>
         <TouchableOpacity
-          onPress={() => {}}>
+          onPress={() => {{state('progress')}}}>
           <Text style={styles.footerText}>Start Recipe!</Text>
         </TouchableOpacity>
       </View>
