@@ -4,7 +4,7 @@ import React from 'react';
 import { View, Text, FlatList, Image } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import SearchBar from '../Components/SearchBar'; // Import your search bar component
-import Footer from '../Components/Footer';
+import RecipeFooter from '../Components/RecipeFooter';
 import BannerTitle from '../Components/Banner';
 import RecipeIngredients from '../Components/IngredientsList';
 import RecipeDirections from '../Components/RecipeDirections';
@@ -43,7 +43,7 @@ export default function RecipePages({ navigation, route }) {
           renderItem={({ item }) => (
             <>
               {/* Recipe Description */}
-              <Image source={{uri:item.image}} width={400} height={300} />
+              <Image source={{uri:item.image}} style={{width: 400, height: 300}} />
               <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
                 <Text style={{ fontSize: 18, marginBottom: 20 }}>
                   Recipe Description
@@ -70,7 +70,7 @@ export default function RecipePages({ navigation, route }) {
           )}
         />
         {/* Footer component */}
-        <Footer />
+        <RecipeFooter />
       </View>
     </View>
   );
