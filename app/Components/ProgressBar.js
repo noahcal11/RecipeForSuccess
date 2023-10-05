@@ -6,11 +6,11 @@ const ProgressBar = (props) => {
     const { bgcolor, completed } = props;
   
     const containerStyles = {
-      height: 20,
+      height: 30,
       width: 200,
       backgroundColor: "#e0e0de",
-      borderRadius: 50,
-      margin: 50
+      borderRadius: 25,
+      margin: 25
     }
   
     const fillerStyles = {
@@ -21,16 +21,18 @@ const ProgressBar = (props) => {
       textAlign: 'right'
     }
   
-    const labelStyles = {
-      paddingLeft:5,
-      color: 'white',
-      fontWeight: 'bold'
-    }
+    // const labelStyles = {
+    //   paddingRight:1,
+    //   paddingTop: 5,
+    //   color: 'white',
+    //   fontWeight: 'bold',
+    //   textAlign: 'right',
+    // }
   
     return (
       <View style={containerStyles}>
         <View style={fillerStyles}>
-          <Text style={labelStyles}>{`${completed}%`}</Text>
+          {/* <Text style={labelStyles}>{`${completed}%`}</Text> */}
         </View>
       </View>
     );
