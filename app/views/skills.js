@@ -30,7 +30,7 @@ export default function Skills({ navigation, route }){
                             {cookingSkills.map((item, idx) => (
                                 <ProgressBar key={idx} bgcolor={item.bgcolor} completed={item.completed} />
                             ))}
-                            <Text style={styles.textBox}> {`${cookingSkills[0].completed}%`} </Text>
+                            <Text style={styles.completedText}> {`${cookingSkills[0].completed}%`} </Text>
                         </View>
 
                         <View style={styles.textContainer}>
@@ -72,4 +72,9 @@ const styles = EStyleSheet.create({
         fontSize:'1rem',
         fontWeight: 'bold',
     },
+    completedText: {
+        fontSize: '1rem',
+        fontWeight: 'bold',
+        marginTop: '-1rem', 
+      },
   });
