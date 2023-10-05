@@ -33,6 +33,7 @@ const Footer = () => {
 
 const styles = EStyleSheet.create({
   footerContainer: {
+    height: '5rem',
     backgroundColor: '#F74F4F',
     alignItems: 'center',
     flexDirection: 'row',
