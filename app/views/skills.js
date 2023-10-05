@@ -2,12 +2,15 @@ import { StatusBar } from 'expo-status-bar';
 import { Text, Image, View, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import Banner from '../Components/Banner';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import { SearchBar } from 'react-native-screens';
+import Footer from '../Components/Footer';
 
 EStyleSheet.build();
 
 export default function Skills({ navigation, route }){
     return(
         <View style={styles.container}>
+            <SearchBar />
             <Banner title="Skills" />
                 <ScrollView>
                     <View style={styles.textBox}>
@@ -34,15 +37,15 @@ export default function Skills({ navigation, route }){
                             <Text style={styles.textBox}>Time & Temperature Rating</Text>
                         </View>
                     </View>
-            </ScrollView>
+                </ScrollView>
+            <Footer />
         </View>
     );
 }
 
 const styles = EStyleSheet.create({
     container: {
-        alignItems: 'center', // Center items horizontally
-        justifyContent: 'center' // Center items vertically
+        flex:1,
       },
     skillContainer: {
         alignItems: 'center',
@@ -54,6 +57,8 @@ const styles = EStyleSheet.create({
         width: '15rem',
       },
     textBox: {
+        alignItems: 'center',
+        justifyContent: 'center',
         textAlign: 'center',
         flexDirection: 'row',
         fontSize:'1rem',

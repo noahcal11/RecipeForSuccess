@@ -68,14 +68,8 @@ const styles = EStyleSheet.create({
   searchInput: {
     width: '6rem', // Adjust the width as needed
     height: '2rem',
-    width: '6rem', // Adjust the width as needed
-    height: '2rem',
-    backgroundColor: 'white',
-    borderWidth: '0.1rem',
     borderWidth: '0.1rem',
     borderColor: 'gray',
-    borderRadius: '.25rem',
-    padding: '.25rem',
     borderRadius: '.25rem',
     padding: '.25rem',
   },
