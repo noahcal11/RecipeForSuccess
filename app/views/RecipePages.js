@@ -35,17 +35,18 @@ export default function RecipePages({ navigation, route }) {
       <SearchBar />
       <View style={styles.container}>
         {/* Banner title */}
-        <BannerTitle title={recipe.title} />
+        <BannerTitle title={'Recipe'} /> 
         {/* Your app content */}
         <FlatList
           data={[recipe]}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
             <>
+            <Text style={styles.title}> {recipe.title} </Text>
               {/* Recipe Description */}
               <Image source={{uri:item.image}} width={400} height={300} />
               <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
-                <Text style={{ fontSize: 18, marginBottom: 20 }}>
+                <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 20 }}>
                   Recipe Description
                 </Text>
                 <RecipeDescription description={item.desc} />
@@ -87,7 +88,8 @@ const styles = {
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginVertical: 20
+    marginVertical: 20,
+    textAlign: 'center',
   },
   componentView: {
     paddingHorizontal: 20,

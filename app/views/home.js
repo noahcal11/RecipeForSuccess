@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar'; 
 import { Text, Image, View, TouchableOpacity, ScrollView, TextInput, FlatList, SectionList } from 'react-native';
 import Banner from '../Components/Banner';
+import Footer from '../Components/Footer'
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState } from 'react';
 
@@ -76,6 +77,7 @@ export default function Home({ navigation, route }){
                         }
                     />
                 </View>
+                
             </View>
             <TouchableOpacity
                 onPress={() => {

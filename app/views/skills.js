@@ -4,8 +4,25 @@ import Banner from '../Components/Banner';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { SearchBar } from 'react-native-screens';
 import Footer from '../Components/Footer';
+import ProgressBar from '../Components/ProgressBar'
 
 EStyleSheet.build();
+
+const cookingSkills = [
+    { bgcolor: "#6a1b9a", completed: 10 },
+  ];
+
+const IngredientsSkills = [
+    { bgcolor: "#6a1b9a", completed: 10 },
+];
+
+const KnifeSkills = [
+    { bgcolor: "#6a1b9a", completed: 10 },
+];
+
+const TTSkills = [
+    { bgcolor: "#6a1b9a", completed: 10 },
+];
 
 export default function Skills({ navigation, route }){
     return(
@@ -13,28 +30,43 @@ export default function Skills({ navigation, route }){
             <SearchBar />
             <Banner title="Skills" />
                 <ScrollView>
-                    <View style={styles.textBox}>
+                    <View>
                             {/* <Text>Welcome {route.params.username}!</Text> */}
-                        <Text>Hey USERNAME check out your skill levels here!</Text>
+                        <Text style={styles.welcomeText}>Hey USERNAME check out your skill levels here!</Text>
                     </View>
 
                     <View style={{alignItems: 'center'}}>
-                        {/* https://github.com/FaiChou/react-native-star-view */}
 
-                        <View style={styles.skillContainer}>
+                        <View style={styles.textContainer}>
                             <Text style={styles.textBox}>Cooking Rating</Text>
+                            {cookingSkills.map((item, idx) => (
+                                <ProgressBar key={idx} bgcolor={item.bgcolor} completed={item.completed} />
+                            ))}
+                            <Text style={styles.completedText}> {`${cookingSkills[0].completed}%`} </Text>
                         </View>
 
-                        <View style={styles.skillContainer}>
+                        <View style={styles.textContainer}>
                             <Text style={styles.textBox}>Ingredients Rating</Text>
+                            {cookingSkills.map((item, idx) => (
+                                <ProgressBar key={idx} bgcolor={item.bgcolor} completed={item.completed} />
+                            ))}
+                            <Text style={styles.completedText}> {`${IngredientsSkills[0].completed}%`} </Text>
                         </View>
 
-                        <View style={styles.skillContainer}>
+                        <View style={styles.textContainer}>
                             <Text style={styles.textBox}>Knife Rating</Text>
+                            {cookingSkills.map((item, idx) => (
+                                <ProgressBar key={idx} bgcolor={item.bgcolor} completed={item.completed} />
+                            ))}
+                            <Text style={styles.completedText}> {`${KnifeSkills[0].completed}%`} </Text>
                         </View>
 
-                        <View style={styles.skillContainer}>
+                        <View style={styles.textContainer}>
                             <Text style={styles.textBox}>Time & Temperature Rating</Text>
+                            {cookingSkills.map((item, idx) => (
+                                <ProgressBar key={idx} bgcolor={item.bgcolor} completed={item.completed} />
+                            ))}
+                            <Text style={styles.completedText}> {`${TTSkills[0].completed}%`} </Text>
                         </View>
                     </View>
                 </ScrollView>
@@ -47,13 +79,13 @@ const styles = EStyleSheet.create({
     container: {
         flex:1,
       },
-    skillContainer: {
+    textContainer: {
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'salmon',
         borderRadius: '2rem', // You can adjust the border radius as needed
-        padding: '1rem', // You can adjust the padding as needed
-        marginVertical: '1rem', // You can adjust the margin as needed
+        padding: '0.5rem', // You can adjust the padding as needed
+        marginTop: '1rem', // You can adjust the margin as needed
         width: '15rem',
       },
     textBox: {
@@ -63,5 +95,17 @@ const styles = EStyleSheet.create({
         flexDirection: 'row',
         fontSize:'1rem',
         fontWeight: 'bold',
+        marginBottom: '1rem',
     },
+    completedText: {
+        fontSize: '1rem',
+        fontWeight: 'bold',
+        marginTop: '-1rem', 
+      },
+    welcomeText: {
+        textAlign: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: '2rem',
+    }, 
   });
