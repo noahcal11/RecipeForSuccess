@@ -30,7 +30,7 @@ export default function Home({ navigation, route }){
             <View>
                 <View style={styles.recipeSection}>
                     <Text style={styles.categoryTitle}>Popular Recipes</Text>
-                    <FlatList
+                    <FlatList scrollEnabled={false}
                         data={popularRecs}
                         renderItem={({ item }) => (
                             <TouchableOpacity onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}>
@@ -40,13 +40,12 @@ export default function Home({ navigation, route }){
                                 </View>
                             </TouchableOpacity>
                         )}
-                        numColumns={2}
                         keyExtractor={(item, index) => index.toString()}
                         ListFooterComponent={
                             <View>
                                 <Text>View more</Text>
                                 <Text style={styles.categoryTitle}>Top Desserts</Text>
-                                    <FlatList
+                                    <FlatList scrollEnabled={false}
                                         data={dessertRecs}
                                         renderItem={({ item }) => (
                                             <View style={styles.imageView}>
@@ -54,13 +53,12 @@ export default function Home({ navigation, route }){
                                                 <Text>{item.id}</Text>
                                             </View>
                                         )}
-                                        numColumns={2}
                                         keyExtractor={(item, index) => index}
                                         ListFooterComponent={
                                             <View style={styles.recipeSection}>
                                                 <Text>View more</Text>
                                                 <Text style={styles.categoryTitle}>Breakfast Creations</Text>
-                                                <FlatList
+                                                <FlatList scrollEnabled={false}
                                                 data={breakfastRecs}
                                                 renderItem={({ item }) => (
                                                     <View style={styles.imageView}>
@@ -68,7 +66,6 @@ export default function Home({ navigation, route }){
                                                         <Text>{item.id}</Text>
                                                     </View>
                                                 )}
-                                                numColumns={2}
                                                 keyExtractor={(item, index) => index}
                                                 />
                                                 <Text>View more</Text>
