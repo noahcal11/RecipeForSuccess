@@ -64,6 +64,7 @@ const styles = EStyleSheet.create({
     right: '0.5rem', // Adjust the right position for the top-right corner
     top: '0.2rem', // Adjust the top position for the top-right corner
     right: '0.5rem', // Adjust the right position for the top-right corner
+    paddingTop: '1rem',
   },
   searchInput: {
     width: '6rem', // Adjust the width as needed
