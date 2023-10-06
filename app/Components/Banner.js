@@ -6,6 +6,7 @@ import SearchBar from './SearchBar';
 import Profile from './Profile';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
+
 EStyleSheet.build();
 
 const BannerTitle = ({ title }) => {
