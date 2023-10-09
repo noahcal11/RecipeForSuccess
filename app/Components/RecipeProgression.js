@@ -56,7 +56,7 @@ const RecipeProgression = ({ingredients, directions, state}) => {
                         if(stepNum != directions.length) {
                             return(
                                 <TouchableOpacity
-                                    onPress={() => {{state.setPageState('survey')}}}
+                                    onPress={() => {{state.setPageState('survey')}}} /* Fix this! */
                                     style={styles.nextButton}>
                                         <Text style={styles.buttonText}>Next</Text>
                                 </TouchableOpacity>

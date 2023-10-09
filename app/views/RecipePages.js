@@ -10,6 +10,7 @@ import RecipeIngredients from '../Components/IngredientsList';
 import RecipeDirections from '../Components/RecipeDirections';
 import RecipeDescription from '../Components/RecipeDescription';
 import RecipeProgression from '../Components/RecipeProgression';
+import RecipeSurvey from '../Components/RecipeSurvey';
 import { useState } from 'react';
 
 EStyleSheet.build();
@@ -87,7 +88,11 @@ export default function RecipePages({ navigation, route }) {
         />
       );
     case 'survey':
-
+        return (
+          <RecipeSurvey
+            directions={recipe.steps}
+          />
+        );
   }
 };
 

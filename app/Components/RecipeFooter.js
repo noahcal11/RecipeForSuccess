@@ -6,7 +6,7 @@ const RecipeFooter = ({state}) => {
     return (
       <View style={styles.footerContainer}>
         <TouchableOpacity
-          onPress={() => {{state('progress')}}}>
+          onPress={() => {{state('progress')}}}> {/* Fix this! */}
           <Text style={styles.footerText}>Start Recipe!</Text>
         </TouchableOpacity>
       </View>
