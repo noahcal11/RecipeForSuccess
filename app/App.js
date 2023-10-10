@@ -22,6 +22,7 @@ export default function App() {
         <Stack.Screen name="RecipePages" component={RecipePages}/>
         <Stack.Screen name="Profile" component={Profile}/>
         <Stack.Screen name="Favorites" component={Favorites}/>
+        <Stack.Screen name="SearchResults" component={SearchResults}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
