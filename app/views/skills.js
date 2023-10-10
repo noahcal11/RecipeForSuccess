@@ -4,7 +4,7 @@ import Banner from '../Components/Banner';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { SearchBar } from 'react-native-screens';
 import Footer from '../Components/Footer';
-import ProgressBar from '../Components/ProgressBar'
+import ProgressBar from '../Components/ProgressBar';
 
 EStyleSheet.build();
 
@@ -39,6 +39,7 @@ export default function Skills({ navigation, route }){
 
                         <View style={styles.textContainer}>
                             <Text style={styles.textBox}>Cooking Rating</Text>
+                            <Text style={styles.textBox2}>Level: #</Text>
                             {cookingSkills.map((item, idx) => (
                                 <ProgressBar key={idx} bgcolor={item.bgcolor} completed={item.completed} />
                             ))}
@@ -47,6 +48,7 @@ export default function Skills({ navigation, route }){
 
                         <View style={styles.textContainer}>
                             <Text style={styles.textBox}>Ingredients Rating</Text>
+                            <Text style={styles.textBox2}>Level: #</Text>
                             {cookingSkills.map((item, idx) => (
                                 <ProgressBar key={idx} bgcolor={item.bgcolor} completed={item.completed} />
                             ))}
@@ -55,6 +57,7 @@ export default function Skills({ navigation, route }){
 
                         <View style={styles.textContainer}>
                             <Text style={styles.textBox}>Knife Rating</Text>
+                            <Text style={styles.textBox2}>Level: #</Text>
                             {cookingSkills.map((item, idx) => (
                                 <ProgressBar key={idx} bgcolor={item.bgcolor} completed={item.completed} />
                             ))}
@@ -63,6 +66,7 @@ export default function Skills({ navigation, route }){
 
                         <View style={styles.textContainer}>
                             <Text style={styles.textBox}>Time & Temperature Rating</Text>
+                            <Text style={styles.textBox2}>Level: #</Text>
                             {cookingSkills.map((item, idx) => (
                                 <ProgressBar key={idx} bgcolor={item.bgcolor} completed={item.completed} />
                             ))}
@@ -96,6 +100,15 @@ const styles = EStyleSheet.create({
         fontSize:'1rem',
         fontWeight: 'bold',
         marginBottom: '1rem',
+    },
+    textBox2: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        flexDirection: 'row',
+        fontSize:'1rem',
+        fontWeight: 'bold',
+        marginBottom: '0rem',
     },
     completedText: {
         fontSize: '1rem',
