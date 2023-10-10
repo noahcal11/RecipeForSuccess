@@ -27,7 +27,7 @@ export default function Home({ navigation, route }){
 
     return(
         <View>
-            <Banner title="Home" />
+            <Banner title="Search Results" />
             <View>
                 {/* <View style={styles.recipeSection}>
                     <SectionList
@@ -73,36 +73,9 @@ export default function Home({ navigation, route }){
                     />
                     <Text>View more</Text>
                 </View>
-                <View style={styles.recipeSection}>
-                    <Text style={styles.categoryTitle}>Top Desserts</Text>
-                    <FlatList nestedScrollEnabled = {true}
-                    data={dessertRecs}
-                    renderItem={({ item }) => (
-                        <View style={styles.imageView}>
-                            <Image style={styles.imageThumbnail} source={{ uri: item.src }} />
-                            <Text>{item.id}</Text>
-                        </View>
-                    )}
-                    numColumns={2}
-                    keyExtractor={(item, index) => index}
-                    />
-                    <Text>View more</Text>
-                </View>
-                <View style={styles.recipeSection}>
-                    <Text style={styles.categoryTitle}>Breakfast Creations</Text>
-                    <FlatList nestedScrollEnabled = {true}
-                    data={breakfastRecs}
-                    renderItem={({ item }) => (
-                        <View style={styles.imageView}>
-                            <Image style={styles.imageThumbnail} source={{ uri: item.src }} />
-                            <Text>{item.id}</Text>
-                        </View>
-                    )}
-                    numColumns={2}
-                    keyExtractor={(item, index) => index}
-                    />
-                    <Text>View more</Text>
-                </View>
+                
+                
+                
             </View>
             <TouchableOpacity
                 onPress={() => {
@@ -128,8 +101,6 @@ export default function Home({ navigation, route }){
                 <Text>Recipe page</Text>
             </TouchableOpacity>
 
-
-
             <TouchableOpacity
                 onPress={() => {
                     navigation.navigate("SearchResults")
@@ -137,6 +108,9 @@ export default function Home({ navigation, route }){
                 >
                 <Text>Search Results</Text>
             </TouchableOpacity>
+
+
+            
         </View>
     );
 }
@@ -172,4 +146,35 @@ const styles = EStyleSheet.create({
         fontSize: '1.5rem',
         fontWeight: 'bold'
     },
+
+    
+    container2: {
+        flex: 1,
+        padding: 20,
+      },
+      filterButton: {
+        backgroundColor: 'blue',
+        padding: 10,
+        borderRadius: 5,
+        alignSelf: 'flex-start',
+      },
+      filterButtonText: {
+        color: 'white',
+      },
+      sortByContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 10,
+      },
+      sortByText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+      },
+      resultItem: {
+        paddingVertical: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: 'gray',
+      },
+    
 });

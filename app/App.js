@@ -3,6 +3,7 @@ import Login from "./views/login";
 import Home from "./views/home";
 import Skills from "./views/skills"
 import RecipePages from "./views/RecipePages"
+import SearchResults from "./views/SearchResults";
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
@@ -18,6 +19,7 @@ export default function App() {
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Skills" component={Skills}/>
         <Stack.Screen name="RecipePages" component={RecipePages}/>
+        <Stack.Screen name="SearchResults" component={SearchResults}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
