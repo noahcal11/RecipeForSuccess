@@ -5,6 +5,7 @@ import Skills from "./views/skills";
 import RecipePages from "./views/RecipePages";
 import Profile from "./views/profile";
 import Favorites from './views/favorites';
+import SearchResults from './views/SearchResults'
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
