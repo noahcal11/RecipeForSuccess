@@ -8,17 +8,9 @@ import ProgressBar from '../Components/ProgressBar'
 
 EStyleSheet.build();
 
-function levelFunc(n) {
-    let logBase2 = Math.floor(Math.log2(n));
-    let progress = Math.round((n - Math.pow(2, logBase2))/Math.pow(2, logBase2)*100);
-    return [logBase2, progress];
-}
-
-const testData = [
-    { bgcolor: "#6a1b9a", completed: 69 },
-    { bgcolor: "#00695c", completed: 30 },
-    { bgcolor: "#ef6c00", completed: 53 },
-  ];
+const cookingSkills = [
+    { bgcolor: "#6a1b9a", completed: 10 },
+];
 
 const IngredientsSkills = [
     { bgcolor: "#6a1b9a", completed: 10 },
