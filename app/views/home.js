@@ -17,7 +17,7 @@ export default function Home({ navigation, route }){
     const getRecipes = async () => {
         const response = await fetch(API_BASE+"/recipe/get/all")
         .then(res => res.json())
-        .then(data => setPopularRecs(data.slice(0,8)))
+        .then(data => setPopularRecs(data.slice(0,12)))
         .catch(error => console.error(error));
     }
         
@@ -28,7 +28,7 @@ export default function Home({ navigation, route }){
     return(
         <View>
             <Banner title="Home" />
-            <View>
+            <ScrollView styles={{ flex: 1 }}>
                 <View style={styles.recipeSection}>
                     <Text style={styles.categoryTitle}>Popular Recipes</Text>
                     <FlatList scrollEnabled={false}
@@ -41,67 +41,39 @@ export default function Home({ navigation, route }){
                                 </View>
                             </TouchableOpacity>
                         )}
+                        numColumns={2}
                         keyExtractor={(item, index) => index.toString()}
-                        ListFooterComponent={
-                            <View>
-                                <Text>View more</Text>
-                                <Text style={styles.categoryTitle}>Top Desserts</Text>
-                                    <FlatList scrollEnabled={false}
-                                        data={dessertRecs}
-                                        renderItem={({ item }) => (
-                                            <View style={styles.imageView}>
-                                                <Image style={styles.imageThumbnail} source={{ uri: item.src }} />
-                                                <Text>{item.id}</Text>
-                                            </View>
-                                        )}
-                                        keyExtractor={(item, index) => index}
-                                        ListFooterComponent={
-                                            <View style={styles.recipeSection}>
-                                                <Text>View more</Text>
-                                                <Text style={styles.categoryTitle}>Breakfast Creations</Text>
-                                                <FlatList scrollEnabled={false}
-                                                data={breakfastRecs}
-                                                renderItem={({ item }) => (
-                                                    <View style={styles.imageView}>
-                                                        <Image style={styles.imageThumbnail} source={{ uri: item.src }} />
-                                                        <Text>{item.id}</Text>
-                                                    </View>
-                                                )}
-                                                keyExtractor={(item, index) => index}
-                                                />
-                                                <Text>View more</Text>
-                                            </View>
-                                        }
-                                    />
-                            </View>
-                        }
                     />
+                    <Text>View more</Text>
+                    <Text style={styles.categoryTitle}>Top Desserts</Text>
+                    <FlatList scrollEnabled={false}
+                        data={dessertRecs}
+                        renderItem={({ item }) => (
+                            <View style={styles.imageView}>
+                                <Image style={styles.imageThumbnail} source={{ uri: item.src }} />
+                                <Text>{item.id}</Text>
+                            </View>
+                        )}
+                        numColumns={2}
+                        keyExtractor={(item, index) => index}
+                    />
+                    <Text>View more</Text>
+                    <Text style={styles.categoryTitle}>Breakfast Creations</Text>
+                    <FlatList scrollEnabled={false}
+                    data={breakfastRecs}
+                    renderItem={({ item }) => (
+                        <View style={styles.imageView}>
+                            <Image style={styles.imageThumbnail} source={{ uri: item.src }} />
+                            <Text>{item.id}</Text>
+                        </View>
+                    )}
+                    numColumns={2}
+                    keyExtractor={(item, index) => index}
+                    />
+                    <Text>View more</Text>
                 </View>
-                
-            </View>
-            <TouchableOpacity
-                onPress={() => {
-                    navigation.navigate("Login")
-                }}
-                >
-                <Text>Go Back</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-                onPress={() => {
-                    navigation.navigate("Skills")
-                }}
-                >
-                <Text>Skills page</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-                onPress={() => {
-                    navigation.navigate("RecipePages")
-                }}
-                >
-                <Text>Recipe page</Text>
-            </TouchableOpacity>
+            </ScrollView>
+            <Footer />
         </View>
     );
 }
@@ -129,6 +101,7 @@ const styles = EStyleSheet.create({
     recipeSection: {
         padding: '1rem',
         backgroundColor: '#eee',
+        flex: 1,
     },
     categoryTitle: {
         textAlign: 'center',
