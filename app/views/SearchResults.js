@@ -7,6 +7,7 @@ import { useState } from 'react';
 EStyleSheet.build();
 
 export default function Home({ navigation, route }){
+   //From Home page
     const [popularRecs, setPopularRecs] = useState([]);
     const [dessertRecs, setDessertRecs] = useState([]);
     const [breakfastRecs, setBreakfastRecs] = useState([]);
@@ -19,7 +20,31 @@ export default function Home({ navigation, route }){
         .then(data => setPopularRecs(data.slice(0,8)))
         .catch(error => console.error(error));
     }
+// for search results specificly
+
+//time, cuisine, category
+    const [showDropdown, setShowDropdown] = useState(false);
+    const [selectedOption, setSelectedOption] = useState('Sort By');
+    const [searchResults, setSearchResults] = useState([
+      { id: '1', title: 'Result 1' },
+      { id: '2', title: 'Result 2' },
+      // Add more search results here
+    ]);
+  
+    const sortOptions = ['Ascending', 'Descending', 'Most Poular']; // Your sorting options
+  
+    const handleSortToggle = () => {
+      setShowDropdown(!showDropdown);
+    };
+  
+    const handleSortSelect = (option) => {
+      setSelectedOption(option);
+      setShowDropdown(false);
+      // Perform sorting based on the selected option
+      // Update searchResults accordingly
     
+   
+    }
     
     useState(() => {
         getRecipes();
@@ -29,6 +54,45 @@ export default function Home({ navigation, route }){
         <View>
             <Banner title="Search Results" />
             <View>
+            <View style={styles.container}>
+      {/* Filter Button */}
+      <TouchableOpacity style={styles.filterButton}>
+        <Text style={styles.filterButtonText}>Filter</Text>
+      </TouchableOpacity>
+
+      {/* Sort By Dropdown */}
+      <View style={styles.sortByContainer}>
+        <TouchableOpacity onPress={handleSortToggle} style={styles.sortButton}>
+          <Text style={styles.sortButtonText}>{selectedOption}</Text>
+        </TouchableOpacity>
+
+        {showDropdown && (
+          <View style={styles.dropdown}>
+            {sortOptions.map((option, index) => (
+              <TouchableOpacity
+                key={index}
+                onPress={() => handleSortSelect(option)}
+                style={styles.dropdownOption}
+              >
+                <Text style={styles.dropdownOptionText}>{option}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
+      </View>
+
+      {/* Search Results */}
+      <FlatList
+        data={searchResults}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View style={styles.resultItem}>
+            <Text>{item.title}</Text>
+          </View>
+        )}
+      />
+    </View>
+
                 {/* <View style={styles.recipeSection}>
                     <SectionList
                         renderSectionHeader={({ section: { title } }) => <Text style={styles.categoryTitle}>{title}</Text>}
@@ -136,6 +200,7 @@ const styles = EStyleSheet.create({
         alignItems: 'center',
         height: '5rem',
         width: '9rem',
+        borderRadius: '4.5rem',
     },
     recipeSection: {
         padding: '1rem',
@@ -153,7 +218,7 @@ const styles = EStyleSheet.create({
         padding: 20,
       },
       filterButton: {
-        backgroundColor: 'blue',
+        backgroundColor: '#F74F4F',
         padding: 10,
         borderRadius: 5,
         alignSelf: 'flex-start',
@@ -163,18 +228,41 @@ const styles = EStyleSheet.create({
       },
       sortByContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-end', // Align to the right
         alignItems: 'center',
         marginBottom: 10,
       },
-      sortByText: {
+      sortButton: {
+        backgroundColor: 'lightgray',
+        padding: 10,
+        borderRadius: 5,
+      },
+      sortButtonText: {
         fontSize: 16,
-        fontWeight: 'bold',
+      },
+      dropdown: {
+        position: 'absolute',
+        top: 40, // Adjust the distance from the button as needed
+        right: 0,
+        backgroundColor: 'white',
+        borderWidth: 1,
+        borderColor: 'gray',
+        borderRadius: 5,
+        width: 150, // Adjust the width as needed
+      },
+      dropdownOption: {
+        padding: 10,
+      },
+
+      dropdownOptionText: {
+        fontSize: 16,
+
       },
       resultItem: {
         paddingVertical: 10,
         borderBottomWidth: 1,
         borderBottomColor: 'gray',
       },
+
     
 });
