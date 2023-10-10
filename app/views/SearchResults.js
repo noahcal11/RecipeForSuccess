@@ -147,7 +147,7 @@ const styles = EStyleSheet.create({
         fontWeight: 'bold'
     },
 
-    
+    //for filter and sort by
     container2: {
         flex: 1,
         padding: 20,
