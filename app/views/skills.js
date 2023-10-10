@@ -20,35 +20,61 @@ const testData = [
     { bgcolor: "#ef6c00", completed: 53 },
   ];
 
+const IngredientsSkills = [
+    { bgcolor: "#6a1b9a", completed: 10 },
+];
+
+const KnifeSkills = [
+    { bgcolor: "#6a1b9a", completed: 10 },
+];
+
+const TTSkills = [
+    { bgcolor: "#6a1b9a", completed: 10 },
+];
+
 export default function Skills({ navigation, route }){
     return(
         <View style={styles.container}>
             <SearchBar />
             <Banner title="Skills" />
                 <ScrollView>
-                    <View style={styles.textBox}>
+                    <View>
                             {/* <Text>Welcome {route.params.username}!</Text> */}
-                        <Text>Hey USERNAME check out your skill levels here!</Text>
+                        <Text style={styles.welcomeText}>Hey USERNAME check out your skill levels here!</Text>
                     </View>
 
                     <View style={{alignItems: 'center'}}>
 
                         <View style={styles.textContainer}>
                             <Text style={styles.textBox}>Cooking Rating</Text>
-                            <ProgressBar bgcolor={testData[0].bgcolor} completed={levelFunc(testData[0].completed)[1]} />
-                            <Text style={styles.textBox}> {`${levelFunc(testData[0].completed)[1]}%`} </Text>
+                            {cookingSkills.map((item, idx) => (
+                                <ProgressBar key={idx} bgcolor={item.bgcolor} completed={item.completed} />
+                            ))}
+                            <Text style={styles.completedText}> {`${cookingSkills[0].completed}%`} </Text>
                         </View>
 
                         <View style={styles.textContainer}>
                             <Text style={styles.textBox}>Ingredients Rating</Text>
+                            {cookingSkills.map((item, idx) => (
+                                <ProgressBar key={idx} bgcolor={item.bgcolor} completed={item.completed} />
+                            ))}
+                            <Text style={styles.completedText}> {`${IngredientsSkills[0].completed}%`} </Text>
                         </View>
 
                         <View style={styles.textContainer}>
                             <Text style={styles.textBox}>Knife Rating</Text>
+                            {cookingSkills.map((item, idx) => (
+                                <ProgressBar key={idx} bgcolor={item.bgcolor} completed={item.completed} />
+                            ))}
+                            <Text style={styles.completedText}> {`${KnifeSkills[0].completed}%`} </Text>
                         </View>
 
                         <View style={styles.textContainer}>
                             <Text style={styles.textBox}>Time & Temperature Rating</Text>
+                            {cookingSkills.map((item, idx) => (
+                                <ProgressBar key={idx} bgcolor={item.bgcolor} completed={item.completed} />
+                            ))}
+                            <Text style={styles.completedText}> {`${TTSkills[0].completed}%`} </Text>
                         </View>
                     </View>
                 </ScrollView>
@@ -77,5 +103,17 @@ const styles = EStyleSheet.create({
         flexDirection: 'row',
         fontSize:'1rem',
         fontWeight: 'bold',
+        marginBottom: '1rem',
     },
+    completedText: {
+        fontSize: '1rem',
+        fontWeight: 'bold',
+        marginTop: '-1rem', 
+      },
+    welcomeText: {
+        textAlign: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: '2rem',
+    }, 
   });

@@ -16,7 +16,7 @@ const Footer = () => {
 
     //NEED TO CHANGE THE NAV FOR FAVORITES WHEN THAT PAGE IS CREATED
     <View style={styles.footerContainer}>
-      <TouchableOpacity onPress={() => {navigation.navigate("Skills")}} style={{marginHorizontal: "12.5%"}}>
+      <TouchableOpacity onPress={() => {navigation.navigate("Favorites")}} style={{marginHorizontal: "12.5%"}}>
         <HeartIcon width="40" height='100' stroke="black" strokeWidth="0.25"/>
       </TouchableOpacity>
 
