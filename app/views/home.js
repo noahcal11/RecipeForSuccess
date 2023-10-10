@@ -26,7 +26,7 @@ export default function Home({ navigation, route }){
     }, []);
 
     return(
-        <View>
+        <View style={styles.container}>
             <Banner title="Home" />
             <ScrollView styles={{ flex: 1 }}>
                 <View style={styles.recipeSection}>
@@ -73,33 +73,6 @@ export default function Home({ navigation, route }){
                     <Text>View more</Text>
                 </View>
             </ScrollView>
-            <Footer />
-            <TouchableOpacity
-                onPress={() => {
-                    navigation.navigate("Login")
-                }}
-                >
-                <Text>Go Back</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-                onPress={() => {
-                    navigation.navigate("Skills")
-                }}
-                >
-                <Text>Skills page</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-                onPress={() => {
-                    navigation.navigate("RecipePages")
-                }}
-                >
-                <Text>Recipe page</Text>
-            </TouchableOpacity>
-
-
-
             <TouchableOpacity
                 onPress={() => {
                     navigation.navigate("SearchResults")
@@ -107,6 +80,7 @@ export default function Home({ navigation, route }){
                 >
                 <Text>Search Results</Text>
             </TouchableOpacity>
+            <Footer />
         </View>
     );
 }
