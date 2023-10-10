@@ -74,6 +74,39 @@ export default function Home({ navigation, route }){
                 </View>
             </ScrollView>
             <Footer />
+            <TouchableOpacity
+                onPress={() => {
+                    navigation.navigate("Login")
+                }}
+                >
+                <Text>Go Back</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                onPress={() => {
+                    navigation.navigate("Skills")
+                }}
+                >
+                <Text>Skills page</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                onPress={() => {
+                    navigation.navigate("RecipePages")
+                }}
+                >
+                <Text>Recipe page</Text>
+            </TouchableOpacity>
+
+
+
+            <TouchableOpacity
+                onPress={() => {
+                    navigation.navigate("SearchResults")
+                }}
+                >
+                <Text>Search Results</Text>
+            </TouchableOpacity>
         </View>
     );
 }
