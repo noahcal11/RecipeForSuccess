@@ -29,7 +29,7 @@ app.get('/'+process.env.API_TOKEN+'/recipe/get',async (req,res) => {
             {ingredients: new RegExp(`\\b${general}\\b`, "i")}
         ]});
         res.json(recipes);
-    } else if (id !== null) {
+    } if (id !== undefined) {
         const recipes = await Recipe.findById(id)
         res.json(recipes);
     } else {
@@ -43,12 +43,11 @@ app.get('/'+process.env.API_TOKEN+'/recipe/get',async (req,res) => {
         const recipes = await Recipe.find({
             total_time: total_time ? {$lte: total_time} : {$lte: 65535},
             cuisine: cuisine ? new RegExp(`\\b${cuisine}\\b`, "i") : new RegExp(`.*|`, "i"),
+            category: category ? new RegExp(`\\b${category}\\b`, "i") : new RegExp(`.*|`, "i"),
             // yields: {$gte: yields},
-            $or: [
-                {title: new RegExp(`\\b${title}\\b`, "i")},
-                {desc: new RegExp(`\\b${desc}\\b`, "i")},
-                {ingredients: new RegExp(`\\b${ingredients}\\b`, "i")}
-            ]
+            title: title ? new RegExp(`\\b${title}\\b`, "i") : new RegExp(`.*|`, "i"),
+            desc: desc ? new RegExp(`\\b${desc}\\b`, "i") : new RegExp(`.*|`, "i"),
+            ingredients: ingredients ? new RegExp(`\\b${ingredients}\\b`, "i") : new RegExp(`.*|`, "i")
         });
         res.json(recipes);
     }
