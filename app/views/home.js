@@ -17,11 +17,10 @@ export default function Home({ navigation, route }){
     const getRecipes = async () => {
         const response = await fetch(API_BASE+"/recipe/get/all")
         .then(res => res.json())
-        .then(data => setPopularRecs(data.slice(0,8)))
+        .then(data => setPopularRecs(data.slice(0,12)))
         .catch(error => console.error(error));
     }
-    
-    
+        
     useState(() => {
         getRecipes();
     }, []);
@@ -29,37 +28,10 @@ export default function Home({ navigation, route }){
     return(
         <View>
             <Banner title="Home" />
-            <View>
-                {/* <View style={styles.recipeSection}>
-                    <SectionList
-                        renderSectionHeader={({ section: { title } }) => <Text style={styles.categoryTitle}>{title}</Text>}
-                        sections={[
-                            { title: 'Popular Recipes', data: popularRecs, renderItem: ({ item }) => (
-                                <View style={styles.imageView}>
-                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
-                                    <Text>{item.title}</Text>
-                                </View>
-                            )},
-                            { title: 'Top Desserts', data: dessertRecs, renderItem: ({ item }) => (
-                                <View style={styles.imageView}>
-                                    <Image style={styles.imageThumbnail} source={{ uri: item.src }} />
-                                    <Text>{item.id}</Text>
-                                </View>
-                            )},
-                            { title: 'Breakfast Creations', data: breakfastRecs, renderItem: ({ item }) => (
-                                <View style={styles.imageView}>
-                                    <Image style={styles.imageThumbnail} source={{ uri: item.src }} />
-                                    <Text>{item.id}</Text>
-                                </View>
-                            )},
-                        ]}
-                        keyExtractor={(item, index) => index}
-                        ListFooterComponent={() => <Text>View more</Text>}
-                    />
-                </View> */}
+            <ScrollView styles={{ flex: 1 }}>
                 <View style={styles.recipeSection}>
                     <Text style={styles.categoryTitle}>Popular Recipes</Text>
-                    <FlatList nestedScrollEnabled = {true}
+                    <FlatList scrollEnabled={false}
                         data={popularRecs}
                         renderItem={({ item }) => (
                             <TouchableOpacity onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}>
@@ -73,25 +45,21 @@ export default function Home({ navigation, route }){
                         keyExtractor={(item, index) => index.toString()}
                     />
                     <Text>View more</Text>
-                </View>
-                <View style={styles.recipeSection}>
                     <Text style={styles.categoryTitle}>Top Desserts</Text>
-                    <FlatList nestedScrollEnabled = {true}
-                    data={dessertRecs}
-                    renderItem={({ item }) => (
-                        <View style={styles.imageView}>
-                            <Image style={styles.imageThumbnail} source={{ uri: item.src }} />
-                            <Text>{item.id}</Text>
-                        </View>
-                    )}
-                    numColumns={2}
-                    keyExtractor={(item, index) => index}
+                    <FlatList scrollEnabled={false}
+                        data={dessertRecs}
+                        renderItem={({ item }) => (
+                            <View style={styles.imageView}>
+                                <Image style={styles.imageThumbnail} source={{ uri: item.src }} />
+                                <Text>{item.id}</Text>
+                            </View>
+                        )}
+                        numColumns={2}
+                        keyExtractor={(item, index) => index}
                     />
                     <Text>View more</Text>
-                </View>
-                <View style={styles.recipeSection}>
                     <Text style={styles.categoryTitle}>Breakfast Creations</Text>
-                    <FlatList nestedScrollEnabled = {true}
+                    <FlatList scrollEnabled={false}
                     data={breakfastRecs}
                     renderItem={({ item }) => (
                         <View style={styles.imageView}>
@@ -104,8 +72,8 @@ export default function Home({ navigation, route }){
                     />
                     <Text>View more</Text>
                 </View>
-                
-            </View>
+            </ScrollView>
+            <Footer />
             <TouchableOpacity
                 onPress={() => {
                     navigation.navigate("Login")
@@ -154,8 +122,6 @@ const styles = EStyleSheet.create({
         backgroundColor: 'white',
     },
     imageView: {
-        flex: 1,
-        flexDirection: 'column',
         margin: '1rem',
         width: '9rem',
     },
@@ -168,6 +134,7 @@ const styles = EStyleSheet.create({
     recipeSection: {
         padding: '1rem',
         backgroundColor: '#eee',
+        flex: 1,
     },
     categoryTitle: {
         textAlign: 'center',
