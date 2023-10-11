@@ -11,18 +11,43 @@ export default function Home({ navigation, route }){
     const [popularRecs, setPopularRecs] = useState([]);
     const [dessertRecs, setDessertRecs] = useState([]);
     const [breakfastRecs, setBreakfastRecs] = useState([]);
+    const [chickenRecs, setChickenRecs] = useState([]);
 
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
-    const getRecipes = async () => {
-        const response = await fetch(API_BASE+"/recipe/get/all")
+    const getPopular = async () => {
+        const response = await fetch(API_BASE+"/recipe/get/?cuisine=American")
         .then(res => res.json())
-        .then(data => setPopularRecs(data.slice(0,12)))
+        .then(data => setPopularRecs(data.slice(0,8)))
+        .catch(error => console.error(error));
+    }
+
+    const getDessert = async () => {
+        const response = await fetch(API_BASE+"/recipe/get/?category=Dessert")
+        .then(res => res.json())
+        .then(data => setDessertRecs(data.slice(0,4)))
+        .catch(error => console.error(error));
+    }
+
+    const getBreakfast = async() => {
+        const response = await fetch(API_BASE+"/recipe/get/?category=Breakfast")
+        .then(res => res.json())
+        .then(data => setBreakfastRecs(data.slice(0,4)))
+        .catch(error => console.error(error));
+    }
+
+    const getChicken = async() => {
+        const response = await fetch(API_BASE+"/recipe/get/?title=Chicken")
+        .then(res => res.json())
+        .then(data => setChickenRecs(data.slice(0,6)))
         .catch(error => console.error(error));
     }
         
     useState(() => {
-        getRecipes();
+        getPopular();
+        getDessert();
+        getBreakfast();
+        getChicken();
     }, []);
 
     return(
@@ -30,8 +55,9 @@ export default function Home({ navigation, route }){
             <Banner title="Home" />
             <ScrollView styles={{ flex: 1 }}>
                 <View style={styles.recipeSection}>
-                    <Text style={styles.categoryTitle}>Popular Recipes</Text>
                     <FlatList scrollEnabled={false}
+                        style={styles.recList}
+                        ListHeaderComponent={<Text style={styles.categoryTitle}>Popular Recipes</Text>}
                         data={popularRecs}
                         renderItem={({ item }) => (
                             <TouchableOpacity onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':route.params.username,'email':route.params.email})}>
@@ -43,34 +69,58 @@ export default function Home({ navigation, route }){
                         )}
                         numColumns={2}
                         keyExtractor={(item, index) => index.toString()}
+                        ListFooterComponent={<Text style={styles.viewMore}>View more</Text>}
                     />
-                    <Text>View more</Text>
-                    <Text style={styles.categoryTitle}>Top Desserts</Text>
                     <FlatList scrollEnabled={false}
+                        style={styles.recList}
+                        ListHeaderComponent={<Text style={styles.categoryTitle}>Top Desserts</Text>}
                         data={dessertRecs}
                         renderItem={({ item }) => (
-                            <View style={styles.imageView}>
-                                <Image style={styles.imageThumbnail} source={{ uri: item.src }} />
-                                <Text>{item.id}</Text>
-                            </View>
+                            <TouchableOpacity onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}>
+                                <View style={styles.imageView} id={item._id}>
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
+                                    <Text>{item.title}</Text>
+                                </View>
+                            </TouchableOpacity>
                         )}
                         numColumns={2}
                         keyExtractor={(item, index) => index}
+                        ListFooterComponent={<Text style={styles.viewMore}>View more</Text>}
                     />
-                    <Text>View more</Text>
-                    <Text style={styles.categoryTitle}>Breakfast Creations</Text>
+                    <View style={styles.recList}>
+                    <Text style={styles.categoryTitle}>Chicken!</Text>
+                    <FlatList
+                        style={styles.recList}
+                        horizontal
+                        data={chickenRecs}
+                        renderItem={({ item }) => (
+                            <TouchableOpacity onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}>
+                                <View style={styles.imageView} id={item._id}>
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
+                                    <Text>{item.title}</Text>
+                                </View>
+                            </TouchableOpacity>
+                        )}
+                        keyExtractor={(item, index) => index}
+                        ListFooterComponent={<Text style={styles.viewMore}>View more</Text>}
+                    />
+                    </View>
                     <FlatList scrollEnabled={false}
-                    data={breakfastRecs}
-                    renderItem={({ item }) => (
-                        <View style={styles.imageView}>
-                            <Image style={styles.imageThumbnail} source={{ uri: item.src }} />
-                            <Text>{item.id}</Text>
-                        </View>
-                    )}
-                    numColumns={2}
-                    keyExtractor={(item, index) => index}
+                        style={styles.recList}
+                        ListHeaderComponent={<Text style={styles.categoryTitle}>Breakfast Creations</Text>}
+                        data={breakfastRecs}
+                        renderItem={({ item }) => (
+                            <TouchableOpacity onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}>
+                                <View style={styles.imageView} id={item._id}>
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
+                                    <Text>{item.title}</Text>
+                                </View>
+                            </TouchableOpacity>
+                        )}
+                        numColumns={2}
+                        keyExtractor={(item, index) => index}
+                        ListFooterComponent={<Text style={styles.viewMore}>View more</Text>}
                     />
-                    <Text>View more</Text>
                 </View>
             </ScrollView>
             <TouchableOpacity
@@ -107,12 +157,25 @@ const styles = EStyleSheet.create({
     },
     recipeSection: {
         padding: '1rem',
-        backgroundColor: '#eee',
         flex: 1,
     },
     categoryTitle: {
+        paddingTop: '0.4rem',
         textAlign: 'center',
         fontSize: '1.5rem',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
+    recList: {
+        backgroundColor: "#eee",
+        margin: '0.5rem',
+    },
+    viewMore: {
+        fontSize: '1.05rem',
+        fontWeight: 'bold',
+        fontStyle: 'italic',
+        paddingLeft: '1rem',
+        paddingBottom: '0.7rem',
+        paddingRight: '0.25rem',
+        color: '#ad0603',
+    }
 });
