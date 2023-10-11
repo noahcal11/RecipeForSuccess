@@ -20,3 +20,5 @@ Content-Type: application/json
 
 ###
 GET http://localhost:8080/recipe/get/?id=64f4fca094cecacd7ee62ba3
+
+GET http://local

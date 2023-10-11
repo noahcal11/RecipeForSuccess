@@ -34,7 +34,7 @@ export default function Home({ navigation, route }){
                     <FlatList scrollEnabled={false}
                         data={popularRecs}
                         renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}>
+                            <TouchableOpacity onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':route.params.username,'email':route.params.email})}>
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
                                     <Text>{item.title}</Text>
@@ -80,7 +80,7 @@ export default function Home({ navigation, route }){
                 >
                 <Text>Search Results</Text>
             </TouchableOpacity>
-            <Footer />
+            <Footer username={route.params.username} email={route.params.email} />
         </View>
     );
 }

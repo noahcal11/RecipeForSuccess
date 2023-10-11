@@ -71,7 +71,7 @@ export default function RecipePages({ navigation, route }) {
           )}
         />
         {/* Footer component */}
-        <Footer />
+        <Footer username={route.params.username} email={route.params.email} />
       </View>
     </View>
   );

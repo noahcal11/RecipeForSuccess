@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar'; 
 import { StyleSheet, Text, Image, View, TouchableOpacity, TextInput } from 'react-native';
-import { useState } from 'react';
+import { useState} from 'react';
 import bcrypt from 'bcryptjs';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
@@ -25,7 +25,7 @@ export default function Login({navigation}) {
       },
       method: "POST",
       body: JSON.stringify({email: email, username: username, password: password})
-    }).then(navigation.navigate('Home',{username:username}));
+    }).then(navigation.navigate('Home',{'username':username,'email':email}));
   }
 
   const getUser = async email => {
@@ -33,9 +33,9 @@ export default function Login({navigation}) {
         .then(res => res.json())
       if (data.length == 0) {
         console.log("Email is not registered!");
-        setPassword("")
+        setPassword("");
         return;
-      }
+      } 
       bcrypt.compare(password, data[0].hash,
         async function (err, isMatch) {
 
@@ -43,7 +43,7 @@ export default function Login({navigation}) {
             // encrypted password
             if (isMatch) {
                 await setUsername(data[0].username)
-                navigation.navigate('Home',{username:data[0].username})
+                navigation.navigate('Home',{'username':data[0].username,'email':email})
             }
 
             if (!isMatch) {
@@ -192,7 +192,7 @@ export default function Login({navigation}) {
                     <TouchableOpacity
                     style={styles.guestLink}
                     onPress={() => {
-                      navigation.navigate('Home',{username:"Guest"})
+                      navigation.navigate('Home',{'username':"Guest",'email':"Guest"})
                     }}>
                         <Text style={styles.guestText}>Continue As Guest</Text>
                     </TouchableOpacity>
