@@ -8,7 +8,7 @@ export default function Profile({ navigation, route }) {
     return(
         <View>
             <BannerTitle title={'Profile'} /> 
-            <Footer> </Footer>
+            <Footer username={route.params.username} email={route.params.email} />
         </View>
     )
 }

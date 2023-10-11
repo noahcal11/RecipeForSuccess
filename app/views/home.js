@@ -76,7 +76,7 @@ export default function Home({ navigation, route }){
                         ListHeaderComponent={<Text style={styles.categoryTitle}>Top Desserts</Text>}
                         data={dessertRecs}
                         renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}>
+                            <TouchableOpacity onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':route.params.username,'email':route.params.email})}>
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
                                     <Text>{item.title}</Text>
@@ -94,7 +94,7 @@ export default function Home({ navigation, route }){
                         horizontal
                         data={chickenRecs}
                         renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}>
+                            <TouchableOpacity onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':route.params.username,'email':route.params.email})}>
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
                                     <Text>{item.title}</Text>
@@ -110,7 +110,7 @@ export default function Home({ navigation, route }){
                         ListHeaderComponent={<Text style={styles.categoryTitle}>Breakfast Creations</Text>}
                         data={breakfastRecs}
                         renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}>
+                            <TouchableOpacity onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':route.params.username,'email':route.params.email})}>
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
                                     <Text>{item.title}</Text>

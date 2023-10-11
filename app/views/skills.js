@@ -5,32 +5,30 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import { SearchBar } from 'react-native-screens';
 import Footer from '../Components/Footer';
 import ProgressBar from '../Components/ProgressBar';
+import { useState } from 'react';
 
 EStyleSheet.build();
 
-const cookingSkills = [
-    { bgcolor: "#6a1b9a", completed: 10 },
-];
-
-const IngredientsSkills = [
-    { bgcolor: "#6a1b9a", completed: 10 },
-];
-
-const KnifeSkills = [
-    { bgcolor: "#6a1b9a", completed: 10 },
-];
-
-const TTSkills = [
-    { bgcolor: "#6a1b9a", completed: 10 },
-];
-
-const testData = [640,5,31,2]
-
 export default function Skills({ navigation, route }){
-    
+    const [skills, setSkills] = useState([0,0,0,0]);
+    const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
+
+    const getPopular = async () => {
+        const response = await fetch(API_BASE+"/user/get/"+route.params.email)
+        .then(res => res.json())
+        .then(data => setSkills(data[0].skill_levels))
+        .catch(error => console.error(error));
+    }
+
+    useState(() => {
+        if (route.params.email !== "Guest") {
+            getPopular();
+        }
+    }, []);
+
     function levelFunc(n) {
         if (n === 0) {
-            return [0,0]
+            return [-1,0]
         }
         let level = Math.floor(Math.log2(n));
         let progress = Math.round((n - Math.pow(2, level))/Math.pow(2, level)*100);
@@ -44,37 +42,37 @@ export default function Skills({ navigation, route }){
                 <ScrollView>
                     <View>
                             {/* <Text>Welcome {route.params.username}!</Text> */}
-                        <Text style={styles.welcomeText}>Hey {route.params.username} check out your skill levels here!</Text>
+                        <Text style={styles.welcomeText}>Hey {route.params.username}, check out your skill levels here!</Text>
                     </View>
 
                     <View style={{alignItems: 'center'}}>
 
                         <View style={styles.textContainer}>
                             <Text style={styles.textBox}>Cooking Rating</Text>
-                            <Text style={styles.textBox2}>Level: {levelFunc(testData[0])[0]+1}</Text>
-                            <ProgressBar bgcolor="#6a1b9a" completed={levelFunc(testData[0])[1]} />
-                            <Text style={styles.completedText}> {`${levelFunc(testData[0])[1]}%`} </Text>
+                            <Text style={styles.textBox2}>Level: {levelFunc(skills[0])[0]+1}</Text>
+                            <ProgressBar bgcolor="#6a1b9a" completed={levelFunc(skills[0])[1]} />
+                            <Text style={styles.completedText}> {`${levelFunc(skills[0])[1]}%`} </Text>
                         </View>
 
                         <View style={styles.textContainer}>
                             <Text style={styles.textBox}>Ingredients Rating</Text>
-                            <Text style={styles.textBox2}>Level: #</Text>
-                            <ProgressBar bgcolor="#6a1b9a" completed={testData[1]} />
-                            <Text style={styles.completedText}> {`${IngredientsSkills[0].completed}%`} </Text>
+                            <Text style={styles.textBox2}>Level: {levelFunc(skills[1])[0]+1}</Text>
+                            <ProgressBar bgcolor="#6a1b9a" completed={levelFunc(skills[1])[1]} />
+                            <Text style={styles.completedText}> {`${levelFunc(skills[1])[1]}%`} </Text>
                         </View>
 
                         <View style={styles.textContainer}>
                             <Text style={styles.textBox}>Knife Rating</Text>
-                            <Text style={styles.textBox2}>Level: #</Text>
-                            <ProgressBar bgcolor="#6a1b9a" completed={testData[2]} />
-                            <Text style={styles.completedText}> {`${KnifeSkills[0].completed}%`} </Text>
+                            <Text style={styles.textBox2}>Level: {levelFunc(skills[2])[0]+1}</Text>
+                            <ProgressBar bgcolor="#6a1b9a" completed={levelFunc(skills[2])[1]} />
+                            <Text style={styles.completedText}> {`${levelFunc(skills[2])[1]}%`} </Text>
                         </View>
 
                         <View style={styles.textContainer}>
                             <Text style={styles.textBox}>Time & Temperature Rating</Text>
-                            <Text style={styles.textBox2}>Level: #</Text>
-                            <ProgressBar bgcolor="#6a1b9a" completed={testData[3]} />
-                            <Text style={styles.completedText}> {`${TTSkills[0].completed}%`} </Text>
+                            <Text style={styles.textBox2}>Level: {levelFunc(skills[3])[0]+1}</Text>
+                            <ProgressBar bgcolor="#6a1b9a" completed={levelFunc(skills[3])[1]} />
+                            <Text style={styles.completedText}> {`${levelFunc(skills[3])[1]}%`} </Text>
                         </View>
                     </View>
                 </ScrollView>

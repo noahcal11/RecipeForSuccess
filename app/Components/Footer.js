@@ -16,11 +16,11 @@ const Footer = ({username,email}) => {
 
     //NEED TO CHANGE THE NAV FOR FAVORITES WHEN THAT PAGE IS CREATED
     <View style={styles.footerContainer}>
-      <TouchableOpacity onPress={() => {navigation.navigate("Favorites",{'username':route.params.username,'email':route.params.email})}} style={{marginHorizontal: "12.5%"}}>
+      <TouchableOpacity onPress={() => {navigation.navigate("Favorites",{'username':username,'email':email})}} style={{marginHorizontal: "12.5%"}}>
         <HeartIcon width="40" height='100' stroke="black" strokeWidth="0.25"/>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => {navigation.navigate("Home", {'username':route.params.username,'email':route.params.email})}} style={{marginHorizontal: "12.5%"}}>
+      <TouchableOpacity onPress={() => {navigation.navigate("Home", {'username':username,'email':email})}} style={{marginHorizontal: "12.5%"}}>
         <HomeIcon width="40" height='100' stroke="black" strokeWidth="0.25"/>
       </TouchableOpacity>
 

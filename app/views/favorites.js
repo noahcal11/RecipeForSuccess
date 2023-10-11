@@ -8,7 +8,7 @@ export default function Favorites({ navigation, route }) {
     return(
         <View>
             <BannerTitle title={'Favorites'} /> 
-            <Footer> </Footer>
+            <Footer username={route.params.username} email={route.params.email} />
         </View>
     )
 }
