@@ -11,13 +11,14 @@ import RecipeDirections from '../Components/RecipeDirections';
 import RecipeDescription from '../Components/RecipeDescription';
 import RecipeProgression from '../Components/RecipeProgression';
 import RecipeSurvey from '../Components/RecipeSurvey';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { Context } from '../App'
 
 EStyleSheet.build();
 
 export default function RecipePages({ navigation, route }) {
   const [recipe, setRecipe] = useState([]);
-  const [pageState, setPageState] = useState('details')
+  const { recipePageState, setRecipePageState } = useContext(Context);
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
   const getRecipes = async () => {
@@ -32,7 +33,7 @@ export default function RecipePages({ navigation, route }) {
   useState(() => {
     getRecipes();
   }, []);
-  switch(pageState) {
+  switch(recipePageState) {
     case 'details':
       return (
         <View style={styles.container}>
@@ -75,7 +76,7 @@ export default function RecipePages({ navigation, route }) {
               )}
             />
             {/* Footer component */}
-            <RecipeFooter state={setPageState} />
+            <RecipeFooter />
           </View>
         </View>
       );
@@ -84,7 +85,6 @@ export default function RecipePages({ navigation, route }) {
         <RecipeProgression 
           ingredients={recipe.ingredients}
           directions={recipe.steps}
-          state={pageState}
         />
       );
     case 'survey':

@@ -1,12 +1,15 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import { useState, useContext, useEffect } from 'react'
+import { Context } from '../App'
 
-const RecipeFooter = ({state}) => {
+const RecipeFooter = () => {
+  const { recipePageState, setRecipePageState } = useContext(Context);
     return (
       <View style={styles.footerContainer}>
         <TouchableOpacity
-          onPress={() => {{state('progress')}}}> {/* Fix this! */}
+          onPress={() => {setRecipePageState('progress')}}>
           <Text style={styles.footerText}>Start Recipe!</Text>
         </TouchableOpacity>
       </View>

@@ -1,16 +1,19 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, Touchable } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import CheckBox from '@react-native-community/checkbox';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { Context } from '../App'
 
-const RecipeProgression = ({ingredients, directions, state}) => {
+const RecipeProgression = ({ingredients, directions}) => {
+    const [stepNum, setStepNum] = useState(0);
+    const [checkValue, setCheckValue] = useState(0);
+    const [toggleCheck, setToggleCheck] = useState(false);
+    const { recipePageState, setRecipePageState } = useContext(Context);
+
     function steps() {
-        const [stepNum, setStepNum] = useState(0);
-        const [checkValue, setCheckValue] = useState(0);
-        const [toggleCheck, setToggleCheck] = useState(false);
         if(stepNum == 0) {
-            return(
+            return (
                 <View>
                     <Text style={styles.heading}>First, prepare the ingredients:</Text>
                     <FlatList
@@ -19,7 +22,7 @@ const RecipeProgression = ({ingredients, directions, state}) => {
                         renderItem={({ item }) => (
                             <View style={styles.ingredientList}>
                                 <Text style={styles.ingredientItem}>{item}</Text>
-                                <CheckBox style={styles.checkbox}
+                                {/* <CheckBox style={styles.checkbox}
                                     disabled={false}
                                     value={toggleCheck}
                                     onValueChange={(newValue) => {
@@ -30,41 +33,44 @@ const RecipeProgression = ({ingredients, directions, state}) => {
                                             setCheckValue(checkValue - 1)
                                         }
                                     }}
-                                />
+                                /> */}
                             </View>
                         )}
                     />
-                    {() => {
-                        if(checkValue == ingredients.length) {
-                            return(
-                                <TouchableOpacity
-                                    onPress={() => {{setStepNum(stepNum + 1)}}}
-                                    style={styles.nextButton}>
-                                        <Text style={styles.buttonText}>Let's Begin!</Text>
-                                </TouchableOpacity>
-                            );
+                    <View>
+                        {checkValue == ingredients.length ?
+                            <TouchableOpacity
+                                onPress={() => {{setStepNum(stepNum + 1)}}}
+                                style={styles.nextButton}>
+                                    <Text style={styles.buttonText}>Let's Begin!</Text>
+                            </TouchableOpacity>
+                            :<TouchableOpacity
+                                onPress={() => {}}
+                                style={styles.grayButton}>
+                                    <Text style={styles.buttonText}>Let's Begin!</Text>
+                            </TouchableOpacity>
                         }
-                    }}
+                    </View>
                 </View>
             );
         } else {
-            return(
+            return (
                 <View>
                     <Text style={styles.header}>Step {stepNum}:</Text>
                     <Text style={styles.step}>{directions[stepNum]}</Text>
                     {() => {
                         if(stepNum != directions.length) {
-                            return(
+                            return (
                                 <TouchableOpacity
-                                    onPress={() => {{state.setPageState('survey')}}} /* Fix this! */
+                                    onPress={() => {setRecipePageState('survey')}}
                                     style={styles.nextButton}>
                                         <Text style={styles.buttonText}>Next</Text>
                                 </TouchableOpacity>
                             );
                         } else {
-                            return(
+                            return (
                                 <TouchableOpacity
-                                    onPress={() => {{setStepNum(stepNum + 1)}}}
+                                    onPress={() => {setStepNum(stepNum + 1)}}
                                     style={styles.nextButton}>
                                         <Text style={styles.buttonText}>Finish!</Text>
                                 </TouchableOpacity>
@@ -87,12 +93,13 @@ export default RecipeProgression;
 
 const styles=EStyleSheet.create({
     heading: {
-        fontSize: '3rem',
-        alignItems: 'center',
+        fontSize: '2rem',
+        alignSelf: 'center',
         justifyContent: 'center',
     },
     ingredientList: {
         flexDirection: 'row',
+        margin: '0.7rem'
     },
     ingredientItem: {
         flex: 7,
@@ -110,6 +117,16 @@ const styles=EStyleSheet.create({
         height: '3rem',
         alignSelf:  'center'
     },
+    grayButton: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#bbb',
+        borderRadius: '2rem',
+        marginBottom: '1rem',
+        width: '13rem',
+        height: '3rem',
+        alignSelf:  'center'
+    },
     buttonText: {
         color: 'white',
         fontSize: '1rem',
@@ -120,5 +137,6 @@ const styles=EStyleSheet.create({
     },
     container: {
         flex: 1,
+        backgroundColor: '#eee'
     }
 })
