@@ -38,7 +38,7 @@ export default function Skills({ navigation, route }){
     return(
         <View style={styles.container}>
             <SearchBar />
-            <Banner title="Skills" />
+            <Banner title="Skills" username={route.params.username} email={route.params.email}/>
                 <ScrollView>
                     <View>
                             {/* <Text>Welcome {route.params.username}!</Text> */}

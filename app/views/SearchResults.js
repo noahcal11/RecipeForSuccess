@@ -52,7 +52,7 @@ export default function Home({ navigation, route }){
 
     return(
         <View>
-            <Banner title="Search Results" />
+            <Banner title="Search Results" username={route.params.username} email={route.params.email} />
             <View>
             <View style={styles.container}>
       {/* Filter Button */}
