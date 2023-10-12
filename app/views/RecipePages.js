@@ -11,6 +11,7 @@ import RecipeDirections from '../Components/RecipeDirections';
 import RecipeDescription from '../Components/RecipeDescription';
 import RecipeProgression from '../Components/RecipeProgression';
 import RecipeSurvey from '../Components/RecipeSurvey';
+import Footer from '../Components/Footer';
 import { useState, useContext } from 'react';
 import { Context } from '../App'
 
@@ -95,9 +96,9 @@ export default function RecipePages({ navigation, route }) {
             directions={recipe.steps}
           />
         );
-};
-
-const styles = {
+  };
+}
+const styles = EStyleSheet.create({
   image: {
     width: '5',
     height: '5',
@@ -114,5 +115,4 @@ const styles = {
   componentView: {
     paddingHorizontal: 20,
   },
-}
-}
+});
