@@ -94,7 +94,7 @@ export default function Home({ navigation, route }){
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("SearchResults",{'username':username,'email':email})
+                                    navigation.navigate("SearchResults",{'username':route.params.username,'email':route.params.email})
                                 }}
                                 
                                 style={({ pressed }) => [
@@ -132,7 +132,7 @@ export default function Home({ navigation, route }){
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("SearchResults",{'username':username,'email':email})
+                                    navigation.navigate("SearchResults",{'username':route.params.username,'email':route.params.email})
                                 }}
                                 
                                 style={({ pressed }) => [
@@ -171,7 +171,7 @@ export default function Home({ navigation, route }){
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("SearchResults",{'username':username,'email':email})
+                                    navigation.navigate("SearchResults",{'username':route.params.username,'email':route.params.email})
                                 }}
                                 
                                 style={({ pressed }) => [
@@ -210,7 +210,7 @@ export default function Home({ navigation, route }){
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("SearchResults",{'username':username,'email':email})
+                                    navigation.navigate("SearchResults",{'username':route.params.username,'email':route.params.email})
                                 }}
                                 
                                 style={({ pressed }) => [
