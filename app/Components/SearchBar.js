@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, TextInput, StyleSheet} from 'react-native';
-import Svg, { Image } from 'react-native-svg';
+import SearchIcon from '../assets/svg/search';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 EStyleSheet.build();
@@ -24,16 +24,10 @@ const SearchBar = () => {
 
   return (
     <View style={styles.searchContainer}>
-      <View style={styles.searchContainer}>
+      <View>
         <TouchableOpacity onPress={openSearchBar}>
           {!isTextInputVisible ? (
-            <Svg width={30} height={30}>
-              <Image
-                href={require('../assets/zoom-bold.png')}
-                width={30}
-                height={30}
-                />
-            </Svg>
+            <SearchIcon style={styles.icon}></SearchIcon>
           ) : null}
         </TouchableOpacity>
       </View>
@@ -58,24 +52,23 @@ const SearchBar = () => {
 
 
 const styles = EStyleSheet.create({
+  icon: {
+    width: '2rem',
+    height: '2rem',
+  },
   searchContainer: {
     position: 'absolute',
-    top: '0.2rem', // Adjust the top position for the top-right corner
+    top: '0.5rem', // Adjust the top position for the top-right corner
     right: '0.5rem', // Adjust the right position for the top-right corner
     top: '0.2rem', // Adjust the top position for the top-right corner
     right: '0.5rem', // Adjust the right position for the top-right corner
+    paddingTop: '1.4rem',
   },
   searchInput: {
     width: '6rem', // Adjust the width as needed
     height: '2rem',
-    width: '6rem', // Adjust the width as needed
-    height: '2rem',
-    backgroundColor: 'white',
-    borderWidth: '0.1rem',
     borderWidth: '0.1rem',
     borderColor: 'gray',
-    borderRadius: '.25rem',
-    padding: '.25rem',
     borderRadius: '.25rem',
     padding: '.25rem',
   },
