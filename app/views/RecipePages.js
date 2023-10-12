@@ -115,3 +115,4 @@ const styles = {
     paddingHorizontal: 20,
   },
 }
+}
