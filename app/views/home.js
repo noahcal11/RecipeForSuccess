@@ -15,31 +15,45 @@ export default function Home({ navigation, route }){
 
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
+    function getRandom(arr, n) {
+        var result = new Array(n),
+            len = arr.length,
+            taken = new Array(len);
+        if (n > len)
+            throw new RangeError("getRandom: more elements taken than available");
+        while (n--) {
+            var x = Math.floor(Math.random() * len);
+            result[n] = arr[x in taken ? taken[x] : x];
+            taken[x] = --len in taken ? taken[len] : len;
+        }
+        return result;
+    }
+
     const getPopular = async () => {
         const response = await fetch(API_BASE+"/recipe/get/?cuisine=American")
         .then(res => res.json())
-        .then(data => setPopularRecs(data.slice(0,8)))
+        .then(data => setPopularRecs(getRandom(data,8)))
         .catch(error => console.error(error));
     }
 
     const getDessert = async () => {
         const response = await fetch(API_BASE+"/recipe/get/?category=Dessert")
         .then(res => res.json())
-        .then(data => setDessertRecs(data.slice(0,4)))
+        .then(data => setDessertRecs(getRandom(data,4)))
         .catch(error => console.error(error));
     }
 
     const getBreakfast = async() => {
         const response = await fetch(API_BASE+"/recipe/get/?category=Breakfast")
         .then(res => res.json())
-        .then(data => setBreakfastRecs(data.slice(0,4)))
+        .then(data => setBreakfastRecs(getRandom(data,4)))
         .catch(error => console.error(error));
     }
 
     const getChicken = async() => {
         const response = await fetch(API_BASE+"/recipe/get/?title=Chicken")
         .then(res => res.json())
-        .then(data => setChickenRecs(data.slice(0,6)))
+        .then(data => setChickenRecs(getRandom(data,8)))
         .catch(error => console.error(error));
     }
         
