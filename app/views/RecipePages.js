@@ -1,7 +1,7 @@
 // App.js
 import React from 'react';
 //import styles from './Genstyle';
-import { View, Text, FlatList, Image } from 'react-native';
+import { View, Text, FlatList, Image, Linking } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import SearchBar from '../Components/SearchBar'; // Import your search bar component
 import RecipeFooter from '../Components/RecipeFooter';
@@ -74,6 +74,7 @@ export default function RecipePages({ navigation, route }) {
                     </Text>
                     <RecipeDirections directions={item.steps} />
                   </View>
+                  <Text onPress={() => Linking.openURL(item.link)}>Credits</Text>
                 </>
               )}
             />
