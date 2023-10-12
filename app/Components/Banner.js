@@ -9,11 +9,11 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 EStyleSheet.build();
 
-const BannerTitle = ({ title }) => {
+const BannerTitle = ({ title,username,password }) => {
   return (
     <View style={styles.banner}>
       {<View style={styles.profile}>
-        <Profile></Profile>
+        <Profile username={username} password={password} ></Profile>
       </View> }
       <Text style={styles.bannerTitle}>{title}</Text>
       <View style={styles.search}>

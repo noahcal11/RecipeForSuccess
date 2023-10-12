@@ -52,7 +52,7 @@ export default function Home({ navigation, route }){
 
     return(
         <View style={styles.container}>
-            <Banner title="Home" />
+            <Banner title="Home" username={route.params.username} email={route.params.email}/>
             <ScrollView styles={{ flex: 1 }}>
                 <View style={styles.recipeSection}>
                     <FlatList scrollEnabled={false}
