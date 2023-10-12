@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar'; 
-import { Text, Image, View, TouchableOpacity, ScrollView, TextInput, FlatList, SectionList } from 'react-native';
+import { Text, Image, View, ScrollView, TextInput, FlatList, SectionList, Pressable } from 'react-native';
 import Banner from '../Components/Banner';
 import Footer from '../Components/Footer'
 import EStyleSheet from 'react-native-extended-stylesheet';
@@ -60,32 +60,76 @@ export default function Home({ navigation, route }){
                         ListHeaderComponent={<Text style={styles.categoryTitle}>Popular Recipes</Text>}
                         data={popularRecs}
                         renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':route.params.username,'email':route.params.email})}>
+                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':route.params.username,'email':route.params.email})}
+                                style={({ pressed }) => [
+                                    {
+                                    opacity: pressed
+                                        ? 0.2
+                                        : 1,
+                                    }]}
+                            >
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
                                     <Text>{item.title}</Text>
                                 </View>
-                            </TouchableOpacity>
+                            </Pressable>
                         )}
                         numColumns={2}
                         keyExtractor={(item, index) => index.toString()}
-                        ListFooterComponent={<Text style={styles.viewMore}>View more</Text>}
+                        ListFooterComponent={
+                            <Pressable
+                                onPress={() => {
+                                    navigation.navigate("SearchResults")
+                                }}
+                                
+                                style={({ pressed }) => [
+                                    {
+                                    opacity: pressed
+                                        ? 0.2
+                                        : 1,
+                                    }]}
+                            >
+                                <Text style={styles.viewMore}>View more</Text>
+                            </Pressable>
+                        }
                     />
                     <FlatList scrollEnabled={false}
                         style={styles.recList}
                         ListHeaderComponent={<Text style={styles.categoryTitle}>Top Desserts</Text>}
                         data={dessertRecs}
                         renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':route.params.username,'email':route.params.email})}>
+                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':route.params.username,'email':route.params.email})}
+                                style={({ pressed }) => [
+                                    {
+                                    opacity: pressed
+                                        ? 0.2
+                                        : 1,
+                                    }]}
+                            >
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
                                     <Text>{item.title}</Text>
                                 </View>
-                            </TouchableOpacity>
+                            </Pressable>
                         )}
                         numColumns={2}
                         keyExtractor={(item, index) => index}
-                        ListFooterComponent={<Text style={styles.viewMore}>View more</Text>}
+                        ListFooterComponent={
+                            <Pressable
+                                onPress={() => {
+                                    navigation.navigate("SearchResults")
+                                }}
+                                
+                                style={({ pressed }) => [
+                                    {
+                                    opacity: pressed
+                                        ? 0.2
+                                        : 1,
+                                    }]}
+                            >
+                                <Text style={styles.viewMore}>View more</Text>
+                            </Pressable>
+                        }
                     />
                     <View style={styles.recList}>
                     <Text style={styles.categoryTitle}>Chicken!</Text>
@@ -94,15 +138,37 @@ export default function Home({ navigation, route }){
                         horizontal
                         data={chickenRecs}
                         renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':route.params.username,'email':route.params.email})}>
+                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':route.params.username,'email':route.params.email})}
+                                style={({ pressed }) => [
+                                    {
+                                    opacity: pressed
+                                        ? 0.2
+                                        : 1,
+                                    }]}
+                            >
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
                                     <Text>{item.title}</Text>
                                 </View>
-                            </TouchableOpacity>
+                            </Pressable>
                         )}
                         keyExtractor={(item, index) => index}
-                        ListFooterComponent={<Text style={styles.viewMore}>View more</Text>}
+                        ListFooterComponent={
+                            <Pressable
+                                onPress={() => {
+                                    navigation.navigate("SearchResults")
+                                }}
+                                
+                                style={({ pressed }) => [
+                                    {
+                                    opacity: pressed
+                                        ? 0.2
+                                        : 1,
+                                    }]}
+                            >
+                                <Text style={styles.viewMore}>View more</Text>
+                            </Pressable>
+                        }
                     />
                     </View>
                     <FlatList scrollEnabled={false}
@@ -110,26 +176,41 @@ export default function Home({ navigation, route }){
                         ListHeaderComponent={<Text style={styles.categoryTitle}>Breakfast Creations</Text>}
                         data={breakfastRecs}
                         renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':route.params.username,'email':route.params.email})}>
+                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':route.params.username,'email':route.params.email})}
+                                style={({ pressed }) => [
+                                    {
+                                    opacity: pressed
+                                        ? 0.2
+                                        : 1,
+                                    }]}
+                            >
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
                                     <Text>{item.title}</Text>
                                 </View>
-                            </TouchableOpacity>
+                            </Pressable>
                         )}
                         numColumns={2}
                         keyExtractor={(item, index) => index}
-                        ListFooterComponent={<Text style={styles.viewMore}>View more</Text>}
+                        ListFooterComponent={
+                            <Pressable
+                                onPress={() => {
+                                    navigation.navigate("SearchResults")
+                                }}
+                                
+                                style={({ pressed }) => [
+                                    {
+                                    opacity: pressed
+                                        ? 0.2
+                                        : 1,
+                                    }]}
+                            >
+                                <Text style={styles.viewMore}>View more</Text>
+                            </Pressable>
+                        }
                     />
                 </View>
             </ScrollView>
-            <TouchableOpacity
-                onPress={() => {
-                    navigation.navigate("SearchResults")
-                }}
-                >
-                <Text>Search Results</Text>
-            </TouchableOpacity>
             <Footer username={route.params.username} email={route.params.email} />
         </View>
     );
