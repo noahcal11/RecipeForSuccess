@@ -15,6 +15,7 @@ export default function Home({ navigation, route }){
 
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
+    // https://stackoverflow.com/questions/19269545/how-to-get-a-number-of-random-elements-from-an-array
     function getRandom(arr, n) {
         var result = new Array(n),
             len = arr.length,
