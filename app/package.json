@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@expo/webpack-config": "^19.0.0",
+    "@react-native-community/checkbox": "^0.5.16",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/native-stack": "^6.9.13",
     "bcryptjs": "^2.4.3",

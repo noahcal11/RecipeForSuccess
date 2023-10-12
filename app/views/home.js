@@ -154,6 +154,8 @@ const styles = EStyleSheet.create({
         alignItems: 'center',
         height: '5rem',
         width: '9rem',
+        borderRadius: '2rem',
+        borderWidth: '0.2rem'
     },
     recipeSection: {
         padding: '1rem',
