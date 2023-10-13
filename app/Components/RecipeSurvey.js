@@ -16,7 +16,7 @@ const RecipeSurvey = ({directions}) => {
             <FlatList
                 data={directions}
                 keyExtractor={(item, index) => index.toString()}
-                renderItem={({ item }) => (
+                renderItem={({ item, index }) => (
                     <View style={styles.stepList}>
                         <Text style={styles.stepQuestion}>How well did you do in step {index + 1}?</Text>
                         <Text style={styles.stepInfo}>{item}</Text>
