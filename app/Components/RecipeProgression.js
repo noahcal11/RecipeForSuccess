@@ -4,9 +4,10 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import CheckBox from 'expo-checkbox';
 import { useState, useContext } from 'react';
 import { Context } from '../App'
+import Banner from './Banner';
 
 // TODO: style this page so it actually looks good
-const RecipeProgression = ({ingredients, directions}) => {
+const RecipeProgression = ({ingredients, directions, title, username, email}) => {
     // Variables
     const [stepNum, setStepNum] = useState(0);
     const [allChecked, setAllChecked] = useState(false);
@@ -86,6 +87,7 @@ const RecipeProgression = ({ingredients, directions}) => {
 
     return (
         <View style={styles.container}>
+            <Banner title={title} username={username} email={email}/>
             {steps()}
         </View>
     )

@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-
+import Banner from './Banner'
 /* TODO:
     - The background color for each button is set dynamically,
         so it cannot be combined with the regular stylesheet.
@@ -19,7 +19,7 @@ import { useNavigation } from '@react-navigation/native';
         skill values from the survey will update the user's
         skills.
 */
-const RecipeSurvey = ({directions, username, email}) => {
+const RecipeSurvey = ({directions, title, username, email}) => {
     const navigation = useNavigation()
     const [skillList, setSkillList] = useState([0,0,0,0]);
     const [selectedButton, setSelectedButton] = useState(new Array(directions.length + 1).fill(0));
@@ -112,6 +112,7 @@ const RecipeSurvey = ({directions, username, email}) => {
     return(
         <View style={styles.container}>
             {/* Header */}
+            <Banner title={title} username={username} email={email}/>
             <Text style={styles.header}>Great Job!</Text>
             <Text style={styles.subheader}>Let us know how you did:</Text>
             {/* First Question (ingredient prep) */}

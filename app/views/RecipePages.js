@@ -86,18 +86,26 @@ export default function RecipePages({ navigation, route }) {
       );
     case 'progress':
       return (
+        <View style={styles.container}>
         <RecipeProgression 
           ingredients={recipe.ingredients}
           directions={recipe.steps}
+          title = {recipe.title}
+          username={route.params.username}
+          email={route.params.email}
         />
+        </View>
       );
     case 'survey':
         return (
+          <View style={styles.container}>
           <RecipeSurvey
             directions={recipe.steps}
+            title = {recipe.title}
             username={route.params.username}
             email={route.params.email}
           />
+          </View>
         );
   };
 }
