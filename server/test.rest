@@ -11,14 +11,21 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:8080/user/new
+POST http://localhost:8080/54pgn7tCy42af5pTRz92ZF2Piu92CQeWsx7cZSW5owfTasAJ3HqGwwvU3yNNqoAo9sy8VmETrnZ8UkVLgyUoxRtU2CCjZCJafFCViAVf93ceLW8ex6yFXsc79kqNWjBK/user/new
 Content-Type: application/json
 
 {
-    "email": "test@test.com", "username": "tester", "password": "password"
+    "email": "sunhawkgaming@gmail.com", "username": "tester", "password": "password"
 }
 
 ###
-GET http://localhost:8080/recipe/get/?id=64f4fca094cecacd7ee62ba3
+POST http://localhost:8080/54pgn7tCy42af5pTRz92ZF2Piu92CQeWsx7cZSW5owfTasAJ3HqGwwvU3yNNqoAo9sy8VmETrnZ8UkVLgyUoxRtU2CCjZCJafFCViAVf93ceLW8ex6yFXsc79kqNWjBK/user/forgot-password/sunhawkgaming@gmail.com
 
-GET http://local
+
+###
+POST http://localhost:8080/54pgn7tCy42af5pTRz92ZF2Piu92CQeWsx7cZSW5owfTasAJ3HqGwwvU3yNNqoAo9sy8VmETrnZ8UkVLgyUoxRtU2CCjZCJafFCViAVf93ceLW8ex6yFXsc79kqNWjBK/user/reset-password/
+Content-Type: application/json
+
+{
+    "email": "sunhawkgaming@gmail.com", "code": "71f5fc", "password": "notpassword"
+}

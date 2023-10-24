@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const process = require('process');
 const bcrypt = require('bcryptjs');
+const nodemailer = require('nodemailer');
+const crypto = require('crypto')
 require('dotenv').config();
 
 const app = express();
@@ -122,6 +124,72 @@ app.delete('/'+process.env.API_TOKEN+'/user/delete/:id', async (req, res) => {
   res.json(user);
 });
 
+app.post('/'+process.env.API_TOKEN+'/user/forgot-password/:email', async (req, res) => {
+    // Generate a 6-digit code
+    const code = crypto.randomBytes(3).toString('hex');
+
+    // Find the user by email
+    const user = await User.findOne({ email: req.params.email })
+    if (!user) {
+        return res.status(400).send('No account with that email address exists.');
+    }
+
+    // Set the password reset fields on the user document
+    user.reset_password_token = code;
+    user.reset_password_expires = Date.now() + 15*60*1000; // 15 minutes
+
+    // Save the user document
+    user.save()
+    // Set up email data
+    let mailOptions = {
+        to: user.email,
+        from: 'jeffsinsel@gmail.com',
+        subject: 'Password Reset',
+        text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+        'Please enter the following code to complete the process:\n\n' +
+        code + '\n\n' +
+        'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+    };
+
+    // Send the email
+    let transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+            user: 'jeffsinsel@gmail.com',
+            pass: process.env.GMAIL_PASSWORD
+        }
+    });
+
+    transporter.sendMail(mailOptions, (err) => {
+        res.send('An e-mail has been sent to ' + user.email + ' with further instructions.');
+    });
+});
+
+app.post('/'+process.env.API_TOKEN+'/user/reset-password/', async (req, res) => {
+    // Find the user by the reset code and make sure it hasn't expired
+    user = await User.findOne({ reset_password_token: req.body.code, email:req.body.email, reset_password_expires: { $gt: Date.now() } });
+    if (!user) {
+        return res.status(400).send('Password reset code is invalid or has expired.');
+    }
+
+    // Encryption of the string password
+    bcrypt.genSalt(10, function (err, Salt) {
+    
+        // The bcrypt is used for encrypting password.
+        bcrypt.hash(req.body.password, Salt, function (err, hash) {
+        user.hash = hash;
+        user.save()
+        });
+    });
+
+    // Update the user's password
+    user.reset_password_token = "";
+    user.reset_password_expires = "";
+
+    // Save the updated user document
+    user.save()
+    res.send('Password has been reset.');
+});
 
 // Other Section
 app.get('/'+process.env.API_TOKEN+'/quit',async (req,res) => {

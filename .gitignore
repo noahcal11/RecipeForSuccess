@@ -1,3 +1,6 @@
 server/recipe-396801-df025cc873aa.json
 .expo
 app/package-lock.json
+server/package-lock.json
+server/node_modules/
+server/test.rest

@@ -13,11 +13,14 @@ export default function Login({navigation}) {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [notification, setNotification] = useState('');
+  const [token, setToken] = useState('');
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
   // const API_BASE = "http://localhost:8080/"+process.env.REACT_APP_API_TOKEN
 
   const createUser = async (email,username,password) => {
+    setNotification("")
     const data = await fetch(API_BASE+"/user/new", {
       headers: {
         'Accept': 'application/json',
@@ -29,10 +32,11 @@ export default function Login({navigation}) {
   }
 
   const getUser = async email => {
+      setNotification("")
       const data = await fetch(API_BASE+"/user/get/" + email, {method: "GET"})
         .then(res => res.json())
       if (data.length == 0) {
-        console.log("Email is not registered!");
+        setNotification("Email is not registered!");
         setPassword("");
         return;
       } 
@@ -50,11 +54,30 @@ export default function Login({navigation}) {
 
                 // If password doesn't match the following
                 // message will be sent
-                console.log('Wrong Password');
+                setNotification('Wrong Password');
                 setPassword("");
             }
       });
     }
+
+  const resetPassword = async email => {
+    setNotification("")
+    const data = await fetch(API_BASE+"/user/forgot-password/" + email, {method: "POST"})
+      .then(setNotification("Email Sent!"),setPopupType("Code"))
+      .catch(setNotification("Email is likely not registered"))
+  }
+
+  const takeToken = async (email,token,password) => {
+    setNotification("")
+    const data = await fetch(API_BASE+"/user/new", {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: "POST",
+      body: JSON.stringify({email: email, token: token, password: password})
+    });
+  }
 
   function displayPopup(type) {
       switch(type) {
@@ -126,10 +149,41 @@ export default function Login({navigation}) {
             <TouchableOpacity
               style={styles.login}
               onPress={() => {
-                getUser(email,password)
+                resetPassword(email)
               }}
             >
               <Text style={styles.loginText}>Send Email</Text>
+            </TouchableOpacity>
+            </View>
+          );
+          case 'Code':
+          return(
+            <View>
+            <TextInput
+              style={styles.input}
+              onChangeText={setEmail}
+              value={email}
+              placeholder="Email"
+            />
+            <TextInput
+              style={styles.input}
+              onChangeText={setToken}
+              value={token}
+              placeholder="Code"
+            />
+            <TextInput
+              style={styles.input}
+              onChangeText={setPassword}
+              value={password}
+              placeholder="New Password"
+            />
+            <TouchableOpacity
+              style={styles.login}
+              onPress={() => {
+                takeToken(email,token,password)
+              }}
+            >
+              <Text style={styles.loginText}>Update Password</Text>
             </TouchableOpacity>
             </View>
           );
@@ -143,6 +197,7 @@ export default function Login({navigation}) {
                 <Image style={styles.logo} source={require("../assets/favicon.png")}></Image>
                 {/* <Text style={styles.text}>Welcome to Recipe For Success</Text> */}
                 <Text style={styles.undertext}>Welcome to Recipe For Success</Text>
+                <Text style={styles.undertext}>{notification}</Text>
             </View>
             <View style={styles.bottom}>
             {/* <TouchableOpacity

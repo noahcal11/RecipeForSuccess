@@ -22,7 +22,8 @@ const UserSchema = new Schema({
     username: {type:String, required: true},
     hash: {type:String, required: true},
     skill_levels: {type:Array, default: [0,0,0,0]},
-    reset_password_token: {type:String, default: undefined}
+    reset_password_token: {type:String, default: ""},
+    reset_password_expires: {type:String, default: ""}
 })
 
 const Recipe = mongoose.model("Recipe",RecipeSchema);
