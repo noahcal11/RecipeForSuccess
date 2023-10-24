@@ -2,6 +2,7 @@ from recipe_scrapers import scrape_me
 import requests
 import time
 import csv
+from fractions import Fraction
 with open('scrape/links.csv', 'r') as read_obj:
   
     # Return a reader object which will
@@ -81,8 +82,25 @@ for i,link in enumerate(link_lst):
             if word.lower() in skills_ingredients_lst:
                 skills.append(word.lower())
         skills = list(set(skills))
-    print(skills, steps, link)
+    
     ingredients = scraper.ingredients()
+    clean_ingredients = []
+    for j in ingredients:
+        try:
+            lst = j.split(" ")
+            number = float(lst[0])
+            first = Fraction(number).limit_denominator()
+            whole_number = int(first.numerator / first.denominator)
+            remainder = first.numerator % first.denominator
+            if whole_number != 0 and remainder != 0:
+                first = "{} {}".format(whole_number, Fraction(remainder, first.denominator))
+            else:
+                first = str(first)
+            lst = lst[1:]
+            lst.insert(0,first)
+            clean_ingredients.append(" ".join(lst))
+        except:
+            clean_ingredients.append(j)
 
     try:
         desc = scraper.description()
@@ -110,7 +128,7 @@ for i,link in enumerate(link_lst):
         'total_time':total_time,
         'yields':yields,
         'steps':steps,
-        'ingredients':ingredients,
+        'ingredients':clean_ingredients,
         'image':image,
         'cuisine':cuisine,
         'category':category,
