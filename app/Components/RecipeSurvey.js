@@ -4,6 +4,8 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Banner from './Banner'
+import { useContext } from 'react';
+import { Context } from '../App'
 /* TODO:
     - The background color for each button is set dynamically,
         so it cannot be combined with the regular stylesheet.
@@ -24,6 +26,7 @@ const RecipeSurvey = ({directions, title, username, email}) => {
     const [skillList, setSkillList] = useState([0,0,0,0]);
     const [selectedButton, setSelectedButton] = useState(new Array(directions.length + 1).fill(0));
     const [allSelected, setAllSelected] = useState(false);
+    const { recipePageState, setRecipePageState } = useContext(Context);
 
     const RatingButtons = (skill, stepID) => {
         function setBackgroundColor(id) {
@@ -109,6 +112,11 @@ const RecipeSurvey = ({directions, title, username, email}) => {
         )
     }
 
+    const Finish = () => {
+        navigation.navigate("Skills", {'username':username,'email':email});
+        setRecipePageState('details');
+    }
+
     return(
         <View style={styles.container}>
             {/* Header */}
@@ -139,7 +147,7 @@ const RecipeSurvey = ({directions, title, username, email}) => {
             {allSelected ?
                 <TouchableOpacity
                     style={styles.finishButton}
-                    onPress={() => {navigation.navigate("Skills", {'username':username,'email':email})}}>
+                    onPress={() => {Finish()}}>
                         <Text style={styles.buttonText}>Submit</Text>
                 </TouchableOpacity>
                 :

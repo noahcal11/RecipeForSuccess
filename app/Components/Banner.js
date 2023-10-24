@@ -39,13 +39,13 @@ const styles = EStyleSheet.create({
     fontWeight: 'bold', // Adjust font weight as needed
     textAlign: 'center', // Center text
     flex: '1rem',
-    paddingTop: '1.5rem',
-    paddingHorizontal: 50,
+    paddingTop: '1.75rem',
+    paddingHorizontal: '1rem',
     justifyContent: 'center',
     alignItems: 'center',
   },
   profile: {
-    width: '3rem', // Adjust the width as needed
+    width: '2rem', // Adjust the width as needed
     height: '2rem',
   },
   search: {
