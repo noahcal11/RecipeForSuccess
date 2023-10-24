@@ -57,6 +57,10 @@ const RecipeSurvey = ({directions, title, username, email}) => {
                                 // If the button has already been selected, do not increment
                                 if(selectedButton[stepID] == 1) {
                                     return item
+                                // If switching from bad to good, increment twice
+                                } else if(selectedButton[stepID] == 3) {
+                                    return item + 2
+                                // Otherwise, increment once
                                 } else return item + 1
                             } else {return item}
                         }))
@@ -74,6 +78,19 @@ const RecipeSurvey = ({directions, title, username, email}) => {
                     style={{ backgroundColor: setBackgroundColor(2) }}
                     onPress={() => {
                         setAllSelected(true)
+                        // Adjust the relevant skill
+                        setSkillList(skillList.map((item, index) => {
+                            if(index === skill) {
+                                // If switching from good to okay, decrement
+                                if(selectedButton[stepID] == 1) {
+                                    return item - 1
+                                // If switching from bad to okay, increment
+                                } else if(selectedButton[stepID] == 3) {
+                                    return item + 1
+                                // Otherwise, do nothing
+                                } else return item
+                            } else {return item}
+                        }))
                         // Update the color of the button once selected
                         setSelectedButton(selectedButton.map((item, index) => {
                             var newValue = 0;
@@ -81,7 +98,6 @@ const RecipeSurvey = ({directions, title, username, email}) => {
                             if(newValue == 0) {setAllSelected(false)}
                             return newValue
                         }))
-                        // An "okay" rating does not affect the skill
                     }}>
                     <Text style={styles.buttonText}>Okay</Text>
                 </TouchableOpacity>
@@ -93,8 +109,12 @@ const RecipeSurvey = ({directions, title, username, email}) => {
                         setSkillList(skillList.map((item, index) => {
                             if(index === skill) {
                                 // If the button has already been selected, do not decrement
-                                if(selectedButton[stepID] == 1) {
+                                if(selectedButton[stepID] == 3) {
                                     return item
+                                // If swithcing from good to bad, decrement twice
+                                } else if(selectedButton[stepID] == 1) {
+                                    return item - 2
+                                // Otherwise, decrement once
                                 } else return item - 1
                             } else {return item}
                         }))
