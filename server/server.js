@@ -162,6 +162,9 @@ app.post('/'+process.env.API_TOKEN+'/user/forgot-password/:email', async (req, r
 
     transporter.sendMail(mailOptions, (err) => {
         res.send('An e-mail has been sent to ' + user.email + ' with further instructions.');
+        if (err) {
+            console.error(err);
+        }
     });
 });
 
