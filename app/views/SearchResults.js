@@ -24,14 +24,14 @@ export default function Home({ navigation, route }){
 
 //time, cuisine, category
     const [showDropdown, setShowDropdown] = useState(false);
-    const [selectedOption, setSelectedOption] = useState('Sort By');
+    const [selectedOption, setSelectedOption] = useState(null); //No initial option selected
     const [searchResults, setSearchResults] = useState([
       { id: '1', title: 'Result 1' },
       { id: '2', title: 'Result 2' },
       // Add more search results here
     ]);
   
-    const sortOptions = ['Ascending', 'Descending', 'Most Poular']; // Your sorting options
+    const sortOptions = ['Ascending', 'Descending']; // Your sorting options
   
     const handleSortToggle = () => {
       setShowDropdown(!showDropdown);
@@ -54,20 +54,24 @@ export default function Home({ navigation, route }){
         <View>
             <Banner title="Search Results" username={route.params.username} email={route.params.email} />
             <View>
-            <View style={styles.container}>
+            <View style={styles.container2}>
       {/* Filter Button */}
       <TouchableOpacity style={styles.filterButton}>
         <Text style={styles.filterButtonText}>Filter</Text>
       </TouchableOpacity>
 
       {/* Sort By Dropdown */}
+      
       <View style={styles.sortByContainer}>
         <TouchableOpacity onPress={handleSortToggle} style={styles.sortButton}>
-          <Text style={styles.sortButtonText}>{selectedOption}</Text>
+          <Text style={styles.sortByText}>
+            Sort By: {selectedOption}
+          </Text>
+
         </TouchableOpacity>
 
         {showDropdown && (
-          <View style={styles.dropdown}>
+          <View style={[styles.dropdown, {zIndex: 1}]}>
             {sortOptions.map((option, index) => (
               <TouchableOpacity
                 key={index}
@@ -80,8 +84,8 @@ export default function Home({ navigation, route }){
           </View>
         )}
       </View>
-
-      {/* Search Results */}
+ 
+      {/* Search Results 
       <FlatList
         data={searchResults}
         keyExtractor={(item) => item.id}
@@ -90,38 +94,12 @@ export default function Home({ navigation, route }){
             <Text>{item.title}</Text>
           </View>
         )}
-      />
+      />  */}
     </View>
 
-                {/* <View style={styles.recipeSection}>
-                    <SectionList
-                        renderSectionHeader={({ section: { title } }) => <Text style={styles.categoryTitle}>{title}</Text>}
-                        sections={[
-                            { title: 'Popular Recipes', data: popularRecs, renderItem: ({ item }) => (
-                                <View style={styles.imageView}>
-                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
-                                    <Text>{item.title}</Text>
-                                </View>
-                            )},
-                            { title: 'Top Desserts', data: dessertRecs, renderItem: ({ item }) => (
-                                <View style={styles.imageView}>
-                                    <Image style={styles.imageThumbnail} source={{ uri: item.src }} />
-                                    <Text>{item.id}</Text>
-                                </View>
-                            )},
-                            { title: 'Breakfast Creations', data: breakfastRecs, renderItem: ({ item }) => (
-                                <View style={styles.imageView}>
-                                    <Image style={styles.imageThumbnail} source={{ uri: item.src }} />
-                                    <Text>{item.id}</Text>
-                                </View>
-                            )},
-                        ]}
-                        keyExtractor={(item, index) => index}
-                        ListFooterComponent={() => <Text>View more</Text>}
-                    />
-                </View> */}
+                
                 <View style={styles.recipeSection}>
-                    <Text style={styles.categoryTitle}>Popular Recipes</Text>
+                    <Text style={styles.categoryTitle}>Suggested Recipes...</Text>
                     <FlatList nestedScrollEnabled = {true}
                         data={popularRecs}
                         renderItem={({ item }) => (
@@ -215,7 +193,9 @@ const styles = EStyleSheet.create({
     //for filter and sort by
     container2: {
         flex: 1,
-        padding: 20,
+        padding: 30,
+        paddingBottom: 20,
+        overflow: 'visible',
       },
       filterButton: {
         backgroundColor: '#F74F4F',
@@ -228,18 +208,18 @@ const styles = EStyleSheet.create({
       },
       sortByContainer: {
         flexDirection: 'row',
-        justifyContent: 'flex-end', // Align to the right
+        justifyContent: 'flex-end', //align to right
         alignItems: 'center',
-        marginBottom: 10,
+        marginBottom: 100,
+
       },
-      sortButton: {
-        backgroundColor: 'lightgray',
-        padding: 10,
-        borderRadius: 5,
-      },
-      sortButtonText: {
+
+      sortByText: {
         fontSize: 16,
+        fontWeight: 'bold', // Make the text bold
       },
+
+      
       dropdown: {
         position: 'absolute',
         top: 40, // Adjust the distance from the button as needed
@@ -249,6 +229,7 @@ const styles = EStyleSheet.create({
         borderColor: 'gray',
         borderRadius: 5,
         width: 150, // Adjust the width as needed
+        zIndex: 1,
       },
       dropdownOption: {
         padding: 10,

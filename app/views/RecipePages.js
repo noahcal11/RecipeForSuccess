@@ -95,6 +95,8 @@ export default function RecipePages({ navigation, route }) {
         return (
           <RecipeSurvey
             directions={recipe.steps}
+            username={route.params.username}
+            email={route.params.email}
           />
         );
   };

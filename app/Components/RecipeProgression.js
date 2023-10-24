@@ -1,50 +1,59 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, FlatList, Touchable } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import CheckBox from '@react-native-community/checkbox';
+import CheckBox from 'expo-checkbox';
 import { useState, useContext } from 'react';
 import { Context } from '../App'
 
+// TODO: style this page so it actually looks good
 const RecipeProgression = ({ingredients, directions}) => {
+    // Variables
     const [stepNum, setStepNum] = useState(0);
-    const [checkValue, setCheckValue] = useState(0);
-    const [toggleCheck, setToggleCheck] = useState(false);
+    const [allChecked, setAllChecked] = useState(false);
+    const [toggleCheck, setToggleCheck] = useState(new Array(ingredients.length).fill(false));
     const { recipePageState, setRecipePageState } = useContext(Context);
 
+    // Handler for when you click on a checkbox
+    function changeHandler(pos) {
+        setAllChecked(true);
+        setToggleCheck(toggleCheck.map((item, index) => {
+            var newValue = false;
+            if(index === pos) {newValue = !item} else {newValue = item}
+            if(!newValue) {setAllChecked(false)}
+            return newValue
+        }));
+    }
+
+    // The main function
     function steps() {
-        if(stepNum == 0) {
+        if(stepNum == 0) { // Displays the ingredient list
             return (
                 <View>
                     <Text style={styles.heading}>First, prepare the ingredients:</Text>
-                    <FlatList
+                    <FlatList // List that displays each ingredient, as well as a checkbox
                         data={ingredients}
                         keyExtractor={(item, index) => index.toString()}
-                        renderItem={({ item }) => (
+                        renderItem={({ item, index }) => (
                             <View style={styles.ingredientList}>
                                 <Text style={styles.ingredientItem}>{item}</Text>
-                                {/* <CheckBox style={styles.checkbox}
+                                <CheckBox style={styles.checkbox}
                                     disabled={false}
-                                    value={toggleCheck}
-                                    onValueChange={(newValue) => {
-                                        setToggleCheck(newValue)
-                                        if(newValue) {
-                                            setCheckValue(checkValue + 1)
-                                        } else {
-                                            setCheckValue(checkValue - 1)
-                                        }
-                                    }}
-                                /> */}
+                                    value={toggleCheck[index]}
+                                    // color={}
+                                    onValueChange={() => {changeHandler(index)}}
+                                />
                             </View>
                         )}
                     />
-                    <View>
-                        {checkValue == ingredients.length ?
+                    <View> 
+                        {allChecked ? // If all checkboxes are selected, display a button
+                                        // that progresses to the directions section
                             <TouchableOpacity
                                 onPress={() => {{setStepNum(stepNum + 1)}}}
                                 style={styles.nextButton}>
                                     <Text style={styles.buttonText}>Let's Begin!</Text>
                             </TouchableOpacity>
-                            :<TouchableOpacity
+                            :<TouchableOpacity // Otherwise, display a gray button that does nothing
                                 onPress={() => {}}
                                 style={styles.grayButton}>
                                     <Text style={styles.buttonText}>Let's Begin!</Text>
@@ -53,30 +62,23 @@ const RecipeProgression = ({ingredients, directions}) => {
                     </View>
                 </View>
             );
-        } else {
+        } else { // Displays the directions in order
             return (
                 <View>
                     <Text style={styles.header}>Step {stepNum}:</Text>
-                    <Text style={styles.step}>{directions[stepNum]}</Text>
-                    {() => {
-                        if(stepNum != directions.length) {
-                            return (
-                                <TouchableOpacity
-                                    onPress={() => {setRecipePageState('survey')}}
-                                    style={styles.nextButton}>
-                                        <Text style={styles.buttonText}>Next</Text>
-                                </TouchableOpacity>
-                            );
-                        } else {
-                            return (
-                                <TouchableOpacity
-                                    onPress={() => {setStepNum(stepNum + 1)}}
-                                    style={styles.nextButton}>
-                                        <Text style={styles.buttonText}>Finish!</Text>
-                                </TouchableOpacity>
-                            );
-                        }
-                    }}
+                    <Text style={styles.step}>{directions[stepNum - 1]}</Text>
+                    {stepNum == directions.length ?
+                        <TouchableOpacity // If on the last step, button sends user to the survey page
+                            onPress={() => {setRecipePageState('survey')}}
+                            style={styles.nextButton}>
+                                <Text style={styles.buttonText}>Finish!</Text>
+                        </TouchableOpacity>
+                        :<TouchableOpacity // Otherwise, button just leads to the next step
+                            onPress={() => {setStepNum(stepNum + 1)}}
+                            style={styles.nextButton}>
+                                <Text style={styles.buttonText}>Next</Text>
+                        </TouchableOpacity>
+                    }
                 </View>
             );
         }
@@ -106,6 +108,7 @@ const styles=EStyleSheet.create({
     },
     checkbox: {
         flex: 1,
+        width: '1rem',
     },
     nextButton: {
         alignItems: 'center',
