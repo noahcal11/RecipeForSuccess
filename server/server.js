@@ -59,6 +59,11 @@ app.get('/'+process.env.API_TOKEN+'/recipe/get/all',async (req,res) => {
 });
 
 app.post('/'+process.env.API_TOKEN+'/recipe/new', (req,res) => {
+    let keywords = [];
+    keywords.push(req.body.title.split(" "));
+    keywords.push(req.body.cuisine.split(" "));
+    keywords.push(req.body.category.split(" "));
+
     const recipe = new Recipe({
         title: req.body.title,
         desc: req.body.desc,
@@ -69,7 +74,8 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', (req,res) => {
         image: req.body.image,
         cuisine: req.body.cuisine,
         category: req.body.category,
-        link: req.body.link
+        link: req.body.link,
+        keywords: keywords
     })
     recipe.save();
 
