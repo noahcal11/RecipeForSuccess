@@ -13,9 +13,12 @@ const Stack = createNativeStackNavigator();
 export const Context = createContext();
 
 export default function App() {
-  const [recipePageState, setRecipePageState] = useState('details')
+  const [recipePageState, setRecipePageState] = useState('details');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+
   return (
-    <Context.Provider value={{recipePageState, setRecipePageState}}>
+    <Context.Provider value={{recipePageState, setRecipePageState,username,setUsername,email,setEmail}}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{
           headerShown: false

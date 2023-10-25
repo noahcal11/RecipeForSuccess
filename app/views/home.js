@@ -3,7 +3,8 @@ import { Text, Image, View, ScrollView, TextInput, FlatList, SectionList, Pressa
 import Banner from '../Components/Banner';
 import Footer from '../Components/Footer'
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { useState } from 'react';
+import { useState,useContext } from 'react';
+import { Context } from '../App';
 
 EStyleSheet.build();
 
@@ -12,6 +13,7 @@ export default function Home({ navigation, route }){
     const [dessertRecs, setDessertRecs] = useState([]);
     const [breakfastRecs, setBreakfastRecs] = useState([]);
     const [chickenRecs, setChickenRecs] = useState([]);
+    const {username,setUsername,email,setEmail} = useContext(Context)
 
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
@@ -67,7 +69,7 @@ export default function Home({ navigation, route }){
 
     return(
         <View style={styles.container}>
-            <Banner title="Home" username={route.params.username} email={route.params.email}/>
+            <Banner title="Home" username={username} email={email}/>
             <ScrollView styles={{ flex: 1 }}>
                 <View style={styles.recipeSection}>
                     <FlatList scrollEnabled={false}
@@ -75,7 +77,7 @@ export default function Home({ navigation, route }){
                         ListHeaderComponent={<Text style={styles.categoryTitle}>Popular Recipes</Text>}
                         data={popularRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':route.params.username,'email':route.params.email})}
+                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':username,'email':email})}
                                 style={({ pressed }) => [
                                     {
                                     opacity: pressed
@@ -94,7 +96,7 @@ export default function Home({ navigation, route }){
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("SearchResults",{'username':route.params.username,'email':route.params.email})
+                                    navigation.navigate("SearchResults",{'username':username,'email':email})
                                 }}
                                 
                                 style={({ pressed }) => [
@@ -113,7 +115,7 @@ export default function Home({ navigation, route }){
                         ListHeaderComponent={<Text style={styles.categoryTitle}>Top Desserts</Text>}
                         data={dessertRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':route.params.username,'email':route.params.email})}
+                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':username,'email':email})}
                                 style={({ pressed }) => [
                                     {
                                     opacity: pressed
@@ -132,7 +134,7 @@ export default function Home({ navigation, route }){
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("SearchResults",{'username':route.params.username,'email':route.params.email})
+                                    navigation.navigate("SearchResults",{'username':username,'email':email})
                                 }}
                                 
                                 style={({ pressed }) => [
@@ -153,7 +155,7 @@ export default function Home({ navigation, route }){
                         horizontal
                         data={chickenRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':route.params.username,'email':route.params.email})}
+                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':username,'email':email})}
                                 style={({ pressed }) => [
                                     {
                                     opacity: pressed
@@ -171,7 +173,7 @@ export default function Home({ navigation, route }){
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("SearchResults",{'username':route.params.username,'email':route.params.email})
+                                    navigation.navigate("SearchResults",{'username':username,'email':email})
                                 }}
                                 
                                 style={({ pressed }) => [
@@ -191,7 +193,7 @@ export default function Home({ navigation, route }){
                         ListHeaderComponent={<Text style={styles.categoryTitle}>Breakfast Creations</Text>}
                         data={breakfastRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':route.params.username,'email':route.params.email})}
+                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':username,'email':email})}
                                 style={({ pressed }) => [
                                     {
                                     opacity: pressed
@@ -210,7 +212,7 @@ export default function Home({ navigation, route }){
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("SearchResults",{'username':route.params.username,'email':route.params.email})
+                                    navigation.navigate("SearchResults",{'username':username,'email':email})
                                 }}
                                 
                                 style={({ pressed }) => [
@@ -226,7 +228,7 @@ export default function Home({ navigation, route }){
                     />
                 </View>
             </ScrollView>
-            <Footer username={route.params.username} email={route.params.email} />
+            <Footer username={username} email={email} />
         </View>
     );
 }

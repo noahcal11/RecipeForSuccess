@@ -5,23 +5,25 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import { SearchBar } from 'react-native-screens';
 import Footer from '../Components/Footer';
 import ProgressBar from '../Components/ProgressBar';
-import { useState } from 'react';
+import { useState,useContext } from 'react';
+import { Context } from '../App'
 
 EStyleSheet.build();
 
 export default function Skills({ navigation, route }){
     const [skills, setSkills] = useState([0,0,0,0]);
+    const {username,setUsername,email,setEmail} = useContext(Context)
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
     const getPopular = async () => {
-        const response = await fetch(API_BASE+"/user/get/"+route.params.email)
+        const response = await fetch(API_BASE+"/user/get/"+email)
         .then(res => res.json())
         .then(data => setSkills(data[0].skill_levels))
         .catch(error => console.error(error));
     }
 
     useState(() => {
-        if (route.params.email !== "Guest") {
+        if (email !== "Guest") {
             getPopular();
         }
     }, []);
@@ -38,11 +40,11 @@ export default function Skills({ navigation, route }){
     return(
         <View style={styles.container}>
             <SearchBar />
-            <Banner title="Skills" username={route.params.username} email={route.params.email}/>
+            <Banner title="Skills" username={username} email={email}/>
                 <ScrollView>
                     <View>
-                            {/* <Text>Welcome {route.params.username}!</Text> */}
-                        <Text style={styles.welcomeText}>Hey {route.params.username}, check out your skill levels here!</Text>
+                            {/* <Text>Welcome {username}!</Text> */}
+                        <Text style={styles.welcomeText}>Hey {username}, check out your skill levels here!</Text>
                     </View>
 
                     <View style={{alignItems: 'center'}}>
@@ -76,7 +78,7 @@ export default function Skills({ navigation, route }){
                         </View>
                     </View>
                 </ScrollView>
-            <Footer username={route.params.username} email={route.params.email} />
+            <Footer username={username} email={email} />
         </View>
     );
 }

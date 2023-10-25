@@ -21,12 +21,12 @@ import { Context } from '../App'
         skill values from the survey will update the user's
         skills.
 */
-const RecipeSurvey = ({directions, title, username, email}) => {
+const RecipeSurvey = ({directions, title}) => {
     const navigation = useNavigation()
     const [skillList, setSkillList] = useState([0,0,0,0]);
     const [selectedButton, setSelectedButton] = useState(new Array(directions.length + 1).fill(0));
     const [allSelected, setAllSelected] = useState(false);
-    const { recipePageState, setRecipePageState } = useContext(Context);
+    const { setRecipePageState, username, email } = useContext(Context);
 
     const RatingButtons = (skill, stepID) => {
         function setBackgroundColor(id) {

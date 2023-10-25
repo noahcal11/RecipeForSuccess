@@ -7,12 +7,12 @@ import { useNavigation } from '@react-navigation/native';
 
 EStyleSheet.build();
 
-const Profile = (username,email) => {
+const Profile = () => {
   const navigation = useNavigation();
   return (
     <View>
       {/* <ProfileIcon style={styles.profile}></ProfileIcon> */}
-      <TouchableOpacity onPress={() => {navigation.navigate("Profile",{'username':username,'email':email})}} style={{marginHorizontal: "12.5%"}}>
+      <TouchableOpacity onPress={() => {navigation.navigate("Profile")}} style={{marginHorizontal: "12.5%"}}>
         <ProfileIcon width="40" height='85' stroke="black" strokeWidth="0.25"/>
       </TouchableOpacity>
     </View>
