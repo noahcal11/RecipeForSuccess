@@ -164,6 +164,7 @@ app.post('/'+process.env.API_TOKEN+'/user/forgot-password/:email', async (req, r
         res.send('An e-mail has been sent to ' + user.email + ' with further instructions.');
         if (err) {
             console.error(err);
+            console.error(process.env.GMAIL_PASSWORD)
         }
     });
 });
