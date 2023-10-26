@@ -53,7 +53,7 @@ export default function RecipePages({ navigation, route }) {
                   {/* Recipe Description */}
                   <Image source={{uri:item.image}} style={{width: 400, height: 300}} />
                   <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
-                    <Text style={{ fontSize: 18, marginBottom: 20 }}>
+                    <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 20 }}>
                       Recipe Description
                     </Text>
                     <RecipeDescription description={item.desc} />
