@@ -73,3 +73,4 @@ jobs:
         env_vars: |
             MDB_USERNAME=${{ secrets.MDB_USERNAME }}
             MDB_PASSWORD=${{ secrets.MDB_PASSWORD }}
+            GMAIL_PASSWORD=${{ secrets.GMAIL_PASSWORD}}
