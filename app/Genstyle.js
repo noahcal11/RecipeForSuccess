@@ -22,11 +22,21 @@ const global = EStyleSheet.create({
     marginVertical: '4rem',
     borderRadius: '2rem'
   },
+  // Gray foreground
+  reverseForeground: {
+    flex: 1,
+    backgroundColor: '#eee',
+    //justifyContent: 'center',
+    marginHorizontal: '0.6rem',
+    marginVertical: '1rem',
+    borderRadius: '2rem'
+  },
   // Generic container
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: 'white'
   },
   // Generic text
   text: {
@@ -64,6 +74,11 @@ const global = EStyleSheet.create({
   bodyText: {
     color: 'black',
     fontSize: '1rem',
+  },
+  // Even smaller text for captions
+  subText: {
+    color: 'black',
+    fontSize: '0.8rem'
   },
   // Centered text
   centeredText: {
@@ -120,12 +135,13 @@ const global = EStyleSheet.create({
   },
   // Header
   titleText: {
-    fontSize: '1.8rem',
+    fontSize: '1.6rem',
     color: 'black',
+    fontWeight: 'bold',
     // font: manrope
     textAlign: 'center',
     justifyContent: 'center',
-    marginHorizontal: '0.5rem',
+    margin: '0.5rem',
   },
 
 //Banner.js styling
