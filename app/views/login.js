@@ -3,6 +3,7 @@ import { StyleSheet, Text, Image, View, TouchableOpacity, TextInput } from 'reac
 import { useState} from 'react';
 import bcrypt from 'bcryptjs';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import global from '../Genstyle';
 
 EStyleSheet.build();
 
@@ -85,24 +86,24 @@ export default function Login({navigation}) {
           return(
           <View>
             <TextInput
-              style={styles.input}
+              style={global.input}
               onChangeText={setEmail}
               value={email}
               placeholder="Email"
             />
             <TextInput
-              style={styles.input}
+              style={global.input}
               onChangeText={setPassword}
               value={password}
               placeholder="Password"
             />
             <TouchableOpacity
-              style={styles.login}
+              style={global.button}
               onPress={() => {
                 getUser(email,password)
               }}
             >
-              <Text style={styles.loginText}>Login</Text>
+              <Text style={global.buttonText}>Login</Text>
             </TouchableOpacity>
           </View>
           );
@@ -110,30 +111,30 @@ export default function Login({navigation}) {
           return(
             <View>
             <TextInput
-              style={styles.input}
+              style={global.input}
               onChangeText={setEmail}
               value={email}
               placeholder="Email"
             />
             <TextInput 
-              style={styles.input}
+              style={global.input}
               onChangeText={setUsername}
               value={username}
               placeholder="Username"
             />
             <TextInput
-              style={styles.input}
+              style={global.input}
               onChangeText={setPassword}
               value={password}
               placeholder="Password"
             />
             <TouchableOpacity
-              style={styles.login}
+              style={global.button}
               onPress={() => {
                 createUser(email,username,password)
               }}
             >
-              <Text style={styles.loginText}>Register</Text>
+              <Text style={global.buttonText}>Register</Text>
             </TouchableOpacity>
             </View>
           );
@@ -141,18 +142,18 @@ export default function Login({navigation}) {
           return(
             <View>
             <TextInput
-              style={styles.input}
+              style={global.input}
               onChangeText={setEmail}
               value={email}
               placeholder="Email"
             />
             <TouchableOpacity
-              style={styles.login}
+              style={global.button}
               onPress={() => {
                 resetPassword(email)
               }}
             >
-              <Text style={styles.loginText}>Send Email</Text>
+              <Text style={global.buttonText}>Send Email</Text>
             </TouchableOpacity>
             </View>
           );
@@ -160,30 +161,30 @@ export default function Login({navigation}) {
           return(
             <View>
             <TextInput
-              style={styles.input}
+              style={global.input}
               onChangeText={setEmail}
               value={email}
               placeholder="Email"
             />
             <TextInput
-              style={styles.input}
+              style={global.input}
               onChangeText={setToken}
               value={token}
               placeholder="Code"
             />
             <TextInput
-              style={styles.input}
+              style={global.input}
               onChangeText={setPassword}
               value={password}
               placeholder="New Password"
             />
             <TouchableOpacity
-              style={styles.login}
+              style={global.button}
               onPress={() => {
                 takeToken(email,token,password)
               }}
             >
-              <Text style={styles.loginText}>Update Password</Text>
+              <Text style={global.buttonText}>Update Password</Text>
             </TouchableOpacity>
             </View>
           );
@@ -191,12 +192,12 @@ export default function Login({navigation}) {
     }
 
     return (
-    <View style={styles.background}>
-        <View style={styles.container}>
+    <View style={global.background}>
+        <View style={global.foreground}>
             <View style={styles.top}>
                 <Image style={styles.logo} source={require("../assets/favicon.png")}></Image>
                 {/* <Text style={styles.text}>Welcome to Recipe For Success</Text> */}
-                <Text style={styles.undertext}>Welcome to Recipe For Success</Text>
+                <Text style={global.titleText}>Welcome to Recipe For Success</Text>
                 <Text style={styles.undertext}>{notification}</Text>
             </View>
             <View style={styles.bottom}>
@@ -213,19 +214,19 @@ export default function Login({navigation}) {
                             setPopupActive(!popupActive)
                             }}
                         >
-                            <Text style={styles.x}>x</Text>
+                            <Text style={global.bodyText}>x</Text>
                         </TouchableOpacity>
                     </View>
                     :<TouchableOpacity
-                    style={styles.login}
+                    style={global.button}
                     onPress={() => {
                         setPopupActive(!popupActive)
                         setPopupType('Login')
                     }}
                     >
-                        <Text style={styles.loginText}>Login</Text>
+                        <Text style={global.buttonText}>Login</Text>
                     </TouchableOpacity>}
-                    <View style={styles.createlinks}>
+                    <View style={global.horizontal}>
                         <TouchableOpacity
                             style={styles.createAcct}
                             onPress={() => {
@@ -243,7 +244,7 @@ export default function Login({navigation}) {
                             <Text style={styles.createText}>Forgot password?</Text>
                         </TouchableOpacity>
                     </View>
-                    <Text style={styles.undertext}>Don't have an account?</Text>
+                    <Text style={global.centeredText}>Don't have an account?</Text>
                     <TouchableOpacity
                     style={styles.guestLink}
                     onPress={() => {
@@ -283,7 +284,8 @@ const styles = EStyleSheet.create({
     logo: {
       height: '5.5rem',
       width: '5.5rem',
-      alignSelf: 'center'
+      alignSelf: 'center',
+      marginTop: '3rem',
     },
     text: {
       textAlign: 'center',
@@ -330,14 +332,17 @@ const styles = EStyleSheet.create({
       fontSize: '1rem',
       width: '13rem',
       height: '3rem',
-      padding: '1rem',
+      paddingLeft: '1rem',
       marginBottom: '1rem',
       alignSelf: 'center'
     },
     x: {
       alignSelf: 'center',
       padding: '0.2rem',
-      color: 'black',
+      marginBottom: '0.5rem',
+      padding: '0.3rem',
+      // borderWidth: '0.05rem',
+      // borderRadius: 7,
       fontSize: '1.2rem'
     },
     guestLink: {

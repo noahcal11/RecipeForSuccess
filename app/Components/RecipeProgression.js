@@ -46,6 +46,7 @@ const RecipeProgression = ({ingredients, directions, title, username, email}) =>
                             </View>
                         )}
                     />
+                    {/* Button that selects or deselects all checkboxes */}
                     <View> 
                         {allChecked ? // If all checkboxes are selected, display a button
                                         // that progresses to the directions section
