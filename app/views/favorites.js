@@ -4,11 +4,11 @@ import React from 'react';
 import { Text, View, TouchableOpacity, FlatList, SafeAreaView, StyleSheet, Modal } from "react-native";
 
 
-export default function Favorites({ navigation, route }) {
+export default function Favorites() {
     return(
         <View>
             <BannerTitle title={'Favorites'} /> 
-            <Footer username={route.params.username} email={route.params.email} />
+            <Footer />
         </View>
     )
 }

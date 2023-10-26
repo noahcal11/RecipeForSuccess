@@ -19,7 +19,7 @@ EStyleSheet.build();
 
 export default function RecipePages({ navigation, route }) {
   const [recipe, setRecipe] = useState([]);
-  const { recipePageState, setRecipePageState } = useContext(Context);
+  const { recipePageState, setRecipePageState, username,setUsername, email,setEmail } = useContext(Context);
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
   const getRecipes = async () => {

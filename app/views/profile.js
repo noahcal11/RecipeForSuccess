@@ -4,11 +4,11 @@ import React from 'react';
 import { Text, View, TouchableOpacity, FlatList, SafeAreaView, StyleSheet, Modal } from "react-native";
 
 
-export default function Profile({ navigation, route }) {
+export default function Profile() {
     return(
         <View>
             <BannerTitle title={'Profile'} /> 
-            <Footer username={route.params.username} email={route.params.email} />
+            <Footer />
         </View>
     )
 }

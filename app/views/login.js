@@ -1,8 +1,9 @@
 import { StatusBar } from 'expo-status-bar'; 
 import { StyleSheet, Text, Image, View, TouchableOpacity, TextInput } from 'react-native';
-import { useState} from 'react';
+import { useContext, useState} from 'react';
 import bcrypt from 'bcryptjs';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import { Context } from '../App';
 import global from '../Genstyle';
 
 EStyleSheet.build();
@@ -11,11 +12,10 @@ export default function Login({navigation}) {
   const [user, setUser] = useState("");
   const [popupActive,setPopupActive] = useState(false);
   const [popupType, setPopupType] = useState('Login');
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [notification, setNotification] = useState('');
   const [token, setToken] = useState('');
+  const {username,setUsername,email,setEmail} = useContext(Context)
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
   // const API_BASE = "http://localhost:8080/"+process.env.REACT_APP_API_TOKEN
@@ -70,7 +70,7 @@ export default function Login({navigation}) {
 
   const takeToken = async (email,token,password) => {
     setNotification("")
-    const data = await fetch(API_BASE+"/user/new", {
+    await fetch(API_BASE+"/user/new", {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -96,6 +96,7 @@ export default function Login({navigation}) {
               onChangeText={setPassword}
               value={password}
               placeholder="Password"
+              secureTextEntry={true}
             />
             <TouchableOpacity
               style={global.button}
@@ -127,6 +128,7 @@ export default function Login({navigation}) {
               onChangeText={setPassword}
               value={password}
               placeholder="Password"
+              secureTextEntry={true}
             />
             <TouchableOpacity
               style={global.button}
@@ -177,6 +179,7 @@ export default function Login({navigation}) {
               onChangeText={setPassword}
               value={password}
               placeholder="New Password"
+              secureTextEntry={true}
             />
             <TouchableOpacity
               style={global.button}

@@ -7,12 +7,12 @@ import { Context } from '../App'
 import Banner from './Banner';
 
 // TODO: style this page so it actually looks good
-const RecipeProgression = ({ingredients, directions, title, username, email}) => {
+const RecipeProgression = ({ingredients, directions, title}) => {
     // Variables
     const [stepNum, setStepNum] = useState(0);
     const [allChecked, setAllChecked] = useState(false);
     const [toggleCheck, setToggleCheck] = useState(new Array(ingredients.length).fill(false));
-    const { recipePageState, setRecipePageState } = useContext(Context);
+    const { recipePageState, setRecipePageState, username, email } = useContext(Context);
 
     // Handler for when you click on a checkbox
     function changeHandler(pos) {
