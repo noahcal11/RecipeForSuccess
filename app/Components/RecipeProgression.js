@@ -5,6 +5,8 @@ import CheckBox from 'expo-checkbox';
 import { useState, useContext } from 'react';
 import { Context } from '../App'
 import Banner from './Banner';
+import Footer from '../Components/Footer'
+import { ScrollView } from 'react-native-gesture-handler';
 
 // TODO: style this page so it actually looks good
 const RecipeProgression = ({ingredients, directions, title}) => {
@@ -90,6 +92,7 @@ const RecipeProgression = ({ingredients, directions, title}) => {
         <View style={styles.container}>
             <Banner title={title} username={username} email={email}/>
             {steps()}
+            <Footer username={username} email={email} />
         </View>
     )
 }
