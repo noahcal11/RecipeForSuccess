@@ -2,13 +2,12 @@ import BannerTitle from '../Components/Banner';
 import Footer from '../Components/Footer';
 import React from 'react';
 import { Text, View, TouchableOpacity, FlatList, SafeAreaView, StyleSheet, Modal } from "react-native";
-import ProfileBannerTitle from '../Components/ProfileBanner';
 
 
-export default function Profile() {
+export default function ProfileSettings() {
     return(
         <View>
-            <ProfileBannerTitle title={'Profile'} /> 
+            <BannerTitle title={'Settings'} /> 
             <Footer />
         </View>
     )

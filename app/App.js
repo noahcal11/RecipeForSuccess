@@ -6,6 +6,7 @@ import RecipePages from "./views/RecipePages";
 import Profile from "./views/profile";
 import Favorites from './views/favorites';
 import SearchResults from './views/SearchResults'
+import ProfileSettings from './views/ProfileSettings';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
@@ -30,6 +31,7 @@ export default function App() {
           <Stack.Screen name="Profile" component={Profile}/>
           <Stack.Screen name="Favorites" component={Favorites}/>
           <Stack.Screen name="SearchResults" component={SearchResults}/>
+          <Stack.Screen name="ProfileSettings" component={ProfileSettings}/>
         </Stack.Navigator>
       </NavigationContainer>
     </Context.Provider>
