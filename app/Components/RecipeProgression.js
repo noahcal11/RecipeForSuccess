@@ -15,6 +15,7 @@ const RecipeProgression = ({ingredients, directions, title}) => {
     const [allChecked, setAllChecked] = useState(false);
     const [toggleCheck, setToggleCheck] = useState(new Array(ingredients.length).fill(false));
     const { recipePageState, setRecipePageState, username, email } = useContext(Context);
+    const recipeTitle = title;
 
     // Handler for when you click on a checkbox
     function changeHandler(pos) {
@@ -32,7 +33,7 @@ const RecipeProgression = ({ingredients, directions, title}) => {
         if(stepNum == 0) { // Displays the ingredient list
             return (
                 <View>
-                    <Text style={styles.heading}>First, prepare the ingredients:</Text>
+                    <Text style={styles.heading}>Ingredients for {recipeTitle}:</Text>
                     <FlatList // List that displays each ingredient, as well as a checkbox
                         data={ingredients}
                         keyExtractor={(item, index) => index.toString()}
@@ -90,7 +91,9 @@ const RecipeProgression = ({ingredients, directions, title}) => {
 
     return (
         <View style={styles.container}>
-            <Banner title={title} username={username} email={email}/>
+            <Banner title={"Progression"} username={username} email={email}/>
+            {/* //almost working except the page does not know where to get recipe title from
+            <Text style={styles.title}> {recipe.title} </Text> */}
             {steps()}
             <Footer username={username} email={email} />
         </View>
@@ -100,6 +103,12 @@ const RecipeProgression = ({ingredients, directions, title}) => {
 export default RecipeProgression;
 
 const styles=EStyleSheet.create({
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginVertical: 20,
+        textAlign: 'center',
+      },
     heading: {
         fontSize: '2rem',
         alignSelf: 'center',
