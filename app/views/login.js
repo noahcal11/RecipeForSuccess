@@ -47,8 +47,10 @@ export default function Login({navigation}) {
             // Comparing the original password to
             // encrypted password
             if (isMatch) {
-                await setUsername(data[0].username)
-                navigation.navigate('Home',{'username':data[0].username,'email':email})
+                await setUsername(data[0].username);
+                await setEmail(data[0].email);
+                navigation.navigate('Home');
+
             }
 
             if (!isMatch) {
@@ -252,7 +254,9 @@ export default function Login({navigation}) {
                     <TouchableOpacity
                     style={styles.guestLink}
                     onPress={() => {
-                      navigation.navigate('Home',{'username':"Guest",'email':"Guest"})
+                      navigation.navigate('Home');
+                      setUsername("Guest");
+                      setEmail("Guest");
                     }}>
                         <Text style={styles.guestText}>Continue As Guest</Text>
                     </TouchableOpacity>

@@ -69,7 +69,7 @@ export default function Home({ navigation, route }){
 
     return(
         <View style={styles.container}>
-            <Banner title="Home" username={username} email={email}/>
+            <Banner title="Home" />
             <ScrollView styles={{ flex: 1 }}>
                 <View style={styles.recipeSection}>
                     <FlatList scrollEnabled={false}
@@ -228,7 +228,7 @@ export default function Home({ navigation, route }){
                     />
                 </View>
             </ScrollView>
-            <Footer username={username} email={email} />
+            <Footer  />
         </View>
     );
 }

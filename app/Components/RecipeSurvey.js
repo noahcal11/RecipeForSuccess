@@ -141,7 +141,7 @@ const RecipeSurvey = ({directions, title}) => {
     return(
         <View style={styles.container}>
             {/* Header */}
-            <Banner title={title} username={username} email={email}/>
+            <Banner title={title}/>
             <Text style={styles.header}>Great Job!</Text>
             <Text style={styles.subheader}>Let us know how you did:</Text>
             {/* First Question (ingredient prep) */}
@@ -178,7 +178,7 @@ const RecipeSurvey = ({directions, title}) => {
                         <Text style={styles.buttonText}>Submit</Text>
                 </TouchableOpacity>
             }
-            <Footer username={username} email={email} />
+            <Footer />
         </View>
     );
 }

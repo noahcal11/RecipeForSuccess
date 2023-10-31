@@ -90,9 +90,9 @@ const RecipeProgression = ({ingredients, directions, title}) => {
 
     return (
         <View style={styles.container}>
-            <Banner title={title} username={username} email={email}/>
+            <Banner title={title}/>
             {steps()}
-            <Footer username={username} email={email} />
+            <Footer />
         </View>
     )
 }
