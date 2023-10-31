@@ -65,23 +65,25 @@ const styles = EStyleSheet.create({
   },
   searchContainer: {
     position: 'absolute',
-    top: '0.5rem', // Adjust the top position for the top-right corner
-    right: '0.5rem', // Adjust the right position for the top-right corner
-    top: '0.2rem', // Adjust the top position for the top-right corner
+    top: '0.25rem', // Adjust the top position for the top-right corner
     right: '0.5rem', // Adjust the right position for the top-right corner
     paddingTop: '1.4rem',
   },
   searchInput: {
-    width: '6rem', // Adjust the width as needed
-    height: '2rem',
+    backgroundColor: 'white',
+    fontWeight: 'bold',
+    fontSize: '1.25rem',
+    //width: '100%',
+    width: '25rem', // Adjust the width as needed
+    height: '2.1rem',
     borderWidth: '0.1rem',
     borderColor: 'gray',
-    borderRadius: '.25rem',
+    borderRadius: 25,
     padding: '.25rem',
   },
   xBox: {
     top: '-0.15rem',
-    right:'-5rem'
+    right:'-22.5rem'
   }
 });
 

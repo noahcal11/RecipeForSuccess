@@ -9,6 +9,8 @@
     "web": "npx expo export -p web"
   },
   "dependencies": {
+    "@expo-google-fonts/cairo": "^0.2.3",
+    "@expo-google-fonts/manrope": "^0.2.3",
     "@expo/webpack-config": "^19.0.0",
     "@react-native-community/checkbox": "^0.5.16",
     "@react-navigation/native": "^6.1.7",
@@ -17,6 +19,7 @@
     "dotenv": "^16.3.1",
     "eas-cli": "^5.2.0",
     "expo": "~49.0.8",
+    "expo-checkbox": "~2.4.0",
     "expo-cli": "^6.3.10",
     "expo-font": "~11.4.0",
     "expo-status-bar": "~1.6.0",
@@ -34,8 +37,7 @@
     "react-native-svg": "13.9.0",
     "react-native-vector-icons": "^10.0.0",
     "react-native-web": "~0.19.6",
-    "styled-component": "^2.8.0",
-    "expo-checkbox": "~2.4.0"
+    "styled-component": "^2.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

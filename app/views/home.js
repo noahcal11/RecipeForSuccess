@@ -5,6 +5,7 @@ import Footer from '../Components/Footer'
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState,useContext } from 'react';
 import { Context } from '../App';
+import Genstyle from '../Genstyle';
 
 EStyleSheet.build();
 
@@ -87,7 +88,7 @@ export default function Home({ navigation, route }){
                             >
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
-                                    <Text>{item.title}</Text>
+                                    <Text style={Genstyle.bodyText}>{item.title}</Text>
                                 </View>
                             </Pressable>
                         )}
