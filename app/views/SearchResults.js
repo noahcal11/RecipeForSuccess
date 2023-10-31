@@ -9,8 +9,6 @@ EStyleSheet.build();
 export default function Home({ navigation, route }){
    //From Home page
     const [popularRecs, setPopularRecs] = useState([]);
-    const [dessertRecs, setDessertRecs] = useState([]);
-    const [breakfastRecs, setBreakfastRecs] = useState([]);
 
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
@@ -52,7 +50,7 @@ export default function Home({ navigation, route }){
 
     return(
         <View>
-            <Banner title="Search Results" username={route.params.username} email={route.params.email} />
+            <Banner title="Search Results" />
             <View>
             <View style={styles.container2}>
       {/* Filter Button */}
@@ -84,8 +82,6 @@ export default function Home({ navigation, route }){
           </View>
         )}
       </View>
- 
-      {/* Search Results 
       <FlatList
         data={searchResults}
         keyExtractor={(item) => item.id}
@@ -94,7 +90,7 @@ export default function Home({ navigation, route }){
             <Text>{item.title}</Text>
           </View>
         )}
-      />  */}
+      /> 
     </View>
 
                 
