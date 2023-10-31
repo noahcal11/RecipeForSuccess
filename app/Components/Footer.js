@@ -5,26 +5,28 @@ import HomeIcon from "../assets/svg/home";
 import HeartIcon from "../assets/svg/heart";
 import RibbonIcon from "../assets/svg/ribbon";
 import { useNavigation } from '@react-navigation/native';
+import { Context } from "../App";
 
 EStyleSheet.build();
 
 const Footer = () => {
   const navigation = useNavigation()
   const [menu, setMenu] = useState(false);
+  const {setRecipePageState} = useContext(Context)
 
   return (
 
     //NEED TO CHANGE THE NAV FOR FAVORITES WHEN THAT PAGE IS CREATED
     <View style={styles.footerContainer}>
-      <TouchableOpacity onPress={() => {navigation.navigate("Favorites")}} style={{marginHorizontal: "12.5%"}}>
+      <TouchableOpacity onPress={() => {navigation.navigate("Favorites"); setRecipePageState("details");}} style={{marginHorizontal: "12.5%"}}>
         <HeartIcon width="40" height='100' stroke="black" strokeWidth="0.25"/>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => {navigation.navigate("Home")}} style={{marginHorizontal: "12.5%"}}>
+      <TouchableOpacity onPress={() => {navigation.navigate("Home"); setRecipePageState("details");}} style={{marginHorizontal: "12.5%"}}>
         <HomeIcon width="40" height='100' stroke="black" strokeWidth="0.25"/>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => {navigation.navigate("Skills")}} style={{marginHorizontal: "12.5%"}}>
+      <TouchableOpacity onPress={() => {navigation.navigate("Skills"); setRecipePageState("details");}} style={{marginHorizontal: "12.5%"}}>
         <RibbonIcon width="40" height='100' stroke="black" strokeWidth="0.25"/>
       </TouchableOpacity>
     </View>
