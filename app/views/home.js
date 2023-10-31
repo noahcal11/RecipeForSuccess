@@ -96,7 +96,7 @@ export default function Home({ navigation, route }){
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("SearchResults",{'username':username,'email':email})
+                                    navigation.navigate("SearchResults")
                                 }}
                                 
                                 style={({ pressed }) => [
@@ -134,7 +134,7 @@ export default function Home({ navigation, route }){
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("SearchResults",{'username':username,'email':email})
+                                    navigation.navigate("SearchResults")
                                 }}
                                 
                                 style={({ pressed }) => [
@@ -173,7 +173,7 @@ export default function Home({ navigation, route }){
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("SearchResults",{'username':username,'email':email})
+                                    navigation.navigate("SearchResults")
                                 }}
                                 
                                 style={({ pressed }) => [
@@ -212,7 +212,7 @@ export default function Home({ navigation, route }){
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("SearchResults",{'username':username,'email':email})
+                                    navigation.navigate("SearchResults")
                                 }}
                                 
                                 style={({ pressed }) => [
