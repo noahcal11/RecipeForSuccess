@@ -4,6 +4,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Banner from './Banner'
+import Footer from '../Components/Footer'
 import { useContext } from 'react';
 import { Context } from '../App'
 /* TODO:
@@ -177,6 +178,7 @@ const RecipeSurvey = ({directions, title}) => {
                         <Text style={styles.buttonText}>Submit</Text>
                 </TouchableOpacity>
             }
+            <Footer username={username} email={email} />
         </View>
     );
 }
