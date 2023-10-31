@@ -133,7 +133,7 @@ const RecipeSurvey = ({directions, title}) => {
     }
 
     const Finish = () => {
-        navigation.navigate("Skills", {'username':username,'email':email});
+        navigation.navigate("Skills");
         setRecipePageState('details');
     }
 

@@ -94,6 +94,7 @@ export default function RecipePages({ navigation, route }) {
           username={route.params.username}
           email={route.params.email}
         />
+        <Footer username={route.params.username} email={route.params.email} />
         </View>
       );
     case 'survey':
@@ -105,6 +106,7 @@ export default function RecipePages({ navigation, route }) {
             username={route.params.username}
             email={route.params.email}
           />
+          <Footer username={route.params.username} email={route.params.email} />
           </View>
         );
   };
