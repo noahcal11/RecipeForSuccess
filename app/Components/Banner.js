@@ -17,7 +17,7 @@ const BannerTitle = ({ title}) => {
       </View> }
       <Text style={styles.bannerTitle}>{title}</Text>
       <View style={styles.search}>
-        <SearchBar />
+        <SearchBar/>
       </View>
     </View>
   );
@@ -50,6 +50,8 @@ const styles = EStyleSheet.create({
   },
   search: {
     //flex: 2,
+    width: '100%',
+    height: '100%',
     flex: '.1rem',
   },
 });
