@@ -32,7 +32,6 @@ const global = EStyleSheet.create({
   text: {
     fontSize: '2rem',
     color: 'black',
-    fontFamily: 'Cairo',
   },
   // Action button
   button: {
