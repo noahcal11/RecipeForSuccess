@@ -32,6 +32,7 @@ const global = EStyleSheet.create({
   text: {
     fontSize: '2rem',
     color: 'black',
+    fontFamily: 'Cairo',
   },
   // Action button
   button: {
@@ -64,6 +65,7 @@ const global = EStyleSheet.create({
   bodyText: {
     color: 'black',
     fontSize: '1rem',
+    fontFamily: 'Cairo_500Medium',
   },
   // Centered text
   centeredText: {
@@ -71,7 +73,7 @@ const global = EStyleSheet.create({
     fontSize: '1.25rem',
     padding: '0.5rem',
     textAlign: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   // Text input field
   input: {
