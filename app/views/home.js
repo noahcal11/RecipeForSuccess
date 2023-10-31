@@ -5,7 +5,6 @@ import Footer from '../Components/Footer'
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState,useContext } from 'react';
 import { Context } from '../App';
-import { useFonts, Cairo_500Medium } from '@expo-google-fonts/cairo';
 import Genstyle from '../Genstyle';
 
 EStyleSheet.build();
@@ -68,14 +67,6 @@ export default function Home({ navigation, route }){
         getBreakfast();
         getChicken();
     }, []);
-
-    let [fontsLoaded, fontError] = useFonts({
-        Cairo_500Medium,
-    });
-    
-    if (!fontsLoaded && !fontError) {
-        return null;
-    }
 
     return(
         <View style={styles.container}>
