@@ -78,7 +78,7 @@ export default function Home({ navigation, route }){
                         ListHeaderComponent={<Text style={styles.categoryTitle}>Popular Recipes</Text>}
                         data={popularRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':username,'email':email})}
+                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}
                                 style={({ pressed }) => [
                                     {
                                     opacity: pressed
@@ -116,7 +116,7 @@ export default function Home({ navigation, route }){
                         ListHeaderComponent={<Text style={styles.categoryTitle}>Top Desserts</Text>}
                         data={dessertRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':username,'email':email})}
+                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}
                                 style={({ pressed }) => [
                                     {
                                     opacity: pressed
@@ -156,7 +156,7 @@ export default function Home({ navigation, route }){
                         horizontal
                         data={chickenRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':username,'email':email})}
+                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}
                                 style={({ pressed }) => [
                                     {
                                     opacity: pressed

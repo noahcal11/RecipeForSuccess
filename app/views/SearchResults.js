@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar'; 
-import { Text, Image, View, TouchableOpacity, ScrollView, TextInput, FlatList, SectionList } from 'react-native';
+import { Text, Image, View, TouchableOpacity, ScrollView, TextInput, FlatList, SectionList, Pressable } from 'react-native';
 import Banner from '../Components/Banner';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState } from 'react';
@@ -11,7 +11,6 @@ export default function Home({ navigation, route }){
     const [popularRecs, setPopularRecs] = useState([]);
 
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
-
     const getRecipes = async () => {
         const response = await fetch(API_BASE+"/recipe/get/all")
         .then(res => res.json())
@@ -23,14 +22,17 @@ export default function Home({ navigation, route }){
 //time, cuisine, category
     const [showDropdown, setShowDropdown] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null); //No initial option selected
-    const [searchResults, setSearchResults] = useState([
-      { id: '1', title: 'Result 1' },
-      { id: '2', title: 'Result 2' },
-      // Add more search results here
-    ]);
+    const [searchResults, setSearchResults] = useState([]);
   
     const sortOptions = ['Ascending', 'Descending']; // Your sorting options
   
+    const getSearch = async (searchTerm) => {
+      const response = await fetch(API_BASE+"/recipe/get/?general="+searchTerm)
+      .then(res => res.json())
+      .then(data => setSearchResults(data))
+      .catch(error => console.error(error));
+    }
+    
     const handleSortToggle = () => {
       setShowDropdown(!showDropdown);
     };
@@ -45,6 +47,7 @@ export default function Home({ navigation, route }){
     }
     
     useState(() => {
+        getSearch(route.params.searchTerm);
         getRecipes();
     }, []);
 
@@ -52,7 +55,42 @@ export default function Home({ navigation, route }){
         <View>
             <Banner title="Search Results" />
             <View>
-            <View style={styles.container2}>
+            <FlatList scrollEnabled={false}
+              data={searchResults}
+              renderItem={({ item }) => (
+                  <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}
+                      style={({ pressed }) => [
+                          {
+                          opacity: pressed
+                              ? 0.2
+                              : 1,
+                          }]}
+                  >
+                      <View id={item._id}>
+                          <Image source={{ uri: item.image }} /> 
+                          <Text>{item.title}</Text>
+                      </View>
+                  </Pressable>
+              )}
+              numColumns={2}
+              keyExtractor={(item, index) => index}
+              ListFooterComponent={
+                  <Pressable
+                      onPress={() => {
+                          navigation.navigate("SearchResults")
+                      }}
+                      
+                      style={({ pressed }) => [
+                          {
+                          opacity: pressed
+                              ? 0.2
+                              : 1,
+                          }]}
+                  >
+                      <Text>View more</Text>
+                  </Pressable>
+              }
+          />
       {/* Filter Button */}
       <TouchableOpacity style={styles.filterButton}>
         <Text style={styles.filterButtonText}>Filter</Text>
@@ -81,16 +119,6 @@ export default function Home({ navigation, route }){
             ))}
           </View>
         )}
-      </View>
-      <FlatList
-        data={searchResults}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.resultItem}>
-            <Text>{item.title}</Text>
-          </View>
-        )}
-      /> 
     </View>
 
                 
