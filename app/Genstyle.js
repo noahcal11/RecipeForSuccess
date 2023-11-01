@@ -81,6 +81,17 @@ const global = EStyleSheet.create({
     width: '13rem',
     height: '3rem',
   },
+  // Alt colored button
+  buttonAlt: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#F67D7D',
+    borderRadius: 25,
+    marginBottom: '1rem',
+    width: '13rem',
+    height: '3rem',
+    alignSelf:  'center'
+  },
   // Slightly smaller text for paragraphs
   bodyText: {
     color: 'black',

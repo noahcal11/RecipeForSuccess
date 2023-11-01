@@ -10,7 +10,7 @@ const RecipeFooter = () => {
     return (
       <View style={styles.footerContainer}>
         <TouchableOpacity
-          style={global.button}
+          style={global.buttonAlt}
           onPress={() => {setRecipePageState('progress')}}>
           <Text style={global.buttonText}>Start Recipe!</Text>
         </TouchableOpacity>
