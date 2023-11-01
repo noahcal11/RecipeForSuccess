@@ -22,11 +22,21 @@ const global = EStyleSheet.create({
     marginVertical: '4rem',
     borderRadius: '2rem'
   },
+  // Gray foreground
+  reverseForeground: {
+    flex: 1,
+    backgroundColor: '#eee',
+    //justifyContent: 'center',
+    marginHorizontal: '0.6rem',
+    marginVertical: '1rem',
+    borderRadius: '2rem'
+  },
   // Generic container
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: 'white'
   },
   // Generic text
   text: {
@@ -60,11 +70,39 @@ const global = EStyleSheet.create({
     height: '3rem',
     alignSelf:  'center'
   },
+  // Light gray button for less important buttons
+  buttonMinor: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#ddd',
+    borderRadius: 25,
+    marginBottom: '1rem',
+    width: '13rem',
+    height: '3rem',
+  },
+  // Alt colored button
+  buttonAlt: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#F67D7D',
+    borderRadius: 25,
+    marginBottom: '1rem',
+    width: '13rem',
+    height: '3rem',
+    alignSelf:  'center'
+  },
   // Slightly smaller text for paragraphs
   bodyText: {
     color: 'black',
     fontSize: '1rem',
     fontFamily: 'Cairo_500Medium',
+    flex: 1,
+  },
+  // Even smaller text for captions
+  subText: {
+    color: 'black',
+    fontSize: '0.8rem'
   },
   // Centered text
   centeredText: {
@@ -88,7 +126,7 @@ const global = EStyleSheet.create({
   // Generic horizontal flex
   horizontal: {
     flexDirection: 'row',
-    marginHorizontal: '0.2rem'
+    margin: '0.5rem'
   },
 
 //Login button (old, don't use)
@@ -121,12 +159,23 @@ const global = EStyleSheet.create({
   },
   // Header
   titleText: {
-    fontSize: '1.8rem',
+    fontSize: '1.6rem',
     color: 'black',
+    fontWeight: 'bold',
     // font: manrope
     textAlign: 'center',
     justifyContent: 'center',
-    marginHorizontal: '0.5rem',
+    margin: '0.5rem',
+  },
+  // Section header
+  subheaderText: {
+    fontSize: '1.4rem',
+    color: 'black',
+    fontWeight: 'bold',
+    // font: manrope
+    textAlign: 'center',
+    justifyContent: 'center',
+    margin: '0.5rem',
   },
 
 //Banner.js styling

@@ -250,7 +250,7 @@ export default function Login({navigation}) {
                     </View>
                     <Text style={global.centeredText}>Don't have an account?</Text>
                     <TouchableOpacity
-                    style={styles.guestLink}
+                    style={global.buttonMinor}
                     onPress={() => {
                       navigation.navigate('Home',{'username':"Guest",'email':"Guest"})
                     }}>
@@ -306,10 +306,11 @@ const styles = EStyleSheet.create({
       textAlign: 'center'
     },
     createText: {
-      fontSize: '1rem',
+      fontSize: '0.9rem',
       justifyContent: 'center',
       textAlign: 'center',
-      color: '#444'
+      color: '#444',
+      textDecorationLine: 'underline'
     },
     undertext: {
       textAlign: 'center',
