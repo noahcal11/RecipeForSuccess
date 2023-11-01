@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, FlatList, Touchable } from 'react-native';
+import { View, Text, Pressable, FlatList } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import CheckBox from 'expo-checkbox';
 import { useState, useContext } from 'react';
@@ -67,22 +67,22 @@ const RecipeProgression = ({ingredients, directions, title}) => {
                     <View> 
                         {allChecked ? // If all checkboxes are selected, display a button
                                         // that progresses to the directions section
-                            <TouchableOpacity
+                            <Pressable
                                 onPress={() => {{setStepNum(stepNum + 1)}}}
                                 style={styles.nextButton}>
                                     <Text style={styles.buttonText}>Let's Begin!</Text>
-                            </TouchableOpacity>
-                            :<TouchableOpacity // Otherwise, display a gray button that does nothing
+                            </Pressable>
+                            :<Pressable // Otherwise, display a gray button that does nothing
                                 onPress={() => {}}
                                 style={styles.grayButton}>
                                     <Text style={styles.buttonText}>Let's Begin!</Text>
-                            </TouchableOpacity>
+                            </Pressable>
                         }
-                        <TouchableOpacity
+                        <Pressable
                             onPress={() => {setRecipePageState('details')}}
                             style={global.buttonMinor}>
                             <Text style={global.subText}>Go Back</Text>
-                        </TouchableOpacity>
+                        </Pressable>
                     </View>
                 </View>
             );
@@ -92,16 +92,16 @@ const RecipeProgression = ({ingredients, directions, title}) => {
                     <Text style={global.titleText}>Step {stepNum}:</Text>
                     <Text style={global.centeredText}>{directions[stepNum - 1]}</Text>
                     {stepNum == directions.length ?
-                        <TouchableOpacity // If on the last step, button sends user to the survey page
+                        <Pressable // If on the last step, button sends user to the survey page
                             onPress={() => {setRecipePageState('survey')}}
                             style={global.button}>
                                 <Text style={global.buttonText}>Finish!</Text>
-                        </TouchableOpacity>
-                        :<TouchableOpacity // Otherwise, button just leads to the next step
+                        </Pressable>
+                        :<Pressable // Otherwise, button just leads to the next step
                             onPress={() => {setStepNum(stepNum + 1)}}
                             style={global.button}>
                                 <Text style={global.buttonText}>Next</Text>
-                        </TouchableOpacity>
+                        </Pressable>
                     }
                 </View>
             );

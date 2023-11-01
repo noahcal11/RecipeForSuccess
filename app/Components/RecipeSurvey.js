@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, Pressable, FlatList } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -47,7 +47,7 @@ const RecipeSurvey = ({directions, title}) => {
 
         return (
             <View style={styles.buttonContainer}>
-                <TouchableOpacity
+                <Pressable
                     // TODO: figure out how to combine a dynamic styling with the stylesheet 
                     style={{ backgroundColor: setBackgroundColor(1) }}
                     onPress={() => {
@@ -74,8 +74,8 @@ const RecipeSurvey = ({directions, title}) => {
                         }))
                     }}>
                     <Text style={styles.buttonText}>Good</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
+                </Pressable>
+                <Pressable
                     style={{ backgroundColor: setBackgroundColor(2) }}
                     onPress={() => {
                         setAllSelected(true)
@@ -101,8 +101,8 @@ const RecipeSurvey = ({directions, title}) => {
                         }))
                     }}>
                     <Text style={styles.buttonText}>Okay</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
+                </Pressable>
+                <Pressable
                     style={{ backgroundColor: setBackgroundColor(3) }}
                     onPress={() => {
                         setAllSelected(true)
@@ -128,7 +128,7 @@ const RecipeSurvey = ({directions, title}) => {
                         }))
                     }}>
                     <Text style={styles.buttonText}>Bad</Text>
-                </TouchableOpacity>
+                </Pressable>
             </View>
         )
     }
@@ -166,17 +166,17 @@ const RecipeSurvey = ({directions, title}) => {
             {/* Insert submit button that is unavailable until all button pairs have a selection */}
             {/* This button will redirect to the skills page and show your improvement */}
             {allSelected ?
-                <TouchableOpacity
+                <Pressable
                     style={styles.finishButton}
                     onPress={() => {Finish()}}>
                         <Text style={styles.buttonText}>Submit</Text>
-                </TouchableOpacity>
+                </Pressable>
                 :
-                <TouchableOpacity
+                <Pressable
                     style={styles.grayButton}
                     onPress={() => {}}>
                         <Text style={styles.buttonText}>Submit</Text>
-                </TouchableOpacity>
+                </Pressable>
             }
         </View>
     );

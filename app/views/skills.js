@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar'; 
-import { Text, Image, View, TouchableOpacity, TextInput, ScrollView } from 'react-native';
+import { Text, Image, View, TextInput, ScrollView, Pressable } from 'react-native';
 import Banner from '../Components/Banner';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { SearchBar } from 'react-native-screens';
@@ -91,7 +91,8 @@ const styles = EStyleSheet.create({
         justifyContent: 'center',
         padding: '1rem', // This works with height
         width: '100%',
-        height: '11.4rem', // this works, wanted percentages but could not figure that out
+        //height: '11.4rem', // this works, wanted percentages but could not figure that out
+        height: '20%',
       },
       textContainerGray: {
         flex: 1,
@@ -99,7 +100,8 @@ const styles = EStyleSheet.create({
         backgroundColor: 'darkgray',
         padding: '1rem', // This works with height
         width: '100%',
-        height: '11.4rem', // this works, wanted percentages but could not figure that out
+        //height: '11.4rem', // this works, wanted percentages but could not figure that out
+        height: '20%',
       },
       skillTitle: {
         textAlign: 'left',
