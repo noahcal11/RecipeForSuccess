@@ -42,35 +42,31 @@ export default function Skills({ navigation, route }){
             <SearchBar />
             <Banner title="Skills" username={username} email={email}/>
                 <ScrollView>
+                    
                     <View>
-                            {/* <Text>Welcome {username}!</Text> */}
-                        <Text style={styles.welcomeText}>Hey {username}, check out your skill levels here!</Text>
-                    </View>
 
-                    <View style={{alignItems: 'center'}}>
-
-                        <View style={styles.textContainer}>
+                        <View style={styles.textContainerRed}>
                             <Text style={styles.textBox}>Cooking Rating</Text>
                             <Text style={styles.textBox2}>Level: {levelFunc(skills[0])[0]+1}</Text>
                             <ProgressBar bgcolor="#6a1b9a" completed={levelFunc(skills[0])[1]} />
                             <Text style={styles.completedText}> {`${levelFunc(skills[0])[1]}%`} </Text>
                         </View>
 
-                        <View style={styles.textContainer}>
+                        <View style={styles.textContainerGray}>
                             <Text style={styles.textBox}>Ingredients Rating</Text>
                             <Text style={styles.textBox2}>Level: {levelFunc(skills[1])[0]+1}</Text>
                             <ProgressBar bgcolor="#6a1b9a" completed={levelFunc(skills[1])[1]} />
                             <Text style={styles.completedText}> {`${levelFunc(skills[1])[1]}%`} </Text>
                         </View>
 
-                        <View style={styles.textContainer}>
+                        <View style={styles.textContainerRed}>
                             <Text style={styles.textBox}>Knife Rating</Text>
                             <Text style={styles.textBox2}>Level: {levelFunc(skills[2])[0]+1}</Text>
                             <ProgressBar bgcolor="#6a1b9a" completed={levelFunc(skills[2])[1]} />
                             <Text style={styles.completedText}> {`${levelFunc(skills[2])[1]}%`} </Text>
                         </View>
 
-                        <View style={styles.textContainer}>
+                        <View style={styles.textContainerGray}>
                             <Text style={styles.textBox}>Time & Temperature Rating</Text>
                             <Text style={styles.textBox2}>Level: {levelFunc(skills[3])[0]+1}</Text>
                             <ProgressBar bgcolor="#6a1b9a" completed={levelFunc(skills[3])[1]} />
@@ -87,14 +83,23 @@ const styles = EStyleSheet.create({
     container: {
         flex:1,
       },
-    textContainer: {
+    textContainerRed: {
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'salmon',
-        borderRadius: '2rem', // You can adjust the border radius as needed
+        borderRadius: '0%', // You can adjust the border radius as needed
         padding: '0.5rem', // You can adjust the padding as needed
         marginTop: '1rem', // You can adjust the margin as needed
-        width: '15rem',
+        width: '100%',
+      },
+      textContainerGray: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'lightgray',
+        borderRadius: '0%', // You can adjust the border radius as needed
+        padding: '0.5rem', // You can adjust the padding as needed
+        marginTop: '1rem', // You can adjust the margin as needed
+        width: '100%',
       },
     textBox: {
         alignItems: 'center',
@@ -118,11 +123,5 @@ const styles = EStyleSheet.create({
         fontSize: '1rem',
         fontWeight: 'bold',
         marginTop: '-1rem', 
-      },
-    welcomeText: {
-        textAlign: 'center',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontSize: '2rem',
-    }, 
+      }
   });
