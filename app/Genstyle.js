@@ -70,10 +70,22 @@ const global = EStyleSheet.create({
     height: '3rem',
     alignSelf:  'center'
   },
+  // Light gray button for less important buttons
+  buttonMinor: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#ddd',
+    borderRadius: 25,
+    marginBottom: '1rem',
+    width: '13rem',
+    height: '3rem',
+  },
   // Slightly smaller text for paragraphs
   bodyText: {
     color: 'black',
     fontSize: '1rem',
+    flex: 1,
   },
   // Even smaller text for captions
   subText: {
@@ -102,7 +114,7 @@ const global = EStyleSheet.create({
   // Generic horizontal flex
   horizontal: {
     flexDirection: 'row',
-    marginHorizontal: '0.2rem'
+    margin: '0.5rem'
   },
 
 //Login button (old, don't use)
@@ -136,6 +148,16 @@ const global = EStyleSheet.create({
   // Header
   titleText: {
     fontSize: '1.6rem',
+    color: 'black',
+    fontWeight: 'bold',
+    // font: manrope
+    textAlign: 'center',
+    justifyContent: 'center',
+    margin: '0.5rem',
+  },
+  // Section header
+  subheaderText: {
+    fontSize: '1.4rem',
     color: 'black',
     fontWeight: 'bold',
     // font: manrope

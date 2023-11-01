@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
+import global from '../Genstyle'
 
 const RecipeIngredients = ({ ingredients }) => {
   return (
@@ -9,7 +10,7 @@ const RecipeIngredients = ({ ingredients }) => {
       renderItem={({ item }) => (
         <View style={styles.ingredientItem}>
           <Text style={styles.bullet}>•</Text>
-          <Text style={styles.ingredientText}>{item}</Text>
+          <Text style={global.bodyText}>{item}</Text>
         </View>
       )}
     />

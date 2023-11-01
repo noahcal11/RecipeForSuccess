@@ -178,7 +178,6 @@ const RecipeSurvey = ({directions, title}) => {
                         <Text style={styles.buttonText}>Submit</Text>
                 </TouchableOpacity>
             }
-            <Footer username={username} email={email} />
         </View>
     );
 }

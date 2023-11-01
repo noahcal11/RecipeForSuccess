@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
+import global from '../Genstyle'
 
 const RecipeDirections = ({ directions }) => {
   return (
@@ -11,7 +12,7 @@ const RecipeDirections = ({ directions }) => {
       renderItem={({ item, index }) => (
         <View style={styles.directionItem}>
           <Text style={styles.directionNumber}>{index + 1}.</Text>
-          <Text style={styles.directionText}>{item}</Text>
+          <Text style={global.bodyText}>{item}</Text>
         </View>
       )}
     />
