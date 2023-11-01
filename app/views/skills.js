@@ -42,35 +42,34 @@ export default function Skills({ navigation, route }){
             <SearchBar />
             <Banner title="Skills" username={username} email={email}/>
                 <ScrollView>
-                    
                     <View>
 
                         <View style={styles.textContainerRed}>
-                            <Text style={styles.textBox}>Cooking Rating</Text>
-                            <Text style={styles.textBox2}>Level: {levelFunc(skills[0])[0]+1}</Text>
-                            <ProgressBar bgcolor="#6a1b9a" completed={levelFunc(skills[0])[1]} />
-                            <Text style={styles.completedText}> {`${levelFunc(skills[0])[1]}%`} </Text>
+                            <Text style={styles.skillTitle}>Cooking Rating</Text>
+                            <Text style={styles.levelText}>Level: {levelFunc(skills[0])[0]+1}</Text>
+                            <ProgressBar bgcolor="#05CACA" completed={levelFunc(skills[0])[1]} />
+                            <Text style={styles.levelText}> {`${levelFunc(skills[0])[1]}%`} </Text>
                         </View>
 
                         <View style={styles.textContainerGray}>
-                            <Text style={styles.textBox}>Ingredients Rating</Text>
-                            <Text style={styles.textBox2}>Level: {levelFunc(skills[1])[0]+1}</Text>
-                            <ProgressBar bgcolor="#6a1b9a" completed={levelFunc(skills[1])[1]} />
-                            <Text style={styles.completedText}> {`${levelFunc(skills[1])[1]}%`} </Text>
+                            <Text style={styles.skillTitle}>Ingredients Rating</Text>
+                            <Text style={styles.levelText}>Level: {levelFunc(skills[1])[0]+1}</Text>
+                            <ProgressBar bgcolor="#05CACA" completed={levelFunc(skills[1])[1]} />
+                            <Text style={styles.levelText}> {`${levelFunc(skills[1])[1]}%`} </Text>
                         </View>
 
                         <View style={styles.textContainerRed}>
-                            <Text style={styles.textBox}>Knife Rating</Text>
-                            <Text style={styles.textBox2}>Level: {levelFunc(skills[2])[0]+1}</Text>
-                            <ProgressBar bgcolor="#6a1b9a" completed={levelFunc(skills[2])[1]} />
-                            <Text style={styles.completedText}> {`${levelFunc(skills[2])[1]}%`} </Text>
+                            <Text style={styles.skillTitle}>Knife Rating</Text>
+                            <Text style={styles.levelText}>Level: {levelFunc(skills[2])[0]+1}</Text>
+                            <ProgressBar bgcolor="#05CACA" completed={levelFunc(skills[2])[1]} />
+                            <Text style={styles.levelText}> {`${levelFunc(skills[2])[1]}%`} </Text>
                         </View>
 
                         <View style={styles.textContainerGray}>
-                            <Text style={styles.textBox}>Time & Temperature Rating</Text>
-                            <Text style={styles.textBox2}>Level: {levelFunc(skills[3])[0]+1}</Text>
-                            <ProgressBar bgcolor="#6a1b9a" completed={levelFunc(skills[3])[1]} />
-                            <Text style={styles.completedText}> {`${levelFunc(skills[3])[1]}%`} </Text>
+                            <Text style={styles.skillTitle}>Time & Temperature Rating</Text>
+                            <Text style={styles.levelText}>Level: {levelFunc(skills[3])[0]+1}</Text>
+                            <ProgressBar bgcolor="#05CACA" completed={levelFunc(skills[3])[1]} />
+                            <Text style={styles.levelText}> {`${levelFunc(skills[3])[1]}%`} </Text>
                         </View>
                     </View>
                 </ScrollView>
@@ -81,47 +80,36 @@ export default function Skills({ navigation, route }){
 
 const styles = EStyleSheet.create({
     container: {
-        flex:1,
+        flex: 1,
+        justifyContent: 'center',
+        height: '100%',
       },
     textContainerRed: {
-        alignItems: 'center',
-        justifyContent: 'center',
+        flex: 1,
         backgroundColor: 'salmon',
-        borderRadius: '0%', // You can adjust the border radius as needed
-        padding: '0.5rem', // You can adjust the padding as needed
-        marginTop: '1rem', // You can adjust the margin as needed
+        justifyContent: 'center',
+        //borderRadius: '0%', // You can adjust the border radius as needed
+        padding: '1rem', // You can adjust the padding as needed
         width: '100%',
+        height: '11.4rem',
       },
       textContainerGray: {
-        alignItems: 'center',
+        flex: 1,
         justifyContent: 'center',
-        backgroundColor: 'lightgray',
-        borderRadius: '0%', // You can adjust the border radius as needed
-        padding: '0.5rem', // You can adjust the padding as needed
-        marginTop: '1rem', // You can adjust the margin as needed
+        backgroundColor: 'darkgray',
+        padding: '1rem', // You can adjust the padding as needed
         width: '100%',
+        height: '11.4rem',
       },
-    textBox: {
-        alignItems: 'center',
-        justifyContent: 'center',
+      skillTitle: {
+        textAlign: 'left',
+        fontSize:'1.5rem',
+        fontWeight: 'bold',
+        marginBottom: '1%',
+      },
+    levelText: {
         textAlign: 'center',
-        flexDirection: 'row',
         fontSize:'1rem',
         fontWeight: 'bold',
-        marginBottom: '1rem',
-    },
-    textBox2: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        textAlign: 'center',
-        flexDirection: 'row',
-        fontSize:'1rem',
-        fontWeight: 'bold',
-        marginBottom: '0rem',
-    },
-    completedText: {
-        fontSize: '1rem',
-        fontWeight: 'bold',
-        marginTop: '-1rem', 
-      }
+    }
   });
