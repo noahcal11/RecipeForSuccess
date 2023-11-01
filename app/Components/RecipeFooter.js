@@ -23,12 +23,13 @@ const RecipeFooter = () => {
 
   const styles = EStyleSheet.create({
     footerContainer: {
-      //backgroundColor: 'transparent',
+      backgroundColor: 'transparent', // #F67D7D
       padding: 10,
       alignItems: 'center',
     },
     footerText: {
-      color: 'white',
+      color: '#141414',
       fontSize: 16,
+      fontWeight: 'bold',
     },
   })

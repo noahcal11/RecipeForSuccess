@@ -17,7 +17,7 @@ const BannerTitle = ({ title}) => {
       </View> }
       <Text style={styles.bannerTitle}>{title}</Text>
       <View style={styles.search}>
-        <SearchBar />
+        <SearchBar/>
       </View>
     </View>
   );
@@ -28,7 +28,7 @@ export default BannerTitle;
 const styles = EStyleSheet.create({
   banner: {
     height: '5.5rem',
-    backgroundColor: 'salmon', // Set the background color of the banner
+    backgroundColor: '#F02727', // Set the background color of the banner
     paddingVertical: '1rem', // Adjust vertical padding as needed
     flexDirection: 'row',
     //justifyContent: 'center'
@@ -50,6 +50,8 @@ const styles = EStyleSheet.create({
   },
   search: {
     //flex: 2,
+    width: '100%',
+    height: '100%',
     flex: '.1rem',
   },
 });
