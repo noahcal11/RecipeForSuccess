@@ -35,7 +35,7 @@ export default ProfileBannerTitle;
 const styles = EStyleSheet.create({
   banner: {
     height: '5.5rem',
-    backgroundColor: 'salmon', // Set the background color of the banner
+    backgroundColor: '#F02727', // Set the background color of the banner
     paddingVertical: '1rem', // Adjust vertical padding as needed
     flexDirection: 'row',
     //justifyContent: 'center'

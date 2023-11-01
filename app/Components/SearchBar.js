@@ -40,7 +40,7 @@ const SearchBar = () => {
             placeholder="Search..."
             style={styles.searchInput}
             autoFocus
-            onSubmitEditing={({ nativeEvent: { text } }) => navigation.navigate("SearchResults",{"searchTerm":text})}
+            onSubmitEditing={({ nativeEvent: { text } }) => {navigation.navigate("SearchResults",{"searchTerm":text}); closeSearchBar();}}
           />
           <TouchableOpacity onPress={closeSearchBar}>
             <View style={styles.xBox}> 

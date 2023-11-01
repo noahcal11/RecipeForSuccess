@@ -12,7 +12,7 @@ export default function Home({ navigation, route }){
 
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
     const getRecipes = async () => {
-        const response = await fetch(API_BASE+"/recipe/get/all")
+        const response = await fetch(API_BASE+"/recipe/get/?general=ham", {method: "GET"})
         .then(res => res.json())
         .then(data => setPopularRecs(data.slice(0,8)))
         .catch(error => console.error(error));
@@ -27,7 +27,7 @@ export default function Home({ navigation, route }){
     const sortOptions = ['Ascending', 'Descending']; // Your sorting options
   
     const getSearch = async (searchTerm) => {
-      const response = await fetch(API_BASE+"/recipe/get/?general="+searchTerm)
+      const response = await fetch(API_BASE+"/recipe/get/?general="+searchTerm, {method: "GET"})
       .then(res => res.json())
       .then(data => setSearchResults(data))
       .catch(error => console.error(error));
@@ -47,8 +47,8 @@ export default function Home({ navigation, route }){
     }
     
     useState(() => {
-        getSearch(route.params.searchTerm);
-        getRecipes();
+      getRecipes();
+      getSearch(route.params.searchTerm);
     }, []);
 
     return(

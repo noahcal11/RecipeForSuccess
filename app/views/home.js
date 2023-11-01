@@ -34,28 +34,28 @@ export default function Home({ navigation, route }){
     }
 
     const getPopular = async () => {
-        const response = await fetch(API_BASE+"/recipe/get/?cuisine=American")
+        const response = await fetch(API_BASE+"/recipe/get/?cuisine=American", {method: "GET"})
         .then(res => res.json())
         .then(data => setPopularRecs(getRandom(data,8)))
         .catch(error => console.error(error));
     }
 
     const getDessert = async () => {
-        const response = await fetch(API_BASE+"/recipe/get/?category=Dessert")
+        const response = await fetch(API_BASE+"/recipe/get/?category=Dessert", {method: "GET"})
         .then(res => res.json())
         .then(data => setDessertRecs(getRandom(data,4)))
         .catch(error => console.error(error));
     }
 
     const getBreakfast = async() => {
-        const response = await fetch(API_BASE+"/recipe/get/?category=Breakfast")
+        const response = await fetch(API_BASE+"/recipe/get/?category=Breakfast", {method: "GET"})
         .then(res => res.json())
         .then(data => setBreakfastRecs(getRandom(data,4)))
         .catch(error => console.error(error));
     }
 
     const getChicken = async() => {
-        const response = await fetch(API_BASE+"/recipe/get/?title=Chicken")
+        const response = await fetch(API_BASE+"/recipe/get/?title=Chicken", {method: "GET"})
         .then(res => res.json())
         .then(data => setChickenRecs(getRandom(data,8)))
         .catch(error => console.error(error));
