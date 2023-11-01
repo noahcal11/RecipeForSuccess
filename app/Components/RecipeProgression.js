@@ -114,7 +114,6 @@ const RecipeProgression = ({ingredients, directions, title}) => {
             {/* //almost working except the page does not know where to get recipe title from
             <Text style={styles.title}> {recipe.title} </Text> */}
             {steps()}
-            <Footer />
         </View>
     )
 }
