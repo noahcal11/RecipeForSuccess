@@ -67,7 +67,7 @@ export default function RecipePages({ navigation, route }) {
                   <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
 
                   <TouchableHighlight onPress={handleFavoritesPress} style={styles.icon}>
-            <StarIcon name="star" size={30} color={isFavorite ? "gold" : "gray"} />
+            <StarIcon width="40" height='85' stroke="black" strokeWidth="0.25" color={isFavorite ? "gold" : "gray"}/>
             </TouchableHighlight>
 
             
