@@ -5,7 +5,7 @@ import Footer from '../Components/Footer'
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState,useContext } from 'react';
 import { Context } from '../App';
-import Genstyle from '../Genstyle';
+import global from '../Genstyle';
 
 EStyleSheet.build();
 
@@ -69,13 +69,13 @@ export default function Home({ navigation, route }){
     }, []);
 
     return(
-        <View style={styles.container}>
-            <Banner title="Home" />
+        <View style={global.container}>
+            <Banner title="Home" username={username} email={email}/>
             <ScrollView styles={{ flex: 1 }}>
                 <View style={styles.recipeSection}>
                     <FlatList scrollEnabled={false}
-                        style={styles.recList}
-                        ListHeaderComponent={<Text style={styles.categoryTitle}>Popular Recipes</Text>}
+                        style={global.reverseForeground}
+                        ListHeaderComponent={<Text style={global.titleText}>Popular Recipes</Text>}
                         data={popularRecs}
                         renderItem={({ item }) => (
                             <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}
@@ -88,7 +88,7 @@ export default function Home({ navigation, route }){
                             >
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
-                                    <Text style={Genstyle.bodyText}>{item.title}</Text>
+                                    <Text style={global.subText}>{item.title}</Text>
                                 </View>
                             </Pressable>
                         )}
@@ -112,8 +112,8 @@ export default function Home({ navigation, route }){
                         }
                     />
                     <FlatList scrollEnabled={false}
-                        style={styles.recList}
-                        ListHeaderComponent={<Text style={styles.categoryTitle}>Top Desserts</Text>}
+                        style={global.reverseForeground}
+                        ListHeaderComponent={<Text style={global.titleText}>Top Desserts</Text>}
                         data={dessertRecs}
                         renderItem={({ item }) => (
                             <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}
@@ -149,8 +149,8 @@ export default function Home({ navigation, route }){
                             </Pressable>
                         }
                     />
-                    <View style={styles.recList}>
-                    <Text style={styles.categoryTitle}>Chicken!</Text>
+                    <View style={global.reverseForeground}>
+                    <Text style={global.titleText}>Chicken!</Text>
                     <FlatList
                         style={styles.recList}
                         horizontal
@@ -190,8 +190,8 @@ export default function Home({ navigation, route }){
                     />
                     </View>
                     <FlatList scrollEnabled={false}
-                        style={styles.recList}
-                        ListHeaderComponent={<Text style={styles.categoryTitle}>Breakfast Creations</Text>}
+                        style={global.reverseForeground}
+                        ListHeaderComponent={<Text style={global.titleText}>Breakfast Creations</Text>}
                         data={breakfastRecs}
                         renderItem={({ item }) => (
                             <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':username,'email':email})}
@@ -246,15 +246,16 @@ const styles = EStyleSheet.create({
     },
     imageView: {
         margin: '1rem',
-        width: '9rem',
+        width: '7rem',
     },
     imageThumbnail: {
         justifyContent: 'center',
         alignItems: 'center',
         height: '5rem',
-        width: '9rem',
+        width: '8rem',
         borderRadius: '2rem',
-        borderWidth: '0.2rem'
+        borderWidth: '0.1rem',
+        borderColor: 'black'
     },
     recipeSection: {
         padding: '1rem',
@@ -278,5 +279,7 @@ const styles = EStyleSheet.create({
         paddingBottom: '0.7rem',
         paddingRight: '0.25rem',
         color: '#ad0603',
+        alignItems: 'center',
+        textAlign: 'center'
     }
 });

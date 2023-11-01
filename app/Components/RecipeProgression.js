@@ -7,6 +7,7 @@ import { Context } from '../App'
 import Banner from './Banner';
 import Footer from '../Components/Footer'
 import { ScrollView } from 'react-native-gesture-handler';
+import global from '../Genstyle'
 
 // TODO: style this page so it actually looks good
 const RecipeProgression = ({ingredients, directions, title}) => {
@@ -14,6 +15,7 @@ const RecipeProgression = ({ingredients, directions, title}) => {
     const [stepNum, setStepNum] = useState(0);
     const [allChecked, setAllChecked] = useState(false);
     const [toggleCheck, setToggleCheck] = useState(new Array(ingredients.length).fill(false));
+    const [selectAll, setSelectAll] = useState(false);
     const { recipePageState, setRecipePageState, username, email } = useContext(Context);
     const recipeTitle = title;
 
@@ -32,14 +34,26 @@ const RecipeProgression = ({ingredients, directions, title}) => {
     function steps() {
         if(stepNum == 0) { // Displays the ingredient list
             return (
-                <View>
-                    <Text style={styles.heading}>Ingredients for {recipeTitle}:</Text>
+                <View style={{ flex: 1 }}>
+                    <Text style={global.titleText}>Ingredients for {recipeTitle}:</Text>
+                    <View style={global.horizontal}>
+                        <Text style={styles.globalSelect}>Select All</Text>
+                        <CheckBox style={styles.checkbox}
+                            disabled={false}
+                            value={selectAll}
+                            onValueChange={() => {
+                                setSelectAll(!selectAll)
+                                setAllChecked(!selectAll)
+                                setToggleCheck(toggleCheck.map(() => {return !selectAll}))
+                            }}
+                        />
+                    </View>
                     <FlatList // List that displays each ingredient, as well as a checkbox
                         data={ingredients}
                         keyExtractor={(item, index) => index.toString()}
                         renderItem={({ item, index }) => (
-                            <View style={styles.ingredientList}>
-                                <Text style={styles.ingredientItem}>{item}</Text>
+                            <View style={global.horizontal}>
+                                <Text style={global.bodyText}>{item}</Text>
                                 <CheckBox style={styles.checkbox}
                                     disabled={false}
                                     value={toggleCheck[index]}
@@ -64,24 +78,29 @@ const RecipeProgression = ({ingredients, directions, title}) => {
                                     <Text style={styles.buttonText}>Let's Begin!</Text>
                             </TouchableOpacity>
                         }
+                        <TouchableOpacity
+                            onPress={() => {setRecipePageState('details')}}
+                            style={global.buttonMinor}>
+                            <Text style={global.subText}>Go Back</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             );
         } else { // Displays the directions in order
             return (
-                <View>
-                    <Text style={styles.header}>Step {stepNum}:</Text>
-                    <Text style={styles.step}>{directions[stepNum - 1]}</Text>
+                <View style={{ flex: 1 }}>
+                    <Text style={global.titleText}>Step {stepNum}:</Text>
+                    <Text style={global.centeredText}>{directions[stepNum - 1]}</Text>
                     {stepNum == directions.length ?
                         <TouchableOpacity // If on the last step, button sends user to the survey page
                             onPress={() => {setRecipePageState('survey')}}
-                            style={styles.nextButton}>
-                                <Text style={styles.buttonText}>Finish!</Text>
+                            style={global.button}>
+                                <Text style={global.buttonText}>Finish!</Text>
                         </TouchableOpacity>
                         :<TouchableOpacity // Otherwise, button just leads to the next step
                             onPress={() => {setStepNum(stepNum + 1)}}
-                            style={styles.nextButton}>
-                                <Text style={styles.buttonText}>Next</Text>
+                            style={global.button}>
+                                <Text style={global.buttonText}>Next</Text>
                         </TouchableOpacity>
                     }
                 </View>
@@ -114,6 +133,14 @@ const styles=EStyleSheet.create({
         alignSelf: 'center',
         justifyContent: 'center',
     },
+    globalSelect: {
+        color: 'black',
+        fontSize: '1.1rem',
+        flex: 1,
+        textAlign: 'right',
+        fontWeight: 'bold',
+        marginRight: '5%'
+    },
     ingredientList: {
         flexDirection: 'row',
         margin: '0.7rem'
@@ -122,8 +149,8 @@ const styles=EStyleSheet.create({
         flex: 7,
     },
     checkbox: {
-        flex: 1,
-        width: '1rem',
+        width: 27,
+        height: 27,
     },
     nextButton: {
         alignItems: 'center',

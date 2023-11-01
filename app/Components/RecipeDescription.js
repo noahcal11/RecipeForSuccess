@@ -2,20 +2,14 @@
 
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import global from '../Genstyle'
 
 const RecipeDescription = ({ description }) => {
   return (
     <View>
-      <Text style={styles.description}>{description}</Text>
+      <Text style={global.bodyText}>{description}</Text>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  description: {
-    fontSize: 16,
-    marginBottom: 20,
-  },
-});
 
 export default RecipeDescription;

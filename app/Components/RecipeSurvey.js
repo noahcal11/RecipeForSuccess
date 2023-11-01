@@ -134,7 +134,7 @@ const RecipeSurvey = ({directions, title}) => {
     }
 
     const Finish = () => {
-        navigation.navigate("Skills", {'username':username,'email':email});
+        navigation.navigate("Skills");
         setRecipePageState('details');
     }
 
@@ -178,7 +178,6 @@ const RecipeSurvey = ({directions, title}) => {
                         <Text style={styles.buttonText}>Submit</Text>
                 </TouchableOpacity>
             }
-            <Footer />
         </View>
     );
 }
