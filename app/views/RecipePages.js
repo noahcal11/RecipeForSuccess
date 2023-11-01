@@ -12,6 +12,7 @@ import RecipeDescription from '../Components/RecipeDescription';
 import RecipeProgression from '../Components/RecipeProgression';
 import RecipeSurvey from '../Components/RecipeSurvey';
 import Footer from '../Components/Footer';
+import StarIcon from '../assets/svg/star';
 import { useState, useContext } from 'react';
 import { Context } from '../App'
 import Icon from 'react-native-vector-icons/FontAwesome'; // Adjust the library and icon as needed
@@ -66,7 +67,7 @@ export default function RecipePages({ navigation, route }) {
                   <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
 
                   <TouchableHighlight onPress={handleFavoritesPress} style={styles.icon}>
-            <Icon name="star" size={30} color={isFavorite ? "gold" : "gray"} />
+            <StarIcon name="star" size={30} color={isFavorite ? "gold" : "gray"} />
             </TouchableHighlight>
 
             
