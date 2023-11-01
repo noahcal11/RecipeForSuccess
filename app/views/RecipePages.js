@@ -14,6 +14,8 @@ import RecipeSurvey from '../Components/RecipeSurvey';
 import Footer from '../Components/Footer';
 import { useState, useContext } from 'react';
 import { Context } from '../App'
+import Icon from 'react-native-vector-icons/FontAwesome'; // Adjust the library and icon as needed
+import { TouchableHighlight } from 'react-native';
 
 EStyleSheet.build();
 
@@ -31,6 +33,13 @@ export default function RecipePages({ navigation, route }) {
       .catch(error => console.error(error));
   }
 
+
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const handleFavoritesPress = () => {
+    setIsFavorite(!isFavorite); // Toggle the isFavorite state when pressed
+  };
+
   useState(() => {
     getRecipes();
   }, []);
@@ -43,6 +52,7 @@ export default function RecipePages({ navigation, route }) {
           <View style={styles.container}>
             {/* Banner title */}
             <BannerTitle title={'Recipe'} />
+            
             {/* Your app content */}
             <FlatList
               data={[recipe]}
@@ -52,7 +62,14 @@ export default function RecipePages({ navigation, route }) {
                 <Text style={styles.title}> {recipe.title} </Text>
                   {/* Recipe Description */}
                   <Image source={{uri:item.image}} style={{width: 400, height: 300}} />
+                  
                   <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
+
+                  <TouchableHighlight onPress={handleFavoritesPress} style={styles.icon}>
+            <Icon name="star" size={30} color={isFavorite ? "gold" : "gray"} />
+            </TouchableHighlight>
+
+            
                     <Text style={{ fontSize: 18, marginBottom: 20 }}>
                       Recipe Description
                     </Text>
@@ -125,5 +142,11 @@ const styles = EStyleSheet.create({
   },
   componentView: {
     paddingHorizontal: 20,
+  },
+
+  icon: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
   },
 });

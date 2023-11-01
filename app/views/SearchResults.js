@@ -3,6 +3,8 @@ import { Text, Image, View, TouchableOpacity, ScrollView, TextInput, FlatList, S
 import Banner from '../Components/Banner';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState } from 'react';
+import Icon from 'react-native-vector-icons/FontAwesome'; // Adjust the library and icon as needed
+import { TouchableHighlight } from 'react-native';
 
 EStyleSheet.build();
 
@@ -36,6 +38,9 @@ export default function Home({ navigation, route }){
     const handleSortToggle = () => {
       setShowDropdown(!showDropdown);
     };
+
+
+    
   
     const handleSortSelect = (option) => {
       setSelectedOption(option);
@@ -45,6 +50,18 @@ export default function Home({ navigation, route }){
     
    
     }
+
+
+    const [isFavorite, setIsFavorite] = useState(false);
+
+  const handleFavoritesPress = () => {
+    setIsFavorite(!isFavorite); // Toggle the isFavorite state when pressed
+  };
+
+
+    
+
+
     
     useState(() => {
         getRecipes();
@@ -55,6 +72,13 @@ export default function Home({ navigation, route }){
             <Banner title="Search Results" username={route.params.username} email={route.params.email} />
             <View>
             <View style={styles.container2}>
+            <TouchableHighlight onPress={handleFavoritesPress} style={styles.icon}>
+            <Icon name="star" size={30} color={isFavorite ? "gold" : "gray"} />
+            </TouchableHighlight>
+
+            {/*<Icon name="star" size={30} color="gold" style={styles.icon} />*/}
+
+ 
       {/* Filter Button */}
       <TouchableOpacity style={styles.filterButton}>
         <Text style={styles.filterButtonText}>Filter</Text>
@@ -245,5 +269,10 @@ const styles = EStyleSheet.create({
         borderBottomColor: 'gray',
       },
 
+      icon: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
+      },
     
 });
