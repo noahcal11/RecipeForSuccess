@@ -83,33 +83,32 @@ const styles = EStyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         height: '100%',
+        flexDirection: 'column',
       },
     textContainerRed: {
         flex: 1,
         backgroundColor: 'salmon',
         justifyContent: 'center',
-        //borderRadius: '0%', // You can adjust the border radius as needed
-        padding: '1rem', // You can adjust the padding as needed
+        padding: '1rem', // This works with height
         width: '100%',
-        height: '11.4rem',
+        height: '11.4rem', // this works, wanted percentages but could not figure that out
       },
       textContainerGray: {
         flex: 1,
         justifyContent: 'center',
         backgroundColor: 'darkgray',
-        padding: '1rem', // You can adjust the padding as needed
+        padding: '1rem', // This works with height
         width: '100%',
-        height: '11.4rem',
+        height: '11.4rem', // this works, wanted percentages but could not figure that out
       },
       skillTitle: {
         textAlign: 'left',
         fontSize:'1.5rem',
         fontWeight: 'bold',
-        marginBottom: '1%',
       },
     levelText: {
         textAlign: 'center',
         fontSize:'1rem',
         fontWeight: 'bold',
-    }
+    },
   });

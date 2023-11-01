@@ -7,7 +7,7 @@ const ProgressBar = (props) => {
   
     const containerStyles = {
       height: 30,
-      width: '90%',
+      width: '80%',
       backgroundColor: "#e0e0de",
       margin: 25,
     }
@@ -18,14 +18,6 @@ const ProgressBar = (props) => {
       backgroundColor: bgcolor,
       textAlign: 'right'
     }
-  
-    // const labelStyles = {
-    //   paddingRight:1,
-    //   paddingTop: 5,
-    //   color: 'white',
-    //   fontWeight: 'bold',
-    //   textAlign: 'right',
-    // }
   
     return (
       <View style={containerStyles}>
