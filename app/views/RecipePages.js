@@ -70,7 +70,8 @@ export default function RecipePages({ navigation, route }) {
             </TouchableHighlight>
 
             
-                    <Text style={{ fontSize: 18, marginBottom: 20 }}>
+                    <Text style={{ fontSize: 18, marginBottom: 20 }}/>
+                    <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 20 }}>
                       Recipe Description
                     </Text>
                     <RecipeDescription description={item.desc} />

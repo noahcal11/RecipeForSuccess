@@ -29,10 +29,10 @@ export default function Login({navigation}) {
       },
       method: "POST",
       body: JSON.stringify({email: email, username: username, password: password})
-    }).then(navigation.navigate('Home',{'username':username,'email':email}));
+    }).then(navigation.navigate('Home'));
   }
 
-  const getUser = async email => {
+  const getUser = async () => {
       setNotification("")
       const data = await fetch(API_BASE+"/user/get/" + email, {method: "GET"})
         .then(res => res.json())
@@ -63,21 +63,22 @@ export default function Login({navigation}) {
 
   const resetPassword = async email => {
     setNotification("")
-    const data = await fetch(API_BASE+"/user/forgot-password/" + email, {method: "POST"})
-      .then(setNotification("Email Sent!"),setPopupType("Code"))
-      .catch(setNotification("Email is likely not registered"))
+    await fetch(API_BASE+"/user/forgot-password/" + email, {method: "POST"})
+      .then(setNotification("Email Sent!"))
+      .then(setPopupType("Code"))
+      .catch(err => console.error(err))
   }
 
-  const takeToken = async (email,token,password) => {
+  const takeToken = async (token) => {
     setNotification("")
-    await fetch(API_BASE+"/user/new", {
+    await fetch(API_BASE+"/user/reset-password", {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       method: "POST",
-      body: JSON.stringify({email: email, token: token, password: password})
-    });
+      body: JSON.stringify({email: email, code: token, password: password})
+    }).then(getUser()).catch(err => console.error(err));
   }
 
   function displayPopup(type) {
