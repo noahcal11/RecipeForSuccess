@@ -105,11 +105,11 @@ const RecipeProgression = ({ingredients, directions, title}) => {
                         </Pressable>
                     }
                     {/* Back button */}
-                    <TouchableOpacity // Decrement step count when going back
+                    <Pressable // Decrement step count when going back
                         onPress={() => {setStepNum(stepNum - 1)}}
                         style={global.buttonMinor}>
                             <Text style={global.subText}>Go Back</Text>
-                    </TouchableOpacity>
+                    </Pressable>
                 </View>
             );
         }
