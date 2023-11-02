@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar'; 
-import { Text, Image, View, Pressable, ScrollView, TextInput, FlatList, SectionList } from 'react-native';
+import { Text, Image, View, TouchableOpacity, ScrollView, TextInput, FlatList, SectionList, Pressable } from 'react-native';
 import Banner from '../Components/Banner';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState } from 'react';
@@ -92,30 +92,30 @@ export default function Home({ navigation, route }){
               }
           />
       {/* Filter Button */}
-      <Pressable style={styles.filterButton}>
+      <TouchableOpacity style={styles.filterButton}>
         <Text style={styles.filterButtonText}>Filter</Text>
-      </Pressable>
+      </TouchableOpacity>
 
       {/* Sort By Dropdown */}
       
       <View style={styles.sortByContainer}>
-        <Pressable onPress={handleSortToggle} style={styles.sortButton}>
+        <TouchableOpacity onPress={handleSortToggle} style={styles.sortButton}>
           <Text style={styles.sortByText}>
             Sort By: {selectedOption}
           </Text>
 
-        </Pressable>
+        </TouchableOpacity>
 
         {showDropdown && (
           <View style={[styles.dropdown, {zIndex: 1}]}>
             {sortOptions.map((option, index) => (
-              <Pressable
+              <TouchableOpacity
                 key={index}
                 onPress={() => handleSortSelect(option)}
                 style={styles.dropdownOption}
               >
                 <Text style={styles.dropdownOptionText}>{option}</Text>
-              </Pressable>
+              </TouchableOpacity>
             ))}
           </View>
         )}
@@ -127,12 +127,12 @@ export default function Home({ navigation, route }){
                     <FlatList nestedScrollEnabled = {true}
                         data={popularRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}>
+                            <TouchableOpacity onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}>
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
                                     <Text>{item.title}</Text>
                                 </View>
-                            </Pressable>
+                            </TouchableOpacity>
                         )}
                         numColumns={2}
                         keyExtractor={(item, index) => index.toString()}
@@ -143,37 +143,40 @@ export default function Home({ navigation, route }){
                 
                 
             </View>
-            <Pressable
+            <TouchableOpacity
                 onPress={() => {
                     navigation.navigate("Login")
                 }}
                 >
                 <Text>Go Back</Text>
-            </Pressable>
+            </TouchableOpacity>
 
-            <Pressable
+            <TouchableOpacity
                 onPress={() => {
                     navigation.navigate("Skills")
                 }}
                 >
                 <Text>Skills page</Text>
-            </Pressable>
+            </TouchableOpacity>
 
-            <Pressable
+            <TouchableOpacity
                 onPress={() => {
                     navigation.navigate("RecipePages")
                 }}
                 >
                 <Text>Recipe page</Text>
-            </Pressable>
+            </TouchableOpacity>
 
-            <Pressable
+            <TouchableOpacity
                 onPress={() => {
                     navigation.navigate("SearchResults")
                 }}
                 >
                 <Text>Search Results</Text>
-            </Pressable>
+            </TouchableOpacity>
+
+
+            
         </View>
     );
 }

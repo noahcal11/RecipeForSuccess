@@ -1,7 +1,7 @@
 // BannerTitle.js
 
 import React from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import GearIcon from '../assets/svg/gear';
 import Profile from './Profile';
 import { useNavigation } from '@react-navigation/native';
@@ -22,9 +22,9 @@ const ProfileBannerTitle = ({ title}) => {
       </View> }
       <Text style={styles.bannerTitle}>{title}</Text>
       <View style={styles.gear}>
-        <Pressable onPress={() => {navigation.navigate("ProfileSettings"); setRecipePageState("details");}} style={{marginHorizontal: "12.5%"}}>
+        <TouchableOpacity onPress={() => {navigation.navigate("ProfileSettings"); setRecipePageState("details");}} style={{marginHorizontal: "12.5%"}}>
           <GearIcon width="40" height='85' stroke="black" strokeWidth="0.25"/>
-        </Pressable>
+        </TouchableOpacity>
       </View>
     </View>
   );

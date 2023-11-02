@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Pressable } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState, useContext, useEffect } from 'react'
 import { Context } from '../App'
@@ -9,11 +9,11 @@ const RecipeFooter = () => {
   const { recipePageState, setRecipePageState } = useContext(Context);
     return (
       <View style={styles.footerContainer}>
-        <Pressable
+        <TouchableOpacity
           style={global.buttonAlt}
           onPress={() => {setRecipePageState('progress')}}>
           <Text style={global.buttonText}>Start Recipe!</Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
     );
   };

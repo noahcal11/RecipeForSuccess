@@ -1,7 +1,7 @@
 // SearchBarComponent.js
 
 import React, { useState } from 'react';
-import { View, Pressable, Text, TextInput, StyleSheet} from 'react-native';
+import { View, TouchableOpacity, Text, TextInput, StyleSheet} from 'react-native';
 import SearchIcon from '../assets/svg/search';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useNavigation } from '@react-navigation/core';
@@ -27,11 +27,11 @@ const SearchBar = () => {
   return (
     <View style={styles.searchContainer}>
       <View>
-        <Pressable onPress={openSearchBar}>
+        <TouchableOpacity onPress={openSearchBar}>
           {!isTextInputVisible ? (
             <SearchIcon style={styles.icon}></SearchIcon>
           ) : null}
-        </Pressable>
+        </TouchableOpacity>
       </View>
 
       {isTextInputVisible ? (
@@ -42,11 +42,11 @@ const SearchBar = () => {
             autoFocus
             onSubmitEditing={({ nativeEvent: { text } }) => {navigation.navigate("SearchResults",{"searchTerm":text}); closeSearchBar();}}
           />
-          <Pressable onPress={closeSearchBar}>
+          <TouchableOpacity onPress={closeSearchBar}>
             <View style={styles.xBox}> 
               <Text>X</Text>
             </View>
-          </Pressable>
+          </TouchableOpacity>
         </View>
       ) : null}
     </View>
