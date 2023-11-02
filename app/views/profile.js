@@ -40,7 +40,7 @@ export default function Profile() {
                         </View>
                     </View>
                 </ScrollView>
-            <Footer username={username} email={email} />
+            <Footer/>
         </View>
     )
 }
