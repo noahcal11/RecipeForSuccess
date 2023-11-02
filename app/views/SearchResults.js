@@ -9,13 +9,10 @@ EStyleSheet.build();
 export default function Home({ navigation, route }){
    //From Home page
     const [popularRecs, setPopularRecs] = useState([]);
-    const [dessertRecs, setDessertRecs] = useState([]);
-    const [breakfastRecs, setBreakfastRecs] = useState([]);
 
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
-
     const getRecipes = async () => {
-        const response = await fetch(API_BASE+"/recipe/get/all")
+        const response = await fetch(API_BASE+"/recipe/get/?general=ham", {method: "GET"})
         .then(res => res.json())
         .then(data => setPopularRecs(data.slice(0,8)))
         .catch(error => console.error(error));
@@ -25,14 +22,17 @@ export default function Home({ navigation, route }){
 //time, cuisine, category
     const [showDropdown, setShowDropdown] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null); //No initial option selected
-    const [searchResults, setSearchResults] = useState([
-      { id: '1', title: 'Result 1' },
-      { id: '2', title: 'Result 2' },
-      // Add more search results here
-    ]);
+    const [searchResults, setSearchResults] = useState([]);
   
     const sortOptions = ['Ascending', 'Descending']; // Your sorting options
   
+    const getSearch = async (searchTerm) => {
+      const response = await fetch(API_BASE+"/recipe/get/?general="+searchTerm, {method: "GET"})
+      .then(res => res.json())
+      .then(data => setSearchResults(data))
+      .catch(error => console.error(error));
+    }
+    
     const handleSortToggle = () => {
       setShowDropdown(!showDropdown);
     };
@@ -47,14 +47,50 @@ export default function Home({ navigation, route }){
     }
     
     useState(() => {
-        getRecipes();
+      getRecipes();
+      getSearch(route.params.searchTerm);
     }, []);
 
     return(
         <View>
-            <Banner title="Search Results" username={route.params.username} email={route.params.email} />
+            <Banner title="Search Results" />
             <View>
-            <View style={styles.container2}>
+            <FlatList scrollEnabled={false}
+              data={searchResults}
+              renderItem={({ item }) => (
+                  <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}
+                      style={({ pressed }) => [
+                          {
+                          opacity: pressed
+                              ? 0.2
+                              : 1,
+                          }]}
+                  >
+                      <View id={item._id}>
+                          <Image source={{ uri: item.image }} /> 
+                          <Text>{item.title}</Text>
+                      </View>
+                  </Pressable>
+              )}
+              numColumns={2}
+              keyExtractor={(item, index) => index}
+              ListFooterComponent={
+                  <Pressable
+                      onPress={() => {
+                          navigation.navigate("SearchResults")
+                      }}
+                      
+                      style={({ pressed }) => [
+                          {
+                          opacity: pressed
+                              ? 0.2
+                              : 1,
+                          }]}
+                  >
+                      <Text>View more</Text>
+                  </Pressable>
+              }
+          />
       {/* Filter Button */}
       <Pressable style={styles.filterButton}>
         <Text style={styles.filterButtonText}>Filter</Text>
@@ -83,18 +119,6 @@ export default function Home({ navigation, route }){
             ))}
           </View>
         )}
-      </View>
- 
-      {/* Search Results 
-      <FlatList
-        data={searchResults}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.resultItem}>
-            <Text>{item.title}</Text>
-          </View>
-        )}
-      />  */}
     </View>
 
                 

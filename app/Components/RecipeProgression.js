@@ -110,7 +110,7 @@ const RecipeProgression = ({ingredients, directions, title}) => {
 
     return (
         <View style={styles.container}>
-            <Banner title={recipeTitle} username={username} email={email}/>
+            <Banner title={"Progression"}/>
             {/* //almost working except the page does not know where to get recipe title from
             <Text style={styles.title}> {recipe.title} </Text> */}
             {steps()}

@@ -40,7 +40,7 @@ export default function Skills({ navigation, route }){
     return(
         <View style={styles.container}>
             <SearchBar />
-            <Banner title="Skills" username={username} email={email}/>
+            <Banner title="Skills"/>
                 <ScrollView>
                     <View>
 
@@ -73,7 +73,7 @@ export default function Skills({ navigation, route }){
                         </View>
                     </View>
                 </ScrollView>
-            <Footer username={username} email={email} />
+            <Footer />
         </View>
     );
 }

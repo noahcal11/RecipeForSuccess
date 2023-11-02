@@ -4,11 +4,13 @@ import React, { useState } from 'react';
 import { View, Pressable, Text, TextInput, StyleSheet} from 'react-native';
 import SearchIcon from '../assets/svg/search';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import { useNavigation } from '@react-navigation/core';
 
 EStyleSheet.build();
 
 
 const SearchBar = () => {
+  const navigation = useNavigation()
   const [isSearchVisible, setSearchVisible] = useState(false);
   const [isTextInputVisible, setTextInputVisible] = useState(false);
 
@@ -38,6 +40,7 @@ const SearchBar = () => {
             placeholder="Search..."
             style={styles.searchInput}
             autoFocus
+            onSubmitEditing={({ nativeEvent: { text } }) => {navigation.navigate("SearchResults",{"searchTerm":text}); closeSearchBar();}}
           />
           <Pressable onPress={closeSearchBar}>
             <View style={styles.xBox}> 
