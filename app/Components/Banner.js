@@ -1,16 +1,18 @@
 // BannerTitle.js
 import ProfileIcon from "../assets/svg/profile";
 import EStyleSheet from 'react-native-extended-stylesheet';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Pressable, Text, TextInput } from 'react-native';
 import SearchIcon from '../assets/svg/search';
 import { useNavigation } from '@react-navigation/core';
+import { Context } from "../App";
 
 EStyleSheet.build();
 
 const BannerTitle = ({ title }) => {
   const navigation = useNavigation()
   const [isTextInputVisible, setTextInputVisible] = useState(false);
+  const {setRecipePageState} = useContext(Context);
 
   const toggleSearchBar = () => {
     setTextInputVisible(!isTextInputVisible);
@@ -95,7 +97,8 @@ const styles = EStyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'right',
     marginHorizontal:'5%',
-    backgroundColor: 'white',
+    backgroundColor: '#ddd',
+    borderRadius: 25,
   },
   searchInput: {
     flex: 1,
