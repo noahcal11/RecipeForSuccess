@@ -1,4 +1,4 @@
-import { Text, View, TouchableOpacity, FlatList, SafeAreaView, StyleSheet, Modal } from "react-native";
+import { Text, View, Pressable, FlatList, SafeAreaView, StyleSheet, Modal } from "react-native";
 import React, { useContext, useState } from 'react';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import HomeIcon from "../assets/svg/home";
@@ -18,24 +18,25 @@ const Footer = () => {
 
     //NEED TO CHANGE THE NAV FOR FAVORITES WHEN THAT PAGE IS CREATED
     <View style={styles.footerContainer}>
-      <TouchableOpacity onPress={() => {navigation.navigate("Favorites"); setRecipePageState("details");}} style={{marginHorizontal: "12.5%"}}>
+      <Pressable onPress={() => {navigation.navigate("Favorites"); setRecipePageState("details");}} style={{marginHorizontal: "12.5%"}}>
         <HeartIcon width="40" height='100' stroke="black" strokeWidth="0.25"/>
-      </TouchableOpacity>
+      </Pressable>
 
-      <TouchableOpacity onPress={() => {navigation.navigate("Home"); setRecipePageState("details");}} style={{marginHorizontal: "12.5%"}}>
+      <Pressable onPress={() => {navigation.navigate("Home"); setRecipePageState("details");}} style={{marginHorizontal: "12.5%"}}>
         <HomeIcon width="40" height='100' stroke="black" strokeWidth="0.25"/>
-      </TouchableOpacity>
+      </Pressable>
 
-      <TouchableOpacity onPress={() => {navigation.navigate("Skills"); setRecipePageState("details");}} style={{marginHorizontal: "12.5%"}}>
+      <Pressable onPress={() => {navigation.navigate("Skills"); setRecipePageState("details");}} style={{marginHorizontal: "12.5%"}}>
         <RibbonIcon width="40" height='100' stroke="black" strokeWidth="0.25"/>
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 };
 
 const styles = EStyleSheet.create({
   footerContainer: {
-    height: '5rem',
+    //height: '5rem',
+    height: '10%',
     backgroundColor: '#F02727',
     alignItems: 'center',
     flexDirection: 'row',
