@@ -33,6 +33,8 @@ const global = EStyleSheet.create({
   },
   // Generic container
   container: {
+    height: '100%',
+    width: '100%',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -108,7 +110,7 @@ const global = EStyleSheet.create({
   centeredText: {
     color: 'black',
     fontSize: '1.25rem',
-    padding: '0.5rem',
+    padding: '0.25rem',
     textAlign: 'center',
     justifyContent: 'center',
   },

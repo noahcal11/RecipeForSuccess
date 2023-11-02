@@ -24,19 +24,19 @@ export default function Profile() {
     ]);
     
     return(
-        <View style={styles.container}>
+        <View style={styles.pageContainer}>
             <ProfileBannerTitle> </ProfileBannerTitle>
-                    <View>
-                        <View style={styles.dropDown}>
-                        <DropDownPicker
-                            autoScroll={true}
-                            open={open}
-                            value={value}
-                            items={items}
-                            setOpen={setOpen}
-                            setValue={setValue}
-                            setItems={setItems}
-                            />
+                    <View style={styles.settingsContainer}>
+                        <View>
+                            <DropDownPicker
+                                autoScroll={true}
+                                open={open}
+                                value={value}
+                                items={items}
+                                setOpen={setOpen}
+                                setValue={setValue}
+                                setItems={setItems}
+                                />
                         </View>
                     </View>
             <Footer/>
@@ -45,11 +45,12 @@ export default function Profile() {
 }
 
 const styles = EStyleSheet.create({
-    container: {
+    pageContainer: {
         flex: 1,
         height: '100%',
       },
-    dropDown: {
+    settingsContainer: {
+        height: '80%',
         alignItems: 'center',
     }
 })
