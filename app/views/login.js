@@ -201,14 +201,13 @@ export default function Login({navigation}) {
     return (
     <View style={global.background}>
         <View style={global.foreground}>
-            <View style={styles.top}>
+            <View>
                 <Image style={styles.logo} source={require("../assets/favicon.png")}></Image>
                 <LogoIcon style={styles.logo}></LogoIcon>
                 {/* <Text style={styles.text}>Welcome to Recipe For Success</Text> */}
-                <Text style={global.titleText}>Welcome to Recipe For Success</Text>
+                <Text style={{ ...global.titleText, marginTop: 150 }}>Welcome to Recipe For Success</Text>
                 <Text style={styles.undertext}>{notification}</Text>
-            </View>
-            <View style={styles.bottom}>
+            
             {/* <Pressable
             style={styles.login}>
             <Text style={styles.loginText}>Register</Text>
@@ -270,15 +269,6 @@ export default function Login({navigation}) {
 }
 
 const styles = EStyleSheet.create({
-    top: {
-      flex: 1,
-      marginTop: '2rem',
-      justifyContent: 'center'
-    },
-    bottom: {
-      flex: 3,
-      justifyContent: 'center',
-    },
     logo: {
       position: 'absolute',
       width: 5,

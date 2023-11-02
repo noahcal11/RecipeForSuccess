@@ -16,6 +16,7 @@ const global = EStyleSheet.create({
   // White foreground
   foreground: {
     flex: 1,
+    flexDirection: 'column',
     backgroundColor: '#fff',
     justifyContent: 'center',
     marginHorizontal: '1.5rem',
@@ -184,7 +185,6 @@ const global = EStyleSheet.create({
     fontFamily: 'Manrope_500Medium',
     textAlign: 'center',
     justifyContent: 'center',
-    margin: '0.5rem',
   },
   // Section header
   subheaderText: {
