@@ -126,7 +126,7 @@ export default function Home({ navigation, route }){
                             >
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
-                                    <Text>{item.title}</Text>
+                                    <Text style={global.subText}>{item.title}</Text>
                                 </View>
                             </Pressable>
                         )}
@@ -166,7 +166,7 @@ export default function Home({ navigation, route }){
                             >
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
-                                    <Text>{item.title}</Text>
+                                    <Text style={global.subText}>{item.title}</Text>
                                 </View>
                             </Pressable>
                         )}
@@ -204,7 +204,7 @@ export default function Home({ navigation, route }){
                             >
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
-                                    <Text>{item.title}</Text>
+                                    <Text style={global.subText}>{item.title}</Text>
                                 </View>
                             </Pressable>
                         )}
@@ -247,6 +247,7 @@ const styles = EStyleSheet.create({
     imageView: {
         margin: '1rem',
         width: '7rem',
+        marginBottom: '0.2rem',
     },
     imageThumbnail: {
         justifyContent: 'center',
@@ -255,7 +256,8 @@ const styles = EStyleSheet.create({
         width: '8rem',
         borderRadius: '2rem',
         borderWidth: '0.1rem',
-        borderColor: 'black'
+        borderColor: 'black',
+        marginBottom: '0.4rem',
     },
     recipeSection: {
         padding: '1rem',
@@ -275,11 +277,12 @@ const styles = EStyleSheet.create({
         fontSize: '1.05rem',
         fontWeight: 'bold',
         fontStyle: 'italic',
+        fontFamily: 'Cairo_500Medium',
         paddingLeft: '1rem',
         paddingBottom: '0.7rem',
         paddingRight: '0.25rem',
         color: '#ad0603',
         alignItems: 'center',
-        textAlign: 'center'
+        textAlign: 'center',
     }
 });

@@ -136,6 +136,7 @@ const styles = EStyleSheet.create({
   },
   credits: {
     fontSize: '1rem',
+    fontFamily: 'Cairo_500Medium',
     justifyContent: 'center',
     textAlign: 'center',
     color: 'blue',

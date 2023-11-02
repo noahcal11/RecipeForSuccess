@@ -9,7 +9,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 EStyleSheet.build();
 
-const BannerTitle = ({ title}) => {
+const BannerTitle = ({ title }) => {
   return (
     <View style={styles.banner}>
       {<View style={styles.profile}>
@@ -38,6 +38,7 @@ const styles = EStyleSheet.create({
     fontSize: '1.5rem', // Adjust the font size as needed
     color: 'black', // Set the text color
     fontWeight: 'bold', // Adjust font weight as needed
+    fontFamily: 'Manrope_500Medium',
     textAlign: 'center', // Center text
     flex: '1rem',
     //paddingTop: '5%',
