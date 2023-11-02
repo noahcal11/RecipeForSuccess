@@ -314,7 +314,8 @@ const styles = EStyleSheet.create({
       justifyContent: 'center',
       textAlign: 'center',
       color: '#444',
-      textDecorationLine: 'underline'
+      textDecorationLine: 'underline',
+      fontFamily: 'Cairo_500Medium',
     },
     undertext: {
       textAlign: 'center',
@@ -365,6 +366,7 @@ const styles = EStyleSheet.create({
     },
     guestText: {
       color: 'black',
-      fontSize: '0.85rem'
+      fontSize: '0.9rem',
+      fontFamily: 'Cairo_500Medium',
     }
   });

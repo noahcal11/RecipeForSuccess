@@ -7,6 +7,7 @@ import Footer from '../Components/Footer';
 import ProgressBar from '../Components/ProgressBar';
 import { useState,useContext } from 'react';
 import { Context } from '../App'
+import global from '../Genstyle';
 
 EStyleSheet.build();
 
@@ -38,38 +39,37 @@ export default function Skills({ navigation, route }){
     }
 
     return(
-        <View style={styles.container}>
+        <View style={styles.pageContainer}>
             <SearchBar />
             <Banner title="Skills"/>
                 <ScrollView>
-                    <View>
-
+                    <View style={styles.skillsContainer}>
                         <View style={styles.textContainerRed}>
-                            <Text style={styles.skillTitle}>Cooking Rating</Text>
-                            <Text style={styles.levelText}>Level: {levelFunc(skills[0])[0]+1}</Text>
+                            <Text style={{...global.subheaderText, textAlign: 'left' }}>Cooking Rating</Text>
+                            <Text style={global.centeredText}>Level: {levelFunc(skills[0])[0]+1}</Text>
                             <ProgressBar bgcolor="#05CACA" completed={levelFunc(skills[0])[1]} />
-                            <Text style={styles.levelText}> {`${levelFunc(skills[0])[1]}%`} </Text>
+                            <Text style={global.centeredText}> {`${levelFunc(skills[0])[1]}%`} </Text>
                         </View>
 
                         <View style={styles.textContainerGray}>
-                            <Text style={styles.skillTitle}>Ingredients Rating</Text>
-                            <Text style={styles.levelText}>Level: {levelFunc(skills[1])[0]+1}</Text>
+                            <Text style={{...global.subheaderText, textAlign: 'left' }}>Ingredients Rating</Text>
+                            <Text style={global.centeredText}>Level: {levelFunc(skills[1])[0]+1}</Text>
                             <ProgressBar bgcolor="#05CACA" completed={levelFunc(skills[1])[1]} />
-                            <Text style={styles.levelText}> {`${levelFunc(skills[1])[1]}%`} </Text>
+                            <Text style={global.centeredText}> {`${levelFunc(skills[1])[1]}%`} </Text>
                         </View>
 
                         <View style={styles.textContainerRed}>
-                            <Text style={styles.skillTitle}>Knife Rating</Text>
-                            <Text style={styles.levelText}>Level: {levelFunc(skills[2])[0]+1}</Text>
+                            <Text style={{...global.subheaderText, textAlign: 'left' }}>Knife Rating</Text>
+                            <Text style={global.centeredText}>Level: {levelFunc(skills[2])[0]+1}</Text>
                             <ProgressBar bgcolor="#05CACA" completed={levelFunc(skills[2])[1]} />
-                            <Text style={styles.levelText}> {`${levelFunc(skills[2])[1]}%`} </Text>
+                            <Text style={global.centeredText}> {`${levelFunc(skills[2])[1]}%`} </Text>
                         </View>
 
                         <View style={styles.textContainerGray}>
-                            <Text style={styles.skillTitle}>Time & Temperature Rating</Text>
-                            <Text style={styles.levelText}>Level: {levelFunc(skills[3])[0]+1}</Text>
+                            <Text style={{...global.subheaderText, textAlign: 'left' }}>Time & Temperature Rating</Text>
+                            <Text style={global.centeredText}>Level: {levelFunc(skills[3])[0]+1}</Text>
                             <ProgressBar bgcolor="#05CACA" completed={levelFunc(skills[3])[1]} />
-                            <Text style={styles.levelText}> {`${levelFunc(skills[3])[1]}%`} </Text>
+                            <Text style={global.centeredText}> {`${levelFunc(skills[3])[1]}%`} </Text>
                         </View>
                     </View>
                 </ScrollView>
@@ -79,12 +79,15 @@ export default function Skills({ navigation, route }){
 }
 
 const styles = EStyleSheet.create({
-    container: {
+    pageContainer: {
         flex: 1,
         justifyContent: 'center',
         height: '100%',
         flexDirection: 'column',
       },
+    skillsContainer: {
+        height: '80%',
+    },
     textContainerRed: {
         flex: 1,
         backgroundColor: 'salmon',
@@ -103,14 +106,4 @@ const styles = EStyleSheet.create({
         //height: '11.4rem', // this works, wanted percentages but could not figure that out
         height: '20%',
       },
-      skillTitle: {
-        textAlign: 'left',
-        fontSize:'1.5rem',
-        fontWeight: 'bold',
-      },
-    levelText: {
-        textAlign: 'center',
-        fontSize:'1rem',
-        fontWeight: 'bold',
-    },
   });

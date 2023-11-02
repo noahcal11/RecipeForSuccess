@@ -18,8 +18,8 @@ const global = EStyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     justifyContent: 'center',
-    marginHorizontal: '2.2rem',
-    marginVertical: '4rem',
+    marginHorizontal: '1.5rem',
+    marginVertical: '3.5rem',
     borderRadius: '2rem'
   },
   // Gray foreground
@@ -29,10 +29,12 @@ const global = EStyleSheet.create({
     //justifyContent: 'center',
     marginHorizontal: '0.6rem',
     marginVertical: '1rem',
-    borderRadius: '2rem'
+    borderRadius: '2rem',
   },
   // Generic container
   container: {
+    height: '100%',
+    width: '100%',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -42,6 +44,7 @@ const global = EStyleSheet.create({
   text: {
     fontSize: '2rem',
     color: 'black',
+    fontFamily: 'Cairo_500Medium',
   },
   // Action button
   button: {
@@ -49,7 +52,7 @@ const global = EStyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'red',
     borderRadius: 25,
-    marginBottom: '1rem',
+    marginVertical: '1rem',
     width: '13rem',
     height: '3rem',
     alignSelf:  'center'
@@ -58,14 +61,16 @@ const global = EStyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: '1rem',
+    fontFamily: 'Cairo_500Medium',
+    fontWeight: 'bold',
   },
   // Grey button that does nothing
   buttonInactive: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'gray',
+    backgroundColor: '#bbb',
     borderRadius: 25,
-    marginBottom: '1rem',
+    marginVertical: '1rem',
     width: '13rem',
     height: '3rem',
     alignSelf:  'center'
@@ -77,7 +82,7 @@ const global = EStyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#ddd',
     borderRadius: 25,
-    marginBottom: '1rem',
+    marginVertical: '1rem',
     width: '13rem',
     height: '3rem',
   },
@@ -87,7 +92,7 @@ const global = EStyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#F67D7D',
     borderRadius: 25,
-    marginBottom: '1rem',
+    marginVertical: '1rem',
     width: '13rem',
     height: '3rem',
     alignSelf:  'center'
@@ -99,24 +104,37 @@ const global = EStyleSheet.create({
     fontFamily: 'Cairo_500Medium',
     flex: 1,
   },
+  // Centered version of bodyText
+  centerBodyText: {
+    color: 'black',
+    fontSize: '1rem',
+    fontFamily: 'Cairo_500Medium',
+    flex: 1,
+    textAlign: 'center',
+    margin: '5%'
+  },
   // Even smaller text for captions
   subText: {
     color: 'black',
-    fontSize: '0.8rem'
+    fontSize: '0.8rem',
+    fontFamily: 'Cairo_500Medium',
+    lineHeight: '1.2rem',
   },
   // Centered text
   centeredText: {
     color: 'black',
     fontSize: '1.25rem',
-    padding: '0.5rem',
+    padding: '0.25rem',
     textAlign: 'center',
     justifyContent: 'center',
+    fontFamily: 'Cairo_500Medium',
   },
   // Text input field
   input: {
     backgroundColor: '#D1D1D1',
     borderRadius: '2rem',
     fontSize: '1rem',
+    fontFamily: 'Cairo_500Medium',
     width: '13rem',
     height: '3rem',
     paddingLeft: '1rem',
@@ -156,13 +174,14 @@ const global = EStyleSheet.create({
   menuText: {
     fontSize: 30,
     color: 'black',
+    fontFamily: 'Cairo_500Medium',
   },
   // Header
   titleText: {
     fontSize: '1.6rem',
     color: 'black',
     fontWeight: 'bold',
-    // font: manrope
+    fontFamily: 'Manrope_500Medium',
     textAlign: 'center',
     justifyContent: 'center',
     margin: '0.5rem',
@@ -172,7 +191,7 @@ const global = EStyleSheet.create({
     fontSize: '1.4rem',
     color: 'black',
     fontWeight: 'bold',
-    // font: manrope
+    fontFamily: 'Manrope_500Medium',
     textAlign: 'center',
     justifyContent: 'center',
     margin: '0.5rem',
@@ -188,6 +207,7 @@ const global = EStyleSheet.create({
     fontSize: 24, // Adjust the font size as needed
     color: 'black', // Set the text color
     fontWeight: 'bold', // Adjust font weight as needed
+    fontFamily: 'Manrope_500Medium',
   },
 });
 
