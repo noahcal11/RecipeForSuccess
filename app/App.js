@@ -9,7 +9,8 @@ import SearchResults from './views/SearchResults'
 import ProfileSettings from './views/ProfileSettings';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useFonts, Cairo_500Medium } from '@expo-google-fonts/cairo';
+import { useFonts } from 'expo-font';
+import { Cairo_500Medium } from '@expo-google-fonts/cairo';
 import { Manrope_500Medium } from '@expo-google-fonts/manrope';
 
 const Stack = createNativeStackNavigator();

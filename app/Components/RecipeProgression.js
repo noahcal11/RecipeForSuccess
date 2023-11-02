@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, FlatList, Touchable } from 'react-native';
+import { View, Text, Pressable, FlatList } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import CheckBox from 'expo-checkbox';
 import { useState, useContext } from 'react';
@@ -67,22 +67,22 @@ const RecipeProgression = ({ingredients, directions, title}) => {
                     <View> 
                         {allChecked ? // If all checkboxes are selected, display a button
                                         // that progresses to the directions section
-                            <TouchableOpacity
+                            <Pressable
                                 onPress={() => {{setStepNum(stepNum + 1)}}}
                                 style={styles.nextButton}>
                                     <Text style={styles.buttonText}>Let's Begin!</Text>
-                            </TouchableOpacity>
-                            :<TouchableOpacity // Otherwise, display a gray button that does nothing
+                            </Pressable>
+                            :<Pressable // Otherwise, display a gray button that does nothing
                                 onPress={() => {}}
                                 style={styles.grayButton}>
                                     <Text style={styles.buttonText}>Let's Begin!</Text>
-                            </TouchableOpacity>
+                            </Pressable>
                         }
-                        <TouchableOpacity
+                        <Pressable
                             onPress={() => {setRecipePageState('details')}}
                             style={global.buttonMinor}>
                             <Text style={global.subText}>Go Back</Text>
-                        </TouchableOpacity>
+                        </Pressable>
                     </View>
                 </View>
             );
@@ -93,16 +93,16 @@ const RecipeProgression = ({ingredients, directions, title}) => {
                     <Text style={global.centeredText}>{directions[stepNum - 1]}</Text>
                     {/* Next button */}
                     {stepNum == directions.length ?
-                        <TouchableOpacity // If on the last step, button sends user to the survey page
+                        <Pressable // If on the last step, button sends user to the survey page
                             onPress={() => {setRecipePageState('survey')}}
                             style={global.button}>
                                 <Text style={global.buttonText}>Finish!</Text>
-                        </TouchableOpacity>
-                        :<TouchableOpacity // Otherwise, button just leads to the next step
+                        </Pressable>
+                        :<Pressable // Otherwise, button just leads to the next step
                             onPress={() => {setStepNum(stepNum + 1)}}
                             style={global.button}>
                                 <Text style={global.buttonText}>Next</Text>
-                        </TouchableOpacity>
+                        </Pressable>
                     }
                     {/* Back button */}
                     <TouchableOpacity // Decrement step count when going back
@@ -117,7 +117,7 @@ const RecipeProgression = ({ingredients, directions, title}) => {
 
     return (
         <View style={styles.container}>
-            <Banner title={recipeTitle} username={username} email={email}/>
+            <Banner title={"Progression"}/>
             {/* //almost working except the page does not know where to get recipe title from
             <Text style={styles.title}> {recipe.title} </Text> */}
             {steps()}
@@ -131,17 +131,20 @@ const styles=EStyleSheet.create({
     title: {
         fontSize: 24,
         fontWeight: 'bold',
+        fontFamily: 'Manrope_500Medium',
         marginVertical: 20,
         textAlign: 'center',
       },
     heading: {
         fontSize: '2rem',
+        fontFamily: 'Manrope_500Medium',
         alignSelf: 'center',
         justifyContent: 'center',
     },
     globalSelect: {
         color: 'black',
         fontSize: '1.1rem',
+        fontFamily: 'Cairo_500Medium',
         flex: 1,
         textAlign: 'right',
         fontWeight: 'bold',
@@ -181,6 +184,7 @@ const styles=EStyleSheet.create({
     buttonText: {
         color: 'white',
         fontSize: '1rem',
+        fontFamily: 'Cairo_500Medium',
     },
     step: {
         alignItems: 'center',

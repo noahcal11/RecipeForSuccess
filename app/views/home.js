@@ -34,28 +34,28 @@ export default function Home({ navigation, route }){
     }
 
     const getPopular = async () => {
-        const response = await fetch(API_BASE+"/recipe/get/?cuisine=American")
+        const response = await fetch(API_BASE+"/recipe/get/?cuisine=American", {method: "GET"})
         .then(res => res.json())
         .then(data => setPopularRecs(getRandom(data,8)))
         .catch(error => console.error(error));
     }
 
     const getDessert = async () => {
-        const response = await fetch(API_BASE+"/recipe/get/?category=Dessert")
+        const response = await fetch(API_BASE+"/recipe/get/?category=Dessert", {method: "GET"})
         .then(res => res.json())
         .then(data => setDessertRecs(getRandom(data,4)))
         .catch(error => console.error(error));
     }
 
     const getBreakfast = async() => {
-        const response = await fetch(API_BASE+"/recipe/get/?category=Breakfast")
+        const response = await fetch(API_BASE+"/recipe/get/?category=Breakfast", {method: "GET"})
         .then(res => res.json())
         .then(data => setBreakfastRecs(getRandom(data,4)))
         .catch(error => console.error(error));
     }
 
     const getChicken = async() => {
-        const response = await fetch(API_BASE+"/recipe/get/?title=Chicken")
+        const response = await fetch(API_BASE+"/recipe/get/?title=Chicken", {method: "GET"})
         .then(res => res.json())
         .then(data => setChickenRecs(getRandom(data,8)))
         .catch(error => console.error(error));
@@ -78,7 +78,7 @@ export default function Home({ navigation, route }){
                         ListHeaderComponent={<Text style={global.titleText}>Popular Recipes</Text>}
                         data={popularRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':username,'email':email})}
+                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}
                                 style={({ pressed }) => [
                                     {
                                     opacity: pressed
@@ -97,7 +97,7 @@ export default function Home({ navigation, route }){
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("SearchResults",{'username':username,'email':email})
+                                    navigation.navigate("SearchResults")
                                 }}
                                 
                                 style={({ pressed }) => [
@@ -116,7 +116,7 @@ export default function Home({ navigation, route }){
                         ListHeaderComponent={<Text style={global.titleText}>Top Desserts</Text>}
                         data={dessertRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':username,'email':email})}
+                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}
                                 style={({ pressed }) => [
                                     {
                                     opacity: pressed
@@ -126,7 +126,7 @@ export default function Home({ navigation, route }){
                             >
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
-                                    <Text>{item.title}</Text>
+                                    <Text style={global.subText}>{item.title}</Text>
                                 </View>
                             </Pressable>
                         )}
@@ -135,7 +135,7 @@ export default function Home({ navigation, route }){
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("SearchResults",{'username':username,'email':email})
+                                    navigation.navigate("SearchResults")
                                 }}
                                 
                                 style={({ pressed }) => [
@@ -156,7 +156,7 @@ export default function Home({ navigation, route }){
                         horizontal
                         data={chickenRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':username,'email':email})}
+                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}
                                 style={({ pressed }) => [
                                     {
                                     opacity: pressed
@@ -166,7 +166,7 @@ export default function Home({ navigation, route }){
                             >
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
-                                    <Text>{item.title}</Text>
+                                    <Text style={global.subText}>{item.title}</Text>
                                 </View>
                             </Pressable>
                         )}
@@ -174,7 +174,7 @@ export default function Home({ navigation, route }){
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("SearchResults",{'username':username,'email':email})
+                                    navigation.navigate("SearchResults")
                                 }}
                                 
                                 style={({ pressed }) => [
@@ -204,7 +204,7 @@ export default function Home({ navigation, route }){
                             >
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
-                                    <Text>{item.title}</Text>
+                                    <Text style={global.subText}>{item.title}</Text>
                                 </View>
                             </Pressable>
                         )}
@@ -213,7 +213,7 @@ export default function Home({ navigation, route }){
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("SearchResults",{'username':username,'email':email})
+                                    navigation.navigate("SearchResults")
                                 }}
                                 
                                 style={({ pressed }) => [
@@ -229,7 +229,7 @@ export default function Home({ navigation, route }){
                     />
                 </View>
             </ScrollView>
-            <Footer username={username} email={email} />
+            <Footer  />
         </View>
     );
 }
@@ -247,6 +247,7 @@ const styles = EStyleSheet.create({
     imageView: {
         margin: '1rem',
         width: '7rem',
+        marginBottom: '0.2rem',
         justifyContent: 'center',
         alignItems: 'center'
     },
@@ -257,7 +258,8 @@ const styles = EStyleSheet.create({
         width: '8rem',
         borderRadius: '2rem',
         borderWidth: '0.1rem',
-        borderColor: 'black'
+        borderColor: 'black',
+        marginBottom: '0.4rem',
     },
     recipeSection: {
         padding: '1rem',
@@ -277,11 +279,12 @@ const styles = EStyleSheet.create({
         fontSize: '1.05rem',
         fontWeight: 'bold',
         fontStyle: 'italic',
+        fontFamily: 'Cairo_500Medium',
         paddingLeft: '1rem',
         paddingBottom: '0.7rem',
         paddingRight: '0.25rem',
         color: '#ad0603',
         alignItems: 'center',
-        textAlign: 'center'
+        textAlign: 'center',
     }
 });

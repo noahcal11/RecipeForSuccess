@@ -18,7 +18,7 @@
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.3.1",
     "eas-cli": "^5.2.0",
-    "expo": "~49.0.8",
+    "expo": "^49.0.0",
     "expo-checkbox": "~2.4.0",
     "expo-cli": "^6.3.10",
     "expo-font": "~11.4.0",
@@ -28,6 +28,7 @@
     "react-dom": "18.2.0",
     "react-native": "0.72.6",
     "react-native-dotenv": "^3.4.9",
+    "react-native-dropdown-picker": "^5.4.6",
     "react-native-extended-stylesheet": "^0.12.0",
     "react-native-gesture-handler": "~2.12.0",
     "react-native-ionicons": "^4.6.5",
@@ -40,7 +41,9 @@
     "styled-component": "^2.8.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "@babel/preset-react": "^7.22.15",
+    "@expo/ngrok": "^4.1.0"
   },
   "private": true
 }

@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar'; 
-import { Text, Image, View, TouchableOpacity, ScrollView, TextInput, FlatList, SectionList } from 'react-native';
+import { Text, Image, View, Pressable, ScrollView, TextInput, FlatList, SectionList } from 'react-native';
 import Banner from '../Components/Banner';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState } from 'react';
@@ -9,13 +9,10 @@ EStyleSheet.build();
 export default function Home({ navigation, route }){
    //From Home page
     const [popularRecs, setPopularRecs] = useState([]);
-    const [dessertRecs, setDessertRecs] = useState([]);
-    const [breakfastRecs, setBreakfastRecs] = useState([]);
 
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
-
     const getRecipes = async () => {
-        const response = await fetch(API_BASE+"/recipe/get/all")
+        const response = await fetch(API_BASE+"/recipe/get/?general=ham", {method: "GET"})
         .then(res => res.json())
         .then(data => setPopularRecs(data.slice(0,8)))
         .catch(error => console.error(error));
@@ -25,14 +22,17 @@ export default function Home({ navigation, route }){
 //time, cuisine, category
     const [showDropdown, setShowDropdown] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null); //No initial option selected
-    const [searchResults, setSearchResults] = useState([
-      { id: '1', title: 'Result 1' },
-      { id: '2', title: 'Result 2' },
-      // Add more search results here
-    ]);
+    const [searchResults, setSearchResults] = useState([]);
   
     const sortOptions = ['Ascending', 'Descending']; // Your sorting options
   
+    const getSearch = async (searchTerm) => {
+      const response = await fetch(API_BASE+"/recipe/get/?general="+searchTerm, {method: "GET"})
+      .then(res => res.json())
+      .then(data => setSearchResults(data))
+      .catch(error => console.error(error));
+    }
+    
     const handleSortToggle = () => {
       setShowDropdown(!showDropdown);
     };
@@ -47,54 +47,78 @@ export default function Home({ navigation, route }){
     }
     
     useState(() => {
-        getRecipes();
+      getRecipes();
+      getSearch(route.params.searchTerm);
     }, []);
 
     return(
         <View>
-            <Banner title="Search Results" username={route.params.username} email={route.params.email} />
+            <Banner title="Search Results" />
             <View>
-            <View style={styles.container2}>
+            <FlatList scrollEnabled={false}
+              data={searchResults}
+              renderItem={({ item }) => (
+                  <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}
+                      style={({ pressed }) => [
+                          {
+                          opacity: pressed
+                              ? 0.2
+                              : 1,
+                          }]}
+                  >
+                      <View id={item._id}>
+                          <Image source={{ uri: item.image }} /> 
+                          <Text>{item.title}</Text>
+                      </View>
+                  </Pressable>
+              )}
+              numColumns={2}
+              keyExtractor={(item, index) => index}
+              ListFooterComponent={
+                  <Pressable
+                      onPress={() => {
+                          navigation.navigate("SearchResults")
+                      }}
+                      
+                      style={({ pressed }) => [
+                          {
+                          opacity: pressed
+                              ? 0.2
+                              : 1,
+                          }]}
+                  >
+                      <Text>View more</Text>
+                  </Pressable>
+              }
+          />
       {/* Filter Button */}
-      <TouchableOpacity style={styles.filterButton}>
+      <Pressable style={styles.filterButton}>
         <Text style={styles.filterButtonText}>Filter</Text>
-      </TouchableOpacity>
+      </Pressable>
 
       {/* Sort By Dropdown */}
       
       <View style={styles.sortByContainer}>
-        <TouchableOpacity onPress={handleSortToggle} style={styles.sortButton}>
+        <Pressable onPress={handleSortToggle} style={styles.sortButton}>
           <Text style={styles.sortByText}>
             Sort By: {selectedOption}
           </Text>
 
-        </TouchableOpacity>
+        </Pressable>
 
         {showDropdown && (
           <View style={[styles.dropdown, {zIndex: 1}]}>
             {sortOptions.map((option, index) => (
-              <TouchableOpacity
+              <Pressable
                 key={index}
                 onPress={() => handleSortSelect(option)}
                 style={styles.dropdownOption}
               >
                 <Text style={styles.dropdownOptionText}>{option}</Text>
-              </TouchableOpacity>
+              </Pressable>
             ))}
           </View>
         )}
-      </View>
- 
-      {/* Search Results 
-      <FlatList
-        data={searchResults}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.resultItem}>
-            <Text>{item.title}</Text>
-          </View>
-        )}
-      />  */}
     </View>
 
                 
@@ -103,12 +127,12 @@ export default function Home({ navigation, route }){
                     <FlatList nestedScrollEnabled = {true}
                         data={popularRecs}
                         renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}>
+                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}>
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
                                     <Text>{item.title}</Text>
                                 </View>
-                            </TouchableOpacity>
+                            </Pressable>
                         )}
                         numColumns={2}
                         keyExtractor={(item, index) => index.toString()}
@@ -119,40 +143,37 @@ export default function Home({ navigation, route }){
                 
                 
             </View>
-            <TouchableOpacity
+            <Pressable
                 onPress={() => {
                     navigation.navigate("Login")
                 }}
                 >
                 <Text>Go Back</Text>
-            </TouchableOpacity>
+            </Pressable>
 
-            <TouchableOpacity
+            <Pressable
                 onPress={() => {
                     navigation.navigate("Skills")
                 }}
                 >
                 <Text>Skills page</Text>
-            </TouchableOpacity>
+            </Pressable>
 
-            <TouchableOpacity
+            <Pressable
                 onPress={() => {
                     navigation.navigate("RecipePages")
                 }}
                 >
                 <Text>Recipe page</Text>
-            </TouchableOpacity>
+            </Pressable>
 
-            <TouchableOpacity
+            <Pressable
                 onPress={() => {
                     navigation.navigate("SearchResults")
                 }}
                 >
                 <Text>Search Results</Text>
-            </TouchableOpacity>
-
-
-            
+            </Pressable>
         </View>
     );
 }

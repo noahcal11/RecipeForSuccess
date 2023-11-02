@@ -1,7 +1,7 @@
 // BannerTitle.js
 
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import GearIcon from '../assets/svg/gear';
 import Profile from './Profile';
 import { useNavigation } from '@react-navigation/native';
@@ -22,9 +22,9 @@ const ProfileBannerTitle = ({ title}) => {
       </View> }
       <Text style={styles.bannerTitle}>{title}</Text>
       <View style={styles.gear}>
-        <TouchableOpacity onPress={() => {navigation.navigate("ProfileSettings"); setRecipePageState("details");}} style={{marginHorizontal: "12.5%"}}>
+        <Pressable onPress={() => {navigation.navigate("ProfileSettings"); setRecipePageState("details");}} style={{marginHorizontal: "12.5%"}}>
           <GearIcon width="40" height='85' stroke="black" strokeWidth="0.25"/>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </View>
   );
@@ -34,8 +34,9 @@ export default ProfileBannerTitle;
 
 const styles = EStyleSheet.create({
   banner: {
-    height: '5.5rem',
-    backgroundColor: 'salmon', // Set the background color of the banner
+    height: '10%',
+    //height: '5.5rem',
+    backgroundColor: '#F02727', // Set the background color of the banner
     paddingVertical: '1rem', // Adjust vertical padding as needed
     flexDirection: 'row',
     //justifyContent: 'center'
@@ -46,7 +47,8 @@ const styles = EStyleSheet.create({
     fontWeight: 'bold', // Adjust font weight as needed
     textAlign: 'center', // Center text
     flex: '1rem',
-    paddingTop: '1.75rem',
+    //paddingTop: '5%',
+    paddingTop: '1.25rem',
     paddingHorizontal: '1rem',
     justifyContent: 'center',
     alignItems: 'center',
