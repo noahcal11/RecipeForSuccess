@@ -34,7 +34,8 @@ export default ProfileBannerTitle;
 
 const styles = EStyleSheet.create({
   banner: {
-    height: '5.5rem',
+    height: '10%',
+    //height: '5.5rem',
     backgroundColor: '#F02727', // Set the background color of the banner
     paddingVertical: '1rem', // Adjust vertical padding as needed
     flexDirection: 'row',
@@ -46,7 +47,8 @@ const styles = EStyleSheet.create({
     fontWeight: 'bold', // Adjust font weight as needed
     textAlign: 'center', // Center text
     flex: '1rem',
-    paddingTop: '1.75rem',
+    //paddingTop: '5%',
+    paddingTop: '1.25rem',
     paddingHorizontal: '1rem',
     justifyContent: 'center',
     alignItems: 'center',
