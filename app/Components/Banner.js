@@ -27,7 +27,7 @@ export default BannerTitle;
 
 const styles = EStyleSheet.create({
   banner: {
-    height: '10%',
+    height: '12%',
     //height: '5.5rem',
     backgroundColor: '#F02727', // Set the background color of the banner
     paddingVertical: '1rem', // Adjust vertical padding as needed
