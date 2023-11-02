@@ -176,7 +176,7 @@ const RecipeSurvey = ({directions, title}) => {
     }
 
     return(
-        <View style={global.container}>   
+        <View style={global.whiteBackground}>   
         {/* Header */}
         <Banner title={title}/>
             <Text style={global.titleText}>Great Job! Let us know how you did:</Text>
@@ -192,7 +192,7 @@ const RecipeSurvey = ({directions, title}) => {
                 renderItem={({ item, index }) => (
                     <View style={styles.question}>
                         <Text style={global.centeredText}>How well did you do in step {index + 1}?</Text>
-                        <View style={global.reverseForeground}>
+                        <View style={global.grayForeground}>
                             <Text style={global.centerBodyText}>{item}</Text>
                         </View>
                         {/* Insert same button system as in the ingredient step */}

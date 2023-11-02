@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar'; 
-import { Text, Image, View, ScrollView, TextInput, FlatList, SectionList, Pressable } from 'react-native';
+import { Text, Image, View, ScrollView, TextInput, FlatList, SectionList, Pressable, Dimensions } from 'react-native';
 import Banner from '../Components/Banner';
 import Footer from '../Components/Footer'
 import EStyleSheet from 'react-native-extended-stylesheet';
@@ -69,12 +69,12 @@ export default function Home({ navigation, route }){
     }, []);
 
     return(
-        <View style={global.container}>
-            <Banner title="Home" username={username} email={email}/>
+        <View style={global.whiteBackground}>
+            <Banner title="Home"/>
             <ScrollView styles={{ flex: 1 }}>
-                <View style={styles.recipeSection}>
+                <View style={{alignItems: 'center'}}>
                     <FlatList scrollEnabled={false}
-                        style={global.reverseForeground}
+                        style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>Popular Recipes</Text>}
                         data={popularRecs}
                         renderItem={({ item }) => (
@@ -107,12 +107,12 @@ export default function Home({ navigation, route }){
                                         : 1,
                                     }]}
                             >
-                                <Text style={styles.viewMore}>View more</Text>
+                                <Text style={global.clickableText}>View more</Text>
                             </Pressable>
                         }
                     />
                     <FlatList scrollEnabled={false}
-                        style={global.reverseForeground}
+                        style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>Top Desserts</Text>}
                         data={dessertRecs}
                         renderItem={({ item }) => (
@@ -145,14 +145,13 @@ export default function Home({ navigation, route }){
                                         : 1,
                                     }]}
                             >
-                                <Text style={styles.viewMore}>View more</Text>
+                                <Text style={global.clickableText}>View more</Text>
                             </Pressable>
                         }
                     />
-                    <View style={global.reverseForeground}>
+                    <View style={global.grayForeground}>
                     <Text style={global.titleText}>Chicken!</Text>
                     <FlatList
-                        style={styles.recList}
                         horizontal
                         data={chickenRecs}
                         renderItem={({ item }) => (
@@ -184,17 +183,17 @@ export default function Home({ navigation, route }){
                                         : 1,
                                     }]}
                             >
-                                <Text style={styles.viewMore}>View more</Text>
+                                <Text style={global.clickableText}>View more</Text>
                             </Pressable>
                         }
                     />
                     </View>
                     <FlatList scrollEnabled={false}
-                        style={global.reverseForeground}
+                        style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>Breakfast Creations</Text>}
                         data={breakfastRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':username,'email':email})}
+                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}
                                 style={({ pressed }) => [
                                     {
                                     opacity: pressed
@@ -223,7 +222,7 @@ export default function Home({ navigation, route }){
                                         : 1,
                                     }]}
                             >
-                                <Text style={styles.viewMore}>View more</Text>
+                                <Text style={global.clickableText}>View more</Text>
                             </Pressable>
                         }
                     />
@@ -235,56 +234,17 @@ export default function Home({ navigation, route }){
 }
 
 const styles = EStyleSheet.create({
-    welcomeText: {
-        textAlign: 'center',
-        fontSize: '1.2rem',
-    },
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        backgroundColor: 'white',
-    },
     imageView: {
-        margin: '1rem',
-        width: '7rem',
-        marginBottom: '0.2rem',
+        margin: 10,
+        width: (Dimensions.get('window').width * .85) * .5 - 10,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'left'
     },
     imageThumbnail: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '5rem',
-        width: '8rem',
-        borderRadius: '2rem',
-        borderWidth: '0.1rem',
+        height: Dimensions.get('window').height * .85 / 8 - 10,
+        width: '100%',
+        borderRadius: 25,
+        borderWidth: 2,
         borderColor: 'black',
-        marginBottom: '0.4rem',
     },
-    recipeSection: {
-        padding: '1rem',
-        flex: 1,
-    },
-    categoryTitle: {
-        paddingTop: '0.4rem',
-        textAlign: 'center',
-        fontSize: '1.5rem',
-        fontWeight: 'bold',
-    },
-    recList: {
-        backgroundColor: "#eee",
-        margin: '0.5rem',
-    },
-    viewMore: {
-        fontSize: '1.05rem',
-        fontWeight: 'bold',
-        fontStyle: 'italic',
-        fontFamily: 'Cairo_500Medium',
-        paddingLeft: '1rem',
-        paddingBottom: '0.7rem',
-        paddingRight: '0.25rem',
-        color: '#ad0603',
-        alignItems: 'center',
-        textAlign: 'center',
-    }
 });
