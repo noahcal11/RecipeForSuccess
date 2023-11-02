@@ -58,7 +58,7 @@ export default BannerTitle;
 
 const styles = EStyleSheet.create({
   banner: {
-    height: '10%',
+    height: '12%',
     width: '100%',
     backgroundColor: '#F02727',
     flexDirection: 'row',
