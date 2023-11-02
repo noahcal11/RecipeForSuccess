@@ -1,6 +1,6 @@
 // https://dev.to/ramonak/react-how-to-create-a-custom-progress-bar-component-in-5-minutes-2lcl
 
-import { Text, Image, View, Pressable, TextInput, ScrollView } from 'react-native';
+import { Text, Image, View, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 
 const ProgressBar = (props) => {
     const { bgcolor, completed } = props;
