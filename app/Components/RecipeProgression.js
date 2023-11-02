@@ -124,17 +124,20 @@ const styles=EStyleSheet.create({
     title: {
         fontSize: 24,
         fontWeight: 'bold',
+        fontFamily: 'Manrope_500Medium',
         marginVertical: 20,
         textAlign: 'center',
       },
     heading: {
         fontSize: '2rem',
+        fontFamily: 'Manrope_500Medium',
         alignSelf: 'center',
         justifyContent: 'center',
     },
     globalSelect: {
         color: 'black',
         fontSize: '1.1rem',
+        fontFamily: 'Cairo_500Medium',
         flex: 1,
         textAlign: 'right',
         fontWeight: 'bold',
@@ -174,6 +177,7 @@ const styles=EStyleSheet.create({
     buttonText: {
         color: 'white',
         fontSize: '1rem',
+        fontFamily: 'Cairo_500Medium',
     },
     step: {
         alignItems: 'center',

@@ -42,6 +42,7 @@ const global = EStyleSheet.create({
   text: {
     fontSize: '2rem',
     color: 'black',
+    fontFamily: 'Cairo_500Medium',
   },
   // Action button
   button: {
@@ -58,6 +59,8 @@ const global = EStyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: '1rem',
+    fontFamily: 'Cairo_500Medium',
+    fontWeight: 'bold',
   },
   // Grey button that does nothing
   buttonInactive: {
@@ -102,7 +105,9 @@ const global = EStyleSheet.create({
   // Even smaller text for captions
   subText: {
     color: 'black',
-    fontSize: '0.8rem'
+    fontSize: '0.8rem',
+    fontFamily: 'Cairo_500Medium',
+    lineHeight: '1.2rem',
   },
   // Centered text
   centeredText: {
@@ -111,12 +116,14 @@ const global = EStyleSheet.create({
     padding: '0.5rem',
     textAlign: 'center',
     justifyContent: 'center',
+    fontFamily: 'Cairo_500Medium',
   },
   // Text input field
   input: {
     backgroundColor: '#D1D1D1',
     borderRadius: '2rem',
     fontSize: '1rem',
+    fontFamily: 'Cairo_500Medium',
     width: '13rem',
     height: '3rem',
     paddingLeft: '1rem',
@@ -156,13 +163,14 @@ const global = EStyleSheet.create({
   menuText: {
     fontSize: 30,
     color: 'black',
+    fontFamily: 'Cairo_500Medium',
   },
   // Header
   titleText: {
     fontSize: '1.6rem',
     color: 'black',
     fontWeight: 'bold',
-    // font: manrope
+    fontFamily: 'Manrope_500Medium',
     textAlign: 'center',
     justifyContent: 'center',
     margin: '0.5rem',
@@ -172,7 +180,7 @@ const global = EStyleSheet.create({
     fontSize: '1.4rem',
     color: 'black',
     fontWeight: 'bold',
-    // font: manrope
+    fontFamily: 'Manrope_500Medium',
     textAlign: 'center',
     justifyContent: 'center',
     margin: '0.5rem',
@@ -188,6 +196,7 @@ const global = EStyleSheet.create({
     fontSize: 24, // Adjust the font size as needed
     color: 'black', // Set the text color
     fontWeight: 'bold', // Adjust font weight as needed
+    fontFamily: 'Manrope_500Medium',
   },
 });
 

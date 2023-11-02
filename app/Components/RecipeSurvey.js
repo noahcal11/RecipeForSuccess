@@ -189,25 +189,25 @@ const styles = EStyleSheet.create({
         flex: 1,
     },
     header: {
-
+        fontFamily: 'Manrope_500Medium',
     },
     subheader: {
-
+        fontFamily: 'Manrope_500Medium',
     },
     ingredientQuestion: {
-
+        fontFamily: 'Manrope_500Medium',
     },
     ingredientText: {
-
+        fontFamily: 'Cairo_500Medium',
     },
     stepList: {
 
     },
     stepQuestion: {
-
+        fontFamily: 'Manrope_500Medium',
     },
     stepInfo: {
-
+        fontFamily: 'Cairo_500Medium',
     },
     buttonContainer: {
 
@@ -244,5 +244,6 @@ const styles = EStyleSheet.create({
     buttonText: {
         color: 'white',
         fontSize: '1rem',
+        fontFamily: 'Manrope_500Medium', //not sure what font I want this to be
     },
 })
