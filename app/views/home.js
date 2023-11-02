@@ -248,6 +248,8 @@ const styles = EStyleSheet.create({
         margin: '1rem',
         width: '7rem',
         marginBottom: '0.2rem',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     imageThumbnail: {
         justifyContent: 'center',
