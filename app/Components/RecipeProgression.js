@@ -9,7 +9,7 @@ import Footer from '../Components/Footer'
 import { ScrollView } from 'react-native-gesture-handler';
 import global from '../Genstyle'
 
-// TODO: style this page so it actually looks good
+// TODO: Make buttons go to the bottom of the page, add a timer
 const RecipeProgression = ({ingredients, directions, title}) => {
     // Variables
     const [stepNum, setStepNum] = useState(0);
@@ -91,6 +91,7 @@ const RecipeProgression = ({ingredients, directions, title}) => {
                 <View style={{ flex: 1 }}>
                     <Text style={global.titleText}>Step {stepNum}:</Text>
                     <Text style={global.centeredText}>{directions[stepNum - 1]}</Text>
+                    {/* Next button */}
                     {stepNum == directions.length ?
                         <TouchableOpacity // If on the last step, button sends user to the survey page
                             onPress={() => {setRecipePageState('survey')}}
@@ -103,6 +104,12 @@ const RecipeProgression = ({ingredients, directions, title}) => {
                                 <Text style={global.buttonText}>Next</Text>
                         </TouchableOpacity>
                     }
+                    {/* Back button */}
+                    <TouchableOpacity // Decrement step count when going back
+                        onPress={() => {setStepNum(stepNum - 1)}}
+                        style={global.buttonMinor}>
+                            <Text style={global.subText}>Go Back</Text>
+                    </TouchableOpacity>
                 </View>
             );
         }

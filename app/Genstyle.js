@@ -18,8 +18,8 @@ const global = EStyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     justifyContent: 'center',
-    marginHorizontal: '2.2rem',
-    marginVertical: '4rem',
+    marginHorizontal: '1.5rem',
+    marginVertical: '3.5rem',
     borderRadius: '2rem'
   },
   // Gray foreground
@@ -29,7 +29,7 @@ const global = EStyleSheet.create({
     //justifyContent: 'center',
     marginHorizontal: '0.6rem',
     marginVertical: '1rem',
-    borderRadius: '2rem'
+    borderRadius: '2rem',
   },
   // Generic container
   container: {
@@ -49,7 +49,7 @@ const global = EStyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'red',
     borderRadius: 25,
-    marginBottom: '1rem',
+    marginVertical: '1rem',
     width: '13rem',
     height: '3rem',
     alignSelf:  'center'
@@ -63,9 +63,9 @@ const global = EStyleSheet.create({
   buttonInactive: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'gray',
+    backgroundColor: '#bbb',
     borderRadius: 25,
-    marginBottom: '1rem',
+    marginVertical: '1rem',
     width: '13rem',
     height: '3rem',
     alignSelf:  'center'
@@ -77,7 +77,7 @@ const global = EStyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#ddd',
     borderRadius: 25,
-    marginBottom: '1rem',
+    marginVertical: '1rem',
     width: '13rem',
     height: '3rem',
   },
@@ -87,7 +87,7 @@ const global = EStyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#F67D7D',
     borderRadius: 25,
-    marginBottom: '1rem',
+    marginVertical: '1rem',
     width: '13rem',
     height: '3rem',
     alignSelf:  'center'
@@ -98,6 +98,15 @@ const global = EStyleSheet.create({
     fontSize: '1rem',
     fontFamily: 'Cairo_500Medium',
     flex: 1,
+  },
+  // Centered version of bodyText
+  centerBodyText: {
+    color: 'black',
+    fontSize: '1rem',
+    fontFamily: 'Cairo_500Medium',
+    flex: 1,
+    textAlign: 'center',
+    margin: '5%'
   },
   // Even smaller text for captions
   subText: {

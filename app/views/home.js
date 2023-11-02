@@ -247,6 +247,8 @@ const styles = EStyleSheet.create({
     imageView: {
         margin: '1rem',
         width: '7rem',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     imageThumbnail: {
         justifyContent: 'center',
