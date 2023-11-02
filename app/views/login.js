@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar'; 
-import { StyleSheet, Text, Image, View, Pressable, TextInput } from 'react-native';
+import { StyleSheet, Text, Image, View, TouchableOpacity, TextInput } from 'react-native';
 import { useContext, useState} from 'react';
 import bcrypt from 'bcryptjs';
 import EStyleSheet from 'react-native-extended-stylesheet';
@@ -101,14 +101,14 @@ export default function Login({navigation}) {
               placeholder="Password"
               secureTextEntry={true}
             />
-            <Pressable
+            <TouchableOpacity
               style={global.button}
               onPress={() => {
                 getUser(email,password)
               }}
             >
               <Text style={global.buttonText}>Login</Text>
-            </Pressable>
+            </TouchableOpacity>
           </View>
           );
         case 'Create':
@@ -133,14 +133,14 @@ export default function Login({navigation}) {
               placeholder="Password"
               secureTextEntry={true}
             />
-            <Pressable
+            <TouchableOpacity
               style={global.button}
               onPress={() => {
                 createUser(email,username,password)
               }}
             >
               <Text style={global.buttonText}>Register</Text>
-            </Pressable>
+            </TouchableOpacity>
             </View>
           );
         case 'Forgot':
@@ -152,14 +152,14 @@ export default function Login({navigation}) {
               value={email}
               placeholder="Email"
             />
-            <Pressable
+            <TouchableOpacity
               style={global.button}
               onPress={() => {
                 resetPassword(email)
               }}
             >
               <Text style={global.buttonText}>Send Email</Text>
-            </Pressable>
+            </TouchableOpacity>
             </View>
           );
           case 'Code':
@@ -184,14 +184,14 @@ export default function Login({navigation}) {
               placeholder="New Password"
               secureTextEntry={true}
             />
-            <Pressable
+            <TouchableOpacity
               style={global.button}
               onPress={() => {
                 takeToken(email,token,password)
               }}
             >
               <Text style={global.buttonText}>Update Password</Text>
-            </Pressable>
+            </TouchableOpacity>
             </View>
           );
         }
@@ -207,23 +207,23 @@ export default function Login({navigation}) {
                 <Text style={styles.undertext}>{notification}</Text>
             </View>
             <View style={styles.bottom}>
-            {/* <Pressable
+            {/* <TouchableOpacity
             style={styles.login}>
             <Text style={styles.loginText}>Register</Text>
-            </Pressable> */}
+            </TouchableOpacity> */}
                 {popupActive ?
                     <View> 
                         {displayPopup(popupType)}
-                        <Pressable
+                        <TouchableOpacity
                             style={styles.x}
                             onPress={() => {
                             setPopupActive(!popupActive)
                             }}
                         >
                             <Text style={global.bodyText}>x</Text>
-                        </Pressable>
+                        </TouchableOpacity>
                     </View>
-                    :<Pressable
+                    :<TouchableOpacity
                     style={global.button}
                     onPress={() => {
                         setPopupActive(!popupActive)
@@ -231,27 +231,27 @@ export default function Login({navigation}) {
                     }}
                     >
                         <Text style={global.buttonText}>Login</Text>
-                    </Pressable>}
+                    </TouchableOpacity>}
                     <View style={global.horizontal}>
-                        <Pressable
+                        <TouchableOpacity
                             style={styles.createAcct}
                             onPress={() => {
                             setPopupActive(true)
                             setPopupType('Create')
                         }}>
                         <Text style={styles.createText}>Create Account</Text>
-                        </Pressable>
-                        <Pressable 
+                        </TouchableOpacity>
+                        <TouchableOpacity 
                             style={styles.createAcct}
                             onPress={() => {
                             setPopupActive(true)
                             setPopupType('Forgot')
                         }}>
                             <Text style={styles.createText}>Forgot password?</Text>
-                        </Pressable>
+                        </TouchableOpacity>
                     </View>
                     <Text style={global.centeredText}>Don't have an account?</Text>
-                    <Pressable
+                    <TouchableOpacity
                     style={global.buttonMinor}
                     onPress={() => {
                       navigation.navigate('Home');
@@ -259,7 +259,7 @@ export default function Login({navigation}) {
                       setEmail("Guest");
                     }}>
                         <Text style={styles.guestText}>Continue As Guest</Text>
-                    </Pressable>
+                    </TouchableOpacity>
                 <StatusBar style="auto" />
             </View>
         </View>
