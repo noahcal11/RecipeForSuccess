@@ -1,7 +1,7 @@
 // App.js
 import React from 'react';
 //import styles from './Genstyle';
-import { View, Text, FlatList, Image, Linking, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, Image, Linking, Pressable } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import SearchBar from '../Components/SearchBar'; // Import your search bar component
 import RecipeFooter from '../Components/RecipeFooter';
