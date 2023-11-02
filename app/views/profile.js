@@ -26,10 +26,10 @@ export default function Profile() {
     return(
         <View style={styles.container}>
             <ProfileBannerTitle> </ProfileBannerTitle>
-                <ScrollView>
                     <View>
                         <View style={styles.dropDown}>
                         <DropDownPicker
+                            autoScroll={true}
                             open={open}
                             value={value}
                             items={items}
@@ -39,7 +39,6 @@ export default function Profile() {
                             />
                         </View>
                     </View>
-                </ScrollView>
             <Footer/>
         </View>
     )
