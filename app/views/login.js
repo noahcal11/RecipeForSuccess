@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { Context } from '../App';
 import global from '../Genstyle';
+import LogoIcon from '../assets/svg/logo';
 
 EStyleSheet.build();
 
@@ -200,13 +201,13 @@ export default function Login({navigation}) {
     return (
     <View style={global.background}>
         <View style={global.foreground}>
-            <View style={styles.top}>
+            <View>
                 <Image style={styles.logo} source={require("../assets/favicon.png")}></Image>
+                <LogoIcon style={styles.logo}></LogoIcon>
                 {/* <Text style={styles.text}>Welcome to Recipe For Success</Text> */}
-                <Text style={global.titleText}>Welcome to Recipe For Success</Text>
+                <Text style={{ ...global.titleText, marginTop: 150 }}>Welcome to Recipe For Success</Text>
                 <Text style={styles.undertext}>{notification}</Text>
-            </View>
-            <View style={styles.bottom}>
+            
             {/* <Pressable
             style={styles.login}>
             <Text style={styles.loginText}>Register</Text>
@@ -268,40 +269,16 @@ export default function Login({navigation}) {
 }
 
 const styles = EStyleSheet.create({
-    background: {
-      backgroundColor: '#ddd',
-      flex: 1
-    },
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      justifyContent: 'center',
-      marginHorizontal: '2.2rem',
-      marginVertical: '2.2rem',
-      borderRadius: '2rem'
-    },
-    top: {
-      flex: 1,
-      marginTop: '2rem',
-      justifyContent: 'center'
-    },
-    bottom: {
-      flex: 3,
-      justifyContent: 'center'
-    },
     logo: {
-      height: '5.5rem',
-      width: '5.5rem',
+      position: 'absolute',
+      width: 5,
+      height: 5,
       alignSelf: 'center',
-      marginTop: '3rem',
     },
     text: {
       textAlign: 'center',
       fontSize: '2rem',
       padding: '1rem'
-    },
-    createlinks: {
-      flexDirection: 'row',
     },
     createAcct: {
       flex: 1,
