@@ -93,7 +93,6 @@ const global = EStyleSheet.create({
     color: 'white',
     fontSize: '1rem',
     fontFamily: 'Cairo_500Medium',
-    fontWeight: 'bold',
     textAlign: 'center',
   },
   // Generic text
@@ -121,7 +120,7 @@ const global = EStyleSheet.create({
   // Even smaller text for captions
   subText: {
     color: 'black',
-    fontSize: '0.8rem',
+    fontSize: '0.9rem',
     fontFamily: 'Cairo_500Medium',
     lineHeight: '1.2rem',
   },
@@ -138,8 +137,7 @@ const global = EStyleSheet.create({
   titleText: {
     fontSize: '1.6rem',
     color: 'black',
-    fontWeight: 'bold',
-    fontFamily: 'Manrope_500Medium',
+    fontFamily: 'Manrope_700Bold',
     textAlign: 'center',
     justifyContent: 'center',
   },
@@ -147,7 +145,6 @@ const global = EStyleSheet.create({
   subheaderText: {
     fontSize: '1.4rem',
     color: 'black',
-    fontWeight: 'bold',
     fontFamily: 'Manrope_500Medium',
     textAlign: 'center',
     justifyContent: 'center',
@@ -220,8 +217,7 @@ const global = EStyleSheet.create({
   titleText: {
     fontSize: '1.6rem',
     color: 'black',
-    fontWeight: 'bold',
-    fontFamily: 'Manrope_500Medium',
+    fontFamily: 'Manrope_700Bold',
     textAlign: 'center',
     justifyContent: 'center',
     margin: '0.5rem',
@@ -230,7 +226,6 @@ const global = EStyleSheet.create({
   subheaderText: {
     fontSize: '1.4rem',
     color: 'black',
-    fontWeight: 'bold',
     fontFamily: 'Manrope_500Medium',
     textAlign: 'center',
     justifyContent: 'center',
@@ -246,7 +241,6 @@ const global = EStyleSheet.create({
   title: {
     fontSize: 24, // Adjust the font size as needed
     color: 'black', // Set the text color
-    fontWeight: 'bold', // Adjust font weight as needed
     fontFamily: 'Manrope_500Medium',
   },
 });
