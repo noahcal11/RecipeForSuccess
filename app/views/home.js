@@ -107,7 +107,7 @@ export default function Home({ navigation, route }){
                                         : 1,
                                     }]}
                             >
-                                <Text style={global.clickableText}>View more</Text>
+                                <Text style={{ ...global.clickableText, marginBottom: '5%'}}>View more</Text>
                             </Pressable>
                         }
                     />
@@ -145,7 +145,7 @@ export default function Home({ navigation, route }){
                                         : 1,
                                     }]}
                             >
-                                <Text style={global.clickableText}>View more</Text>
+                                <Text style={{ ...global.clickableText, marginBottom: '5%'}}>View more</Text>
                             </Pressable>
                         }
                     />
@@ -222,7 +222,7 @@ export default function Home({ navigation, route }){
                                         : 1,
                                     }]}
                             >
-                                <Text style={global.clickableText}>View more</Text>
+                                <Text style={{ ...global.clickableText, marginBottom: '5%'}}>View more</Text>
                             </Pressable>
                         }
                     />
@@ -246,5 +246,6 @@ const styles = EStyleSheet.create({
         borderRadius: 25,
         borderWidth: 2,
         borderColor: 'black',
+        marginBottom: '5%'
     },
 });
