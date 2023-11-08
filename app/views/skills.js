@@ -39,34 +39,34 @@ export default function Skills({ navigation, route }){
     }
 
     return(
-        <View style={styles.pageContainer}>
+        <View style={global.whiteBackground}>
             <SearchBar />
             <Banner title="Skills"/>
                 <ScrollView>
                     <View style={styles.skillsContainer}>
-                        <View style={styles.textContainerRed}>
-                            <Text style={{...global.subheaderText, textAlign: 'left' }}>Cooking Rating</Text>
+                        <View style={styles.redForeground}>
+                            <Text style={{...global.subheaderText, textAlign: 'center' }}>Cooking Rating</Text>
                             <Text style={global.centeredText}>Level: {levelFunc(skills[0])[0]+1}</Text>
                             <ProgressBar bgcolor="#05CACA" completed={levelFunc(skills[0])[1]} />
                             <Text style={global.centeredText}> {`${levelFunc(skills[0])[1]}%`} </Text>
                         </View>
 
-                        <View style={styles.textContainerGray}>
-                            <Text style={{...global.subheaderText, textAlign: 'left' }}>Ingredients Rating</Text>
+                        <View style={global.grayForeground}>
+                            <Text style={{...global.subheaderText, textAlign: 'center' }}>Ingredients Rating</Text>
                             <Text style={global.centeredText}>Level: {levelFunc(skills[1])[0]+1}</Text>
                             <ProgressBar bgcolor="#05CACA" completed={levelFunc(skills[1])[1]} />
                             <Text style={global.centeredText}> {`${levelFunc(skills[1])[1]}%`} </Text>
                         </View>
 
-                        <View style={styles.textContainerRed}>
-                            <Text style={{...global.subheaderText, textAlign: 'left' }}>Knife Rating</Text>
+                        <View style={styles.redForeground}>
+                            <Text style={{...global.subheaderText, textAlign: 'center' }}>Knife Rating</Text>
                             <Text style={global.centeredText}>Level: {levelFunc(skills[2])[0]+1}</Text>
                             <ProgressBar bgcolor="#05CACA" completed={levelFunc(skills[2])[1]} />
                             <Text style={global.centeredText}> {`${levelFunc(skills[2])[1]}%`} </Text>
                         </View>
 
-                        <View style={styles.textContainerGray}>
-                            <Text style={{...global.subheaderText, textAlign: 'left' }}>Time & Temperature Rating</Text>
+                        <View style={global.grayForeground}>
+                            <Text style={{...global.subheaderText, textAlign: 'center' }}>Time & Temperature Rating</Text>
                             <Text style={global.centeredText}>Level: {levelFunc(skills[3])[0]+1}</Text>
                             <ProgressBar bgcolor="#05CACA" completed={levelFunc(skills[3])[1]} />
                             <Text style={global.centeredText}> {`${levelFunc(skills[3])[1]}%`} </Text>
@@ -100,10 +100,17 @@ const styles = EStyleSheet.create({
       textContainerGray: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor: 'darkgray',
+        backgroundColor: '#EEEEEE', 
         padding: '1rem', // This works with height
         width: '100%',
         //height: '11.4rem', // this works, wanted percentages but could not figure that out
         height: '20%',
+      },
+      redForeground: {
+        backgroundColor: '#F67D7D',
+        marginHorizontal: '5%',
+        marginVertical: '5%',
+        borderRadius: 25,
+        flex:1
       },
   });

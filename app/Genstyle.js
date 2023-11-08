@@ -45,6 +45,7 @@ const global = EStyleSheet.create({
 
   // Action button
   button: {
+    alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'red',
@@ -56,6 +57,7 @@ const global = EStyleSheet.create({
   },
   // Grey button that does nothing
   buttonInactive: {
+    alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#bbb',
@@ -79,6 +81,8 @@ const global = EStyleSheet.create({
   },
   // Alt colored button
   buttonAlt: {
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: '#F67D7D',
     borderRadius: 25,
     width: Dimensions.get('window').width*0.5,

@@ -8,6 +8,7 @@ import Footer from '../Components/Footer'
 import { useContext } from 'react';
 import { Context } from '../App'
 import global from '../Genstyle'
+import { ScrollView } from 'react-native-gesture-handler';
 /* TODO:
     - The background color for each button is set dynamically,
         so it cannot be combined with the regular stylesheet.
@@ -178,14 +179,14 @@ const RecipeSurvey = ({directions, title}) => {
     return(
         <View style={global.whiteBackground}>   
         {/* Header */}
-        <Banner title={title}/>
+        <Banner title={"Survey"}/>
             <Text style={global.titleText}>Great Job! Let us know how you did:</Text>
             {/* First Question (ingredient prep) */}
-            <View style={styles.question}>
-                <Text style={global.centeredText}>How well did you prepare the ingredients?</Text>
+            {/* <View style={styles.question}> */}
+                {/* <Text style={global.centeredText}>How well did you prepare the ingredients?</Text> */}
                 {/* Insert a pair of buttons where only one can be "activated" */}
-                {RatingButtons(0, 0)}
-            </View>
+                {/* {RatingButtons(0, 0)} */}
+            {/* </View> */}
             <FlatList
                 data={directions}
                 keyExtractor={(item, index) => index.toString()}

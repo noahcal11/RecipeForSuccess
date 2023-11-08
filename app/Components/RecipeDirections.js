@@ -22,7 +22,7 @@ const RecipeDirections = ({ directions }) => {
 const styles = StyleSheet.create({
   directionItem: {
     flexDirection: 'row',
-    alignItems: 'center',
+    // alignItems: 'center',
     marginBottom: 10,
   },
   directionNumber: {
