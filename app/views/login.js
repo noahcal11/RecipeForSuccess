@@ -199,9 +199,10 @@ export default function Login({navigation}) {
     }
 
     return (
-    <View style={global.background}>
-        <View style={global.foreground}>
-            <View>
+    <View style={global.grayBackground}>
+        <View style={global.whiteForeground}>
+            <View style={styles.top}>
+                <Image style={styles.logo} source={require("../assets/favicon.png")}></Image>
                 <LogoIcon style={styles.logo}></LogoIcon>
                 {/* <Text style={styles.text}>Welcome to Recipe For Success</Text> */}
                 <Text style={{ ...global.titleText, marginTop: 150 }}>Welcome to Recipe For Success</Text>

@@ -28,7 +28,7 @@ export default function Profile() {
     ]);
     
     return(
-        <View style={global.container}>
+        <View style={global.whiteBackground}>
             <ProfileBannerTitle> </ProfileBannerTitle>
                     <View style={styles.settingsContainer}>
                         <View>

@@ -2,51 +2,47 @@
 
 // styles.js
 
-// import { StyleSheet } from 'react-native';
 import EStyleSheet from "react-native-extended-stylesheet";
+import { Dimensions } from "react-native";
 
 EStyleSheet.build();
 
 const global = EStyleSheet.create({
-  // Gray background
-  background: {
-    backgroundColor: '#ddd',
-    flex: 1
-  },
-  // White foreground
-  foreground: {
+  
+  // Generic containers
+
+  // Backgrounds
+  // White background
+  whiteBackground: {
     flex: 1,
-    flexDirection: 'column',
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    marginHorizontal: '1.5rem',
-    marginVertical: '3.5rem',
-    borderRadius: '2rem'
+    backgroundColor: '#f6f6f6',
+  },
+  // Gray background
+  grayBackground: {
+    backgroundColor: '#eee',
+    flex: 1,
+  },
+
+  //Foregrounds
+  // White foreground
+  whiteForeground: {
+    backgroundColor: '#f6f6f6',
+    marginHorizontal: '5%',
+    marginVertical: '5%',
+    borderRadius: 25,
+    flex:1
   },
   // Gray foreground
-  reverseForeground: {
-    flex: 1,
+  grayForeground: {
     backgroundColor: '#eee',
-    //justifyContent: 'center',
-    marginHorizontal: '0.6rem',
-    marginVertical: '1rem',
-    borderRadius: '2rem',
+    marginHorizontal: '5%',
+    marginVertical: '5%',
+    borderRadius: 25,
+    flex:1
   },
-  // Generic container
-  container: {
-    height: '100%',
-    width: '100%',
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white'
-  },
-  // Generic text
-  text: {
-    fontSize: '2rem',
-    color: 'black',
-    fontFamily: 'Cairo_500Medium',
-  },
+
+  // Buttons 
+
   // Action button
   button: {
     alignItems: 'center',
@@ -54,16 +50,9 @@ const global = EStyleSheet.create({
     backgroundColor: 'red',
     borderRadius: 25,
     marginVertical: '1rem',
-    width: '13rem',
-    height: '3rem',
-    alignSelf:  'center'
-  },
-  // Text for buttons
-  buttonText: {
-    color: 'white',
-    fontSize: '1rem',
-    fontFamily: 'Cairo_500Medium',
-    fontWeight: 'bold',
+    width: Dimensions.get('window').width*0.5,
+    height:  Dimensions.get('window').height*0.06,
+    textAlign: 'center',
   },
   // Grey button that does nothing
   buttonInactive: {
@@ -72,9 +61,9 @@ const global = EStyleSheet.create({
     backgroundColor: '#bbb',
     borderRadius: 25,
     marginVertical: '1rem',
-    width: '13rem',
-    height: '3rem',
-    alignSelf:  'center'
+    width: Dimensions.get('window').width*0.5,
+    height:  Dimensions.get('window').height*0.06,
+    textAlign: 'center',
   },
   // Light gray button for less important buttons
   buttonMinor: {
@@ -84,19 +73,33 @@ const global = EStyleSheet.create({
     backgroundColor: '#ddd',
     borderRadius: 25,
     marginVertical: '1rem',
-    width: '13rem',
-    height: '3rem',
+    width: Dimensions.get('window').width*0.5,
+    height:  Dimensions.get('window').height*0.06,
+    textAlign: 'center',
   },
   // Alt colored button
   buttonAlt: {
-    alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: '#F67D7D',
     borderRadius: 25,
-    marginVertical: '1rem',
-    width: '13rem',
-    height: '3rem',
-    alignSelf:  'center'
+    width: Dimensions.get('window').width*0.5,
+    height:  Dimensions.get('window').height*0.06,
+    textAlign: 'center',
+  },
+
+  //Text
+
+  // Text for buttons
+  buttonText: {
+    color: 'white',
+    fontSize: '1rem',
+    fontFamily: 'Cairo_500Medium',
+    textAlign: 'center',
+  },
+  // Generic text
+  text: {
+    fontSize: '2rem',
+    color: 'black',
+    fontFamily: 'Cairo_500Medium',
   },
   // Slightly smaller text for paragraphs
   bodyText: {
@@ -117,7 +120,7 @@ const global = EStyleSheet.create({
   // Even smaller text for captions
   subText: {
     color: 'black',
-    fontSize: '0.8rem',
+    fontSize: '0.9rem',
     fontFamily: 'Cairo_500Medium',
     lineHeight: '1.2rem',
   },
@@ -129,6 +132,37 @@ const global = EStyleSheet.create({
     textAlign: 'center',
     justifyContent: 'center',
     fontFamily: 'Cairo_500Medium',
+  },
+    // Header
+  titleText: {
+    fontSize: '1.6rem',
+    color: 'black',
+    fontFamily: 'Manrope_700Bold',
+    textAlign: 'center',
+    justifyContent: 'center',
+  },
+  // Section header
+  subheaderText: {
+    fontSize: '1.4rem',
+    color: 'black',
+    fontFamily: 'Manrope_500Medium',
+    textAlign: 'center',
+    justifyContent: 'center',
+  },
+  creditsText: {
+    fontSize: '1rem',
+    fontFamily: 'Cairo_500Medium',
+    justifyContent: 'center',
+    textAlign: 'center',
+    color: 'blue',
+    textDecorationLine: 'underline',
+  },
+  clickableText: {
+    fontSize: '1rem',
+    fontFamily: 'Cairo_500Medium',
+    justifyContent: 'center',
+    textAlign: 'center',
+    textDecorationLine: 'underline',
   },
   // Text input field
   input: {
@@ -142,12 +176,14 @@ const global = EStyleSheet.create({
     marginBottom: '1rem',
     alignSelf: 'center'
   },
-  // Generic horizontal flex
+
+// Leagcy (old)
+
+// Generic horizontal flex
   horizontal: {
     flexDirection: 'row',
     margin: '0.5rem'
   },
-
 //Login button (old, don't use)
   loginButton: {
     backgroundColor: '#F74F4F',
@@ -181,16 +217,15 @@ const global = EStyleSheet.create({
   titleText: {
     fontSize: '1.6rem',
     color: 'black',
-    fontWeight: 'bold',
-    fontFamily: 'Manrope_500Medium',
+    fontFamily: 'Manrope_700Bold',
     textAlign: 'center',
     justifyContent: 'center',
+    margin: '0.5rem',
   },
   // Section header
   subheaderText: {
     fontSize: '1.4rem',
     color: 'black',
-    fontWeight: 'bold',
     fontFamily: 'Manrope_500Medium',
     textAlign: 'center',
     justifyContent: 'center',
@@ -206,7 +241,6 @@ const global = EStyleSheet.create({
   title: {
     fontSize: 24, // Adjust the font size as needed
     color: 'black', // Set the text color
-    fontWeight: 'bold', // Adjust font weight as needed
     fontFamily: 'Manrope_500Medium',
   },
 });

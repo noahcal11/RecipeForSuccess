@@ -1,24 +1,55 @@
 // BannerTitle.js
-
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import SearchBar from './SearchBar';
-import Profile from './Profile';
+import ProfileIcon from "../assets/svg/profile";
 import EStyleSheet from 'react-native-extended-stylesheet';
-
+import React, { useState, useContext } from 'react';
+import { View, Pressable, Text, TextInput } from 'react-native';
+import SearchIcon from '../assets/svg/search';
+import { useNavigation } from '@react-navigation/core';
+import { Context } from "../App";
 
 EStyleSheet.build();
 
 const BannerTitle = ({ title }) => {
+  const navigation = useNavigation()
+  const [isTextInputVisible, setTextInputVisible] = useState(false);
+  const {setRecipePageState} = useContext(Context);
+
+  const toggleSearchBar = () => {
+    setTextInputVisible(!isTextInputVisible);
+  };
+
   return (
     <View style={styles.banner}>
-      {<View style={styles.profile}>
-        <Profile />
-      </View> }
-      <Text style={styles.bannerTitle}>{title}</Text>
-      <View style={styles.search}>
-        <SearchBar/>
-      </View>
+      {!isTextInputVisible ? (
+        <>
+          <View style={styles.profile}>
+            <Pressable onPress={() => {navigation.navigate("Profile"); setRecipePageState("details");}} style={styles.profileIcon}>
+              <ProfileIcon />
+            </Pressable>
+          </View>
+          <Text style={styles.bannerTitle}>{title}</Text>
+          <View style={styles.search}>
+            <Pressable onPress={toggleSearchBar} style={styles.searchIcon}>
+              <SearchIcon />
+            </Pressable>
+          </View>
+        </>
+      ) : (
+        <View style={styles.searchBar}>
+          <TextInput
+            placeholder="Search..."
+            style={styles.searchInput}
+            autoFocus
+            onSubmitEditing={({ nativeEvent: { text } }) => {
+              navigation.navigate("SearchResults",{"searchTerm":text});
+              toggleSearchBar();
+            }}
+          />
+          <Pressable onPress={toggleSearchBar}>
+            <View style={styles.xBox}><Text>X</Text></View>
+          </Pressable>
+        </View>
+      )}
     </View>
   );
 };
@@ -28,32 +59,55 @@ export default BannerTitle;
 const styles = EStyleSheet.create({
   banner: {
     height: '12%',
-    //height: '5.5rem',
-    backgroundColor: '#F02727', // Set the background color of the banner
-    paddingVertical: '1rem', // Adjust vertical padding as needed
+    width: '100%',
+    backgroundColor: '#F02727',
     flexDirection: 'row',
-    //justifyContent: 'center'
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingTop: '10%'
   },
   bannerTitle: {
-    fontSize: '1.5rem', // Adjust the font size as needed
-    color: 'black', // Set the text color
-    fontWeight: 'bold', // Adjust font weight as needed
-    fontFamily: 'Manrope_500Medium',
-    textAlign: 'center', // Center text
-    flex: '1rem',
-    //paddingTop: '5%',
-    paddingTop: '1.25rem',
-    paddingHorizontal: '1rem',
-    justifyContent: 'center',
-    alignItems: 'center',
+    fontSize: '1.5rem',
+    color: 'black',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    flex: 1,
   },
   profile: {
-    width: '2rem', // Adjust the width as needed
-    height: '2rem',
+    width: '2.5rem',
+    height: '2.5rem',
+    marginLeft: '5%',
+  },
+  profileIcon: {
+    width: '100%',
+    height: '100%',
   },
   search: {
-    //flex: 2,
+    width: '2.5rem',
+    height: '2.5rem',
+    marginRight: '5%',
+  },
+  searchIcon: {
+    width: '100%',
     height: '100%',
-    flex: '.1rem',
+  },
+  searchBar: {
+    width: '90%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'right',
+    marginHorizontal:'5%',
+    backgroundColor: '#ddd',
+    borderRadius: 25,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: '2rem',
+  },
+  xBox: {
+    width: '2.5rem',
+    height: '2.5rem',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

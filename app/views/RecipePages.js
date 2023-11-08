@@ -1,7 +1,7 @@
 // App.js
 import React from 'react';
 //import styles from './Genstyle';
-import { View, Text, FlatList, Image, Linking, Pressable } from 'react-native';
+import { View, Text, FlatList, Image, Linking, Pressable, Dimensions } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import SearchBar from '../Components/SearchBar'; // Import your search bar component
 import RecipeFooter from '../Components/RecipeFooter';
@@ -38,16 +38,14 @@ export default function RecipePages({ navigation, route }) {
   switch(recipePageState) {
     case 'details':
       return (
-        <View style={global.container}>
-          {/* Search bar */}
-          <SearchBar />
-          <View style={{ flex: 1 }}>
-            {/* Banner title */}
-            <BannerTitle title={'Recipe'} />
+        <View style={global.whiteBackground}>
+          <BannerTitle title={'Recipe'} />
+          <View style= {global.grayForeground}>
             {/* Your app content */}
             <FlatList
               data={[recipe]}
               keyExtractor={(item, index) => index.toString()}
+              contentContainerStyle = {{paddingBottom:1000}}
               renderItem={({ item }) => (
                 <>
                 <Text style={global.titleText}> {recipe.title} </Text>
@@ -75,19 +73,19 @@ export default function RecipePages({ navigation, route }) {
                     </Text>
                     <RecipeDirections directions={item.steps} />
                   </View>
-                  <Text style={styles.credits} onPress={() => Linking.openURL(item.link)}>Credits</Text>
+                  <Text style={global.creditsText} onPress={() => Linking.openURL(item.link)}>Credits</Text>
                 </>
               )}
             />
             {/* Footer component */}
             <RecipeFooter />
-            <Footer username={route.params.username} email={route.params.email} />
           </View>
+          <Footer />
         </View>
       );
     case 'progress':
       return (
-        <View style={styles.container}>
+        <View style={global.whiteBackground}>
           <RecipeProgression 
             ingredients={recipe.ingredients}
             directions={recipe.steps}
@@ -95,51 +93,31 @@ export default function RecipePages({ navigation, route }) {
             username={route.params.username}
             email={route.params.email}
           />
-          <Footer username={route.params.username} email={route.params.email} />
+          <Footer />
         </View>
       );
     case 'survey':
         return (
-          <View style={styles.container}>
+          <View style={global.whiteBackground}>
             <RecipeSurvey
               directions={recipe.steps}
               title = {recipe.title}
               username={route.params.username}
               email={route.params.email}
             />
-            <Footer username={route.params.username} email={route.params.email} />
+            <Footer />
           </View>
         );
   };
 }
 const styles = EStyleSheet.create({
   image: {
-    width: 320,
-    height: 220,
-    margin: '1rem',
+    width: '80%',
+    height: Dimensions.get('window').height *.3,
+    margin: '10%',
     borderRadius: 25,
     borderColor: 'black',
-    borderWidth: '0.05rem',
+    borderWidth: 2,
     alignSelf: 'center',
-  },
-  container: {
-    flex: 1,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginVertical: 20,
-    textAlign: 'center',
-  },
-  componentView: {
-    paddingHorizontal: 20,
-  },
-  credits: {
-    fontSize: '1rem',
-    fontFamily: 'Cairo_500Medium',
-    justifyContent: 'center',
-    textAlign: 'center',
-    color: 'blue',
-    textDecorationLine: 'underline',
-  },
+  }
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Pressable } from 'react-native';
+import { View, Text, Pressable, Dimensions } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState, useContext, useEffect } from 'react'
 import { Context } from '../App'
@@ -26,10 +26,6 @@ const RecipeFooter = () => {
       backgroundColor: 'transparent', // #F67D7D
       padding: 10,
       alignItems: 'center',
-    },
-    footerText: {
-      color: '#141414',
-      fontSize: 16,
-      fontWeight: 'bold',
-    },
+      height: '8%',
+    }
   })
