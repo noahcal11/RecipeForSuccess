@@ -6,6 +6,7 @@ const ProgressBar = (props) => {
     const { bgcolor, completed } = props;
   
     const containerStyles = {
+      borderRadius: 25,
       borderWidth: 3,
       borderColor: 'black',
       height: 30,
