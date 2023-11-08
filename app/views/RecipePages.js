@@ -13,6 +13,7 @@ import RecipeProgression from '../Components/RecipeProgression';
 import RecipeSurvey from '../Components/RecipeSurvey';
 import Footer from '../Components/Footer';
 import StarIcon from '../assets/svg/star';
+import HeartIcon from '../assets/svg/heart';
 import { useState, useContext } from 'react';
 import { Context } from '../App'
 import global from '../Genstyle'
@@ -37,11 +38,13 @@ export default function RecipePages({ navigation, route }) {
 
 
   const [isFavorite, setIsFavorite] = useState(false);
-  const iconColor = isFavorite ? 'gold' : 'gray';
+  const iconColor = isFavorite ? 'pink' : 'currentColor';
 
 
   const handleFavoritesPress = () => {
-    setIsFavorite(!isFavorite); // Toggle the isFavorite state when pressed
+    console.log('Icon clicked');
+    setIsFavorite(!isFavorite);
+    console.log('isFavorite state:', isFavorite); // Toggle the isFavorite state when pressed
   };
 
   useState(() => {
@@ -66,9 +69,7 @@ export default function RecipePages({ navigation, route }) {
                   
                   <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
 
-                  <TouchableHighlight onPress={handleFavoritesPress} style={styles.icon}>
-            <StarIcon width="40" height='85' stroke="black" strokeWidth="0.25" fill={iconColor}/>
-            </TouchableHighlight>
+                  
 
             
                     <Text style={{ fontSize: 18, marginBottom: 20 }}/>
@@ -77,6 +78,10 @@ export default function RecipePages({ navigation, route }) {
                     </Text>
                     <RecipeDescription description={item.desc} />
                   </View>
+
+                  <TouchableHighlight onPress={handleFavoritesPress} style={styles.icon}>
+            <HeartIcon width="40" height='85' stroke="black" strokeWidth="0.25" fill={iconColor}/>
+            </TouchableHighlight>
     
                   {/* Recipe Ingredients */}
                   <View style={{ paddingHorizontal: 20 }}>
