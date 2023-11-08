@@ -102,7 +102,8 @@ const styles = EStyleSheet.create({
   },
   searchInput: {
     flex: 1,
-    fontSize: '2rem',
+    fontSize: '1.5rem',
+    paddingLeft: 10
   },
   xBox: {
     width: '2.5rem',
