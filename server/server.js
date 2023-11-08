@@ -22,37 +22,34 @@ const { Recipe,User } = require('./model');
 // Recipe Section
 
 app.get('/'+process.env.API_TOKEN+'/recipe/get',async (req,res) => {   
+    let recipes;
     const id = req.query.id;
     const general = req.query.general;
     if (general != null) {
-        const recipes = await Recipe.find({$or: [
+        recipes = await Recipe.find({$or: [
             {title: new RegExp(`\\b${general}\\b`, "i")},
             {desc: new RegExp(`\\b${general}\\b`, "i")},
             {ingredients: new RegExp(`\\b${general}\\b`, "i")}
         ]});
-        res.json(recipes);
-    } if (id !== undefined) {
-        const recipes = await Recipe.findById(id)
-        res.json(recipes);
+    } else if (id !== undefined) {
+        recipes = await Recipe.findById(id)
     } else {
         const title = req.query.title;
         const desc = req.query.desc;
         const ingredients = req.query.ingredients;
         const total_time = req.query.total_time;
-        // const yields = parseInt(req.query.yields.split(" servings")[0]);
         const cuisine = req.query.cuisine;
         const category = req.query.category;
-        const recipes = await Recipe.find({
+        recipes = await Recipe.find({
             total_time: total_time ? {$lte: total_time} : {$lte: 65535},
             cuisine: cuisine ? new RegExp(`\\b${cuisine}\\b`, "i") : new RegExp(`.*|`, "i"),
             category: category ? new RegExp(`\\b${category}\\b`, "i") : new RegExp(`.*|`, "i"),
-            // yields: {$gte: yields},
             title: title ? new RegExp(`\\b${title}\\b`, "i") : new RegExp(`.*|`, "i"),
             desc: desc ? new RegExp(`\\b${desc}\\b`, "i") : new RegExp(`.*|`, "i"),
             ingredients: ingredients ? new RegExp(`\\b${ingredients}\\b`, "i") : new RegExp(`.*|`, "i")
         });
-        res.json(recipes);
     }
+    res.json(recipes);
 });
 
 app.get('/'+process.env.API_TOKEN+'/recipe/get/all',async (req,res) => {

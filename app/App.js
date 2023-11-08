@@ -9,8 +9,9 @@ import SearchResults from './views/SearchResults'
 import ProfileSettings from './views/ProfileSettings';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useFonts, Cairo_500Medium } from '@expo-google-fonts/cairo';
-import { Manrope_500Medium } from '@expo-google-fonts/manrope';
+import { useFonts } from 'expo-font';
+import { Cairo_500Medium } from '@expo-google-fonts/cairo';
+import { Manrope_500Medium, Manrope_700Bold } from '@expo-google-fonts/manrope';
 
 const Stack = createNativeStackNavigator();
 export const Context = createContext();
@@ -23,6 +24,7 @@ export default function App() {
   let [fontsLoaded, fontError] = useFonts({
     Cairo_500Medium,
     Manrope_500Medium,
+    Manrope_700Bold,
   });
 
   if (!fontsLoaded && !fontError) {

@@ -19,7 +19,7 @@ jobs:
   build-app:
     name: Install and Build App
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/staging'
+    if: github.ref == 'refs/heads/yippe'
     defaults:
       run:
         working-directory: app
@@ -38,7 +38,7 @@ jobs:
   build-server:
     name: Build and Deploy Server
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/staging'
     defaults:
       run:
         working-directory: server

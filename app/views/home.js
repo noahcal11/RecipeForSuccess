@@ -1,11 +1,11 @@
 import { StatusBar } from 'expo-status-bar'; 
-import { Text, Image, View, ScrollView, TextInput, FlatList, SectionList, Pressable } from 'react-native';
+import { Text, Image, View, ScrollView, TextInput, FlatList, SectionList, Pressable, Dimensions } from 'react-native';
 import Banner from '../Components/Banner';
 import Footer from '../Components/Footer'
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState,useContext } from 'react';
 import { Context } from '../App';
-import Genstyle from '../Genstyle';
+import global from '../Genstyle';
 
 EStyleSheet.build();
 
@@ -34,28 +34,28 @@ export default function Home({ navigation, route }){
     }
 
     const getPopular = async () => {
-        const response = await fetch(API_BASE+"/recipe/get/?cuisine=American")
+        const response = await fetch(API_BASE+"/recipe/get/?cuisine=American", {method: "GET"})
         .then(res => res.json())
         .then(data => setPopularRecs(getRandom(data,8)))
         .catch(error => console.error(error));
     }
 
     const getDessert = async () => {
-        const response = await fetch(API_BASE+"/recipe/get/?category=Dessert")
+        const response = await fetch(API_BASE+"/recipe/get/?category=Dessert", {method: "GET"})
         .then(res => res.json())
         .then(data => setDessertRecs(getRandom(data,4)))
         .catch(error => console.error(error));
     }
 
     const getBreakfast = async() => {
-        const response = await fetch(API_BASE+"/recipe/get/?category=Breakfast")
+        const response = await fetch(API_BASE+"/recipe/get/?category=Breakfast", {method: "GET"})
         .then(res => res.json())
         .then(data => setBreakfastRecs(getRandom(data,4)))
         .catch(error => console.error(error));
     }
 
     const getChicken = async() => {
-        const response = await fetch(API_BASE+"/recipe/get/?title=Chicken")
+        const response = await fetch(API_BASE+"/recipe/get/?title=Chicken", {method: "GET"})
         .then(res => res.json())
         .then(data => setChickenRecs(getRandom(data,8)))
         .catch(error => console.error(error));
@@ -69,16 +69,16 @@ export default function Home({ navigation, route }){
     }, []);
 
     return(
-        <View style={styles.container}>
-            <Banner title="Home" username={username} email={email}/>
+        <View style={global.whiteBackground}>
+            <Banner title="Home"/>
             <ScrollView styles={{ flex: 1 }}>
-                <View style={styles.recipeSection}>
+                <View style={{alignItems: 'center'}}>
                     <FlatList scrollEnabled={false}
-                        style={styles.recList}
-                        ListHeaderComponent={<Text style={styles.categoryTitle}>Popular Recipes</Text>}
+                        style={global.grayForeground}
+                        ListHeaderComponent={<Text style={global.titleText}>Popular Recipes</Text>}
                         data={popularRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':username,'email':email})}
+                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}
                                 style={({ pressed }) => [
                                     {
                                     opacity: pressed
@@ -88,7 +88,7 @@ export default function Home({ navigation, route }){
                             >
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
-                                    <Text style={Genstyle.bodyText}>{item.title}</Text>
+                                    <Text style={global.subText}>{item.title}</Text>
                                 </View>
                             </Pressable>
                         )}
@@ -97,7 +97,7 @@ export default function Home({ navigation, route }){
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("SearchResults",{'username':username,'email':email})
+                                    navigation.navigate("SearchResults")
                                 }}
                                 
                                 style={({ pressed }) => [
@@ -107,16 +107,16 @@ export default function Home({ navigation, route }){
                                         : 1,
                                     }]}
                             >
-                                <Text style={styles.viewMore}>View more</Text>
+                                <Text style={{ ...global.clickableText, marginBottom: '5%'}}>View more</Text>
                             </Pressable>
                         }
                     />
                     <FlatList scrollEnabled={false}
-                        style={styles.recList}
-                        ListHeaderComponent={<Text style={styles.categoryTitle}>Top Desserts</Text>}
+                        style={global.grayForeground}
+                        ListHeaderComponent={<Text style={global.titleText}>Top Desserts</Text>}
                         data={dessertRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':username,'email':email})}
+                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}
                                 style={({ pressed }) => [
                                     {
                                     opacity: pressed
@@ -126,7 +126,7 @@ export default function Home({ navigation, route }){
                             >
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
-                                    <Text>{item.title}</Text>
+                                    <Text style={global.subText}>{item.title}</Text>
                                 </View>
                             </Pressable>
                         )}
@@ -135,7 +135,7 @@ export default function Home({ navigation, route }){
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("SearchResults",{'username':username,'email':email})
+                                    navigation.navigate("SearchResults")
                                 }}
                                 
                                 style={({ pressed }) => [
@@ -145,18 +145,17 @@ export default function Home({ navigation, route }){
                                         : 1,
                                     }]}
                             >
-                                <Text style={styles.viewMore}>View more</Text>
+                                <Text style={{ ...global.clickableText, marginBottom: '5%'}}>View more</Text>
                             </Pressable>
                         }
                     />
-                    <View style={styles.recList}>
-                    <Text style={styles.categoryTitle}>Chicken!</Text>
+                    <View style={global.grayForeground}>
+                    <Text style={global.titleText}>Chicken!</Text>
                     <FlatList
-                        style={styles.recList}
                         horizontal
                         data={chickenRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':username,'email':email})}
+                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}
                                 style={({ pressed }) => [
                                     {
                                     opacity: pressed
@@ -166,7 +165,7 @@ export default function Home({ navigation, route }){
                             >
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
-                                    <Text>{item.title}</Text>
+                                    <Text style={global.subText}>{item.title}</Text>
                                 </View>
                             </Pressable>
                         )}
@@ -174,7 +173,7 @@ export default function Home({ navigation, route }){
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("SearchResults",{'username':username,'email':email})
+                                    navigation.navigate("SearchResults")
                                 }}
                                 
                                 style={({ pressed }) => [
@@ -184,17 +183,17 @@ export default function Home({ navigation, route }){
                                         : 1,
                                     }]}
                             >
-                                <Text style={styles.viewMore}>View more</Text>
+                                <Text style={global.clickableText}>View more</Text>
                             </Pressable>
                         }
                     />
                     </View>
                     <FlatList scrollEnabled={false}
-                        style={styles.recList}
-                        ListHeaderComponent={<Text style={styles.categoryTitle}>Breakfast Creations</Text>}
+                        style={global.grayForeground}
+                        ListHeaderComponent={<Text style={global.titleText}>Breakfast Creations</Text>}
                         data={breakfastRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id,'username':username,'email':email})}
+                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}
                                 style={({ pressed }) => [
                                     {
                                     opacity: pressed
@@ -204,7 +203,7 @@ export default function Home({ navigation, route }){
                             >
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
-                                    <Text>{item.title}</Text>
+                                    <Text style={global.subText}>{item.title}</Text>
                                 </View>
                             </Pressable>
                         )}
@@ -213,7 +212,7 @@ export default function Home({ navigation, route }){
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("SearchResults",{'username':username,'email':email})
+                                    navigation.navigate("SearchResults")
                                 }}
                                 
                                 style={({ pressed }) => [
@@ -223,60 +222,30 @@ export default function Home({ navigation, route }){
                                         : 1,
                                     }]}
                             >
-                                <Text style={styles.viewMore}>View more</Text>
+                                <Text style={{ ...global.clickableText, marginBottom: '5%'}}>View more</Text>
                             </Pressable>
                         }
                     />
                 </View>
             </ScrollView>
-            <Footer username={username} email={email} />
+            <Footer  />
         </View>
     );
 }
 
 const styles = EStyleSheet.create({
-    welcomeText: {
-        textAlign: 'center',
-        fontSize: '1.2rem',
-    },
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        backgroundColor: 'white',
-    },
     imageView: {
-        margin: '1rem',
-        width: '9rem',
+        margin: 10,
+        width: (Dimensions.get('window').width * .85) * .5 - 10,
+        justifyContent: 'center',
+        alignItems: 'left'
     },
     imageThumbnail: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '5rem',
-        width: '9rem',
-        borderRadius: '2rem',
-        borderWidth: '0.2rem'
+        height: Dimensions.get('window').height * .85 / 8 - 10,
+        width: '100%',
+        borderRadius: 25,
+        borderWidth: 2,
+        borderColor: 'black',
+        marginBottom: '5%'
     },
-    recipeSection: {
-        padding: '1rem',
-        flex: 1,
-    },
-    categoryTitle: {
-        paddingTop: '0.4rem',
-        textAlign: 'center',
-        fontSize: '1.5rem',
-        fontWeight: 'bold',
-    },
-    recList: {
-        backgroundColor: "#eee",
-        margin: '0.5rem',
-    },
-    viewMore: {
-        fontSize: '1.05rem',
-        fontWeight: 'bold',
-        fontStyle: 'italic',
-        paddingLeft: '1rem',
-        paddingBottom: '0.7rem',
-        paddingRight: '0.25rem',
-        color: '#ad0603',
-    }
 });

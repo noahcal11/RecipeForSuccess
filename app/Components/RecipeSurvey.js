@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, Pressable, FlatList } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -7,6 +7,7 @@ import Banner from './Banner'
 import Footer from '../Components/Footer'
 import { useContext } from 'react';
 import { Context } from '../App'
+import global from '../Genstyle'
 /* TODO:
     - The background color for each button is set dynamically,
         so it cannot be combined with the regular stylesheet.
@@ -36,7 +37,7 @@ const RecipeSurvey = ({directions, title}) => {
                     case 1:
                         return 'green';
                     case 2:
-                        return 'yellow';
+                        return 'orange';
                     case 3:
                         return 'red';
                     default:
@@ -45,11 +46,47 @@ const RecipeSurvey = ({directions, title}) => {
             } else return 'gray';
         }
 
+        const buttonStyles = EStyleSheet.create({
+            leftButton: {
+                flex: 1,
+                backgroundColor: setBackgroundColor(1),
+                alignItems: 'center',
+                alignSelf: 'center',
+                justifyContent: 'center',
+                marginBottom: '1rem',
+                borderTopLeftRadius: 25,
+                borderBottomLeftRadius: 25,
+                width: '4rem',
+                height: '3rem'
+            },
+            middleButton: {
+                flex: 1,
+                backgroundColor: setBackgroundColor(2),
+                alignItems: 'center',
+                alignSelf: 'center',
+                justifyContent: 'center',
+                marginBottom: '1rem',
+                width: '4rem',
+                height: '3rem'
+            },
+            rightButton: {
+                flex: 1,
+                backgroundColor: setBackgroundColor(3),
+                alignItems: 'center',
+                alignSelf: 'center',
+                justifyContent: 'center',
+                marginBottom: '1rem',
+                borderTopRightRadius: 25,
+                borderBottomRightRadius: 25,
+                width: '4rem',
+                height: '3rem'
+            }
+        })
+
         return (
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                    // TODO: figure out how to combine a dynamic styling with the stylesheet 
-                    style={{ backgroundColor: setBackgroundColor(1) }}
+            <View style={global.horizontal}>
+                <Pressable
+                    style={buttonStyles.leftButton}
                     onPress={() => {
                         setAllSelected(true);
                         // Increment the relevant skill
@@ -73,10 +110,10 @@ const RecipeSurvey = ({directions, title}) => {
                             return newValue
                         }))
                     }}>
-                    <Text style={styles.buttonText}>Good</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={{ backgroundColor: setBackgroundColor(2) }}
+                    <Text style={global.buttonText}>Good</Text>
+                </Pressable>
+                <Pressable
+                    style={buttonStyles.middleButton}
                     onPress={() => {
                         setAllSelected(true)
                         // Adjust the relevant skill
@@ -100,10 +137,10 @@ const RecipeSurvey = ({directions, title}) => {
                             return newValue
                         }))
                     }}>
-                    <Text style={styles.buttonText}>Okay</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={{ backgroundColor: setBackgroundColor(3) }}
+                    <Text style={global.buttonText}>Okay</Text>
+                </Pressable>
+                <Pressable
+                    style={buttonStyles.rightButton}
                     onPress={() => {
                         setAllSelected(true)
                         // Decrement the relevant skill
@@ -127,26 +164,25 @@ const RecipeSurvey = ({directions, title}) => {
                             return newValue
                         }))
                     }}>
-                    <Text style={styles.buttonText}>Bad</Text>
-                </TouchableOpacity>
+                    <Text style={global.buttonText}>Bad</Text>
+                </Pressable>
             </View>
         )
     }
 
     const Finish = () => {
-        navigation.navigate("Skills", {'username':username,'email':email});
+        navigation.navigate("Skills");
         setRecipePageState('details');
     }
 
     return(
-        <View style={styles.container}>
-            {/* Header */}
-            <Banner title={title} username={username} email={email}/>
-            <Text style={styles.header}>Great Job!</Text>
-            <Text style={styles.subheader}>Let us know how you did:</Text>
+        <View style={global.whiteBackground}>   
+        {/* Header */}
+        <Banner title={title}/>
+            <Text style={global.titleText}>Great Job! Let us know how you did:</Text>
             {/* First Question (ingredient prep) */}
-            <View style={styles.ingredientQuestion}>
-                <Text style={styles.ingredientText}>How well did you prepare the ingredients?</Text>
+            <View style={styles.question}>
+                <Text style={global.centeredText}>How well did you prepare the ingredients?</Text>
                 {/* Insert a pair of buttons where only one can be "activated" */}
                 {RatingButtons(0, 0)}
             </View>
@@ -154,9 +190,11 @@ const RecipeSurvey = ({directions, title}) => {
                 data={directions}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item, index }) => (
-                    <View style={styles.stepList}>
-                        <Text style={styles.stepQuestion}>How well did you do in step {index + 1}?</Text>
-                        <Text style={styles.stepInfo}>{item}</Text>
+                    <View style={styles.question}>
+                        <Text style={global.centeredText}>How well did you do in step {index + 1}?</Text>
+                        <View style={global.grayForeground}>
+                            <Text style={global.centerBodyText}>{item}</Text>
+                        </View>
                         {/* Insert same button system as in the ingredient step */}
                         {/* TODO: Determine which skill each step correlates to */}
                         {RatingButtons(1, index + 1)}
@@ -166,19 +204,18 @@ const RecipeSurvey = ({directions, title}) => {
             {/* Insert submit button that is unavailable until all button pairs have a selection */}
             {/* This button will redirect to the skills page and show your improvement */}
             {allSelected ?
-                <TouchableOpacity
-                    style={styles.finishButton}
+                <Pressable
+                    style={global.button}
                     onPress={() => {Finish()}}>
                         <Text style={styles.buttonText}>Submit</Text>
-                </TouchableOpacity>
+                </Pressable>
                 :
-                <TouchableOpacity
-                    style={styles.grayButton}
+                <Pressable
+                    style={global.buttonInactive}
                     onPress={() => {}}>
                         <Text style={styles.buttonText}>Submit</Text>
-                </TouchableOpacity>
+                </Pressable>
             }
-            <Footer username={username} email={email} />
         </View>
     );
 }
@@ -186,29 +223,32 @@ const RecipeSurvey = ({directions, title}) => {
 export default RecipeSurvey;
 
 const styles = EStyleSheet.create({
+    question: {
+        margin: '1%'
+    },
     container: {
         flex: 1,
     },
     header: {
-
+        fontFamily: 'Manrope_500Medium',
     },
     subheader: {
-
+        fontFamily: 'Manrope_500Medium',
     },
     ingredientQuestion: {
-
+        fontFamily: 'Manrope_500Medium',
     },
     ingredientText: {
-
+        fontFamily: 'Cairo_500Medium',
     },
     stepList: {
 
     },
     stepQuestion: {
-
+        fontFamily: 'Manrope_500Medium',
     },
     stepInfo: {
-
+        fontFamily: 'Cairo_500Medium',
     },
     buttonContainer: {
 
@@ -245,5 +285,6 @@ const styles = EStyleSheet.create({
     buttonText: {
         color: 'white',
         fontSize: '1rem',
+        fontFamily: 'Manrope_500Medium', //not sure what font I want this to be
     },
 })

@@ -1,7 +1,7 @@
 // App.js
 import React from 'react';
 //import styles from './Genstyle';
-import { View, Text, FlatList, Image, Linking } from 'react-native';
+import { View, Text, FlatList, Image, Linking, Pressable, Dimensions } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import SearchBar from '../Components/SearchBar'; // Import your search bar component
 import RecipeFooter from '../Components/RecipeFooter';
@@ -15,6 +15,7 @@ import Footer from '../Components/Footer';
 import StarIcon from '../assets/svg/star';
 import { useState, useContext } from 'react';
 import { Context } from '../App'
+import global from '../Genstyle'
 import Icon from 'react-native-vector-icons/FontAwesome'; // Adjust the library and icon as needed
 import { TouchableHighlight } from 'react-native';
 
@@ -49,20 +50,17 @@ export default function RecipePages({ navigation, route }) {
   switch(recipePageState) {
     case 'details':
       return (
-        <View style={styles.container}>
-          {/* Search bar */}
-          <SearchBar />
-          <View style={styles.container}>
-            {/* Banner title */}
-            <BannerTitle title={'Recipe'} />
-            
+        <View style={global.whiteBackground}>
+          <BannerTitle title={'Recipe'} />
+          <View style= {global.grayForeground}>
             {/* Your app content */}
             <FlatList
               data={[recipe]}
               keyExtractor={(item, index) => index.toString()}
+              contentContainerStyle = {{paddingBottom:1000}}
               renderItem={({ item }) => (
                 <>
-                <Text style={styles.title}> {recipe.title} </Text>
+                <Text style={global.titleText}> {recipe.title} </Text>
                   {/* Recipe Description */}
                   <Image source={{uri:item.image}} style={{width: 400, height: 300}} />
                   
@@ -82,7 +80,7 @@ export default function RecipePages({ navigation, route }) {
     
                   {/* Recipe Ingredients */}
                   <View style={{ paddingHorizontal: 20 }}>
-                    <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 20 }}>
+                    <Text style={global.subheaderText}>
                       Recipe Ingredients
                     </Text>
                     <RecipeIngredients ingredients={item.ingredients} />
@@ -90,62 +88,57 @@ export default function RecipePages({ navigation, route }) {
     
                   {/* Recipe Directions */}
                   <View style={{ paddingHorizontal: 20 }}>
-                    <Text style={{ fontSize: 24, fontWeight: 'bold', marginVertical: 20 }}>
+                    <Text style={global.subheaderText}>
                       Recipe Directions
                     </Text>
                     <RecipeDirections directions={item.steps} />
                   </View>
-                  <Text onPress={() => Linking.openURL(item.link)}>Credits</Text>
+                  <Text style={global.creditsText} onPress={() => Linking.openURL(item.link)}>Credits</Text>
                 </>
               )}
             />
             {/* Footer component */}
             <RecipeFooter />
-            <Footer username={route.params.username} email={route.params.email} />
           </View>
+          <Footer />
         </View>
       );
     case 'progress':
       return (
-        <View style={styles.container}>
-        <RecipeProgression 
-          ingredients={recipe.ingredients}
-          directions={recipe.steps}
-          title = {recipe.title}
-          username={route.params.username}
-          email={route.params.email}
-        />
-        </View>
-      );
-    case 'survey':
-        return (
-          <View style={styles.container}>
-          <RecipeSurvey
+        <View style={global.whiteBackground}>
+          <RecipeProgression 
+            ingredients={recipe.ingredients}
             directions={recipe.steps}
             title = {recipe.title}
             username={route.params.username}
             email={route.params.email}
           />
+          <Footer />
+        </View>
+      );
+    case 'survey':
+        return (
+          <View style={global.whiteBackground}>
+            <RecipeSurvey
+              directions={recipe.steps}
+              title = {recipe.title}
+              username={route.params.username}
+              email={route.params.email}
+            />
+            <Footer />
           </View>
         );
   };
 }
 const styles = EStyleSheet.create({
   image: {
-    width: '5',
-    height: '5',
-  },
-  container: {
-    flex: 1,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginVertical: 20,
-    textAlign: 'center',
-  },
-  componentView: {
-    paddingHorizontal: 20,
+    width: '80%',
+    height: Dimensions.get('window').height *.3,
+    margin: '10%',
+    borderRadius: 25,
+    borderColor: 'black',
+    borderWidth: 2,
+    alignSelf: 'center',
   },
 
   icon: {

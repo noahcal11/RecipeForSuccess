@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, FlatList, Touchable } from 'react-native';
+import { View, Text, Pressable, FlatList } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import CheckBox from 'expo-checkbox';
 import { useState, useContext } from 'react';
@@ -7,13 +7,15 @@ import { Context } from '../App'
 import Banner from './Banner';
 import Footer from '../Components/Footer'
 import { ScrollView } from 'react-native-gesture-handler';
+import global from '../Genstyle'
 
-// TODO: style this page so it actually looks good
+// TODO: Make buttons go to the bottom of the page, add a timer
 const RecipeProgression = ({ingredients, directions, title}) => {
     // Variables
     const [stepNum, setStepNum] = useState(0);
     const [allChecked, setAllChecked] = useState(false);
     const [toggleCheck, setToggleCheck] = useState(new Array(ingredients.length).fill(false));
+    const [selectAll, setSelectAll] = useState(false);
     const { recipePageState, setRecipePageState, username, email } = useContext(Context);
     const recipeTitle = title;
 
@@ -32,14 +34,26 @@ const RecipeProgression = ({ingredients, directions, title}) => {
     function steps() {
         if(stepNum == 0) { // Displays the ingredient list
             return (
-                <View>
-                    <Text style={styles.heading}>Ingredients for {recipeTitle}:</Text>
+                <View style={{ flex: 1 }}>
+                    <Text style={global.titleText}>Ingredients for {recipeTitle}:</Text>
+                    <View style={global.horizontal}>
+                        <Text style={styles.globalSelect}>Select All</Text>
+                        <CheckBox style={styles.checkbox}
+                            disabled={false}
+                            value={selectAll}
+                            onValueChange={() => {
+                                setSelectAll(!selectAll)
+                                setAllChecked(!selectAll)
+                                setToggleCheck(toggleCheck.map(() => {return !selectAll}))
+                            }}
+                        />
+                    </View>
                     <FlatList // List that displays each ingredient, as well as a checkbox
                         data={ingredients}
                         keyExtractor={(item, index) => index.toString()}
                         renderItem={({ item, index }) => (
-                            <View style={styles.ingredientList}>
-                                <Text style={styles.ingredientItem}>{item}</Text>
+                            <View style={global.horizontal}>
+                                <Text style={global.bodyText}>{item}</Text>
                                 <CheckBox style={styles.checkbox}
                                     disabled={false}
                                     value={toggleCheck[index]}
@@ -53,37 +67,49 @@ const RecipeProgression = ({ingredients, directions, title}) => {
                     <View> 
                         {allChecked ? // If all checkboxes are selected, display a button
                                         // that progresses to the directions section
-                            <TouchableOpacity
+                            <Pressable
                                 onPress={() => {{setStepNum(stepNum + 1)}}}
                                 style={styles.nextButton}>
                                     <Text style={styles.buttonText}>Let's Begin!</Text>
-                            </TouchableOpacity>
-                            :<TouchableOpacity // Otherwise, display a gray button that does nothing
+                            </Pressable>
+                            :<Pressable // Otherwise, display a gray button that does nothing
                                 onPress={() => {}}
                                 style={styles.grayButton}>
                                     <Text style={styles.buttonText}>Let's Begin!</Text>
-                            </TouchableOpacity>
+                            </Pressable>
                         }
+                        <Pressable
+                            onPress={() => {setRecipePageState('details')}}
+                            style={global.buttonMinor}>
+                            <Text style={global.subText}>Go Back</Text>
+                        </Pressable>
                     </View>
                 </View>
             );
         } else { // Displays the directions in order
             return (
-                <View>
-                    <Text style={styles.header}>Step {stepNum}:</Text>
-                    <Text style={styles.step}>{directions[stepNum - 1]}</Text>
+                <View style={{ flex: 1 }}>
+                    <Text style={global.titleText}>Step {stepNum}:</Text>
+                    <Text style={global.centeredText}>{directions[stepNum - 1]}</Text>
+                    {/* Next button */}
                     {stepNum == directions.length ?
-                        <TouchableOpacity // If on the last step, button sends user to the survey page
+                        <Pressable // If on the last step, button sends user to the survey page
                             onPress={() => {setRecipePageState('survey')}}
-                            style={styles.nextButton}>
-                                <Text style={styles.buttonText}>Finish!</Text>
-                        </TouchableOpacity>
-                        :<TouchableOpacity // Otherwise, button just leads to the next step
+                            style={global.button}>
+                                <Text style={global.buttonText}>Finish!</Text>
+                        </Pressable>
+                        :<Pressable // Otherwise, button just leads to the next step
                             onPress={() => {setStepNum(stepNum + 1)}}
-                            style={styles.nextButton}>
-                                <Text style={styles.buttonText}>Next</Text>
-                        </TouchableOpacity>
+                            style={global.button}>
+                                <Text style={global.buttonText}>Next</Text>
+                        </Pressable>
                     }
+                    {/* Back button */}
+                    <Pressable // Decrement step count when going back
+                        onPress={() => {setStepNum(stepNum - 1)}}
+                        style={global.buttonMinor}>
+                            <Text style={global.subText}>Go Back</Text>
+                    </Pressable>
                 </View>
             );
         }
@@ -91,11 +117,10 @@ const RecipeProgression = ({ingredients, directions, title}) => {
 
     return (
         <View style={styles.container}>
-            <Banner title={"Progression"} username={username} email={email}/>
+            <Banner title={"Progression"}/>
             {/* //almost working except the page does not know where to get recipe title from
             <Text style={styles.title}> {recipe.title} </Text> */}
             {steps()}
-            <Footer username={username} email={email} />
         </View>
     )
 }
@@ -106,13 +131,24 @@ const styles=EStyleSheet.create({
     title: {
         fontSize: 24,
         fontWeight: 'bold',
+        fontFamily: 'Manrope_500Medium',
         marginVertical: 20,
         textAlign: 'center',
       },
     heading: {
         fontSize: '2rem',
+        fontFamily: 'Manrope_500Medium',
         alignSelf: 'center',
         justifyContent: 'center',
+    },
+    globalSelect: {
+        color: 'black',
+        fontSize: '1.1rem',
+        fontFamily: 'Cairo_500Medium',
+        flex: 1,
+        textAlign: 'right',
+        fontWeight: 'bold',
+        marginRight: '5%'
     },
     ingredientList: {
         flexDirection: 'row',
@@ -122,8 +158,8 @@ const styles=EStyleSheet.create({
         flex: 7,
     },
     checkbox: {
-        flex: 1,
-        width: '1rem',
+        width: 27,
+        height: 27,
     },
     nextButton: {
         alignItems: 'center',
@@ -148,6 +184,7 @@ const styles=EStyleSheet.create({
     buttonText: {
         color: 'white',
         fontSize: '1rem',
+        fontFamily: 'Cairo_500Medium',
     },
     step: {
         alignItems: 'center',

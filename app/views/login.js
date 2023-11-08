@@ -1,10 +1,11 @@
 import { StatusBar } from 'expo-status-bar'; 
-import { StyleSheet, Text, Image, View, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, Text, Image, View, Pressable, TextInput } from 'react-native';
 import { useContext, useState} from 'react';
 import bcrypt from 'bcryptjs';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { Context } from '../App';
 import global from '../Genstyle';
+import LogoIcon from '../assets/svg/logo';
 
 EStyleSheet.build();
 
@@ -47,8 +48,10 @@ export default function Login({navigation}) {
             // Comparing the original password to
             // encrypted password
             if (isMatch) {
-                await setUsername(data[0].username)
-                navigation.navigate('Home',{'username':data[0].username,'email':email})
+                await setUsername(data[0].username);
+                await setEmail(data[0].email);
+                navigation.navigate('Home');
+
             }
 
             if (!isMatch) {
@@ -99,14 +102,14 @@ export default function Login({navigation}) {
               placeholder="Password"
               secureTextEntry={true}
             />
-            <TouchableOpacity
+            <Pressable
               style={global.button}
               onPress={() => {
                 getUser(email,password)
               }}
             >
               <Text style={global.buttonText}>Login</Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
           );
         case 'Create':
@@ -131,14 +134,14 @@ export default function Login({navigation}) {
               placeholder="Password"
               secureTextEntry={true}
             />
-            <TouchableOpacity
+            <Pressable
               style={global.button}
               onPress={() => {
                 createUser(email,username,password)
               }}
             >
               <Text style={global.buttonText}>Register</Text>
-            </TouchableOpacity>
+            </Pressable>
             </View>
           );
         case 'Forgot':
@@ -150,14 +153,14 @@ export default function Login({navigation}) {
               value={email}
               placeholder="Email"
             />
-            <TouchableOpacity
+            <Pressable
               style={global.button}
               onPress={() => {
                 resetPassword(email)
               }}
             >
               <Text style={global.buttonText}>Send Email</Text>
-            </TouchableOpacity>
+            </Pressable>
             </View>
           );
           case 'Code':
@@ -182,46 +185,46 @@ export default function Login({navigation}) {
               placeholder="New Password"
               secureTextEntry={true}
             />
-            <TouchableOpacity
+            <Pressable
               style={global.button}
               onPress={() => {
                 takeToken(email,token,password)
               }}
             >
               <Text style={global.buttonText}>Update Password</Text>
-            </TouchableOpacity>
+            </Pressable>
             </View>
           );
         }
     }
 
     return (
-    <View style={global.background}>
-        <View style={global.foreground}>
+    <View style={global.grayBackground}>
+        <View style={global.whiteForeground}>
             <View style={styles.top}>
                 <Image style={styles.logo} source={require("../assets/favicon.png")}></Image>
+                <LogoIcon style={styles.logo}></LogoIcon>
                 {/* <Text style={styles.text}>Welcome to Recipe For Success</Text> */}
-                <Text style={global.titleText}>Welcome to Recipe For Success</Text>
+                <Text style={{ ...global.titleText, marginTop: 150 }}>Welcome to Recipe For Success</Text>
                 <Text style={styles.undertext}>{notification}</Text>
-            </View>
-            <View style={styles.bottom}>
-            {/* <TouchableOpacity
+            
+            {/* <Pressable
             style={styles.login}>
             <Text style={styles.loginText}>Register</Text>
-            </TouchableOpacity> */}
+            </Pressable> */}
                 {popupActive ?
                     <View> 
                         {displayPopup(popupType)}
-                        <TouchableOpacity
+                        <Pressable
                             style={styles.x}
                             onPress={() => {
                             setPopupActive(!popupActive)
                             }}
                         >
                             <Text style={global.bodyText}>x</Text>
-                        </TouchableOpacity>
+                        </Pressable>
                     </View>
-                    :<TouchableOpacity
+                    :<Pressable
                     style={global.button}
                     onPress={() => {
                         setPopupActive(!popupActive)
@@ -229,33 +232,35 @@ export default function Login({navigation}) {
                     }}
                     >
                         <Text style={global.buttonText}>Login</Text>
-                    </TouchableOpacity>}
+                    </Pressable>}
                     <View style={global.horizontal}>
-                        <TouchableOpacity
+                        <Pressable
                             style={styles.createAcct}
                             onPress={() => {
                             setPopupActive(true)
                             setPopupType('Create')
                         }}>
                         <Text style={styles.createText}>Create Account</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity 
+                        </Pressable>
+                        <Pressable 
                             style={styles.createAcct}
                             onPress={() => {
                             setPopupActive(true)
                             setPopupType('Forgot')
                         }}>
                             <Text style={styles.createText}>Forgot password?</Text>
-                        </TouchableOpacity>
+                        </Pressable>
                     </View>
                     <Text style={global.centeredText}>Don't have an account?</Text>
-                    <TouchableOpacity
-                    style={styles.guestLink}
+                    <Pressable
+                    style={global.buttonMinor}
                     onPress={() => {
-                      navigation.navigate('Home',{'username':"Guest",'email':"Guest"})
+                      navigation.navigate('Home');
+                      setUsername("Guest");
+                      setEmail("Guest");
                     }}>
                         <Text style={styles.guestText}>Continue As Guest</Text>
-                    </TouchableOpacity>
+                    </Pressable>
                 <StatusBar style="auto" />
             </View>
         </View>
@@ -264,40 +269,16 @@ export default function Login({navigation}) {
 }
 
 const styles = EStyleSheet.create({
-    background: {
-      backgroundColor: '#ddd',
-      flex: 1
-    },
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      justifyContent: 'center',
-      marginHorizontal: '2.2rem',
-      marginVertical: '2.2rem',
-      borderRadius: '2rem'
-    },
-    top: {
-      flex: 1,
-      marginTop: '2rem',
-      justifyContent: 'center'
-    },
-    bottom: {
-      flex: 3,
-      justifyContent: 'center'
-    },
     logo: {
-      height: '5.5rem',
-      width: '5.5rem',
+      position: 'absolute',
+      width: 5,
+      height: 5,
       alignSelf: 'center',
-      marginTop: '3rem',
     },
     text: {
       textAlign: 'center',
       fontSize: '2rem',
       padding: '1rem'
-    },
-    createlinks: {
-      flexDirection: 'row',
     },
     createAcct: {
       flex: 1,
@@ -306,10 +287,12 @@ const styles = EStyleSheet.create({
       textAlign: 'center'
     },
     createText: {
-      fontSize: '1rem',
+      fontSize: '0.9rem',
       justifyContent: 'center',
       textAlign: 'center',
-      color: '#444'
+      color: '#444',
+      textDecorationLine: 'underline',
+      fontFamily: 'Cairo_500Medium',
     },
     undertext: {
       textAlign: 'center',
@@ -360,6 +343,7 @@ const styles = EStyleSheet.create({
     },
     guestText: {
       color: 'black',
-      fontSize: '0.85rem'
+      fontSize: '0.9rem',
+      fontFamily: 'Cairo_500Medium',
     }
   });
