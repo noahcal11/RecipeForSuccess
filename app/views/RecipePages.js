@@ -36,6 +36,8 @@ export default function RecipePages({ navigation, route }) {
 
 
   const [isFavorite, setIsFavorite] = useState(false);
+  const iconColor = isFavorite ? 'gold' : 'gray';
+
 
   const handleFavoritesPress = () => {
     setIsFavorite(!isFavorite); // Toggle the isFavorite state when pressed
@@ -67,7 +69,7 @@ export default function RecipePages({ navigation, route }) {
                   <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
 
                   <TouchableHighlight onPress={handleFavoritesPress} style={styles.icon}>
-            <StarIcon width="40" height='85' stroke="black" strokeWidth="0.25" color={isFavorite ? "gold" : "gray"}/>
+            <StarIcon width="40" height='85' stroke="black" strokeWidth="0.25" fill={iconColor}/>
             </TouchableHighlight>
 
             
