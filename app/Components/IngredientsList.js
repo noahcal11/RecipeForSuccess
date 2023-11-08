@@ -20,7 +20,7 @@ const RecipeIngredients = ({ ingredients }) => {
 const styles = StyleSheet.create({
   ingredientItem: {
     flexDirection: 'row',
-    alignItems: 'center',
+    // alignItems: 'center',
     marginBottom: 10,
   },
   bullet: {
