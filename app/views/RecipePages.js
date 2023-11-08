@@ -45,7 +45,7 @@ export default function RecipePages({ navigation, route }) {
             <FlatList
               data={[recipe]}
               keyExtractor={(item, index) => index.toString()}
-              contentContainerStyle = {{paddingBottom:1000}}
+              contentContainerStyle = {{ paddingBottom: 10 }} // Why was this at 1000?
               renderItem={({ item }) => (
                 <>
                 <Text style={global.titleText}> {recipe.title} </Text>
