@@ -30,6 +30,20 @@ const RecipeSurvey = ({directions, title}) => {
     const [selectedButton, setSelectedButton] = useState(new Array(directions.length + 1).fill(0));
     const [allSelected, setAllSelected] = useState(false);
     const { setRecipePageState, username, email } = useContext(Context);
+    const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN;
+
+    const updateSkills = async () => {
+        navigation.navigate("Skills");
+        setRecipePageState('details');
+        await fetch(API_BASE+"/user/update-skills/" + email, {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          method: "POST",
+          body: JSON.stringify({"0":skillList[0],"1":skillList[1],"2":skillList[2],"3":skillList[3]})
+        }).catch(err => console.error(err));
+      }
 
     const RatingButtons = (skill, stepID) => {
         function setBackgroundColor(id) {
@@ -171,11 +185,6 @@ const RecipeSurvey = ({directions, title}) => {
         )
     }
 
-    const Finish = () => {
-        navigation.navigate("Skills");
-        setRecipePageState('details');
-    }
-
     return(
         <View style={global.whiteBackground}>   
         {/* Header */}
@@ -207,7 +216,7 @@ const RecipeSurvey = ({directions, title}) => {
             {allSelected ?
                 <Pressable
                     style={global.button}
-                    onPress={() => {Finish()}}>
+                    onPress={() => {updateSkills()}}>
                         <Text style={styles.buttonText}>Submit</Text>
                 </Pressable>
                 :
