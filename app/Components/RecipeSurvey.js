@@ -8,7 +8,6 @@ import Footer from '../Components/Footer'
 import { useContext } from 'react';
 import { Context } from '../App'
 import global from '../Genstyle'
-import { ScrollView } from 'react-native-gesture-handler';
 /* TODO:
     - Update the skills page (and this page) so that the new
         skill values from the survey will update the user's
@@ -25,10 +24,10 @@ const RecipeSurvey = ({directions, title}) => {
     const navigation = useNavigation()
     const [skillList, setSkillList] = useState([0,0,0,0]);
     const [usedSkills, setUsedSkills] = useState([true, true, true, true]);
-    const [selectedButton, setSelectedButton] = useState(new Array(directions.length + 1).fill(0));
+    const [selectedButton, setSelectedButton] = useState(new Array(4).fill(0));
     const [allSelected, setAllSelected] = useState(false);
     const { setRecipePageState, username, email } = useContext(Context);
-    const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN;
+    const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app";
 
     const updateSkills = async () => {
         navigation.navigate("Skills");

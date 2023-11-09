@@ -120,11 +120,15 @@ app.post('/user/update-skills/:email', async (req,res) => {
     const user = await User.findOne({ email: req.params.email })
     let updated = []
     for (let i = 0;i < Object.keys(req.body).length; i++) {
-        updated[i] = user.skill_levels[i]+Object.values(req.body)[i]
+        if (user.skill_levels[i]+Object.values(req.body)[i] > 0) {
+            updated[i] = user.skill_levels[i]+Object.values(req.body)[i]
+        } else {
+            updated[i] = 0
+        }
     } 
     user.skill_levels = updated
     user.save()
-    console.log(user.skill_levels)
+    res.json(user);
 })
 
 app.delete('/'+process.env.API_TOKEN+'/user/delete/:id', async (req, res) => {

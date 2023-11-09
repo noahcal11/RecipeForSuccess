@@ -30,7 +30,7 @@ export default function Skills({ navigation, route }){
     }, []);
 
     function levelFunc(n) {
-        if (n === 0) {
+        if (n <= 0) {
             return [-1,0]
         }
         let level = Math.floor(Math.log2(n));
