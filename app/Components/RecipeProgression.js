@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Pressable, FlatList } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import CheckBox from 'expo-checkbox';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Context } from '../App'
 import Banner from './Banner';
 import Footer from '../Components/Footer'
@@ -13,9 +13,16 @@ import global from '../Genstyle'
 const RecipeProgression = ({ingredients, directions, title}) => {
     // Variables
     const [stepNum, setStepNum] = useState(0);
+    // Variables for Checkbox section
     const [allChecked, setAllChecked] = useState(false);
     const [toggleCheck, setToggleCheck] = useState(new Array(ingredients.length).fill(false));
     const [selectAll, setSelectAll] = useState(false);
+    // Variables for Timer section
+    const [isActive, setIsActive] = useState(false);
+    const [passedTime, setPassedTime] = useState(0);
+    const [time, setTime] = useState("00:00");
+    var startTime = new Date();
+    // Global variables
     const { recipePageState, setRecipePageState, username, email } = useContext(Context);
     const recipeTitle = title;
 
@@ -68,7 +75,10 @@ const RecipeProgression = ({ingredients, directions, title}) => {
                         {allChecked ? // If all checkboxes are selected, display a button
                                         // that progresses to the directions section
                             <Pressable
-                                onPress={() => {{setStepNum(stepNum + 1)}}}
+                                onPress={() => {{
+                                    setStepNum(stepNum + 1)
+                                    setIsActive(true)
+                                }}}
                                 style={styles.nextButton}>
                                     <Text style={styles.buttonText}>Let's Begin!</Text>
                             </Pressable>
@@ -91,6 +101,7 @@ const RecipeProgression = ({ingredients, directions, title}) => {
                 <View style={{ flex: 1 }}>
                     <Text style={global.titleText}>Step {stepNum}:</Text>
                     <Text style={global.centeredText}>{directions[stepNum - 1]}</Text>
+                    {/* TODO: Add a timer to track time spent on recipe */}
                     {/* Next button */}
                     {stepNum == directions.length ?
                         <Pressable // If on the last step, button sends user to the survey page
@@ -110,10 +121,43 @@ const RecipeProgression = ({ingredients, directions, title}) => {
                         style={global.buttonMinor}>
                             <Text style={global.subText}>Go Back</Text>
                     </Pressable>
+                    {/* Timer */}
+                    <View style={styles.timer}>
+                        <Text style={global.centeredText}>{time}</Text>
+                        <Pressable
+                            onPress={() => {setIsActive(!isActive)}}
+                            style={global.buttonAlt}>
+                            {isActive ?
+                            <Text style={global.subText}>Pause</Text>
+                            :<Text style={global.subText}>Resume</Text>}
+                        </Pressable>
+                    </View>
                 </View>
             );
         }
     }
+
+    const updateTime = (ms) => {
+        const sec = Math.floor((ms / 1000) % 60).toString().padStart(2, "0");
+        const min = Math.floor((ms / 1000 / 60) % 60).toString().padStart(2, "0");
+        setTime(min + ":" + sec);
+    }
+
+    // Ensures the timer updates constantly
+    useEffect(() => {
+        if(!isActive) return;
+        var id = setInterval(() => {
+            var remainder = passedTime + (new Date() - startTime);
+            setPassedTime(remainder);
+            updateTime(remainder);
+            // Failsafe if timer goes negative
+            if(remainder <= 0) {
+                setTime("00:00");
+                clearInterval(id);
+            }
+        }, 1)
+        return () => clearInterval(id);
+    }, [isActive])
 
     return (
         <View style={styles.container}>
@@ -128,6 +172,16 @@ const RecipeProgression = ({ingredients, directions, title}) => {
 export default RecipeProgression;
 
 const styles=EStyleSheet.create({
+    timer: {
+        borderRadius: 25,
+        borderWidth: 1,
+        borderColor: 'black',
+        width: '60%',
+        height: '20%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center'
+    },
     title: {
         fontSize: 24,
         fontWeight: 'bold',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Pressable, FlatList } from 'react-native';
+import { View, Text, Pressable, FlatList, ScrollView, Dimensions } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -9,26 +9,25 @@ import { useContext } from 'react';
 import { Context } from '../App'
 import global from '../Genstyle'
 /* TODO:
-    - The background color for each button is set dynamically,
-        so it cannot be combined with the regular stylesheet.
-        Figure out how to allow the button to use both stylings.
-
-    - There is currently nothing that determines what steps
-        correspond to what skills. Find a way to do this.
-
-    - The page was made functional before styling it. Finish
-        the stylesheet so it looks presentable.
-
     - Update the skills page (and this page) so that the new
         skill values from the survey will update the user's
         skills.
+    - BIG PLANS:
+     - Add a dummy array to this page that determines what skills are present
+      - example: [true, true, true, true]
+      - This would be automatically updated on page load once the API has tags for each skill
+     - Change the questions to ask about each skill rather than each step
+      - Have the question only appear if that skill is used
+     - Add an API call that adds the on-page skill list to the user's skill list
 */
 const RecipeSurvey = ({directions, title}) => {
     const navigation = useNavigation()
     const [skillList, setSkillList] = useState([0,0,0,0]);
+    const [usedSkills, setUsedSkills] = useState([true, true, true, true]);
     const [selectedButton, setSelectedButton] = useState(new Array(directions.length + 1).fill(0));
     const [allSelected, setAllSelected] = useState(false);
     const { setRecipePageState, username, email } = useContext(Context);
+    const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
     const RatingButtons = (skill, stepID) => {
         function setBackgroundColor(id) {
@@ -56,8 +55,8 @@ const RecipeSurvey = ({directions, title}) => {
                 marginBottom: '1rem',
                 borderTopLeftRadius: 25,
                 borderBottomLeftRadius: 25,
-                width: '4rem',
-                height: '3rem'
+                width: Dimensions.get('window').width*0.5,
+                height: Dimensions.get('window').height*0.06
             },
             middleButton: {
                 flex: 1,
@@ -66,8 +65,8 @@ const RecipeSurvey = ({directions, title}) => {
                 alignSelf: 'center',
                 justifyContent: 'center',
                 marginBottom: '1rem',
-                width: '4rem',
-                height: '3rem'
+                width: Dimensions.get('window').width*0.5,
+                height: Dimensions.get('window').height*0.06
             },
             rightButton: {
                 flex: 1,
@@ -78,8 +77,8 @@ const RecipeSurvey = ({directions, title}) => {
                 marginBottom: '1rem',
                 borderTopRightRadius: 25,
                 borderBottomRightRadius: 25,
-                width: '4rem',
-                height: '3rem'
+                width: Dimensions.get('window').width*0.5,
+                height: Dimensions.get('window').height*0.06
             }
         })
 
@@ -170,7 +169,13 @@ const RecipeSurvey = ({directions, title}) => {
         )
     }
 
+    const updateSkills = async () => {
+        // await fetch(API_BASE+"/user/")
+    }
+
     const Finish = () => {
+        // TODO: API call that incremets each skill based on survey results
+        updateSkills();
         navigation.navigate("Skills");
         setRecipePageState('details');
     }
@@ -180,13 +185,30 @@ const RecipeSurvey = ({directions, title}) => {
         {/* Header */}
         <Banner title={title}/>
             <Text style={global.titleText}>Great Job! Let us know how you did:</Text>
-            {/* First Question (ingredient prep) */}
+            {/* Each question corresponds to a skill */}
+            <ScrollView styles={{ flex: 1 }}>
+            {usedSkills[0] ?
             <View style={styles.question}>
-                <Text style={global.centeredText}>How well did you prepare the ingredients?</Text>
-                {/* Insert a pair of buttons where only one can be "activated" */}
+                <Text style={global.centeredText}>How good were you at cooking the dish?</Text>
                 {RatingButtons(0, 0)}
-            </View>
-            <FlatList
+            </View> : <></>}
+            {usedSkills[1] ?
+            <View style={styles.question}>
+                <Text style={global.centeredText}>How well did you work with the ingredients?</Text>
+                {RatingButtons(1, 1)}
+            </View> : <></>}
+            {usedSkills[2] ?
+            <View style={styles.question}>
+                <Text style={global.centeredText}>How good were you at using a knife or other tools on your ingredients?</Text>
+                {RatingButtons(2, 2)}
+            </View> : <></>}
+            {usedSkills[3] ?
+            <View style={styles.question}>
+                <Text style={global.centeredText}>How was your time management and temperature control?</Text>
+                {RatingButtons(3, 3)}
+            </View> : <></>}
+            </ScrollView>
+            {/* <FlatList 
                 data={directions}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item, index }) => (
@@ -195,12 +217,11 @@ const RecipeSurvey = ({directions, title}) => {
                         <View style={global.grayForeground}>
                             <Text style={global.centerBodyText}>{item}</Text>
                         </View>
-                        {/* Insert same button system as in the ingredient step */}
-                        {/* TODO: Determine which skill each step correlates to */}
                         {RatingButtons(1, index + 1)}
                     </View>
                 )}
             />
+             */}
             {/* Insert submit button that is unavailable until all button pairs have a selection */}
             {/* This button will redirect to the skills page and show your improvement */}
             {allSelected ?
