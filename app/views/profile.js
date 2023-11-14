@@ -16,7 +16,12 @@ export default function Profile() {
             <Banner title="Profile"/>
                 <View style={styles.settingsContainer}>
                     <ScrollView styles={{ flex: 1 }}>
-                        <SwitchComp name="milk">A</SwitchComp>
+                        <View style={styles.horizontal}>
+                            <SwitchComp name="milk">A</SwitchComp>
+                            <SwitchComp name="milk">A</SwitchComp>
+                            <SwitchComp name="milk">A</SwitchComp>
+                            <SwitchComp name="milk">A</SwitchComp>
+                        </View>
                     </ScrollView>
                 </View>
             <Footer/>
@@ -27,6 +32,10 @@ export default function Profile() {
 const styles = EStyleSheet.create({
     settingsContainer: {
         height: '80%',
-        alignItems: 'center',
-    }
+    },
+    horizontal: {
+        flexDirection: 'column',
+        alignItems: 'flex-end',
+        margin: '0.5rem',
+      },
 })

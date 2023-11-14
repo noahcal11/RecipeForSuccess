@@ -1,5 +1,9 @@
 import React, {useState} from 'react';
 import {View, Switch, StyleSheet} from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
+
+
+EStyleSheet.build();
 
 const SwitchComp = (name) => {
   const [isEnabled, setIsEnabled] = useState(false);
@@ -18,12 +22,14 @@ const SwitchComp = (name) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'left',
-    justifyContent: 'left',
-  },
+const styles = EStyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: 'left',
+        justifyContent: 'left',
+        margin: '0.5rem'
+      },
 });
+
 
 export default SwitchComp;
