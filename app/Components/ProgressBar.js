@@ -20,7 +20,8 @@ const ProgressBar = (props) => {
       height: '100%',
       width: `${completed}%`,
       backgroundColor: bgcolor,
-      textAlign: 'right'
+      textAlign: 'right',
+      borderRadius: 25,
     }
   
     return (
