@@ -24,15 +24,18 @@ const { Recipe,User } = require('./model');
 app.get('/'+process.env.API_TOKEN+'/recipe/get',async (req,res) => {   
     let recipes;
     const id = req.query.id;
+    const ids = req.query.ids;
     const general = req.query.general;
-    if (general != null) {
+    if (general !== undefined) {
         recipes = await Recipe.find({$or: [
             {title: new RegExp(`\\b${general}\\b`, "i")},
             {desc: new RegExp(`\\b${general}\\b`, "i")},
             {ingredients: new RegExp(`\\b${general}\\b`, "i")}
         ]});
     } else if (id !== undefined) {
-        recipes = await Recipe.findById(id)
+        recipes = await Recipe.findById(id);
+    } else if (ids !== undefined) {
+        recipes = await Recipe.find({'_id': { $in: ids}});
     } else {
         const title = req.query.title;
         const desc = req.query.desc;

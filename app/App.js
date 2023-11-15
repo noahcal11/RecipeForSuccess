@@ -20,6 +20,9 @@ export default function App() {
   const [recipePageState, setRecipePageState] = useState('details');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
+  const [favorited, setFavorited] = useState([]);
+  const [created, setCreated] = useState([]);
+  const [completed, setCompleted] = useState([]);
 
   let [fontsLoaded, fontError] = useFonts({
     Cairo_500Medium,
@@ -32,7 +35,14 @@ export default function App() {
   }
 
   return (
-    <Context.Provider value={{ recipePageState, setRecipePageState, username, setUsername, email, setEmail }}>
+    <Context.Provider value={{ 
+        recipePageState, setRecipePageState, 
+        username, setUsername, 
+        email, setEmail, 
+        favorited, setFavorited,
+        completed, setCompleted,
+        created, setCreated 
+      }}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{
           headerShown: false

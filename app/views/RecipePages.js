@@ -23,7 +23,7 @@ EStyleSheet.build();
 export default function RecipePages({ navigation, route }) {
   const [recipe, setRecipe] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
-  const { recipePageState, setRecipePageState, username,setUsername, email,setEmail } = useContext(Context);
+  const { recipePageState, setRecipePageState, username,setUsername, email,setEmail, favorited,setFavorited } = useContext(Context);
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
@@ -38,19 +38,27 @@ export default function RecipePages({ navigation, route }) {
 
   // Set isFavorite based on whether or not the current recipe is in the user's list of favorites
   const getFavorite = async () => {
-    // API call that gets the user's favorites list and the current recipe's ID
-    // Check the favorites list to see if the current recipe is in the list
+    if (favorited.includes(route.params._id)) {
+      setIsFavorite(true);
+    } else {
+      setIsFavorite(false);
+    }
   }
 
   // Add or remove the current recipe from the user's list of favorites
   const setFavorite = async () => {
-    const response = await fetch(API_BASE+"/recipe/get/?id="+route.params._id)
-    setIsFavorite(!isFavorite)
-    if(isFavorite) {
-      // If true, the recipe needs to be added to the favorites list
-    } else {
-      // If false, the recipe needs to be removed from the favorites list
-    }
+    setIsFavorite(!isFavorite);
+    await fetch(API_BASE+"/user/update-favorite/", {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: "POST",
+      body: JSON.stringify({email: email, id: route.params._id})
+    }).then(res => res.json()).catch(err => console.error(err));
+    
+    const data = await fetch(API_BASE+"/user/get/" + email, {method: "GET"}).then(res => res.json());
+    setFavorited(data[0].favorited_recipes);
   }
 
   useState(() => {

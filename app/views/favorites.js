@@ -6,6 +6,7 @@ import { useState,useContext } from 'react';
 import { Context } from '../App'
 import Banner from '../Components/Banner';
 import global from '../Genstyle';
+import { Dimensions } from 'react-native';
 
 EStyleSheet.build();
 
@@ -13,18 +14,18 @@ export default function Favorites() {
     const [favesList, setFavesList] = useState([]);
 
     const getFavorites = async () => {
-        // API call that gets the favorites list from the user's profile
+        
     }
 
     return(
         <View style={global.whiteBackground}>
             <Banner title="Favorites"/>
             <ScrollView styles={{ flex: 1 }}>
-                <View style={{ alignItems: 'center' }}>
-                <FlatList scrollEnabled={false}
+                <View style={{alignItems: 'center'}}>
+                    <FlatList scrollEnabled={false}
                         style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>Favorites</Text>}
-                        data={favesList}
+                        data={favorited}
                         renderItem={({ item }) => (
                             <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}
                                 style={({ pressed }) => [
@@ -42,22 +43,22 @@ export default function Favorites() {
                         )}
                         numColumns={2}
                         keyExtractor={(item, index) => index.toString()}
-                        // ListFooterComponent={
-                        //     <Pressable
-                        //         onPress={() => {
-                        //             navigation.navigate("SearchResults")
-                        //         }}
+                        ListFooterComponent={
+                            <Pressable
+                                onPress={() => {
+                                    navigation.navigate("SearchResults")
+                                }}
                                 
-                        //         style={({ pressed }) => [
-                        //             {
-                        //             opacity: pressed
-                        //                 ? 0.2
-                        //                 : 1,
-                        //             }]}
-                        //     >
-                        //         <Text style={{ ...global.clickableText, marginBottom: '5%'}}>View more</Text>
-                        //     </Pressable>
-                        // }
+                                style={({ pressed }) => [
+                                    {
+                                    opacity: pressed
+                                        ? 0.2
+                                        : 1,
+                                    }]}
+                            >
+                                <Text style={{ ...global.clickableText, marginBottom: '5%'}}>View more</Text>
+                            </Pressable>
+                        }
                     />
                 </View>
             </ScrollView>
@@ -67,8 +68,18 @@ export default function Favorites() {
 }
 
 const styles = EStyleSheet.create({
-    settingsContainer: {
-        height: '80%',
-        alignItems: 'center',
-    }
-})
+    imageView: {
+        margin: 10,
+        width: (Dimensions.get('window').width * .85) * .5 - 10,
+        justifyContent: 'center',
+        alignItems: 'left'
+    },
+    imageThumbnail: {
+        height: Dimensions.get('window').height * .85 / 8 - 10,
+        width: '100%',
+        borderRadius: 25,
+        borderWidth: 2,
+        borderColor: 'black',
+        marginBottom: '5%'
+    },
+});
