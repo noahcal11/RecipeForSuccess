@@ -63,13 +63,13 @@ export default function Home({ navigation, route }) {
     return (
         <View style={global.whiteBackground}>
             <Banner title="Search Results" />
+            <View style={global.grayForeground}>
             <ScrollView styles={{ flex: 1 }}>
                 <View>
                     {/* Filter Button */}
                     <Pressable style={styles.filterButton}>
                         <Text style={styles.filterButtonText}>Filter</Text>
                     </Pressable>
-                    
                     <FlatList scrollEnabled={false}
                         data={searchResults}
                         renderItem={({ item }) => (
@@ -89,22 +89,7 @@ export default function Home({ navigation, route }) {
                         )}
                         numColumns={2}
                         keyExtractor={(item, index) => index}
-                        ListFooterComponent={
-                            <Pressable
-                                onPress={() => {
-                                    navigation.navigate("SearchResults")
-                                }}
-
-                                style={({ pressed }) => [
-                                    {
-                                        opacity: pressed
-                                            ? 0.2
-                                            : 1,
-                                    }]}
-                            >
-                                <Text style={global.clickableText}>View more</Text>
-                            </Pressable>
-                        }
+                        
                     />
 
                     {/* Sort By Dropdown */}
@@ -155,6 +140,7 @@ export default function Home({ navigation, route }) {
 
                 </View>
             </ScrollView>
+            </View>
             <Footer />
         </View>
     );

@@ -21,13 +21,4 @@ const Profile = () => {
   );
 }
 
-const styles = EStyleSheet.create({
-    profile: {
-        position: 'relative',
-        width: '2.5rem',
-        height: '2.5rem',
-        left: '0.5rem', // Adjust the right position for the top-right corner
-      },
-});
-
 export default Profile;

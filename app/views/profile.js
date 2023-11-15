@@ -1,5 +1,5 @@
 import Footer from '../Components/Footer';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Text, View, ScrollView } from "react-native";
 import EStyleSheet from 'react-native-extended-stylesheet';
 import global from '../Genstyle';
@@ -8,6 +8,7 @@ import Accordion from 'react-native-collapsible/Accordion';
 import BannerTitle from '../Components/Banner';
 import DownArrowIcon from '../assets/svg/downArrow';
 import SignInModel from '../Components/SignInModel';
+import { Context } from '../App';
 
 EStyleSheet.build();
 
@@ -41,6 +42,7 @@ const SECTIONS = [
 
 export default function Profile() {
   const [activeSections, setActiveSections] = useState([]);
+  const {email} = useContext(Context);
 
   const renderHeader = (section) => {
     return (
@@ -92,6 +94,7 @@ export default function Profile() {
           />
         </ScrollView>
       </View>
+      {email === 'Guest' ? <SignInModel blurb="In order to use this feature, you have to be signed in!" /> : <View></View>}
       <Footer />
     </View>
   );
