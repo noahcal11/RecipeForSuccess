@@ -44,7 +44,7 @@ export default function RecipePages({ navigation, route }) {
 
   // Add or remove the current recipe from the user's list of favorites
   const setFavorite = async () => {
-    // Toggle isFavorite to its opposite and check its new state
+    const response = await fetch(API_BASE+"/recipe/get/?id="+route.params._id)
     setIsFavorite(!isFavorite)
     if(isFavorite) {
       // If true, the recipe needs to be added to the favorites list
@@ -72,19 +72,21 @@ export default function RecipePages({ navigation, route }) {
                 <>
                 <Text style={global.titleText}> {recipe.title} </Text>
                   {/* Recipe Description */}
-                  <Image source={{uri:item.image}} style={styles.image} />
+                  <View style={{ position: 'relative' }}>
+                    <Image source={{uri:item.image}} style={styles.image} />
+                    <Pressable
+                      style={{position: 'absolute', marginTop:'15%', marginLeft: '75%'}}
+                      onPress={() => {setFavorite()}}>
+                      {isFavorite ?
+                        <FilledHeart width='40' height='40' fill='red' />
+                        :<HeartIcon fill='white' width='40' height='40' />}
+                    </Pressable>
+                  </View>
                   <View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
-                    <View style={{ flexDirection: 'row' }}>
+                    <View>
                       <Text style={global.subheaderText}>
                         Recipe Description
                       </Text>
-                      <Pressable
-                        style={{ alignSelf: 'flex-end', marginHorizontal: '5%' }}
-                        onPress={() => {setFavorite()}}>
-                          {isFavorite ?
-                            <FilledHeart width='40' height='40' fill='red' />
-                            :<HeartIcon width='40' height='40' />}
-                      </Pressable>
                     </View>
                     <RecipeDescription description={item.desc} />
                   </View>

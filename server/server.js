@@ -131,6 +131,13 @@ app.post('/user/update-skills/:email', async (req,res) => {
     res.json(user);
 })
 
+app.post('/user/update-favorite/', async (req,res) => {
+    const user = await User.findOne({ email: req.body.email })
+    user.favorited_recipes.push(req.body.id)
+    user.save()
+    res.json(user);
+})
+
 app.delete('/'+process.env.API_TOKEN+'/user/delete/:id', async (req, res) => {
   const user = await User.findByIdAndDelete(req.params.id);
   res.json(user);
