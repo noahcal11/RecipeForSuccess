@@ -12,9 +12,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
 import { Cairo_500Medium } from '@expo-google-fonts/cairo';
 import { Manrope_500Medium, Manrope_700Bold } from '@expo-google-fonts/manrope';
+import { Context } from './Context';
 
 const Stack = createNativeStackNavigator();
-export const Context = createContext();
 
 export default function App() {
   const [recipePageState, setRecipePageState] = useState('details');

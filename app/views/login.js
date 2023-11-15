@@ -3,7 +3,7 @@ import { StyleSheet, Text, Image, View, Pressable, TextInput } from 'react-nativ
 import { useContext, useState} from 'react';
 import bcrypt from 'bcryptjs';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { Context } from '../App';
+import { Context } from '../Context';
 import global from '../Genstyle';
 import LogoIcon from '../assets/svg/logo';
 

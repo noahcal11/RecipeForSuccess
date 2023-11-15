@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Pressable, Dimensions } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState, useContext, useEffect } from 'react'
-import { Context } from '../App'
+import { Context } from '../Context'
 import global from '../Genstyle'
 
 const RecipeFooter = () => {

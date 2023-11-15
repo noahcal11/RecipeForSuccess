@@ -3,7 +3,7 @@ import React from 'react';
 import { View, StyleSheet, Pressable } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useNavigation } from '@react-navigation/native';
-import { Context } from "../App";
+import { Context } from "../Context";
 import { useContext } from "react";
 
 EStyleSheet.build();

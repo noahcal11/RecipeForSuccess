@@ -5,7 +5,7 @@ import React, { useState, useContext } from 'react';
 import { View, Pressable, Text, TextInput } from 'react-native';
 import SearchIcon from '../assets/svg/search';
 import { useNavigation } from '@react-navigation/core';
-import { Context } from "../App";
+import { Context } from "../Context";
 import SignInModel from "./SignInModel";
 
 EStyleSheet.build();

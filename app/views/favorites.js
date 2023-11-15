@@ -3,7 +3,7 @@ import React from 'react';
 import { Text, View, Pressable, FlatList, SafeAreaView, StyleSheet, Modal, ScrollView, Image } from "react-native";
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState,useContext } from 'react';
-import { Context } from '../App'
+import { Context } from '../Context'
 import Banner from '../Components/Banner';
 import global from '../Genstyle';
 import { Dimensions } from 'react-native';

@@ -3,7 +3,7 @@ import { View, Text, Pressable, FlatList } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import CheckBox from 'expo-checkbox';
 import { useState, useContext, useEffect } from 'react';
-import { Context } from '../App'
+import { Context } from '../Context'
 import Banner from './Banner';
 import Footer from '../Components/Footer'
 import { ScrollView } from 'react-native-gesture-handler';

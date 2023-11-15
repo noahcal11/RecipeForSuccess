@@ -4,7 +4,7 @@ import Banner from '../Components/Banner';
 import Footer from '../Components/Footer';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState,useContext } from 'react';
-import { Context } from '../App';
+import { Context } from '../Context';
 import global from '../Genstyle';
 
 EStyleSheet.build();

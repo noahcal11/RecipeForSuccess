@@ -15,7 +15,7 @@ import Footer from '../Components/Footer';
 import HeartIcon from '../assets/svg/heart';
 import FilledHeart from '../assets/svg/filledHeart';
 import { useState, useContext } from 'react';
-import { Context } from '../App'
+import { Context } from '../Context'
 import global from '../Genstyle'
 
 EStyleSheet.build();

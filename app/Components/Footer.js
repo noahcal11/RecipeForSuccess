@@ -5,7 +5,7 @@ import HomeIcon from "../assets/svg/home";
 import HeartIcon from "../assets/svg/heart";
 import RibbonIcon from "../assets/svg/ribbon";
 import { useNavigation } from '@react-navigation/native';
-import { Context } from "../App";
+import { Context } from "../Context";
 
 EStyleSheet.build();
 

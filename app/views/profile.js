@@ -8,7 +8,7 @@ import Accordion from 'react-native-collapsible/Accordion';
 import BannerTitle from '../Components/Banner';
 import DownArrowIcon from '../assets/svg/downArrow';
 import SignInModel from '../Components/SignInModel';
-import { Context } from '../App';
+import { Context } from '../Context';
 
 EStyleSheet.build();
 
