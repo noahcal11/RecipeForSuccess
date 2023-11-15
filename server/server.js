@@ -99,7 +99,7 @@ app.post('/'+process.env.API_TOKEN+'/user/new', (req,res) => {
     const password = req.body.password;
     
     // Encryption of the string password
-    bcrypt.genSalt(10, function (err, Salt) {
+    bcrypt.genSalt(5, function (err, Salt) {
     
         // The bcrypt is used for encrypting password.
         bcrypt.hash(password, Salt, function (err, hash) {
