@@ -17,9 +17,15 @@ export default function Favorites() {
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
     const getFavorites = async () => {
-        const response = await fetch(API_BASE+"/recipe/get/?ids="+favorited)
-        .then(res => res.json());
-        console.log(response);
+        const response = await fetch(API_BASE+"/recipe/get/", {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({ids: favorited})
+        })
+        console.log(response[0]);
         // setFavesList(response[0])
     }
 
