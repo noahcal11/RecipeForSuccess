@@ -1,88 +1,84 @@
 import Footer from '../Components/Footer';
-import React from 'react';
-import { Text, View, Pressable, FlatList, SafeAreaView, StyleSheet, Modal, ScrollView } from "react-native";
+import React, { useState } from 'react';
+import { Text, View, ScrollView } from "react-native";
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { useState,useContext, PropsWithChildren } from 'react';
-import { Context } from '../App'
-import Banner from '../Components/Banner';
 import global from '../Genstyle';
 import SwitchComp from '../Components/Switch';
+import Accordion from 'react-native-collapsible/Accordion';
+import BannerTitle from '../Components/Banner';
+import DownArrowIcon from '../assets/svg/downArrow';
 
 EStyleSheet.build();
 
+const SECTIONS = [
+  {
+    title: 'Allergies',
+    content: [
+      { title: 'Dairy' },
+      { title: 'Eggs'},
+      { title: 'Fish'},
+      { title: 'Shellfish'},
+      { title: 'Tree Nuts'},
+      { title: 'Peanuts'},
+      { title: 'Wheat'},
+      { title: 'Soybeans'},
+      { title: 'Chicken'},
+      { title: 'Pork'},
+      { title: 'Red Meat'},
+      { title: 'Gluten'},
+    ],
+  },
+];
+
 export default function Profile() {
-    return(
-        <View style={global.whiteBackground}>
-            <Banner title="Profile"/>
-                <View style={global.grayForeground}>
-                    <Text styles={global.subheaderText}>Allergens (i am not centered)</Text>
-                    <ScrollView>
-                            <View style={global.horizontal}>
-                                <Text style={global.bodyText}>Dairy</Text>
-                                <SwitchComp name="Dairy"> </SwitchComp>
-                            </View>
+  const [activeSections, setActiveSections] = useState([]);
 
-                            <View style={global.horizontal}>
-                                <Text style={global.bodyText}>Eggs</Text>
-                                <SwitchComp name="Eggs"> </SwitchComp>
-                            </View>
+  //this is where the allergies is displaying weird
+  const renderHeader = (section) => {
+    return (
+      <View style={global.horizontal}>
+        <Text style={global.bodyText}>{section.title}</Text>
+        <DownArrowIcon></DownArrowIcon>
+      </View>
+    );
+  };
 
-                            <View style={global.horizontal}>
-                                <Text style={global.bodyText}>Fish</Text>
-                                <SwitchComp name="Fish"> </SwitchComp>
-                            </View>
+  const renderContent = (section) => {
+    return (
+      <View>
+        {section.content.map((item, index) => (
+          <View style={global.horizontal} key={index}>
+            <Text style={global.bodyText}>{item.title}</Text>
+            <SwitchComp name={item.title}> </SwitchComp>
+          </View>
+        ))}
+      </View>
+    );
+  };
 
-                            <View style={global.horizontal}>
-                                <Text style={global.bodyText}>Shellfish</Text>
-                                <SwitchComp name="Shellfish"> </SwitchComp>
-                            </View>
+  const updateSections = (activeSections) => {
+    setActiveSections(activeSections);
+  };
 
-                            <View style={global.horizontal}>
-                                <Text style={global.bodyText}>Tree Nuts</Text>
-                                <SwitchComp name="Tree Nuts"> </SwitchComp>
-                            </View>
-
-                            <View style={global.horizontal}>
-                                <Text style={global.bodyText}>Peanuts</Text>
-                                <SwitchComp name="Peanuts"> </SwitchComp>
-                            </View>
-
-                            <View style={global.horizontal}>
-                                <Text style={global.bodyText}>Wheat</Text>
-                                <SwitchComp name="Wheat"> </SwitchComp>
-                            </View>
-
-                            <View style={global.horizontal}>
-                                <Text style={global.bodyText}>Soybeans</Text>
-                                <SwitchComp name="Soybeans"> </SwitchComp>
-                            </View>
-
-                            <View style={global.horizontal}>
-                                <Text style={global.bodyText}>Chicken</Text>
-                                <SwitchComp name="Chicken"> </SwitchComp>
-                            </View>
-
-                            <View style={global.horizontal}>
-                                <Text style={global.bodyText}>Pork</Text>
-                                <SwitchComp name="Pork"> </SwitchComp>
-                            </View>
-
-                            <View style={global.horizontal}>
-                                <Text style={global.bodyText}>Red Meat</Text>
-                                <SwitchComp name="Red Meat"> </SwitchComp>
-                            </View>
-
-                            <View style={global.horizontal}>
-                                <Text style={global.bodyText}>Gluten</Text>
-                                <SwitchComp name="Gluten"> </SwitchComp>
-                            </View>
-                    </ScrollView>
-                </View>
-            <Footer/>
-        </View>
-    )
+  return (
+    <View style={global.whiteBackground}>
+      <BannerTitle title="Profile" />
+      <View style={global.grayForeground}>
+        <ScrollView>
+          <Accordion
+            sections={SECTIONS}
+            activeSections={activeSections}
+            renderHeader={renderHeader}
+            renderContent={renderContent}
+            onChange={updateSections}
+          />
+        </ScrollView>
+      </View>
+      <Footer />
+    </View>
+  );
 }
 
 const styles = EStyleSheet.create({
-
-})
+  // Your styles here if needed
+});
