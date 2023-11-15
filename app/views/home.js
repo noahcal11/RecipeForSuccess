@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar'; 
-import { Text, Image, View, ScrollView, TextInput, FlatList, SectionList, Pressable, Dimensions } from 'react-native';
+import { Text, Image, View, ScrollView, TextInput, FlatList, Pressable, Dimensions } from 'react-native';
 import Banner from '../Components/Banner';
-import Footer from '../Components/Footer'
+import Footer from '../Components/Footer';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState,useContext } from 'react';
 import { Context } from '../App';
@@ -228,7 +228,7 @@ export default function Home({ navigation, route }){
                     />
                 </View>
             </ScrollView>
-            <Footer  />
+            <Footer />
         </View>
     );
 }
