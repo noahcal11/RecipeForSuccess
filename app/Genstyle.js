@@ -99,6 +99,11 @@ const global = EStyleSheet.create({
     fontFamily: 'Cairo_500Medium',
     textAlign: 'center',
   },
+  buttonMinorText: {
+    color: 'black',
+    fontSize: '0.9rem',
+    fontFamily: 'Cairo_500Medium',
+  },
   // Generic text
   text: {
     fontSize: '2rem',

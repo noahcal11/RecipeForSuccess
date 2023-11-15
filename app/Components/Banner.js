@@ -6,13 +6,14 @@ import { View, Pressable, Text, TextInput } from 'react-native';
 import SearchIcon from '../assets/svg/search';
 import { useNavigation } from '@react-navigation/core';
 import { Context } from "../App";
+import SignInModel from "./SignInModel";
 
 EStyleSheet.build();
 
 const BannerTitle = ({ title }) => {
   const navigation = useNavigation()
   const [isTextInputVisible, setTextInputVisible] = useState(false);
-  const {setRecipePageState} = useContext(Context);
+  const {setRecipePageState, email} = useContext(Context);
 
   const toggleSearchBar = () => {
     setTextInputVisible(!isTextInputVisible);
@@ -23,7 +24,11 @@ const BannerTitle = ({ title }) => {
       {!isTextInputVisible ? (
         <>
           <View style={styles.profile}>
-            <Pressable onPress={() => {navigation.navigate("Profile"); setRecipePageState("details");}} style={styles.profileIcon}>
+            <Pressable onPress={() => {
+                navigation.navigate("Profile");
+                setRecipePageState("details");
+              }
+            } style={styles.profileIcon}>
               <ProfileIcon />
             </Pressable>
           </View>

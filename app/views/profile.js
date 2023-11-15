@@ -7,10 +7,12 @@ import { Context } from '../App'
 import Banner from '../Components/Banner';
 import global from '../Genstyle';
 import SwitchComp from '../Components/Switch';
+import SignInModel from '../Components/SignInModel';
 
 EStyleSheet.build();
 
 export default function Profile() {
+    const {email} = useContext(Context);
     return(
         <View style={global.whiteBackground}>
             <Banner title="Profile"/>
@@ -24,6 +26,7 @@ export default function Profile() {
                         </View>
                     </ScrollView>
                 </View>
+            {email === 'Guest' ? <SignInModel blurb="In order to use this feature, you have to be signed in!" /> : <View></View>}
             <Footer/>
         </View>
     )

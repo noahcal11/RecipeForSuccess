@@ -8,6 +8,7 @@ import ProgressBar from '../Components/ProgressBar';
 import { useState,useContext } from 'react';
 import { Context } from '../App'
 import global from '../Genstyle';
+import SignInModel from '../Components/SignInModel';
 
 EStyleSheet.build();
 
@@ -73,6 +74,7 @@ export default function Skills({ navigation, route }){
                         </View>
                     </View>
                 </ScrollView>
+            {email === 'Guest' ? <SignInModel blurb="In order to use this feature, you have to be signed in!" /> : <View></View>}
             <Footer />
         </View>
     );

@@ -28,7 +28,14 @@ export default function RecipePages({ navigation, route }) {
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
   const getRecipes = async () => {
-    const response = await fetch(API_BASE+"/recipe/get/?id="+route.params._id)
+    const response = await fetch(API_BASE+"/recipe/get/", {
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+          },
+          method: "POST",
+          body: JSON.stringify({id: route.params._id})
+  })
       .then(res => res.json())
       .then(data => {
         setRecipe(data)
@@ -84,8 +91,8 @@ export default function RecipePages({ navigation, route }) {
                     <Image source={{uri:item.image}} style={styles.image} />
                     <Pressable
                       style={{position: 'absolute', marginTop:'15%', marginLeft: '75%'}}
-                      onPress={() => {setFavorite()}}>
-                      {isFavorite ?
+                      onPress={() => {email !== "Guest"? setFavorite():<View></View>}}>
+                      {isFavorite?
                         <FilledHeart width='40' height='40' fill='red' />
                         :<HeartIcon fill='white' width='40' height='40' />}
                     </Pressable>

@@ -34,28 +34,56 @@ export default function Home({ navigation, route }){
     }
 
     const getPopular = async () => {
-        const response = await fetch(API_BASE+"/recipe/get/?cuisine=American", {method: "GET"})
+        const response = await fetch(API_BASE+"/recipe/get/", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({cuisine: "American"})
+        })
         .then(res => res.json())
         .then(data => setPopularRecs(getRandom(data,8)))
         .catch(error => console.error(error));
     }
 
     const getDessert = async () => {
-        const response = await fetch(API_BASE+"/recipe/get/?category=Dessert", {method: "GET"})
+        const response = await fetch(API_BASE+"/recipe/get/", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({category: "Dessert"})
+        })
         .then(res => res.json())
         .then(data => setDessertRecs(getRandom(data,4)))
         .catch(error => console.error(error));
     }
 
     const getBreakfast = async() => {
-        const response = await fetch(API_BASE+"/recipe/get/?category=Breakfast", {method: "GET"})
+        const response = await fetch(API_BASE+"/recipe/get/", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({category: "Breakfast"})
+        })
         .then(res => res.json())
         .then(data => setBreakfastRecs(getRandom(data,4)))
         .catch(error => console.error(error));
     }
 
     const getChicken = async() => {
-        const response = await fetch(API_BASE+"/recipe/get/?title=Chicken", {method: "GET"})
+        const response = await fetch(API_BASE+"/recipe/get/", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({title: "Chicken"})
+        })
         .then(res => res.json())
         .then(data => setChickenRecs(getRandom(data,8)))
         .catch(error => console.error(error));

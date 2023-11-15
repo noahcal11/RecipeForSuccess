@@ -1,18 +1,19 @@
 import Footer from '../Components/Footer';
 import React from 'react';
-import { Text, View, Pressable, FlatList, SafeAreaView, StyleSheet, Modal, ScrollView } from "react-native";
+import { Text, View, Pressable, FlatList, SafeAreaView, StyleSheet, Modal, ScrollView, Image } from "react-native";
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState,useContext } from 'react';
 import { Context } from '../App'
 import Banner from '../Components/Banner';
 import global from '../Genstyle';
 import { Dimensions } from 'react-native';
+import SignInModel from '../Components/SignInModel';
 
 EStyleSheet.build();
 
-export default function Favorites() {
+export default function Favorites( {navigation, route} ) {
     const [favesList, setFavesList] = useState([]);
-    const {favorited} = useContext(Context);
+    const {favorited, email} = useContext(Context);
 
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
@@ -25,8 +26,8 @@ export default function Favorites() {
             method: "POST",
             body: JSON.stringify({ids: favorited})
         })
-        console.log(response[0]);
-        // setFavesList(response[0])
+        .then(res => res.json())
+        setFavesList(response);
     }
 
     useState(() => {
@@ -59,25 +60,10 @@ export default function Favorites() {
                         )}
                         numColumns={2}
                         keyExtractor={(item, index) => index.toString()}
-                        ListFooterComponent={
-                            <Pressable
-                                onPress={() => {
-                                    navigation.navigate("SearchResults")
-                                }}
-                                
-                                style={({ pressed }) => [
-                                    {
-                                    opacity: pressed
-                                        ? 0.2
-                                        : 1,
-                                    }]}
-                            >
-                                <Text style={{ ...global.clickableText, marginBottom: '5%'}}>View more</Text>
-                            </Pressable>
-                        }
                     />
                 </View>
             </ScrollView>
+            {email === 'Guest' ? <SignInModel blurb="In order to use this feature, you have to be signed in!" /> : <View></View>}
             <Footer/>
         </View>
     )

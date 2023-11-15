@@ -27,7 +27,14 @@ export default function Home({ navigation, route }){
     const sortOptions = ['Ascending', 'Descending']; // Your sorting options
   
     const getSearch = async (searchTerm) => {
-      const response = await fetch(API_BASE+"/recipe/get/?general="+searchTerm, {method: "POST"})
+      const response = await fetch(API_BASE+"/recipe/get/", {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({general: searchTerm})
+      })
       .then(res => res.json())
       .then(data => setSearchResults(data))
       .catch(error => console.error(error));
