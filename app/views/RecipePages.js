@@ -19,6 +19,8 @@ import { Context } from '../App'
 import global from '../Genstyle'
 import Icon from 'react-native-vector-icons/FontAwesome'; // Adjust the library and icon as needed
 import { TouchableHighlight } from 'react-native';
+import filledHeart from '../assets/svg/filledHeart';
+
 
 EStyleSheet.build();
 
@@ -42,9 +44,9 @@ export default function RecipePages({ navigation, route }) {
 
 
   const handleFavoritesPress = () => {
-    console.log('Icon clicked');
+    
     setIsFavorite(!isFavorite);
-    console.log('isFavorite state:', isFavorite); // Toggle the isFavorite state when pressed
+     // Toggle the isFavorite state when pressed
   };
 
   useState(() => {
@@ -79,9 +81,16 @@ export default function RecipePages({ navigation, route }) {
                     <RecipeDescription description={item.desc} />
                   </View>
 
+                  
+                  <View>
                   <TouchableHighlight onPress={handleFavoritesPress} style={styles.icon}>
+            {isFavorite ? (
             <HeartIcon width="40" height='85' stroke="black" strokeWidth="0.25" fill={iconColor}/>
+            ) : (
+            <filledHeart width="40" height='85' stroke="black" strokeWidth="0.25" fill={iconColor}/>
+            )}
             </TouchableHighlight>
+            </View>
     
                   {/* Recipe Ingredients */}
                   <View style={{ paddingHorizontal: 20 }}>
