@@ -103,7 +103,8 @@ const styles = EStyleSheet.create({
     searchInput: {
         flex: 1,
         fontSize: '1.5rem',
-        paddingLeft: 10
+        paddingLeft: 10,
+        fontFamily: 'Cairo_500Medium'
     },
     xBox: {
         width: '2.5rem',
