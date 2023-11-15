@@ -4,3 +4,4 @@ app/package-lock.json
 server/package-lock.json
 server/node_modules/
 server/test.rest
+node_modules

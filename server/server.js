@@ -116,7 +116,7 @@ app.post('/'+process.env.API_TOKEN+'/user/new', (req,res) => {
     });
 });  
 
-app.post('/user/update-skills/:email', async (req,res) => {
+app.post('/'+process.env.API_TOKEN+'/user/update-skills/:email', async (req,res) => {
     const user = await User.findOne({ email: req.params.email })
     let updated = []
     for (let i = 0;i < Object.keys(req.body).length; i++) {
@@ -131,10 +131,15 @@ app.post('/user/update-skills/:email', async (req,res) => {
     res.json(user);
 })
 
-app.post('/user/update-favorite/', async (req,res) => {
-    const user = await User.findOne({ email: req.body.email })
-    user.favorited_recipes.push(req.body.id)
-    user.save()
+app.post('/'+process.env.API_TOKEN+'/user/update-favorite/', async (req,res) => {
+    const user = await User.findOne({ email: req.body.email });
+    if (user.favorited_recipes.includes(req.body.id)) {
+        user.favorited_recipes.splice(user.favorited_recipes.indexOf(req.body.id),1);
+    } else {
+        user.favorited_recipes.push(req.body.id);
+    }
+
+    user.save();
     res.json(user);
 })
 

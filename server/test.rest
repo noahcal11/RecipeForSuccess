@@ -23,9 +23,9 @@ GET https://recipe-api-maamobyhea-uc.a.run.app/54pgn7tCy42af5pTRz92ZF2Piu92CQeWs
 
 
 ###
-POST http://localhost:8080/user/skill/jeffsinsel@gmail.com
+POST http://localhost:8080/user/update-favorite/
 Content-Type: application/json
 
 {
-    "0": 1, "1": 1, "2": 0, "3": -1 
+    "email": "jeffsinsel@gmail.com", "id": "64f4fc9a94cecacd7ee62b97"
 }
