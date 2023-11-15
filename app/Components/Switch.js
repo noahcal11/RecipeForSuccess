@@ -10,24 +10,20 @@ const SwitchComp = (name) => {
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   return (
-    <View style={styles.container}>
       <Switch
-        trackColor={{false: '#767577', true: '#81b0ff'}}
-        thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+        trackColor={{false: '#767577', true: '#F67D7D'}}
+        thumbColor={isEnabled ? '#f4f3f4' : '#f4f3f4'}
         ios_backgroundColor="#3e3e3e"
         onValueChange={toggleSwitch}
         value={isEnabled}
       />
-    </View>
   );
 };
 
 const styles = EStyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'left',
-        justifyContent: 'left',
-        margin: '0.5rem'
+        alignItems: 'flex-end',
       },
 });
 

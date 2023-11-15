@@ -15,9 +15,9 @@ const BannerTitle = ({ title }) => {
   const [isTextInputVisible, setTextInputVisible] = useState(false);
   const {setRecipePageState, email} = useContext(Context);
 
-  const toggleSearchBar = () => {
-    setTextInputVisible(!isTextInputVisible);
-  };
+    const toggleSearchBar = () => {
+        setTextInputVisible(!isTextInputVisible);
+    };
 
   return (
     <View style={styles.banner}>
@@ -62,58 +62,59 @@ const BannerTitle = ({ title }) => {
 export default BannerTitle;
 
 const styles = EStyleSheet.create({
-  banner: {
-    height: '12%',
-    width: '100%',
-    backgroundColor: '#F02727',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingTop: '10%'
-  },
-  bannerTitle: {
-    fontSize: '1.5rem',
-    color: 'black',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    flex: 1,
-  },
-  profile: {
-    width: '2.5rem',
-    height: '2.5rem',
-    marginLeft: '5%',
-  },
-  profileIcon: {
-    width: '100%',
-    height: '100%',
-  },
-  search: {
-    width: '2.5rem',
-    height: '2.5rem',
-    marginRight: '5%',
-  },
-  searchIcon: {
-    width: '100%',
-    height: '100%',
-  },
-  searchBar: {
-    width: '90%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'right',
-    marginHorizontal:'5%',
-    backgroundColor: '#ddd',
-    borderRadius: 25,
-  },
-  searchInput: {
-    flex: 1,
-    fontSize: '1.5rem',
-    paddingLeft: 10
-  },
-  xBox: {
-    width: '2.5rem',
-    height: '2.5rem',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+    banner: {
+        height: '12%',
+        width: '100%',
+        backgroundColor: '#F02727',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingTop: '10%'
+    },
+    bannerTitle: {
+        fontSize: '1.6rem',
+        color: 'black',
+        fontFamily: 'Manrope_700Bold',
+        textAlign: 'center',
+        justifyContent: 'center',
+    },
+    profile: {
+        width: '2.5rem',
+        height: '2.5rem',
+        marginLeft: '5%',
+    },
+    profileIcon: {
+        width: '100%',
+        height: '100%',
+    },
+    search: {
+        width: '2.5rem',
+        height: '2.5rem',
+        marginRight: '5%',
+    },
+    searchIcon: {
+        width: '100%',
+        height: '100%',
+    },
+    searchBar: {
+        width: '90%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'right',
+        marginHorizontal: '5%',
+        backgroundColor: '#ddd',
+        borderRadius: 25,
+    },
+    searchInput: {
+        flex: 1,
+        fontSize: '1.5rem',
+        paddingLeft: 10,
+        fontFamily: 'Cairo_500Medium'
+    },
+    xBox: {
+        width: '2.5rem',
+        height: '2.5rem',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 });
