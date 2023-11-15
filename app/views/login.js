@@ -204,7 +204,7 @@ export default function Login({navigation}) {
             <View style={styles.top}>
                 <LogoIcon style={styles.logo}></LogoIcon>
                 {/* <Text style={styles.text}>Welcome to Recipe For Success</Text> */}
-                <Text style={{ ...global.titleText, marginTop: 150 }}>Welcome to Recipe For Success</Text>
+                <Text style={{ ...global.titleText, marginTop: 10 }}>Welcome to Recipe For Success</Text>
                 <Text style={styles.undertext}>{notification}</Text>
             
             {/* <Pressable
