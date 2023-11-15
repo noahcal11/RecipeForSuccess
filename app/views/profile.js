@@ -12,7 +12,7 @@ EStyleSheet.build();
 
 const SECTIONS = [
   {
-    title: 'Allergies',
+    title: 'Select Allergies',
     content: [
       { title: 'Dairy' },
       { title: 'Eggs'},
@@ -28,12 +28,19 @@ const SECTIONS = [
       { title: 'Gluten'},
     ],
   },
+  {
+    title: 'Select Widgets',
+    content: [
+      { title: 'Favorites'},
+      { title: 'Broccoli'},
+      // Add more items as needed
+    ],
+  },
 ];
 
 export default function Profile() {
   const [activeSections, setActiveSections] = useState([]);
 
-  //this is where the allergies is displaying weird
   const renderHeader = (section) => {
     return (
       <View style={global.horizontal}>
@@ -44,8 +51,18 @@ export default function Profile() {
   };
 
   const renderContent = (section) => {
+    let contentText = '';
+
+    // Conditionally set the content text based on the section title
+    if (section.title === 'Select Allergies') {
+      contentText = 'Any selected ingredients will not be included in the recipes displayed.';
+    } else if (section.title === 'Select Widgets') {
+      contentText = 'Any selected widgets will be shown on the home screen.';
+    }
+
     return (
       <View>
+        <Text style={global.centerBodyText}>{contentText}</Text>
         {section.content.map((item, index) => (
           <View style={global.horizontal} key={index}>
             <Text style={global.bodyText}>{item.title}</Text>
