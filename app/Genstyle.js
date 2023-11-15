@@ -217,15 +217,6 @@ const global = EStyleSheet.create({
     color: 'black',
     fontFamily: 'Cairo_500Medium',
   },
-  // Header
-  titleText: {
-    fontSize: '1.6rem',
-    color: 'black',
-    fontFamily: 'Manrope_700Bold',
-    textAlign: 'center',
-    justifyContent: 'center',
-    margin: '0.5rem',
-  },
   // Section header
   subheaderText: {
     fontSize: '1.4rem',
