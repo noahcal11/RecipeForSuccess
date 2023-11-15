@@ -12,58 +12,74 @@ EStyleSheet.build();
 
 export default function Favorites() {
     const [favesList, setFavesList] = useState([]);
+    const [favorited] = useContext(Context);
 
     const getFavorites = async () => {
-        
+        const response = await fetch(API_BASE+"/recipe/get/", {
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            method: "GET",
+            body: JSON.stringify({ids:favorited})
+          })
+        .then(res => res.json());
+        // console.log(response);
+        // setFavesList(response[0])
     }
 
+    useState(() => {
+        getFavorites();
+    });
+
     return(
-        <View style={global.whiteBackground}>
-            <Banner title="Favorites"/>
-            <ScrollView styles={{ flex: 1 }}>
-                <View style={{alignItems: 'center'}}>
-                    <FlatList scrollEnabled={false}
-                        style={global.grayForeground}
-                        ListHeaderComponent={<Text style={global.titleText}>Favorites</Text>}
-                        data={favorited}
-                        renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}
-                                style={({ pressed }) => [
-                                    {
-                                    opacity: pressed
-                                        ? 0.2
-                                        : 1,
-                                    }]}
-                            >
-                                <View style={styles.imageView} id={item._id}>
-                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
-                                    <Text style={global.subText}>{item.title}</Text>
-                                </View>
-                            </Pressable>
-                        )}
-                        numColumns={2}
-                        keyExtractor={(item, index) => index.toString()}
-                        ListFooterComponent={
-                            <Pressable
-                                onPress={() => {
-                                    navigation.navigate("SearchResults")
-                                }}
+        <Text>Hello World</Text>
+        // <View style={global.whiteBackground}>
+        //     <Banner title="Favorites"/>
+        //     <ScrollView styles={{ flex: 1 }}>
+        //         <View style={{alignItems: 'center'}}>
+        //             <FlatList scrollEnabled={false}
+        //                 style={global.grayForeground}
+        //                 ListHeaderComponent={<Text style={global.titleText}>Favorites</Text>}
+        //                 data={favesList}
+        //                 renderItem={({ item }) => (
+        //                     <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}
+        //                         style={({ pressed }) => [
+        //                             {
+        //                             opacity: pressed
+        //                                 ? 0.2
+        //                                 : 1,
+        //                             }]}
+        //                     >
+        //                         <View style={styles.imageView} id={item._id}>
+        //                             <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
+        //                             <Text style={global.subText}>{item.title}</Text>
+        //                         </View>
+        //                     </Pressable>
+        //                 )}
+        //                 numColumns={2}
+        //                 keyExtractor={(item, index) => index.toString()}
+        //                 ListFooterComponent={
+        //                     <Pressable
+        //                         onPress={() => {
+        //                             navigation.navigate("SearchResults")
+        //                         }}
                                 
-                                style={({ pressed }) => [
-                                    {
-                                    opacity: pressed
-                                        ? 0.2
-                                        : 1,
-                                    }]}
-                            >
-                                <Text style={{ ...global.clickableText, marginBottom: '5%'}}>View more</Text>
-                            </Pressable>
-                        }
-                    />
-                </View>
-            </ScrollView>
-            <Footer/>
-        </View>
+        //                         style={({ pressed }) => [
+        //                             {
+        //                             opacity: pressed
+        //                                 ? 0.2
+        //                                 : 1,
+        //                             }]}
+        //                     >
+        //                         <Text style={{ ...global.clickableText, marginBottom: '5%'}}>View more</Text>
+        //                     </Pressable>
+        //                 }
+        //             />
+        //         </View>
+        //     </ScrollView>
+        //     <Footer/>
+        // </View>
     )
 }
 
