@@ -38,7 +38,7 @@ export default function Profile() {
     return (
       <View style={global.horizontal}>
         <Text style={global.bodyText}>{section.title}</Text>
-        <DownArrowIcon></DownArrowIcon>
+        <DownArrowIcon style={styles.arrowIcon}></DownArrowIcon>
       </View>
     );
   };
@@ -80,5 +80,8 @@ export default function Profile() {
 }
 
 const styles = EStyleSheet.create({
-  // Your styles here if needed
+  arrowIcon: {
+    height: 25,
+    width: 25,
+  }
 });
