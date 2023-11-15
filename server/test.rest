@@ -1,0 +1,31 @@
+# make sure the server is running: "npm start" to get it running
+# gets every record be careful
+GET http://localhost:8080/recipe/get/64f4fcd794cecacd7ee62c11
+###
+# this will give a MongoServerError: E11000 duplicate key error collection if it is already in the database
+POST http://localhost:8080/recipe/new
+Content-Type: application/json
+
+{
+    "title": "Juiciest Hamburgers Ever", "desc": "Juicy, flavorful hamburgers are just what you need for a perfect summer BBQ, party, or potluck, and these are super easy to prepare for guests.", "total_time": 35, "yields": "8 servings", "steps": ["Gather all ingredients.", "Preheat a grill for high heat.", "Mix the ground beef, egg, bread crumbs, evaporated milk, Worcestershire sauce, cayenne pepper, and garlic in a large bowl using your hands.", "Form the mixture into 8 hamburger patties.", "Lightly oil the grill grate. Grill patties until browned and no longer pink, about 5 minutes per side.", "Serve hot and enjoy!"], "ingredients": ["2 pounds ground beef", "1 egg, beaten", "0.75 cup dry bread crumbs", "3 tablespoons evaporated milk", "2 tablespoons Worcestershire sauce", "0.125 teaspoon cayenne pepper", "2 cloves garlic, minced"], "image": "https://www.allrecipes.com/thmb/3x-XkV8T36df_M4tkoDbaD-WmJs=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/49404-juiciest-hamburgers-ever-DDMFS-4x3-86fc27c741dd410aa365f96490c54060.jpg", "cuisine": "American", "category": "Dinner", "link": "https://www.allrecipes.com/recipe/49404/juiciest-hamburgers-ever/"
+}
+
+###
+POST http://localhost:8080/54pgn7tCy42af5pTRz92ZF2Piu92CQeWsx7cZSW5owfTasAJ3HqGwwvU3yNNqoAo9sy8VmETrnZ8UkVLgyUoxRtU2CCjZCJafFCViAVf93ceLW8ex6yFXsc79kqNWjBK/user/new
+Content-Type: application/json
+
+{
+    "email": "sunhawkgaming@gmail.com", "username": "tester", "password": "password"
+}
+
+###
+GET https://recipe-api-maamobyhea-uc.a.run.app/54pgn7tCy42af5pTRz92ZF2Piu92CQeWsx7cZSW5owfTasAJ3HqGwwvU3yNNqoAo9sy8VmETrnZ8UkVLgyUoxRtU2CCjZCJafFCViAVf93ceLW8ex6yFXsc79kqNWjBK/recipe/get/?general=ham
+
+
+###
+POST http://localhost:8080/user/skill/jeffsinsel@gmail.com
+Content-Type: application/json
+
+{
+    "0": 1, "1": 1, "2": 0, "3": -1 
+}

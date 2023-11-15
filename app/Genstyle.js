@@ -237,11 +237,6 @@ const global = EStyleSheet.create({
   },
 
 //Banner.js styling
-  banner: {
-    backgroundColor: 'salmon', // Set the background color of the banner
-    paddingVertical: 10, // Adjust vertical padding as needed
-    alignItems: 'center', // Center the title horizontally
-  },
   title: {
     fontSize: 24, // Adjust the font size as needed
     color: 'black', // Set the text color
