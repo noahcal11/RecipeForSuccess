@@ -129,7 +129,7 @@ app.post('/'+process.env.API_TOKEN+'/user/update-user' , async (req,res) => {
 
 app.post('/'+process.env.API_TOKEN+'/user/update-password' , async (req,res) => {
     const user = await User.findOne({ email: req.body.email });
-    
+
     bcrypt.compare(user.password, req.body.oldPassword,
         async function (err, isMatch) {
             // Comparing the original password to
@@ -148,7 +148,7 @@ app.post('/'+process.env.API_TOKEN+'/user/update-password' , async (req,res) => 
                 });
             }
             if (!isMatch) {
-
+                res.json(err);
             }
       });
 });

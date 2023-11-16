@@ -14,19 +14,20 @@ const ChangePasswordModel = ({ blurb }) => {
   const {isChangePasswordModelVisible, setChangePasswordModelVisible, email} = useContext(Context);
   const navigation = useNavigation();
 
+  const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
+
   const handlePasswordChange = async () => {
-    if (newPassword === confirmPassword) {
-      const data = await fetch(API_BASE+"/user/update-password", {
+    console.log(newPassword);
+    console.log(confirmPassword);
+    console.log(newPassword === confirmPassword);
+      await fetch(API_BASE+"/user/update-password", {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
         method: "POST",
         body: JSON.stringify({email: email, oldPassword: oldPassword, newPassword: newPassword})
-      })
-    } else {
-      console.log("Passwords do not match")
-    }
+      }).then(res => res.json())
     setChangePasswordModelVisible(!isChangePasswordModelVisible);
   };
 
