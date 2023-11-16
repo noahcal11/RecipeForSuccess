@@ -6,27 +6,11 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState,useContext } from 'react';
 import { Context } from '../Context';
 import global from '../Genstyle';
-import Accordion from 'react-native-collapsible/Accordion';
-import DownArrowIcon from '../assets/svg/downArrow';
-import SwitchComp from '../Components/Switch';
+import FilterIcon from '../assets/svg/filter';
 
 EStyleSheet.build();
 
-const SECTIONS = [
-    {
-      title: 'Select Widgets',
-      content: [
-        { title: 'Favorites'},
-        { title: 'Mexicans'},
-        { title: 'Corn'},
-        { title: 'Red Meat'},
-        // Add more items as needed
-      ],
-    },
-  ];
-
 export default function Home({ navigation, route }){
-    const [activeSections, setActiveSections] = useState([]);
     const [popularRecs, setPopularRecs] = useState([]);
     const [dessertRecs, setDessertRecs] = useState([]);
     const [breakfastRecs, setBreakfastRecs] = useState([]);
@@ -106,33 +90,7 @@ export default function Home({ navigation, route }){
         .catch(error => console.error(error));
     }
 
-    const renderHeader = (section) => {
-        return (
-          <View style={global.horizontal}>
-            <Text style={global.bodyText}>{section.title}</Text>
-            <DownArrowIcon style={styles.arrowIcon}></DownArrowIcon>
-          </View>
-        );
-      };
 
-    const renderContent = (section) => {
-        contentText = 'Any selected widgets will be shown above all other recipes on the home page.';
-        return (
-            <View>
-              <Text style={global.centerBodyText}>{contentText}</Text>
-              {section.content.map((item, index) => (
-                <View style={global.horizontal} key={index}>
-                  <Text style={global.bodyText}>{item.title}</Text>
-                  <SwitchComp name={item.title}> </SwitchComp>
-                </View>
-              ))}
-            </View>
-          );
-    }
-
-    const updateSections = (activeSections) => {
-        setActiveSections(activeSections);
-      };
         
     useState(() => {
         getPopular();
@@ -145,22 +103,15 @@ export default function Home({ navigation, route }){
         <View style={global.whiteBackground}>
             <Banner title="Home"/>
             <ScrollView styles={{ flex: 1 }}>
-                <View style={{alignItems: 'center'}}>
-                    
-                    
-                    <View style={global.grayForeground}>
-                    <Text style={global.titleText}>Filters</Text>
-                        <Accordion
-                        sections={SECTIONS}
-                        activeSections={activeSections}
-                        renderHeader={renderHeader}
-                        renderContent={renderContent}
-                        onChange={updateSections}
-                        />
-                    </View>
+                <Pressable
+                        style={{...global.buttonMinor, position: 'relative', marginLeft: '70%', marginTop: '5%', width: 60}}
+                        onPress={() => {email !== "Guest"? setFavorite():<View></View>}}>
+                        <FilterIcon style={styles.filterIcon}></FilterIcon>
+                </Pressable>
 
+                <View style={{alignItems: 'center'}}>
                     <FlatList scrollEnabled={false}
-                        style={global.grayForeground}
+                        style={{...global.grayForeground, marginVertical: '0%', marginBottom: '5%'}}
                         ListHeaderComponent={<Text style={global.titleText}>Popular Recipes</Text>}
                         data={popularRecs}
                         renderItem={({ item }) => (
@@ -334,8 +285,9 @@ const styles = EStyleSheet.create({
         borderColor: 'black',
         marginBottom: '5%'
     },
-    arrowIcon: {
-        height: 25,
-        width: 25,
+    filterIcon: {
+        height: 40,
+        width: 40,
+        alignItems: 'left'
       },
 });
