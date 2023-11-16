@@ -1,26 +1,25 @@
 // SearchBarComponent.js
+// Not being used currently
 
 import React, { useState } from 'react';
 import { View, Pressable, Text, TextInput, StyleSheet} from 'react-native';
 import SearchIcon from '../assets/svg/search';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation,useRoute } from '@react-navigation/core';
 
 EStyleSheet.build();
 
 
 const SearchBar = () => {
   const navigation = useNavigation()
-  const [isSearchVisible, setSearchVisible] = useState(false);
+  const route = useRoute();
   const [isTextInputVisible, setTextInputVisible] = useState(false);
 
   const openSearchBar = () => {
-    setSearchVisible(true);
     setTextInputVisible(true); // Show the text input when opening the search bar
   };
 
   const closeSearchBar = () => {
-    setSearchVisible(false);
     setTextInputVisible(false); // Hide the text input when closing the search bar
   };
 
@@ -40,7 +39,7 @@ const SearchBar = () => {
             placeholder="Search..."
             style={styles.searchInput}
             autoFocus
-            onSubmitEditing={({ nativeEvent: { text } }) => {navigation.navigate("SearchResults",{"searchTerm":text}); closeSearchBar();}}
+            onSubmitEditing={({ nativeEvent: { text } }) => {navigation.navigate("Favorites"); closeSearchBar();}}
           />
           <Pressable onPress={closeSearchBar}>
             <View style={styles.xBox}> 

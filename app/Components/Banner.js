@@ -4,14 +4,15 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import React, { useState, useContext } from 'react';
 import { View, Pressable, Text, TextInput } from 'react-native';
 import SearchIcon from '../assets/svg/search';
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation,useRoute } from '@react-navigation/core';
 import { Context } from "../Context";
 import SignInModel from "./SignInModel";
 
 EStyleSheet.build();
 
 const BannerTitle = ({ title }) => {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
+  const route = useRoute();
   const [isTextInputVisible, setTextInputVisible] = useState(false);
   const {setRecipePageState, email} = useContext(Context);
 
@@ -46,6 +47,7 @@ const BannerTitle = ({ title }) => {
             style={styles.searchInput}
             autoFocus
             onSubmitEditing={({ nativeEvent: { text } }) => {
+              route.name === "SearchResults" ? navigation.navigate("Home") :
               navigation.navigate("SearchResults",{"searchTerm":text});
               toggleSearchBar();
             }}
