@@ -97,14 +97,6 @@ export default function Home({ navigation, route }){
         } else return title;
     }
 
-    // Shortens longer titles so any given recipe title only takes up two lines
-    function makeTwoLines(title) {
-        if (title.length >= 25) {
-            return title.substring(0, 25) + "...";
-        } else return title;
-    }
-
-
         
     useState(() => {
         getPopular();
