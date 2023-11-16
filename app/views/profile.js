@@ -185,7 +185,7 @@ export default function Profile() {
             transparent={true}
             visible={isChangePasswordModelVisible}
             onRequestClose={() => setChangePasswordModelVisible(false)}>
-            <SignInModel blurb="Change Password" onClose={() => setChangePasswordModelVisible(false)} />
+            <ChangePasswordModel blurb="Change Password" onClose={() => setChangePasswordModelVisible(false)} />
           </Modal>
 
         </View>
