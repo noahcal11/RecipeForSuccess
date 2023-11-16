@@ -45,9 +45,9 @@ const SECTIONS = [
 
 export default function Profile() {
   const [activeSections, setActiveSections] = useState([]);
+  const {username,setUsername,email,setEmail} = useContext(Context);
   const [newEmail, setNewEmail] = useState(email);
   const navigation = useNavigation();
-  const {username,setUsername,email,setEmail} = useContext(Context);
   const [isProfileModified, setIsProfileModified] = useState(false);
   const [isChangePasswordModelVisible, setChangePasswordModelVisible] = useState(false);
 
@@ -72,7 +72,7 @@ export default function Profile() {
       body: JSON.stringify({oldEmail: email, newEmail: newEmail, username: username})
     })
     setEmail(newEmail);
-    setIsModified(false);
+    setIsProfileModified(false);
   };
 
   const renderHeader = (section) => {
@@ -179,7 +179,9 @@ export default function Profile() {
           <Pressable
                     style={global.buttonMinor}
                     onPress={() => {
-                      navigation.navigate('Home');
+                      navigation.navigate('Login');
+                      setEmail('');
+                      setUsername('');
                     }}>
                         <Text style={styles.guestText}>Logout</Text>
           </Pressable>

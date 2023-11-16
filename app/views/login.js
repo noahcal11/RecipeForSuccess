@@ -44,7 +44,8 @@ export default function Login({navigation}) {
       } 
       bcrypt.compare(password, data[0].hash,
         async function (err, isMatch) {
-
+            setPassword('');
+            setPopupActive(false);
             // Comparing the original password to
             // encrypted password
             if (isMatch) {
