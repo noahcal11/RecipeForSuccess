@@ -116,8 +116,7 @@ export default function Home({ navigation, route }) {
                             </View>
                         )}
                     </View>
-
-
+                    
                     <View style={styles.recipeSection}>
                         <Text style={styles.categoryTitle}>Suggested Recipes...</Text>
                         <FlatList scrollEnabled={false}
@@ -135,9 +134,6 @@ export default function Home({ navigation, route }) {
                         />
                         <Text>View more</Text>
                     </View>
-
-
-
                 </View>
             </ScrollView>
             </View>
