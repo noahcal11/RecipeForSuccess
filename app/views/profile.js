@@ -47,21 +47,21 @@ export default function Profile() {
   const [activeSections, setActiveSections] = useState([]);
   const navigation = useNavigation()
   const {username,setUsername,email,setEmail} = useContext(Context);
-  const [isModified, setIsModified] = useState(false);
+  const [isProfileModified, setIsProfileModified] = useState(false);
   const [isChangePasswordModelVisible, setChangePasswordModelVisible] = useState(false);
 
   const handleEmailChange = (newEmail) => {
     setEmail(newEmail);
-    setIsModified(true);
+    setIsProfileModified(true);
   };
   const handleUsernameChange = (newUsername) => {
     setUsername(newUsername);
-    setIsModified(true);
+    setIsProfileModified(true);
   };
   const handleUpdateAccount = () => {
     // Implement the logic for updating the account
-    // Reset the isModified state after updating
-    setIsModified(false);
+    // Reset the isProfileModified state after updating
+    setIsProfileModified(false);
   };
 
   const renderHeader = (section) => {
@@ -149,7 +149,7 @@ export default function Profile() {
           <TextInput style={global.input} value={email} onChangeText={handleEmailChange}></TextInput>
           <Text style={global.subheaderText}>Username</Text>
           <TextInput style={global.input} value={username} onChangeText={handleUsernameChange}></TextInput>
-          {isModified && (
+          {isProfileModified && (
             <Pressable
               style={global.button}
               onPress={handleUpdateAccount}>
