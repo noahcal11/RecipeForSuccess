@@ -149,7 +149,6 @@ const global = EStyleSheet.create({
     fontFamily: 'Manrope_700Bold',
     textAlign: 'center',
     justifyContent: 'center',
-    padding: '1rem',
   },
   // Section header
   subheaderText: {
