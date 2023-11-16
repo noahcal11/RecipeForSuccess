@@ -140,7 +140,7 @@ app.post('/'+process.env.API_TOKEN+'/user/update-password' , async (req,res) => 
                         if (err) {
                             return res.json('Cannot encrypt');
                         }
-                        user.password = hash
+                        user.hash = hash
                         user.save();
                         res.json(user);
                     });
