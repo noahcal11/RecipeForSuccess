@@ -180,6 +180,7 @@ const styles=EStyleSheet.create({
         borderWidth: 1,
         borderColor: 'black',
         paddingVertical: '5%',
+        marginBottom: '5%',
         width: '60%',
         height: '20%',
         justifyContent: 'center',
