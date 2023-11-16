@@ -1,21 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Alert, Modal, StyleSheet, Text, Pressable, View, TextInput } from 'react-native';
 import global from '../Genstyle';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useNavigation } from '@react-navigation/native';
+import { Context } from '../Context';
 
 EStyleSheet.build();
 
 const ChangePasswordModel = ({ blurb }) => {
-  const [modalVisible, setModalVisible] = useState(true);
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const {isChangePasswordModelVisible, setChangePasswordModelVisible, email} = useContext(Context);
   const navigation = useNavigation();
 
-  const handlePasswordChange = () => {
-    // Implement the logic for changing the password
-    setModalVisible(!modalVisible);
+  const handlePasswordChange = async () => {
+    if (newPassword === confirmPassword) {
+      const data = await fetch(API_BASE+"/user/update-password", {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({email: email, oldPassword: oldPassword, newPassword: newPassword})
+      })
+    } else {
+      console.log("Passwords do not match")
+    }
+    setChangePasswordModelVisible(!isChangePasswordModelVisible);
   };
 
   const isButtonActive = oldPassword !== '' && newPassword !== '' && confirmPassword !== '';
@@ -25,9 +37,9 @@ const ChangePasswordModel = ({ blurb }) => {
       <Modal
         animationType="slide"
         transparent={true}
-        visible={modalVisible}
+        visible={isChangePasswordModelVisible}
         onRequestClose={() => {
-          setModalVisible(!modalVisible);
+          setChangePasswordModelVisible(!isChangePasswordModelVisible);
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
@@ -58,7 +70,7 @@ const ChangePasswordModel = ({ blurb }) => {
             <Pressable
               style={global.buttonMinor}
               onPress={() => {
-                setModalVisible(!modalVisible);
+                setChangePasswordModelVisible(!isChangePasswordModelVisible);
                 navigation.navigate('Profile');
               }}>
               <Text style={global.buttonMinorText}>Cancel</Text>

@@ -125,7 +125,33 @@ app.post('/'+process.env.API_TOKEN+'/user/update-user' , async (req,res) => {
     user.username = req.body.username;
     user.save();
     res.json(user);
-})
+});
+
+app.post('/'+process.env.API_TOKEN+'/user/update-password' , async (req,res) => {
+    const user = await User.findOne({ email: req.body.email });
+    
+    bcrypt.compare(user.password, req.body.oldPassword,
+        async function (err, isMatch) {
+            // Comparing the original password to
+            // encrypted password
+            if (isMatch) {
+                bcrypt.genSalt(5, function (err, Salt) {
+                    // The bcrypt is used for encrypting password.
+                    bcrypt.hash(password, Salt, function (err, hash) {
+                        if (err) {
+                            return res.json('Cannot encrypt');
+                        }
+                        user.password = hash
+                        user.save();
+                        res.json(user);
+                    });
+                });
+            }
+            if (!isMatch) {
+
+            }
+      });
+});
 
 app.post('/'+process.env.API_TOKEN+'/user/update-skills/:email', async (req,res) => {
     const user = await User.findOne({ email: req.params.email })

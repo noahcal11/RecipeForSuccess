@@ -23,6 +23,7 @@ export default function App() {
   const [favorited, setFavorited] = useState([]);
   const [created, setCreated] = useState([]);
   const [completed, setCompleted] = useState([]);
+  const [isChangePasswordModelVisible, setChangePasswordModelVisible] = useState(false);
 
   let [fontsLoaded, fontError] = useFonts({
     Cairo_500Medium,
@@ -41,7 +42,8 @@ export default function App() {
         email, setEmail, 
         favorited, setFavorited,
         completed, setCompleted,
-        created, setCreated 
+        created, setCreated,
+        isChangePasswordModelVisible, setChangePasswordModelVisible 
       }}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{
