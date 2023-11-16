@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Text, Image, View, Pressable, ScrollView, TextInput, FlatList, Dimensions } from 'react-native';
 import Banner from '../Components/Banner';
 import Footer from '../Components/Footer';
+import FilterIcon from '../assets/svg/filter';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState } from 'react';
 import global from '../Genstyle';
@@ -56,8 +57,14 @@ export default function Home({ navigation, route }) {
             <View style={global.grayForeground}>
                 <ScrollView styles={{ flex: 1 }}>
                     {/* Filter Button */}
-                    <Pressable style={styles.filterButton}>
-                        <Text style={styles.filterButtonText}>Filter</Text>
+                    <Pressable style={({ pressed }) => [
+                                    {
+                                        opacity: pressed
+                                            ? 0.2
+                                            : 1,
+                                    },
+                                    styles.filterButton]}>
+                        <FilterIcon width="25" height='25' stroke="black" fill="#141414" strokeWidth="0.25"/>
                     </Pressable>
 
                     {/* Sort By Dropdown */}

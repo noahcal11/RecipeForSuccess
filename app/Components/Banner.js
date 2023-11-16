@@ -28,7 +28,14 @@ const BannerTitle = ({ title }) => {
                 navigation.navigate("Profile");
                 setRecipePageState("details");
               }
-            } style={styles.profileIcon}>
+            }
+            style={({ pressed }) => [
+              {
+                  opacity: pressed
+                      ? 0.2
+                      : 1,
+              },
+              styles.profileIcon]}>
               <ProfileIcon />
             </Pressable>
           </View>
