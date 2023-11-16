@@ -1,12 +1,11 @@
 import React from 'react';
-import { View, Text, Pressable, FlatList } from 'react-native';
+import { View, Text, Pressable, FlatList, ScrollView } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import CheckBox from 'expo-checkbox';
 import { useState, useContext, useEffect } from 'react';
 import { Context } from '../Context'
 import Banner from './Banner';
 import Footer from '../Components/Footer'
-import { ScrollView } from 'react-native-gesture-handler';
 import global from '../Genstyle'
 
 // TODO: Make buttons go to the bottom of the page, add a timer
@@ -20,7 +19,7 @@ const RecipeProgression = ({ingredients, directions, title}) => {
     // Variables for Timer section
     const [isActive, setIsActive] = useState(false);
     const [passedTime, setPassedTime] = useState(0);
-    const [time, setTime] = useState("00:00");
+    const [time, setTime] = useState("00:00:00");
     var startTime = new Date();
     // Global variables
     const { recipePageState, setRecipePageState, username, email } = useContext(Context);
@@ -98,7 +97,7 @@ const RecipeProgression = ({ingredients, directions, title}) => {
             );
         } else { // Displays the directions in order
             return (
-                <View style={{ flex: 1 }}>
+                <ScrollView style={{ flex: 1 }}>
                     <Text style={global.titleText}>Step {stepNum}:</Text>
                     <Text style={global.centeredText}>{directions[stepNum - 1]}</Text>
                     {/* TODO: Add a timer to track time spent on recipe */}
@@ -132,32 +131,35 @@ const RecipeProgression = ({ingredients, directions, title}) => {
                             :<Text style={global.subText}>Resume</Text>}
                         </Pressable>
                     </View>
-                </View>
+                </ScrollView>
             );
         }
     }
 
-    const updateTime = (ms) => {
-        const sec = Math.floor((ms / 1000) % 60).toString().padStart(2, "0");
-        const min = Math.floor((ms / 1000 / 60) % 60).toString().padStart(2, "0");
-        setTime(min + ":" + sec);
+    function timeout(delay) {
+        return new Promise(res => setTimeout(res, delay))
+    }
+
+    const updateTime = (time) => {
+        const sec = Math.floor(time % 60).toString().padStart(2, "0");
+        const min = Math.floor((time / 60) % 60).toString().padStart(2, "0");
+        const hour = Math.floor((time / 60) / 60).toString().padStart(2, "0");
+        setTime(hour + ":" + min + ":" + sec);
     }
 
     // Ensures the timer updates constantly
     useEffect(() => {
         if(!isActive) return;
-        var id = setInterval(() => {
-            var remainder = passedTime + (new Date() - startTime);
-            setPassedTime(remainder);
-            updateTime(remainder);
-            // Failsafe if timer goes negative
-            if(remainder <= 0) {
-                setTime("00:00");
-                clearInterval(id);
-            }
-        }, 1)
-        return () => clearInterval(id);
-    }, [isActive])
+        timeout(1000).then(() => {
+            setPassedTime(passedTime + 1)
+            updateTime(passedTime)
+        });
+        // Failsafe if timer goes negative
+        if(passedTime <= 0) {
+            setTime("00:00:00");
+            setPassedTime(0);
+        }
+    }, [isActive, passedTime])
 
     return (
         <View style={styles.container}>
@@ -173,9 +175,11 @@ export default RecipeProgression;
 
 const styles=EStyleSheet.create({
     timer: {
+        flex: 1,
         borderRadius: 25,
         borderWidth: 1,
         borderColor: 'black',
+        paddingVertical: '5%',
         width: '60%',
         height: '20%',
         justifyContent: 'center',

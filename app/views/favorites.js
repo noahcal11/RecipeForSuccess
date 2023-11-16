@@ -39,6 +39,7 @@ export default function Favorites( {navigation, route} ) {
             <Banner title="Favorites"/>
             <ScrollView styles={{ flex: 1 }}>
                 <View style={{alignItems: 'center'}}>
+                    {favesList.length > 0 ?
                     <FlatList scrollEnabled={false}
                         style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>Favorites</Text>}
@@ -61,6 +62,10 @@ export default function Favorites( {navigation, route} ) {
                         numColumns={2}
                         keyExtractor={(item, index) => index.toString()}
                     />
+                    :<View style={global.grayForeground}>
+                        <Text style={global.subheaderText}>You have not added any recipes to your favorites!</Text>
+                        <Text style={global.centerBodyText}>Tap on the heart icon on a recipe's page to favorite it!</Text>
+                    </View>}
                 </View>
             </ScrollView>
             {email === 'Guest' ? <SignInModel blurb="In order to use this feature, you have to be signed in!" /> : <View></View>}
