@@ -119,6 +119,14 @@ app.post('/'+process.env.API_TOKEN+'/user/new', (req,res) => {
     });
 });  
 
+app.post('/'+process.env.API_TOKEN+'/user/update-user' , async (req,res) => {
+    const user = await User.findOne({ email: req.body.email });
+    user.email = req.body.email;
+    user.username = req.body.username;
+    user.save();
+    res.json(user);
+})
+
 app.post('/'+process.env.API_TOKEN+'/user/update-skills/:email', async (req,res) => {
     const user = await User.findOne({ email: req.params.email })
     let updated = []
