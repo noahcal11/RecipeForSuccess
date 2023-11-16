@@ -1,6 +1,6 @@
 import Footer from '../Components/Footer';
 import React, { useContext, useState } from 'react';
-import { Text, View, ScrollView } from "react-native";
+import { Text, View, ScrollView, Pressable, TextInput } from "react-native";
 import EStyleSheet from 'react-native-extended-stylesheet';
 import global from '../Genstyle';
 import SwitchComp from '../Components/Switch';
@@ -9,6 +9,8 @@ import BannerTitle from '../Components/Banner';
 import DownArrowIcon from '../assets/svg/downArrow';
 import SignInModel from '../Components/SignInModel';
 import { Context } from '../Context';
+import { useNavigation } from '@react-navigation/core';
+
 
 EStyleSheet.build();
 
@@ -42,7 +44,22 @@ const SECTIONS = [
 
 export default function Profile() {
   const [activeSections, setActiveSections] = useState([]);
-  const {email} = useContext(Context);
+  const navigation = useNavigation()
+  const {username,setUsername,email,setEmail} = useContext(Context);
+  const [isModified, setIsModified] = useState(false);
+  const handleEmailChange = (newEmail) => {
+    setEmail(newEmail);
+    setIsModified(true);
+  };
+  const handleUsernameChange = (newUsername) => {
+    setUsername(newUsername);
+    setIsModified(true);
+  };
+  const handleUpdateAccount = () => {
+    // Implement the logic for updating the account
+    // Reset the isModified state after updating
+    setIsModified(false);
+  };
 
   const renderHeader = (section) => {
     return (
@@ -83,18 +100,86 @@ export default function Profile() {
   return (
     <View style={global.whiteBackground}>
       <BannerTitle title="Profile" />
-      <View style={global.grayForeground}>
-        <ScrollView>
-          <Accordion
-            sections={SECTIONS}
-            activeSections={activeSections}
-            renderHeader={renderHeader}
-            renderContent={renderContent}
-            onChange={updateSections}
-          />
-        </ScrollView>
-      </View>
-      {email === 'Guest' ? <SignInModel blurb="In order to use this feature, you have to be signed in!" /> : <View></View>}
+      <ScrollView>
+      
+        <View style={global.grayForeground}>
+          <Text style={global.titleText}>Preferences</Text>
+            <Accordion
+              sections={SECTIONS}
+              activeSections={activeSections}
+              renderHeader={renderHeader}
+              renderContent={renderContent}
+              onChange={updateSections}
+            />
+        </View>
+
+        <View style={global.grayForeground}>
+          <Text style={global.titleText}>Your Recipes</Text>
+          <Pressable
+                    style={global.buttonMinor}
+                    onPress={() => {
+                      navigation.navigate('Home');
+                    }}>
+                        <Text style={styles.guestText}>Created</Text>
+          </Pressable>
+          <Pressable
+                    style={global.buttonMinor}
+                    onPress={() => {
+                      navigation.navigate('Home');
+                    }}>
+                        <Text style={styles.guestText}>Completed</Text>
+          </Pressable>
+          <Pressable
+                    style={global.button}
+                    onPress={() => {
+                      navigation.navigate('PageTemplate');
+                    }}>
+                        <Text style={styles.guestText}>Upload</Text>
+          </Pressable>
+
+        </View>
+
+
+        <View style={global.grayForeground}>
+          <Text style={global.titleText}>Account Settings</Text>
+          <Text style={global.subheaderText}>Email</Text>
+          <TextInput style={global.input} value={email} onChangeText={handleEmailChange}></TextInput>
+          <Text style={global.subheaderText}>Username</Text>
+          <TextInput style={global.input} value={username} onChangeText={handleUsernameChange}></TextInput>
+          {isModified && (
+            <Pressable
+              style={global.button}
+              onPress={handleUpdateAccount}>
+              <Text style={styles.guestText}>Update Account</Text>
+            </Pressable>
+          )}
+
+          <Pressable
+                    style={global.buttonMinor}
+                    onPress={() => {
+                      navigation.navigate('Home');
+                    }}>
+                        <Text style={styles.guestText}>Change Password</Text>
+          </Pressable>
+
+          <Pressable
+                    style={global.buttonMinor}
+                    onPress={() => {
+                      navigation.navigate('Home');
+                    }}>
+                        <Text style={styles.guestText}>Logout</Text>
+          </Pressable>
+          <Pressable
+                    style={global.buttonMinor}
+                    onPress={() => {
+                      navigation.navigate('Home');
+                    }}>
+                        <Text style={styles.guestText}>Delete Account </Text>
+          </Pressable>
+        </View>
+
+      </ScrollView>
+      {/* {email === 'Guest' ? <SignInModel blurb="In order to use this feature, you have to be signed in!" /> : <View></View>} */}
       <Footer />
     </View>
   );
