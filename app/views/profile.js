@@ -11,6 +11,7 @@ import SignInModel from '../Components/SignInModel';
 import { Context } from '../Context';
 import { useNavigation } from '@react-navigation/core';
 import ChangePasswordModel from '../Components/ChangePasswordModel';
+import MessageModel from '../Components/MessageModel';
 
 
 EStyleSheet.build();
@@ -50,7 +51,7 @@ export default function Profile() {
   const navigation = useNavigation();
   const [isProfileModified, setIsProfileModified] = useState(false);
   const [isChangePasswordModelVisible, setChangePasswordModelVisible] = useState(false);
-
+  const [isMessageModelVisible, setMessageModelVisible] = useState(false);
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
@@ -163,7 +164,10 @@ export default function Profile() {
           {isProfileModified && (
             <Pressable
               style={global.button}
-              onPress={handleUpdateAccount}>
+              onPress={() => {
+                handleUpdateAccount();
+                setMessageModelVisible(true);
+              }} >
               <Text style={styles.guestText}>Update Account</Text>
             </Pressable>
           )}
@@ -201,10 +205,18 @@ export default function Profile() {
             <ChangePasswordModel blurb="Change Password" onClose={() => setChangePasswordModelVisible(false)} />
           </Modal>
 
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={isMessageModelVisible}
+            onRequestClose={() => setMessageModelVisible(false)}>
+            <MessageModel blurb="Account Settings Updated" onClose={() => setMessageModelVisible(false)} />
+          </Modal>
+
         </View>
 
       </ScrollView>
-      {/* {email === 'Guest' ? <SignInModel blurb="In order to use this feature, you have to be signed in!" /> : <View></View>} */}
+      {email === 'Guest' ? <SignInModel blurb="In order to use this feature, you have to be signed in!" /> : <View></View>}
       <Footer />
     </View>
   );
