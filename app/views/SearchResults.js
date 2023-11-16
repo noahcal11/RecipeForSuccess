@@ -5,6 +5,8 @@ import Footer from '../Components/Footer';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState } from 'react';
 import global from '../Genstyle';
+import Icon from 'react-native-vector-icons/FontAwesome'; // Adjust the library and icon as needed
+import { TouchableHighlight } from 'react-native';
 
 EStyleSheet.build();
 
