@@ -43,7 +43,7 @@ const styles = EStyleSheet.create({
   modalView: {
     backgroundColor: 'white',
     borderRadius: 25,
-    padding: '10%', 
+    padding: '5%', 
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
