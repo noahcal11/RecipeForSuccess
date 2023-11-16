@@ -1,6 +1,6 @@
 import Footer from '../Components/Footer';
 import React, { useContext, useState } from 'react';
-import { Text, View, ScrollView, Pressable, TextInput } from "react-native";
+import { Text, View, ScrollView, Pressable, TextInput, Modal } from "react-native";
 import EStyleSheet from 'react-native-extended-stylesheet';
 import global from '../Genstyle';
 import SwitchComp from '../Components/Switch';
@@ -10,6 +10,7 @@ import DownArrowIcon from '../assets/svg/downArrow';
 import SignInModel from '../Components/SignInModel';
 import { Context } from '../Context';
 import { useNavigation } from '@react-navigation/core';
+import ChangePasswordModel from '../Components/ChangePasswordModel';
 
 
 EStyleSheet.build();
@@ -47,6 +48,8 @@ export default function Profile() {
   const navigation = useNavigation()
   const {username,setUsername,email,setEmail} = useContext(Context);
   const [isModified, setIsModified] = useState(false);
+  const [isChangePasswordModelVisible, setChangePasswordModelVisible] = useState(false);
+
   const handleEmailChange = (newEmail) => {
     setEmail(newEmail);
     setIsModified(true);
@@ -157,7 +160,7 @@ export default function Profile() {
           <Pressable
                     style={global.buttonMinor}
                     onPress={() => {
-                      navigation.navigate('Home');
+                      setChangePasswordModelVisible(true);
                     }}>
                         <Text style={styles.guestText}>Change Password</Text>
           </Pressable>
@@ -176,6 +179,15 @@ export default function Profile() {
                     }}>
                         <Text style={styles.guestText}>Delete Account </Text>
           </Pressable>
+
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={isChangePasswordModelVisible}
+            onRequestClose={() => setChangePasswordModelVisible(false)}>
+            <SignInModel blurb="Change Password" onClose={() => setChangePasswordModelVisible(false)} />
+          </Modal>
+
         </View>
 
       </ScrollView>
