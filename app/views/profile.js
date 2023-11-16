@@ -44,20 +44,30 @@ const SECTIONS = [
 
 export default function Profile() {
   const [activeSections, setActiveSections] = useState([]);
-  const navigation = useNavigation()
-  const {username,setUsername,email,setEmail} = useContext(Context);
+  const [newEmail, setNewEmail] = useState("");
+  const navigation = useNavigation();
+  const {username,setUsername,email} = useContext(Context);
   const [isModified, setIsModified] = useState(false);
+
+  const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
+
   const handleEmailChange = (newEmail) => {
-    setEmail(newEmail);
+    setNewEmail(newEmail);
     setIsModified(true);
   };
   const handleUsernameChange = (newUsername) => {
     setUsername(newUsername);
     setIsModified(true);
   };
-  const handleUpdateAccount = () => {
-    // Implement the logic for updating the account
-    // Reset the isModified state after updating
+  const handleUpdateAccount = async () => {
+    const data = await fetch(API_BASE+"/user/update-user", {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: "POST",
+      body: JSON.stringify({oldEmail: email, newEmail: newEmail, username: username})
+    })
     setIsModified(false);
   };
 

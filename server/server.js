@@ -120,8 +120,8 @@ app.post('/'+process.env.API_TOKEN+'/user/new', (req,res) => {
 });  
 
 app.post('/'+process.env.API_TOKEN+'/user/update-user' , async (req,res) => {
-    const user = await User.findOne({ email: req.body.email });
-    user.email = req.body.email;
+    const user = await User.findOne({ email: req.body.oldEmail });
+    user.email = req.body.newEmail;
     user.username = req.body.username;
     user.save();
     res.json(user);
