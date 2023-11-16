@@ -137,7 +137,7 @@ app.post('/'+process.env.API_TOKEN+'/user/update-password' , async (req,res) => 
             if (isMatch) {
                 bcrypt.genSalt(5, function (err, Salt) {
                     // The bcrypt is used for encrypting password.
-                    bcrypt.hash(password, Salt, function (err, hash) {
+                    bcrypt.hash(req.body.newPassword, Salt, function (err, hash) {
                         if (err) {
                             return res.json('Cannot encrypt');
                         }

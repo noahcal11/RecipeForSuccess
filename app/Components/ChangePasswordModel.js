@@ -17,9 +17,6 @@ const ChangePasswordModel = ({ blurb }) => {
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
   const handlePasswordChange = async () => {
-    console.log(newPassword);
-    console.log(confirmPassword);
-    console.log(newPassword === confirmPassword);
       await fetch(API_BASE+"/user/update-password", {
         headers: {
           'Accept': 'application/json',
