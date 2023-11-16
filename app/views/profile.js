@@ -44,9 +44,9 @@ const SECTIONS = [
 
 export default function Profile() {
   const [activeSections, setActiveSections] = useState([]);
-  const [newEmail, setNewEmail] = useState("");
+  const [newEmail, setNewEmail] = useState(email);
   const navigation = useNavigation();
-  const {username,setUsername,email} = useContext(Context);
+  const {username,setUsername,email,setEmail} = useContext(Context);
   const [isModified, setIsModified] = useState(false);
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
@@ -68,6 +68,7 @@ export default function Profile() {
       method: "POST",
       body: JSON.stringify({oldEmail: email, newEmail: newEmail, username: username})
     })
+    setEmail(newEmail);
     setIsModified(false);
   };
 
@@ -153,7 +154,7 @@ export default function Profile() {
         <View style={global.grayForeground}>
           <Text style={global.titleText}>Account Settings</Text>
           <Text style={global.subheaderText}>Email</Text>
-          <TextInput style={global.input} value={email} onChangeText={handleEmailChange}></TextInput>
+          <TextInput style={global.input} value={newEmail} onChangeText={handleEmailChange}></TextInput>
           <Text style={global.subheaderText}>Username</Text>
           <TextInput style={global.input} value={username} onChangeText={handleUsernameChange}></TextInput>
           {isModified && (
