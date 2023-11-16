@@ -25,17 +25,12 @@ const ChangePasswordModel = ({blurb}) => {
             <Pressable
               style={global.button}
               onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={global.buttonText}>Sign In</Text>
-            </Pressable>
-            <Pressable
-              style={global.button}
-              onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={global.buttonText}>Register</Text>
+              <Text style={global.buttonText}>Change Password </Text>
             </Pressable>
             <Pressable
               style={global.buttonMinor}
-              onPress={() => {setModalVisible(!modalVisible); navigation.navigate('Home');}}>
-              <Text style={global.buttonMinorText}>Return Home</Text>
+              onPress={() => {setModalVisible(!modalVisible); navigation.navigate('Profile');}}>
+              <Text style={global.buttonMinorText}>Cancel</Text>
             </Pressable>
           </View>
         </View>

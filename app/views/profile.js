@@ -1,6 +1,6 @@
 import Footer from '../Components/Footer';
 import React, { useContext, useState } from 'react';
-import { Text, View, ScrollView, Pressable, TextInput } from "react-native";
+import { Text, View, ScrollView, Pressable, TextInput, Modal } from "react-native";
 import EStyleSheet from 'react-native-extended-stylesheet';
 import global from '../Genstyle';
 import SwitchComp from '../Components/Switch';
@@ -10,6 +10,7 @@ import DownArrowIcon from '../assets/svg/downArrow';
 import SignInModel from '../Components/SignInModel';
 import { Context } from '../Context';
 import { useNavigation } from '@react-navigation/core';
+import ChangePasswordModel from '../Components/ChangePasswordModel';
 
 
 EStyleSheet.build();
@@ -47,17 +48,19 @@ export default function Profile() {
   const [newEmail, setNewEmail] = useState(email);
   const navigation = useNavigation();
   const {username,setUsername,email,setEmail} = useContext(Context);
-  const [isModified, setIsModified] = useState(false);
+  const [isProfileModified, setIsProfileModified] = useState(false);
+  const [isChangePasswordModelVisible, setChangePasswordModelVisible] = useState(false);
+
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
   const handleEmailChange = (newEmail) => {
     setNewEmail(newEmail);
-    setIsModified(true);
+    setIsProfileModified(true);
   };
   const handleUsernameChange = (newUsername) => {
     setUsername(newUsername);
-    setIsModified(true);
+    setIsProfileModified(true);
   };
   const handleUpdateAccount = async () => {
     const data = await fetch(API_BASE+"/user/update-user", {
@@ -157,7 +160,7 @@ export default function Profile() {
           <TextInput style={global.input} value={newEmail} onChangeText={handleEmailChange}></TextInput>
           <Text style={global.subheaderText}>Username</Text>
           <TextInput style={global.input} value={username} onChangeText={handleUsernameChange}></TextInput>
-          {isModified && (
+          {isProfileModified && (
             <Pressable
               style={global.button}
               onPress={handleUpdateAccount}>
@@ -168,7 +171,7 @@ export default function Profile() {
           <Pressable
                     style={global.buttonMinor}
                     onPress={() => {
-                      navigation.navigate('Home');
+                      setChangePasswordModelVisible(true);
                     }}>
                         <Text style={styles.guestText}>Change Password</Text>
           </Pressable>
@@ -187,6 +190,15 @@ export default function Profile() {
                     }}>
                         <Text style={styles.guestText}>Delete Account </Text>
           </Pressable>
+
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={isChangePasswordModelVisible}
+            onRequestClose={() => setChangePasswordModelVisible(false)}>
+            <SignInModel blurb="Change Password" onClose={() => setChangePasswordModelVisible(false)} />
+          </Modal>
+
         </View>
 
       </ScrollView>
