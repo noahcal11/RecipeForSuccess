@@ -88,6 +88,13 @@ export default function Home({ navigation, route }){
         .then(data => setChickenRecs(getRandom(data,8)))
         .catch(error => console.error(error));
     }
+
+    // Shortens longer titles so any given recipe title only takes up two lines
+    function makeTwoLines(title) {
+        if (title.length >= 25) {
+            return title.substring(0, 25) + "...";
+        } else return title;
+    }
         
     useState(() => {
         getPopular();
@@ -116,7 +123,7 @@ export default function Home({ navigation, route }){
                             >
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
-                                    <Text style={global.subText}>{item.title}</Text>
+                                    <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
                                 </View>
                             </Pressable>
                         )}
@@ -154,7 +161,7 @@ export default function Home({ navigation, route }){
                             >
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
-                                    <Text style={global.subText}>{item.title}</Text>
+                                    <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
                                 </View>
                             </Pressable>
                         )}
@@ -193,7 +200,7 @@ export default function Home({ navigation, route }){
                             >
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
-                                    <Text style={global.subText}>{item.title}</Text>
+                                    <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
                                 </View>
                             </Pressable>
                         )}
@@ -231,7 +238,7 @@ export default function Home({ navigation, route }){
                             >
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
-                                    <Text style={global.subText}>{item.title}</Text>
+                                    <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
                                 </View>
                             </Pressable>
                         )}
