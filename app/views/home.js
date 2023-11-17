@@ -7,6 +7,7 @@ import { useState,useContext } from 'react';
 import { Context } from '../Context';
 import global from '../Genstyle';
 import FilterIcon from '../assets/svg/filter';
+import HomeFilterModel from '../Components/HomeFilterModel';
 
 EStyleSheet.build();
 
@@ -16,6 +17,7 @@ export default function Home({ navigation, route }){
     const [breakfastRecs, setBreakfastRecs] = useState([]);
     const [chickenRecs, setChickenRecs] = useState([]);
     const {username,setUsername,email,setEmail} = useContext(Context)
+    const [isHomeFilterModelVisible, setHomeFilterModelVisible] = useState(false);
 
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
@@ -110,10 +112,15 @@ export default function Home({ navigation, route }){
             <Banner title="Home"/>
             <ScrollView styles={{ flex: 1 }}>
                 <Pressable
-                        style={{...global.buttonMinor, position: 'relative', marginLeft: '70%', marginTop: '5%', width: 60}}
-                        onPress={() => {email !== "Guest"? setFavorite():<View></View>}}>
-                        <FilterIcon style={styles.filterIcon}></FilterIcon>
+                    style={{ ...global.buttonMinor, position: 'relative', marginLeft: '70%', marginTop: '5%', width: 60 }}
+                    onPress={() => {setHomeFilterModelVisible(true); }}
+                    >
+                    <FilterIcon style={styles.filterIcon} />
                 </Pressable>
+
+                <View style={{ alignItems: 'center' }}>
+                {isHomeFilterModelVisible ? <HomeFilterModel blurb="Set Home Page Filters" onClose={() => setHomeFilterModelVisible(false)} /> : <View></View>}
+                </View>
 
                 <View style={{alignItems: 'center'}}>
                     <FlatList scrollEnabled={false}
