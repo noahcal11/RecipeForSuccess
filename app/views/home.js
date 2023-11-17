@@ -7,6 +7,7 @@ import { useState,useContext } from 'react';
 import { Context } from '../Context';
 import global from '../Genstyle';
 import FilterIcon from '../assets/svg/filter';
+import HomeFiltersModel from '../Components/HomeFiltersModel';
 
 EStyleSheet.build();
 
@@ -16,6 +17,7 @@ export default function Home({ navigation, route }){
     const [breakfastRecs, setBreakfastRecs] = useState([]);
     const [chickenRecs, setChickenRecs] = useState([]);
     const {username,setUsername,email,setEmail} = useContext(Context)
+    const [isHomeFiltersModelVisible, setHomeFiltersModelVisible] = useState(false);
 
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
@@ -109,11 +111,23 @@ export default function Home({ navigation, route }){
         <View style={global.whiteBackground}>
             <Banner title="Home"/>
             <ScrollView styles={{ flex: 1 }}>
-                <Pressable
+                {/* <Pressable
                         style={{...global.buttonMinor, position: 'relative', marginLeft: '70%', marginTop: '5%', width: 60}}
                         onPress={() => {email !== "Guest"? setFavorite():<View></View>}}>
                         <FilterIcon style={styles.filterIcon}></FilterIcon>
+                </Pressable> */}
+
+                <Pressable
+                    style={{...global.buttonMinor, position: 'relative', marginLeft: '70%', marginTop: '5%', width: 60}}
+                    onPress={() => {
+                        setHomeFiltersModelVisible(true);
+                    }} >
+                    <FilterIcon style={styles.filterIcon}></FilterIcon>
                 </Pressable>
+                
+                <View style={{ alignItems: 'center' }}>
+                    {isHomeFiltersModelVisible ? <HomeFiltersModel blurb="Set Home Page Filters" /> : null}
+                </View>
 
                 <View style={{alignItems: 'center'}}>
                     <FlatList scrollEnabled={false}
