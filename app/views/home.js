@@ -110,7 +110,13 @@ export default function Home({ navigation, route }){
             <Banner title="Home" />
             <ScrollView styles={{ flex: 1 }}>
                 <Pressable
-                        style={{...global.buttonMinor, position: 'relative', marginLeft: '70%', marginTop: '5%', width: 60}}
+                        style={({ pressed }) => [
+                            {
+                                opacity: pressed
+                                    ? 0.2
+                                    : 1,
+                            },
+                            {...global.buttonMinor, position: 'relative', marginLeft: '70%', marginBottom: '2%', width: 60}]}
                         onPress={() => {email !== "Guest"? setFavorite():<View></View>}}>
                         <FilterIcon style={styles.filterIcon}></FilterIcon>
                 </Pressable>
@@ -295,5 +301,5 @@ const styles = EStyleSheet.create({
         height: 40,
         width: 40,
         alignItems: 'left'
-      },
+    },
 });

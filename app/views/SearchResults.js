@@ -1,7 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
-import { Text, Image, View, Pressable, ScrollView, TextInput, FlatList, Dimensions } from 'react-native';
+import { Text, Image, View, Pressable, ScrollView, TextInput, FlatList, Dimensions, Modal } from 'react-native';
 import Banner from '../Components/Banner';
 import Footer from '../Components/Footer';
+import SearchFilterModel from '../Components/SearchFilterModel';
 import FilterIcon from '../assets/svg/filter';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState } from 'react';
@@ -9,9 +10,9 @@ import global from '../Genstyle';
 
 EStyleSheet.build();
 
-export default function Home({ navigation, route }) {
-    //From Home page
+export default function SearchResults({ navigation, route }) {
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/" + process.env.REACT_APP_API_TOKEN
+    const [isSearchFilterModelVisible, setSearchFilterModelVisible] = useState(false);
 
     //time, cuisine, category
     const [showDropdown, setShowDropdown] = useState(false);
@@ -58,13 +59,16 @@ export default function Home({ navigation, route }) {
                 <ScrollView styles={{ flex: 1 }}>
                     {/* Filter Button */}
                     <Pressable style={({ pressed }) => [
-                                    {
-                                        opacity: pressed
-                                            ? 0.2
-                                            : 1,
-                                    },
-                                    styles.filterButton]}>
-                        <FilterIcon width="25" height='25' stroke="black" fill="#141414" strokeWidth="0.25"/>
+                        {
+                            opacity: pressed
+                                ? 0.2
+                                : 1,
+                        },
+                        { ...global.buttonMinor, position: 'relative', marginLeft: '70%', marginBottom: '2%', width: 60 }]}
+                        onPress={() => {
+                            setSearchFilterModelVisible(true);
+                        }}>
+                        <FilterIcon style={styles.filterIcon} />
                     </Pressable>
 
                     {/* Sort By Dropdown */}
@@ -113,6 +117,14 @@ export default function Home({ navigation, route }) {
                         keyExtractor={(item, index) => index}
 
                     />
+
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={isSearchFilterModelVisible}
+                        onRequestClose={() => setSearchFilterModelVisible(false)}>
+                        <SearchFilterModel blurb="Filter Search" onClose={() => setSearchFilterModelVisible(false)} />
+                    </Modal>
                 </ScrollView>
             </View>
             <Footer />
@@ -161,24 +173,16 @@ const styles = EStyleSheet.create({
         paddingBottom: 20,
         overflow: 'visible',
     },
-    filterButton: {
-        backgroundColor: '#F74F4F',
-        paddingHorizontal: '3%',
-        paddingVertical: '1.5%',
-        borderRadius: 25,
-        alignSelf: 'flex-start',
-        marginTop: '5%',
-        marginLeft: '5%'
-    },
-    filterButtonText: {
-        color: 'white',
-        fontFamily: 'Cairo_500Medium',
+    filterIcon: {
+        height: 40,
+        width: 40,
+        alignItems: 'left'
     },
     sortByContainer: {
         flexDirection: 'row',
-        justifyContent: 'flex-end', //align to right
+        justifyContent: 'flex', //align to right
         alignItems: 'center',
-        marginRight: '2%'
+        marginLeft: '2%'
     },
 
     sortByText: {
@@ -195,7 +199,7 @@ const styles = EStyleSheet.create({
         borderWidth: '0.1rem',
         borderColor: 'gray',
         borderRadius: 5,
-        width: Dimensions.get('window').width*0.35, // Adjust the width as needed
+        width: Dimensions.get('window').width * 0.35, // Adjust the width as needed
         zIndex: 1,
     },
     dropdownOption: {
