@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 
 EStyleSheet.build();
 
-const HomeFiltersModel = ({blurb}) => {
+const HomeFiltersModel = ({blurb, setHomeFiltersModelVisible}) => {
   const [modalVisible, setModalVisible] = useState(true);
   const navigation = useNavigation();
 
@@ -22,20 +22,34 @@ const HomeFiltersModel = ({blurb}) => {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={global.titleText}>{blurb}</Text>
+            
+            <Pressable
+    style={global.buttonMinor}
+    onPress={() => {
+        setModalVisible(!modalVisible);
+        setHomeFiltersModelVisible(false);
+    }}>
+    <Text style={global.buttonMinorText}>Return Home</Text>
+</Pressable>
+            
             <Pressable
               style={global.button}
-              onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={global.buttonText}>Sign In</Text>
+              onPress={() => {
+                setModalVisible(!modalVisible);
+                setHomeFiltersModelVisible(false);
+                navigation.navigate('Home');
+            }}>
+            <Text style={global.buttonMinorText}>Return Home</Text>
             </Pressable>
-            <Pressable
-              style={global.button}
-              onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={global.buttonText}>Register</Text>
-            </Pressable>
+
             <Pressable
               style={global.buttonMinor}
-              onPress={() => {setModalVisible(!modalVisible); navigation.navigate('Home');}}>
-              <Text style={global.buttonMinorText}>Return Home</Text>
+              onPress={() => {
+                setModalVisible(!modalVisible);
+                setHomeFiltersModelVisible(false);
+                navigation.navigate('Home');
+            }}>
+            <Text style={global.buttonMinorText}>Return Home</Text>
             </Pressable>
           </View>
         </View>
