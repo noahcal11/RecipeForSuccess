@@ -7,6 +7,9 @@ import Profile from "./views/profile";
 import Favorites from './views/favorites';
 import SearchResults from './views/SearchResults'
 import PageTemplate from './views/pageTemplate';
+import Created from './views/Created';
+import Completed from './views/Completed';
+import Upload from './views/Upload';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
@@ -59,6 +62,9 @@ export default function App() {
           <Stack.Screen name="Favorites" component={Favorites}/>
           <Stack.Screen name="SearchResults" component={SearchResults}/>
           <Stack.Screen name="PageTemplate" component={PageTemplate}/>
+          <Stack.Screen name="Created" component={Created}/>
+          <Stack.Screen name="Completed" component={Completed}/>
+          <Stack.Screen name="Upload" component={Upload}/>
         </Stack.Navigator>
       </NavigationContainer>
     </Context.Provider>

@@ -124,21 +124,21 @@ export default function Profile() {
           <Pressable
                     style={global.buttonMinor}
                     onPress={() => {
-                      navigation.navigate('Home');
+                      navigation.navigate('Created');
                     }}>
                         <Text style={styles.guestText}>Created</Text>
           </Pressable>
           <Pressable
                     style={global.buttonMinor}
                     onPress={() => {
-                      navigation.navigate('Home');
+                      navigation.navigate('Completed');
                     }}>
                         <Text style={styles.guestText}>Completed</Text>
           </Pressable>
           <Pressable
                     style={global.button}
                     onPress={() => {
-                      navigation.navigate('PageTemplate');
+                      navigation.navigate('Upload');
                     }}>
                         <Text style={styles.guestText}>Upload</Text>
           </Pressable>
