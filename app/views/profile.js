@@ -34,14 +34,6 @@ const SECTIONS = [
       { title: 'Gluten'},
     ],
   },
-  {
-    title: 'Select Widgets',
-    content: [
-      { title: 'Favorites'},
-      { title: 'Broccoli'},
-      // Add more items as needed
-    ],
-  },
 ];
 
 export default function Profile() {

@@ -6,6 +6,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState,useContext } from 'react';
 import { Context } from '../Context';
 import global from '../Genstyle';
+import FilterIcon from '../assets/svg/filter';
 
 EStyleSheet.build();
 
@@ -88,6 +89,14 @@ export default function Home({ navigation, route }){
         .then(data => setChickenRecs(getRandom(data,8)))
         .catch(error => console.error(error));
     }
+
+    // Shortens longer titles so any given recipe title only takes up two lines
+    function makeTwoLines(title) {
+        if (title.length >= 25) {
+            return title.substring(0, 25) + "...";
+        } else return title;
+    }
+
         
     useState(() => {
         getPopular();
@@ -100,9 +109,15 @@ export default function Home({ navigation, route }){
         <View style={global.whiteBackground}>
             <Banner title="Home"/>
             <ScrollView styles={{ flex: 1 }}>
+                <Pressable
+                        style={{...global.buttonMinor, position: 'relative', marginLeft: '70%', marginTop: '5%', width: 60}}
+                        onPress={() => {email !== "Guest"? setFavorite():<View></View>}}>
+                        <FilterIcon style={styles.filterIcon}></FilterIcon>
+                </Pressable>
+
                 <View style={{alignItems: 'center'}}>
                     <FlatList scrollEnabled={false}
-                        style={global.grayForeground}
+                        style={{...global.grayForeground, marginVertical: '0%', marginBottom: '5%'}}
                         ListHeaderComponent={<Text style={global.titleText}>Popular Recipes</Text>}
                         data={popularRecs}
                         renderItem={({ item }) => (
@@ -116,7 +131,7 @@ export default function Home({ navigation, route }){
                             >
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
-                                    <Text style={global.subText}>{item.title}</Text>
+                                    <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
                                 </View>
                             </Pressable>
                         )}
@@ -154,7 +169,7 @@ export default function Home({ navigation, route }){
                             >
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
-                                    <Text style={global.subText}>{item.title}</Text>
+                                    <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
                                 </View>
                             </Pressable>
                         )}
@@ -193,7 +208,7 @@ export default function Home({ navigation, route }){
                             >
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
-                                    <Text style={global.subText}>{item.title}</Text>
+                                    <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
                                 </View>
                             </Pressable>
                         )}
@@ -231,7 +246,7 @@ export default function Home({ navigation, route }){
                             >
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
-                                    <Text style={global.subText}>{item.title}</Text>
+                                    <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
                                 </View>
                             </Pressable>
                         )}
@@ -276,4 +291,9 @@ const styles = EStyleSheet.create({
         borderColor: 'black',
         marginBottom: '5%'
     },
+    filterIcon: {
+        height: 40,
+        width: 40,
+        alignItems: 'left'
+      },
 });
