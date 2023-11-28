@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import Banner from './Banner'
 import Footer from '../Components/Footer'
 import { useContext } from 'react';
-import { Context } from '../App'
+import { Context } from '../Context'
 import global from '../Genstyle'
 /* TODO:
     - Update the skills page (and this page) so that the new

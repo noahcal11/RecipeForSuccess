@@ -5,7 +5,7 @@ import HomeIcon from "../assets/svg/home";
 import HeartIcon from "../assets/svg/heart";
 import RibbonIcon from "../assets/svg/ribbon";
 import { useNavigation } from '@react-navigation/native';
-import { Context } from "../App";
+import { Context } from "../Context";
 
 EStyleSheet.build();
 
@@ -16,10 +16,9 @@ const Footer = () => {
 
   return (
 
-    //NEED TO CHANGE THE NAV FOR FAVORITES WHEN THAT PAGE IS CREATED
     <View style={styles.footerContainer}>
       <Pressable onPress={() => {navigation.navigate("Favorites"); setRecipePageState("details");}} style={{marginHorizontal: "12.5%"}}>
-        <HeartIcon width="40" height='100' stroke="black" strokeWidth="0.25"/>
+        <HeartIcon width="40" height='100' stroke="black" fill="red" strokeWidth="0.25"/>
       </Pressable>
 
       <Pressable onPress={() => {navigation.navigate("Home"); setRecipePageState("details");}} style={{marginHorizontal: "12.5%"}}>

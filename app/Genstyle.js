@@ -99,6 +99,11 @@ const global = EStyleSheet.create({
     fontFamily: 'Cairo_500Medium',
     textAlign: 'center',
   },
+  buttonMinorText: {
+    color: 'black',
+    fontSize: '0.9rem',
+    fontFamily: 'Cairo_500Medium',
+  },
   // Generic text
   text: {
     fontSize: '2rem',
@@ -216,15 +221,6 @@ const global = EStyleSheet.create({
     fontSize: 30,
     color: 'black',
     fontFamily: 'Cairo_500Medium',
-  },
-  // Header
-  titleText: {
-    fontSize: '1.6rem',
-    color: 'black',
-    fontFamily: 'Manrope_700Bold',
-    textAlign: 'center',
-    justifyContent: 'center',
-    margin: '0.5rem',
   },
   // Section header
   subheaderText: {

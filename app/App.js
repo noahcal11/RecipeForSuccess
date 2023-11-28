@@ -6,20 +6,25 @@ import RecipePages from "./views/RecipePages";
 import Profile from "./views/profile";
 import Favorites from './views/favorites';
 import SearchResults from './views/SearchResults'
-import ProfileSettings from './views/ProfileSettings';
+import PageTemplate from './views/pageTemplate';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
 import { Cairo_500Medium } from '@expo-google-fonts/cairo';
 import { Manrope_500Medium, Manrope_700Bold } from '@expo-google-fonts/manrope';
+import { Context } from './Context';
 
 const Stack = createNativeStackNavigator();
-export const Context = createContext();
 
 export default function App() {
   const [recipePageState, setRecipePageState] = useState('details');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
+  const [favorited, setFavorited] = useState([]);
+  const [created, setCreated] = useState([]);
+  const [completed, setCompleted] = useState([]);
+  const [isChangePasswordModelVisible, setChangePasswordModelVisible] = useState(false);
+  const [isHomeFiltersModelVisible, setHomeFiltersModelVisible] = useState(false);
 
   let [fontsLoaded, fontError] = useFonts({
     Cairo_500Medium,
@@ -32,7 +37,16 @@ export default function App() {
   }
 
   return (
-    <Context.Provider value={{ recipePageState, setRecipePageState, username, setUsername, email, setEmail }}>
+    <Context.Provider value={{ 
+        isHomeFiltersModelVisible, setHomeFiltersModelVisible,
+        recipePageState, setRecipePageState, 
+        username, setUsername, 
+        email, setEmail, 
+        favorited, setFavorited,
+        completed, setCompleted,
+        created, setCreated,
+        isChangePasswordModelVisible, setChangePasswordModelVisible 
+      }}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{
           headerShown: false
@@ -44,7 +58,7 @@ export default function App() {
           <Stack.Screen name="Profile" component={Profile}/>
           <Stack.Screen name="Favorites" component={Favorites}/>
           <Stack.Screen name="SearchResults" component={SearchResults}/>
-          <Stack.Screen name="ProfileSettings" component={ProfileSettings}/>
+          <Stack.Screen name="PageTemplate" component={PageTemplate}/>
         </Stack.Navigator>
       </NavigationContainer>
     </Context.Provider>

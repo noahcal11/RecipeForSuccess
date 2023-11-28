@@ -3,7 +3,7 @@ import { StyleSheet, Text, Image, View, Pressable, TextInput } from 'react-nativ
 import { useContext, useState} from 'react';
 import bcrypt from 'bcryptjs';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { Context } from '../App';
+import { Context } from '../Context';
 import global from '../Genstyle';
 import LogoIcon from '../assets/svg/logo';
 
@@ -16,7 +16,7 @@ export default function Login({navigation}) {
   const [password, setPassword] = useState('');
   const [notification, setNotification] = useState('');
   const [token, setToken] = useState('');
-  const {username,setUsername,email,setEmail} = useContext(Context)
+  const {username,setUsername,email,setEmail,setFavorited,setCompleted,setCreated} = useContext(Context)
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
   // const API_BASE = "http://localhost:8080/"+process.env.REACT_APP_API_TOKEN
@@ -44,12 +44,16 @@ export default function Login({navigation}) {
       } 
       bcrypt.compare(password, data[0].hash,
         async function (err, isMatch) {
-
+            setPassword('');
+            setPopupActive(false);
             // Comparing the original password to
             // encrypted password
             if (isMatch) {
                 await setUsername(data[0].username);
                 await setEmail(data[0].email);
+                await setFavorited(data[0].favorited_recipes);
+                await setCreated(data[0].created_recipes);
+                await setCompleted(data[0].completed_recipes);
                 navigation.navigate('Home');
 
             }

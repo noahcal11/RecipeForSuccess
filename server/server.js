@@ -21,25 +21,28 @@ const { Recipe,User } = require('./model');
 
 // Recipe Section
 
-app.get('/'+process.env.API_TOKEN+'/recipe/get',async (req,res) => {   
+app.post('/'+process.env.API_TOKEN+'/recipe/get',async (req,res) => {   
     let recipes;
-    const id = req.query.id;
-    const general = req.query.general;
-    if (general != null) {
+    const id = req.body.id;
+    const ids = req.body.ids;
+    const general = req.body.general;
+    if (general !== undefined) {
         recipes = await Recipe.find({$or: [
             {title: new RegExp(`\\b${general}\\b`, "i")},
             {desc: new RegExp(`\\b${general}\\b`, "i")},
             {ingredients: new RegExp(`\\b${general}\\b`, "i")}
         ]});
     } else if (id !== undefined) {
-        recipes = await Recipe.findById(id)
+        recipes = await Recipe.findById(id);
+    } else if (ids !== undefined) {
+        recipes = await Recipe.find({'_id': { $in: ids}});
     } else {
-        const title = req.query.title;
-        const desc = req.query.desc;
-        const ingredients = req.query.ingredients;
-        const total_time = req.query.total_time;
-        const cuisine = req.query.cuisine;
-        const category = req.query.category;
+        const title = req.body.title;
+        const desc = req.body.desc;
+        const ingredients = req.body.ingredients;
+        const total_time = req.body.total_time;
+        const cuisine = req.body.cuisine;
+        const category = req.body.category;
         recipes = await Recipe.find({
             total_time: total_time ? {$lte: total_time} : {$lte: 65535},
             cuisine: cuisine ? new RegExp(`\\b${cuisine}\\b`, "i") : new RegExp(`.*|`, "i"),
@@ -96,10 +99,10 @@ app.post('/'+process.env.API_TOKEN+'/user/new', (req,res) => {
     const password = req.body.password;
     
     // Encryption of the string password
-    bcrypt.genSalt(10, function (err, Salt) {
+    bcrypt.genSalt(5, function (err, Salt) {
     
         // The bcrypt is used for encrypting password.
-        bcrypt.hash(password, Salt, function (err, hash) {
+        bcrypt.hash(password, Salt, async function (err, hash) {
     
             if (err) {
                 return console.log('Cannot encrypt');
@@ -110,13 +113,46 @@ app.post('/'+process.env.API_TOKEN+'/user/new', (req,res) => {
                 username: req.body.username,
                 hash: hash
             })
-            user.save();
+            await user.save();
             res.json(user);
         });
     });
 });  
 
-app.post('/user/update-skills/:email', async (req,res) => {
+app.post('/'+process.env.API_TOKEN+'/user/update-user' , async (req,res) => {
+    const user = await User.findOne({ email: req.body.oldEmail });
+    user.email = req.body.newEmail;
+    user.username = req.body.username;
+    user.save();
+    res.json(user);
+});
+
+app.post('/'+process.env.API_TOKEN+'/user/update-password' , async (req,res) => {
+    const user = await User.findOne({ email: req.body.email });
+    bcrypt.compare(req.body.oldPassword, user.hash,
+        async function (err, isMatch) {
+            // Comparing the original password to
+            // encrypted password
+            if (isMatch) {
+                bcrypt.genSalt(5, function (err, Salt) {
+                    // The bcrypt is used for encrypting password.
+                    bcrypt.hash(req.body.newPassword, Salt, function (err, hash) {
+                        if (err) {
+                            return res.json('Cannot encrypt');
+                        }
+                        user.hash = hash
+                        user.save();
+                        res.json(user);
+                    });
+                });
+            }
+            if (!isMatch) {
+                res.json("No match");
+            }
+      });
+});
+
+app.post('/'+process.env.API_TOKEN+'/user/update-skills/:email', async (req,res) => {
     const user = await User.findOne({ email: req.params.email })
     let updated = []
     for (let i = 0;i < Object.keys(req.body).length; i++) {
@@ -128,6 +164,18 @@ app.post('/user/update-skills/:email', async (req,res) => {
     } 
     user.skill_levels = updated
     user.save()
+    res.json(user);
+})
+
+app.post('/'+process.env.API_TOKEN+'/user/update-favorite/', async (req,res) => {
+    const user = await User.findOne({ email: req.body.email });
+    if (user.favorited_recipes.includes(req.body.id)) {
+        user.favorited_recipes.splice(user.favorited_recipes.indexOf(req.body.id),1);
+    } else {
+        user.favorited_recipes.push(req.body.id);
+    }
+
+    user.save();
     res.json(user);
 })
 

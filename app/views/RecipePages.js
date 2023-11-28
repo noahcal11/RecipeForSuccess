@@ -15,7 +15,7 @@ import Footer from '../Components/Footer';
 import HeartIcon from '../assets/svg/heart';
 import FilledHeart from '../assets/svg/filledHeart';
 import { useState, useContext } from 'react';
-import { Context } from '../App'
+import { Context } from '../Context'
 import global from '../Genstyle'
 
 EStyleSheet.build();
@@ -23,12 +23,19 @@ EStyleSheet.build();
 export default function RecipePages({ navigation, route }) {
   const [recipe, setRecipe] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
-  const { recipePageState, setRecipePageState, username,setUsername, email,setEmail } = useContext(Context);
+  const { recipePageState, setRecipePageState, username,setUsername, email,setEmail, favorited,setFavorited } = useContext(Context);
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
   const getRecipes = async () => {
-    const response = await fetch(API_BASE+"/recipe/get/?id="+route.params._id)
+    const response = await fetch(API_BASE+"/recipe/get/", {
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+          },
+          method: "POST",
+          body: JSON.stringify({id: route.params._id})
+  })
       .then(res => res.json())
       .then(data => {
         setRecipe(data)
@@ -38,19 +45,27 @@ export default function RecipePages({ navigation, route }) {
 
   // Set isFavorite based on whether or not the current recipe is in the user's list of favorites
   const getFavorite = async () => {
-    // API call that gets the user's favorites list and the current recipe's ID
-    // Check the favorites list to see if the current recipe is in the list
+    if (favorited.includes(route.params._id)) {
+      setIsFavorite(true);
+    } else {
+      setIsFavorite(false);
+    }
   }
 
   // Add or remove the current recipe from the user's list of favorites
   const setFavorite = async () => {
-    // Toggle isFavorite to its opposite and check its new state
-    setIsFavorite(!isFavorite)
-    if(isFavorite) {
-      // If true, the recipe needs to be added to the favorites list
-    } else {
-      // If false, the recipe needs to be removed from the favorites list
-    }
+    setIsFavorite(!isFavorite);
+    await fetch(API_BASE+"/user/update-favorite/", {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: "POST",
+      body: JSON.stringify({email: email, id: route.params._id})
+    }).then(res => res.json()).catch(err => console.error(err));
+    
+    const data = await fetch(API_BASE+"/user/get/" + email, {method: "GET"}).then(res => res.json());
+    setFavorited(data[0].favorited_recipes);
   }
 
   useState(() => {
@@ -72,19 +87,21 @@ export default function RecipePages({ navigation, route }) {
                 <>
                 <Text style={global.titleText}> {recipe.title} </Text>
                   {/* Recipe Description */}
-                  <Image source={{uri:item.image}} style={styles.image} />
+                  <View style={{ position: 'relative' }}>
+                    <Image source={{uri:item.image}} style={styles.image} />
+                    <Pressable
+                      style={{position: 'absolute', marginTop:'15%', marginLeft: '75%'}}
+                      onPress={() => {email !== "Guest"? setFavorite():<View></View>}}>
+                      {isFavorite?
+                        <FilledHeart width='40' height='40' fill='red' />
+                        :<HeartIcon fill='white' width='40' height='40' />}
+                    </Pressable>
+                  </View>
                   <View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
-                    <View style={{ flexDirection: 'row' }}>
+                    <View>
                       <Text style={global.subheaderText}>
                         Recipe Description
                       </Text>
-                      <Pressable
-                        style={{ alignSelf: 'flex-end', marginHorizontal: '5%' }}
-                        onPress={() => {setFavorite()}}>
-                          {isFavorite ?
-                            <FilledHeart width='40' height='40' fill='red' />
-                            :<HeartIcon width='40' height='40' />}
-                      </Pressable>
                     </View>
                     <RecipeDescription description={item.desc} />
                   </View>

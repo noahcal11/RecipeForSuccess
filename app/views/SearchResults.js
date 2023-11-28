@@ -1,196 +1,116 @@
-import { StatusBar } from 'expo-status-bar'; 
-import { Text, Image, View, Pressable, ScrollView, TextInput, FlatList, SectionList } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { Text, Image, View, Pressable, ScrollView, TextInput, FlatList, Dimensions } from 'react-native';
 import Banner from '../Components/Banner';
+import Footer from '../Components/Footer';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState } from 'react';
+import global from '../Genstyle';
 import Icon from 'react-native-vector-icons/FontAwesome'; // Adjust the library and icon as needed
 import { TouchableHighlight } from 'react-native';
 
 EStyleSheet.build();
 
-export default function Home({ navigation, route }){
-   //From Home page
-    const [popularRecs, setPopularRecs] = useState([]);
+export default function Home({ navigation, route }) {
+    //From Home page
+    const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/" + process.env.REACT_APP_API_TOKEN
 
-    const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
-    const getRecipes = async () => {
-        const response = await fetch(API_BASE+"/recipe/get/?general=ham", {method: "GET"})
-        .then(res => res.json())
-        .then(data => setPopularRecs(data.slice(0,8)))
-        .catch(error => console.error(error));
-    }
-// for search results specificly
-
-//time, cuisine, category
+    //time, cuisine, category
     const [showDropdown, setShowDropdown] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null); //No initial option selected
     const [searchResults, setSearchResults] = useState([]);
-  
-    const sortOptions = ['Ascending', 'Descending']; // Your sorting options
-  
+
+    const sortOptions = ['A to Z', 'Newest', 'Oldest']; // Your sorting options
+
     const getSearch = async (searchTerm) => {
-      const response = await fetch(API_BASE+"/recipe/get/?general="+searchTerm, {method: "GET"})
-      .then(res => res.json())
-      .then(data => setSearchResults(data))
-      .catch(error => console.error(error));
+        const response = await fetch(API_BASE + "/recipe/get/", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({ general: searchTerm })
+        })
+            .then(res => res.json())
+            .then(data => setSearchResults(data))
+            .catch(error => console.error(error));
     }
-    
+
     const handleSortToggle = () => {
-      setShowDropdown(!showDropdown);
+        setShowDropdown(!showDropdown);
     };
 
-
-    
-  
     const handleSortSelect = (option) => {
-      setSelectedOption(option);
-      setShowDropdown(false);
-      // Perform sorting based on the selected option
-      // Update searchResults accordingly
-    
-   
+        setSelectedOption(option);
+        setShowDropdown(false);
+        // Perform sorting based on the selected option
+        // Update searchResults accordingly
+
+
     }
 
-
-    const [isFavorite, setIsFavorite] = useState(false);
-
-  const handleFavoritesPress = () => {
-    setIsFavorite(!isFavorite); // Toggle the isFavorite state when pressed
-  };
-
-
-    
-
-
-    
     useState(() => {
-      getRecipes();
-      getSearch(route.params.searchTerm);
+        getSearch(route.params.searchTerm);
     }, []);
 
-    return(
-        <View>
+    return (
+        <View style={global.whiteBackground}>
             <Banner title="Search Results" />
-            <View>
-            <FlatList scrollEnabled={false}
-              data={searchResults}
-              renderItem={({ item }) => (
-                  <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}
-                      style={({ pressed }) => [
-                          {
-                          opacity: pressed
-                              ? 0.2
-                              : 1,
-                          }]}
-                  >
-                      <View id={item._id}>
-                          <Image source={{ uri: item.image }} /> 
-                          <Text>{item.title}</Text>
-                      </View>
-                  </Pressable>
-              )}
-              numColumns={2}
-              keyExtractor={(item, index) => index}
-              ListFooterComponent={
-                  <Pressable
-                      onPress={() => {
-                          navigation.navigate("SearchResults")
-                      }}
-                      
-                      style={({ pressed }) => [
-                          {
-                          opacity: pressed
-                              ? 0.2
-                              : 1,
-                          }]}
-                  >
-                      <Text>View more</Text>
-                  </Pressable>
-              }
-          />
-      {/* Filter Button */}
-      <Pressable style={styles.filterButton}>
-        <Text style={styles.filterButtonText}>Filter</Text>
-      </Pressable>
+            <View style={global.grayForeground}>
+                <ScrollView styles={{ flex: 1 }}>
+                    {/* Filter Button */}
+                    <Pressable style={styles.filterButton}>
+                        <Text style={styles.filterButtonText}>Filter</Text>
+                    </Pressable>
 
-      {/* Sort By Dropdown */}
-      
-      <View style={styles.sortByContainer}>
-        <Pressable onPress={handleSortToggle} style={styles.sortButton}>
-          <Text style={styles.sortByText}>
-            Sort By: {selectedOption}
-          </Text>
+                    {/* Sort By Dropdown */}
 
-        </Pressable>
+                    <View style={styles.sortByContainer}>
+                        <Pressable onPress={handleSortToggle} style={styles.sortButton}>
+                            <Text style={styles.sortByText}>
+                                Sort By: {selectedOption}
+                            </Text>
 
-        {showDropdown && (
-          <View style={[styles.dropdown, {zIndex: 1}]}>
-            {sortOptions.map((option, index) => (
-              <Pressable
-                key={index}
-                onPress={() => handleSortSelect(option)}
-                style={styles.dropdownOption}
-              >
-                <Text style={styles.dropdownOptionText}>{option}</Text>
-              </Pressable>
-            ))}
-          </View>
-        )}
-    </View>
+                        </Pressable>
 
-                
-                <View style={styles.recipeSection}>
-                    <Text style={styles.categoryTitle}>Suggested Recipes...</Text>
-                    <FlatList nestedScrollEnabled = {true}
-                        data={popularRecs}
+                        {showDropdown && (
+                            <View style={[styles.dropdown, { zIndex: 1 }]}>
+                                {sortOptions.map((option, index) => (
+                                    <Pressable
+                                        key={index}
+                                        onPress={() => handleSortSelect(option)}
+                                        style={styles.dropdownOption}
+                                    >
+                                        <Text style={styles.dropdownOptionText}>{option}</Text>
+                                    </Pressable>
+                                ))}
+                            </View>
+                        )}
+                    </View>
+
+                    <FlatList scrollEnabled={false}
+                        data={searchResults}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}>
+                            <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
+                                style={({ pressed }) => [
+                                    {
+                                        opacity: pressed
+                                            ? 0.2
+                                            : 1,
+                                    }]}
+                            >
                                 <View style={styles.imageView} id={item._id}>
-                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
-                                    <Text>{item.title}</Text>
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} />
+                                    <Text style={global.subText}>{item.title}</Text>
                                 </View>
                             </Pressable>
                         )}
                         numColumns={2}
-                        keyExtractor={(item, index) => index.toString()}
+                        keyExtractor={(item, index) => index}
+
                     />
-                    <Text>View more</Text>
-                </View>
-                
-                
-                
+                </ScrollView>
             </View>
-            <Pressable
-                onPress={() => {
-                    navigation.navigate("Login")
-                }}
-                >
-                <Text>Go Back</Text>
-            </Pressable>
-
-            <Pressable
-                onPress={() => {
-                    navigation.navigate("Skills")
-                }}
-                >
-                <Text>Skills page</Text>
-            </Pressable>
-
-            <Pressable
-                onPress={() => {
-                    navigation.navigate("RecipePages")
-                }}
-                >
-                <Text>Recipe page</Text>
-            </Pressable>
-
-            <Pressable
-                onPress={() => {
-                    navigation.navigate("SearchResults")
-                }}
-                >
-                <Text>Search Results</Text>
-            </Pressable>
+            <Footer />
         </View>
     );
 }
@@ -206,17 +126,18 @@ const styles = EStyleSheet.create({
         backgroundColor: 'white',
     },
     imageView: {
-        flex: 1,
-        flexDirection: 'column',
-        margin: '1rem',
-        width: '9rem',
+        margin: 10,
+        width: (Dimensions.get('window').width * .85) * .5 - 10,
+        justifyContent: 'center',
+        alignItems: 'left'
     },
     imageThumbnail: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '5rem',
-        width: '9rem',
-        borderRadius: '4.5rem',
+        height: Dimensions.get('window').height * .85 / 8 - 10,
+        width: '100%',
+        borderRadius: 25,
+        borderWidth: 2,
+        borderColor: 'black',
+        marginBottom: '5%'
     },
     recipeSection: {
         padding: '1rem',
@@ -234,59 +155,50 @@ const styles = EStyleSheet.create({
         padding: 30,
         paddingBottom: 20,
         overflow: 'visible',
-      },
-      filterButton: {
+    },
+    filterButton: {
         backgroundColor: '#F74F4F',
-        padding: 10,
-        borderRadius: 5,
+        paddingHorizontal: '3%',
+        paddingVertical: '1.5%',
+        borderRadius: 25,
         alignSelf: 'flex-start',
-      },
-      filterButtonText: {
+        marginTop: '5%',
+        marginLeft: '5%'
+    },
+    filterButtonText: {
         color: 'white',
-      },
-      sortByContainer: {
+        fontFamily: 'Cairo_500Medium',
+    },
+    sortByContainer: {
         flexDirection: 'row',
         justifyContent: 'flex-end', //align to right
         alignItems: 'center',
-        marginBottom: 100,
+        marginRight: '2%'
+    },
 
-      },
+    sortByText: {
+        fontSize: '1rem',
+        fontFamily: 'Manrope_700Bold'
+    },
 
-      sortByText: {
-        fontSize: 16,
-        fontWeight: 'bold', // Make the text bold
-      },
 
-      
-      dropdown: {
+    dropdown: {
         position: 'absolute',
-        top: 40, // Adjust the distance from the button as needed
-        right: 0,
+        top: '120%', // Adjust the distance from the button as needed
+        right: '0%',
         backgroundColor: 'white',
-        borderWidth: 1,
+        borderWidth: '0.1rem',
         borderColor: 'gray',
         borderRadius: 5,
-        width: 150, // Adjust the width as needed
+        width: Dimensions.get('window').width*0.35, // Adjust the width as needed
         zIndex: 1,
-      },
-      dropdownOption: {
-        padding: 10,
-      },
+    },
+    dropdownOption: {
+        padding: '7.5%',
+    },
 
-      dropdownOptionText: {
-        fontSize: 16,
+    dropdownOptionText: {
+        fontSize: '1rem',
 
-      },
-      resultItem: {
-        paddingVertical: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: 'gray',
-      },
-
-      icon: {
-        position: 'absolute',
-        top: 10,
-        right: 10,
-      },
-    
+    },
 });

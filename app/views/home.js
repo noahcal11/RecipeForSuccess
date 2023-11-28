@@ -1,11 +1,13 @@
 import { StatusBar } from 'expo-status-bar'; 
-import { Text, Image, View, ScrollView, TextInput, FlatList, SectionList, Pressable, Dimensions } from 'react-native';
+import { Text, Image, View, ScrollView, TextInput, FlatList, Pressable, Dimensions } from 'react-native';
 import Banner from '../Components/Banner';
-import Footer from '../Components/Footer'
+import Footer from '../Components/Footer';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState,useContext } from 'react';
-import { Context } from '../App';
+import { Context } from '../Context';
 import global from '../Genstyle';
+import FilterIcon from '../assets/svg/filter';
+import HomeFiltersModel from '../Components/HomeFiltersModel';
 
 EStyleSheet.build();
 
@@ -14,7 +16,7 @@ export default function Home({ navigation, route }){
     const [dessertRecs, setDessertRecs] = useState([]);
     const [breakfastRecs, setBreakfastRecs] = useState([]);
     const [chickenRecs, setChickenRecs] = useState([]);
-    const {username,setUsername,email,setEmail} = useContext(Context)
+    const {username,setUsername,email,setEmail,isHomeFiltersModelVisible, setHomeFiltersModelVisible} = useContext(Context)
 
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
@@ -34,32 +36,68 @@ export default function Home({ navigation, route }){
     }
 
     const getPopular = async () => {
-        const response = await fetch(API_BASE+"/recipe/get/?cuisine=American", {method: "GET"})
+        const response = await fetch(API_BASE+"/recipe/get/", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({cuisine: "American"})
+        })
         .then(res => res.json())
         .then(data => setPopularRecs(getRandom(data,8)))
         .catch(error => console.error(error));
     }
 
     const getDessert = async () => {
-        const response = await fetch(API_BASE+"/recipe/get/?category=Dessert", {method: "GET"})
+        const response = await fetch(API_BASE+"/recipe/get/", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({category: "Dessert"})
+        })
         .then(res => res.json())
         .then(data => setDessertRecs(getRandom(data,4)))
         .catch(error => console.error(error));
     }
 
     const getBreakfast = async() => {
-        const response = await fetch(API_BASE+"/recipe/get/?category=Breakfast", {method: "GET"})
+        const response = await fetch(API_BASE+"/recipe/get/", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({category: "Breakfast"})
+        })
         .then(res => res.json())
         .then(data => setBreakfastRecs(getRandom(data,4)))
         .catch(error => console.error(error));
     }
 
     const getChicken = async() => {
-        const response = await fetch(API_BASE+"/recipe/get/?title=Chicken", {method: "GET"})
+        const response = await fetch(API_BASE+"/recipe/get/", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({title: "Chicken"})
+        })
         .then(res => res.json())
         .then(data => setChickenRecs(getRandom(data,8)))
         .catch(error => console.error(error));
     }
+
+    // Shortens longer titles so any given recipe title only takes up two lines
+    function makeTwoLines(title) {
+        if (title.length >= 25) {
+            return title.substring(0, 25) + "...";
+        } else return title;
+    }
+
         
     useState(() => {
         getPopular();
@@ -72,9 +110,27 @@ export default function Home({ navigation, route }){
         <View style={global.whiteBackground}>
             <Banner title="Home"/>
             <ScrollView styles={{ flex: 1 }}>
+                {/* <Pressable
+                        style={{...global.buttonMinor, position: 'relative', marginLeft: '70%', marginTop: '5%', width: 60}}
+                        onPress={() => {email !== "Guest"? setFavorite():<View></View>}}>
+                        <FilterIcon style={styles.filterIcon}></FilterIcon>
+                </Pressable> */}
+
+                <Pressable
+                    style={{...global.buttonMinor, position: 'relative', marginLeft: '70%', marginTop: '5%', width: 60}}
+                    onPress={() => {
+                        setHomeFiltersModelVisible(true);
+                    }} >
+                    <FilterIcon style={styles.filterIcon}></FilterIcon>
+                </Pressable>
+                
+                <View style={{ alignItems: 'center' }}>
+                    {isHomeFiltersModelVisible ? <HomeFiltersModel blurb="Set Home Page Filters"/> : null}
+                </View>
+
                 <View style={{alignItems: 'center'}}>
                     <FlatList scrollEnabled={false}
-                        style={global.grayForeground}
+                        style={{...global.grayForeground, marginVertical: '0%', marginBottom: '5%'}}
                         ListHeaderComponent={<Text style={global.titleText}>Popular Recipes</Text>}
                         data={popularRecs}
                         renderItem={({ item }) => (
@@ -88,7 +144,7 @@ export default function Home({ navigation, route }){
                             >
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
-                                    <Text style={global.subText}>{item.title}</Text>
+                                    <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
                                 </View>
                             </Pressable>
                         )}
@@ -126,7 +182,7 @@ export default function Home({ navigation, route }){
                             >
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
-                                    <Text style={global.subText}>{item.title}</Text>
+                                    <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
                                 </View>
                             </Pressable>
                         )}
@@ -165,7 +221,7 @@ export default function Home({ navigation, route }){
                             >
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
-                                    <Text style={global.subText}>{item.title}</Text>
+                                    <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
                                 </View>
                             </Pressable>
                         )}
@@ -203,7 +259,7 @@ export default function Home({ navigation, route }){
                             >
                                 <View style={styles.imageView} id={item._id}>
                                     <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
-                                    <Text style={global.subText}>{item.title}</Text>
+                                    <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
                                 </View>
                             </Pressable>
                         )}
@@ -228,7 +284,7 @@ export default function Home({ navigation, route }){
                     />
                 </View>
             </ScrollView>
-            <Footer  />
+            <Footer />
         </View>
     );
 }
@@ -248,4 +304,9 @@ const styles = EStyleSheet.create({
         borderColor: 'black',
         marginBottom: '5%'
     },
+    filterIcon: {
+        height: 40,
+        width: 40,
+        alignItems: 'left'
+      },
 });

@@ -3,7 +3,7 @@ import React from 'react';
 import { View, StyleSheet, Pressable } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useNavigation } from '@react-navigation/native';
-import { Context } from "../App";
+import { Context } from "../Context";
 import { useContext } from "react";
 
 EStyleSheet.build();
@@ -20,14 +20,5 @@ const Profile = () => {
     </View>
   );
 }
-
-const styles = EStyleSheet.create({
-    profile: {
-        position: 'relative',
-        width: '2.5rem',
-        height: '2.5rem',
-        left: '0.5rem', // Adjust the right position for the top-right corner
-      },
-});
 
 export default Profile;
