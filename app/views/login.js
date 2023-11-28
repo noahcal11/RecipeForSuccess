@@ -211,6 +211,8 @@ export default function Login({navigation}) {
                 <Text style={{ ...global.titleText, marginTop: 10 }}>Welcome to Recipe For Success</Text>
                 <Text style={styles.undertext}>{notification}</Text>
             
+            <TextInput style ={global.input} placeholder = "Email" />
+            <TextInput style ={global.input} placeholder = "Password" secureTextEntry ={true}/>
             {/* <Pressable
             style={styles.login}>
             <Text style={styles.loginText}>Register</Text>
