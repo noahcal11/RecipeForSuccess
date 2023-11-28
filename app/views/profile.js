@@ -189,7 +189,7 @@ export default function Profile() {
           </Pressable>
           
           <ChangePasswordModel blurb="Change Password"/>
-          <MessageModel blurb="Account Settings Updated" />
+          {/* <MessageModel blurb="Account Settings Updated" /> */}
 
         </View>
 

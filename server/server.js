@@ -102,7 +102,7 @@ app.post('/'+process.env.API_TOKEN+'/user/new', (req,res) => {
     bcrypt.genSalt(5, function (err, Salt) {
     
         // The bcrypt is used for encrypting password.
-        bcrypt.hash(password, Salt, function (err, hash) {
+        bcrypt.hash(password, Salt, async function (err, hash) {
     
             if (err) {
                 return console.log('Cannot encrypt');
@@ -113,7 +113,7 @@ app.post('/'+process.env.API_TOKEN+'/user/new', (req,res) => {
                 username: req.body.username,
                 hash: hash
             })
-            user.save();
+            await user.save();
             res.json(user);
         });
     });
