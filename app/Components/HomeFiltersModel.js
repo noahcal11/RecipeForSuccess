@@ -1,13 +1,14 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Alert, Modal, StyleSheet, Text, Pressable, View} from 'react-native';
 import global from '../Genstyle';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useNavigation } from '@react-navigation/native';
+import { Context } from '../Context';
 
 EStyleSheet.build();
 
-const HomeFiltersModel = ({blurb, setHomeFiltersModelVisible}) => {
-  const [modalVisible, setModalVisible] = useState(true);
+const HomeFiltersModel = ({blurb}) => {
+  const {isHomeFiltersModelVisible, setHomeFiltersModelVisible} = useContext(Context);
   const navigation = useNavigation();
 
   return (
@@ -15,27 +16,28 @@ const HomeFiltersModel = ({blurb, setHomeFiltersModelVisible}) => {
       <Modal
         animationType="slide"
         transparent={true}
-        visible={modalVisible}
+        visible={isHomeFiltersModelVisible}
         onRequestClose={() => {
-          setModalVisible(!modalVisible);
+          setHomeFiltersModelVisible(!isHomeFiltersModelVisible);
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={global.titleText}>{blurb}</Text>
             
             <Pressable
-    style={global.buttonMinor}
-    onPress={() => {
-        setModalVisible(!modalVisible);
-        setHomeFiltersModelVisible(false);
-    }}>
-    <Text style={global.buttonMinorText}>Return Home</Text>
-</Pressable>
+              style={global.button}
+              onPress={() => {
+                setHomeFiltersModelVisible(!isHomeFiltersModelVisible);
+                setHomeFiltersModelVisible(false);
+                navigation.navigate('Home');
+            }}>
+            <Text style={global.buttonMinorText}>Return Home</Text>
+            </Pressable>
             
             <Pressable
               style={global.button}
               onPress={() => {
-                setModalVisible(!modalVisible);
+                setHomeFiltersModelVisible(!isHomeFiltersModelVisible);
                 setHomeFiltersModelVisible(false);
                 navigation.navigate('Home');
             }}>
@@ -45,7 +47,7 @@ const HomeFiltersModel = ({blurb, setHomeFiltersModelVisible}) => {
             <Pressable
               style={global.buttonMinor}
               onPress={() => {
-                setModalVisible(!modalVisible);
+                setHomeFiltersModelVisible(!isHomeFiltersModelVisible);
                 setHomeFiltersModelVisible(false);
                 navigation.navigate('Home');
             }}>

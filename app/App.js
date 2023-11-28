@@ -24,6 +24,7 @@ export default function App() {
   const [created, setCreated] = useState([]);
   const [completed, setCompleted] = useState([]);
   const [isChangePasswordModelVisible, setChangePasswordModelVisible] = useState(false);
+  const [isHomeFiltersModelVisible, setHomeFiltersModelVisible] = useState(false);
 
   let [fontsLoaded, fontError] = useFonts({
     Cairo_500Medium,
@@ -37,6 +38,7 @@ export default function App() {
 
   return (
     <Context.Provider value={{ 
+        isHomeFiltersModelVisible, setHomeFiltersModelVisible,
         recipePageState, setRecipePageState, 
         username, setUsername, 
         email, setEmail, 

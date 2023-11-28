@@ -16,8 +16,7 @@ export default function Home({ navigation, route }){
     const [dessertRecs, setDessertRecs] = useState([]);
     const [breakfastRecs, setBreakfastRecs] = useState([]);
     const [chickenRecs, setChickenRecs] = useState([]);
-    const {username,setUsername,email,setEmail} = useContext(Context)
-    const [isHomeFiltersModelVisible, setHomeFiltersModelVisible] = useState(false);
+    const {username,setUsername,email,setEmail,isHomeFiltersModelVisible, setHomeFiltersModelVisible} = useContext(Context)
 
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
@@ -126,7 +125,7 @@ export default function Home({ navigation, route }){
                 </Pressable>
                 
                 <View style={{ alignItems: 'center' }}>
-                    {isHomeFiltersModelVisible ? <HomeFiltersModel blurb="Set Home Page Filters" /> : null}
+                    {isHomeFiltersModelVisible ? <HomeFiltersModel blurb="Set Home Page Filters"/> : null}
                 </View>
 
                 <View style={{alignItems: 'center'}}>
