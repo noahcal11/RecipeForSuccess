@@ -81,6 +81,7 @@ const global = EStyleSheet.create({
   },
   // Alt colored button
   buttonAlt: {
+    alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#F67D7D',
