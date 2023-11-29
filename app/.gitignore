@@ -38,3 +38,6 @@ yarn-error.*
 .env
 # package-lock
 package-lock.json
+
+#apple temp file
+.DS_Store

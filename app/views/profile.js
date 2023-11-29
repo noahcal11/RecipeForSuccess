@@ -38,11 +38,10 @@ const SECTIONS = [
 
 export default function Profile() {
   const [activeSections, setActiveSections] = useState([]);
-  const {username,setUsername,email,setEmail} = useContext(Context);
+  const {username,setUsername,email,setEmail,setChangePasswordModelVisible} = useContext(Context);
   const [newEmail, setNewEmail] = useState(email);
   const navigation = useNavigation();
   const [isProfileModified, setIsProfileModified] = useState(false);
-  const [isChangePasswordModelVisible, setChangePasswordModelVisible] = useState(false);
   const [isMessageModelVisible, setMessageModelVisible] = useState(false);
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
@@ -125,21 +124,21 @@ export default function Profile() {
           <Pressable
                     style={global.buttonMinor}
                     onPress={() => {
-                      navigation.navigate('Home');
+                      navigation.navigate('Created');
                     }}>
                         <Text style={styles.guestText}>Created</Text>
           </Pressable>
           <Pressable
                     style={global.buttonMinor}
                     onPress={() => {
-                      navigation.navigate('Home');
+                      navigation.navigate('Completed');
                     }}>
                         <Text style={styles.guestText}>Completed</Text>
           </Pressable>
           <Pressable
                     style={global.button}
                     onPress={() => {
-                      navigation.navigate('PageTemplate');
+                      navigation.navigate('Upload');
                     }}>
                         <Text style={styles.guestText}>Upload</Text>
           </Pressable>
@@ -167,7 +166,7 @@ export default function Profile() {
           <Pressable
                     style={global.buttonMinor}
                     onPress={() => {
-                      setChangePasswordModelVisible(true);
+                      setChangePasswordModelVisible(true)
                     }}>
                         <Text style={styles.guestText}>Change Password</Text>
           </Pressable>
@@ -188,27 +187,14 @@ export default function Profile() {
                     }}>
                         <Text style={styles.guestText}>Delete Account </Text>
           </Pressable>
-
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={isChangePasswordModelVisible}
-            onRequestClose={() => setChangePasswordModelVisible(false)}>
-            <ChangePasswordModel blurb="Change Password" onClose={() => setChangePasswordModelVisible(false)} />
-          </Modal>
-
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={isMessageModelVisible}
-            onRequestClose={() => setMessageModelVisible(false)}>
-            <MessageModel blurb="Account Settings Updated" onClose={() => setMessageModelVisible(false)} />
-          </Modal>
+          
+          <ChangePasswordModel blurb="Change Password"/>
+          {/* <MessageModel blurb="Account Settings Updated" /> */}
 
         </View>
 
       </ScrollView>
-      {email === 'Guest' ? <SignInModel blurb="In order to use this feature, you have to be signed in!" /> : <View></View>}
+      {/* {email === 'Guest' ? <SignInModel blurb="In order to use this feature, you have to be signed in!" /> : <View></View>} */}
       <Footer />
     </View>
   );

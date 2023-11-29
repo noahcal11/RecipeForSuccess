@@ -23,9 +23,9 @@ GET https://recipe-api-maamobyhea-uc.a.run.app/54pgn7tCy42af5pTRz92ZF2Piu92CQeWs
 
 
 ###
-POST http://localhost:8080/recipe/get/
+POST http://localhost:8080/user/update-password/
 Content-Type: application/json
 
 {
-    "ids": ["64f4fe2994cecacd7ee62ebb","64f4fdaf94cecacd7ee62dc5","64f4fd4894cecacd7ee62cf5","64f4fd8194cecacd7ee62d69"]
+    "email": "jeffsinsel@gmail.com", "oldPassword": "password", "newPassword": "1"
 }

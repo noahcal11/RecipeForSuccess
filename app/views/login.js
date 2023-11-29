@@ -11,7 +11,7 @@ EStyleSheet.build();
 
 export default function Login({navigation}) {
   const [user, setUser] = useState("");
-  const [popupActive,setPopupActive] = useState(false);
+  const [popupActive,setPopupActive] = useState(true);
   const [popupType, setPopupType] = useState('Login');
   const [password, setPassword] = useState('');
   const [notification, setNotification] = useState('');
@@ -19,7 +19,6 @@ export default function Login({navigation}) {
   const {username,setUsername,email,setEmail,setFavorited,setCompleted,setCreated} = useContext(Context)
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
-  // const API_BASE = "http://localhost:8080/"+process.env.REACT_APP_API_TOKEN
 
   const createUser = async (email,username,password) => {
     setNotification("")
@@ -210,49 +209,38 @@ export default function Login({navigation}) {
                 {/* <Text style={styles.text}>Welcome to Recipe For Success</Text> */}
                 <Text style={{ ...global.titleText, marginTop: 10 }}>Welcome to Recipe For Success</Text>
                 <Text style={styles.undertext}>{notification}</Text>
-            
-            {/* <Pressable
-            style={styles.login}>
-            <Text style={styles.loginText}>Register</Text>
-            </Pressable> */}
-                {popupActive ?
-                    <View> 
-                        {displayPopup(popupType)}
-                        <Pressable
-                            style={styles.x}
-                            onPress={() => {
-                            setPopupActive(!popupActive)
-                            }}
-                        >
-                            <Text style={global.bodyText}>x</Text>
-                        </Pressable>
-                    </View>
-                    :<Pressable
-                    style={global.button}
-                    onPress={() => {
-                        setPopupActive(!popupActive)
-                        setPopupType('Login')
-                    }}
-                    >
-                        <Text style={global.buttonText}>Login</Text>
-                    </Pressable>}
+                    {displayPopup(popupType)}
                     <View style={global.horizontal}>
+                        {popupType === "Create" ?
+                        <Pressable
+                        style={styles.createAcct}
+                        onPress={() => {
+                        setPopupType('Login')
+                        }}>
+                          <Text style={styles.createText}>Login</Text>
+                        </Pressable> :
                         <Pressable
                             style={styles.createAcct}
                             onPress={() => {
-                            setPopupActive(true)
                             setPopupType('Create')
                         }}>
                         <Text style={styles.createText}>Create Account</Text>
-                        </Pressable>
-                        <Pressable 
+                        </Pressable> }
+                        {popupType === "Forgot" ?
+                        <Pressable
                             style={styles.createAcct}
                             onPress={() => {
-                            setPopupActive(true)
+                            setPopupType('Login')
+                        }}>
+                          <Text style={styles.createText}>Login</Text>
+                        </Pressable> :
+                        <Pressable
+                            style={styles.createAcct}
+                            onPress={() => {
                             setPopupType('Forgot')
                         }}>
-                            <Text style={styles.createText}>Forgot password?</Text>
-                        </Pressable>
+                        <Text style={styles.createText}>Forgot Password?</Text>
+                        </Pressable> }
                     </View>
                     <Text style={global.centeredText}>Don't have an account?</Text>
                     <Pressable

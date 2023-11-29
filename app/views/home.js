@@ -7,6 +7,7 @@ import { useState, useContext } from 'react';
 import { Context } from '../Context';
 import global from '../Genstyle';
 import FilterIcon from '../assets/svg/filter';
+import HomeFiltersModel from '../Components/HomeFiltersModel';
 
 EStyleSheet.build();
 
@@ -15,7 +16,7 @@ export default function Home({ navigation, route }){
     const [dessertRecs, setDessertRecs] = useState([]);
     const [breakfastRecs, setBreakfastRecs] = useState([]);
     const [chickenRecs, setChickenRecs] = useState([]);
-    const { username, setUsername, email, setEmail } = useContext(Context)
+    const {username,setUsername,email,setEmail,isHomeFiltersModelVisible, setHomeFiltersModelVisible} = useContext(Context)
 
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/" + process.env.REACT_APP_API_TOKEN
 
@@ -109,17 +110,46 @@ export default function Home({ navigation, route }){
         <View style={global.whiteBackground}>
             <Banner title="Home" />
             <ScrollView styles={{ flex: 1 }}>
-                <Pressable
-                        style={({ pressed }) => [
-                            {
-                                opacity: pressed
-                                    ? 0.2
-                                    : 1,
-                            },
-                            {...global.buttonMinor, position: 'relative', marginLeft: '70%', marginBottom: '2%', width: 60}]}
+                {/* <Pressable
+                        style={{...global.buttonMinor, position: 'relative', marginLeft: '70%', marginTop: '5%', width: 60}}
                         onPress={() => {email !== "Guest"? setFavorite():<View></View>}}>
                         <FilterIcon style={styles.filterIcon}></FilterIcon>
+                </Pressable> */}
+
+                <Pressable style={{...global.buttonMinor, alignSelf: 'left', alignItems: 'center', TextAlign: 'center', justifyContent: 'center'}}
+                onPress={() => {
+                    navigation.navigate('submitRecipe');}}
+                >
+                
+                    <Text>
+                        Created 
+                        Recipes
+                    </Text>
+
                 </Pressable>
+                    
+                
+                <Pressable style={{...global.buttonMinor, alignSelf: 'left', alignItems: 'center', TextAlign: 'center', justifyContent: 'center'}}
+                 onPress={() => {
+                    navigation.navigate('Home');}}>
+                    <Text>
+                        Completed
+                        Recipes
+                    </Text>
+                    
+                </Pressable>
+
+                <Pressable
+                    style={{...global.buttonMinor, position: 'relative', marginLeft: '70%', marginTop: '5%', width: 60}}
+                    onPress={() => {
+                        setHomeFiltersModelVisible(true);
+                    }} >
+                    <FilterIcon style={styles.filterIcon}></FilterIcon>
+                </Pressable>
+                
+                <View style={{ alignItems: 'center' }}>
+                    {isHomeFiltersModelVisible ? <HomeFiltersModel blurb="Set Home Page Filters"/> : null}
+                </View>
 
                 <View style={{alignItems: 'center'}}>
                     <FlatList scrollEnabled={false}

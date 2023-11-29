@@ -102,7 +102,7 @@ app.post('/'+process.env.API_TOKEN+'/user/new', (req,res) => {
     bcrypt.genSalt(5, function (err, Salt) {
     
         // The bcrypt is used for encrypting password.
-        bcrypt.hash(password, Salt, function (err, hash) {
+        bcrypt.hash(password, Salt, async function (err, hash) {
     
             if (err) {
                 return console.log('Cannot encrypt');
@@ -113,7 +113,7 @@ app.post('/'+process.env.API_TOKEN+'/user/new', (req,res) => {
                 username: req.body.username,
                 hash: hash
             })
-            user.save();
+            await user.save();
             res.json(user);
         });
     });
@@ -125,7 +125,32 @@ app.post('/'+process.env.API_TOKEN+'/user/update-user' , async (req,res) => {
     user.username = req.body.username;
     user.save();
     res.json(user);
-})
+});
+
+app.post('/'+process.env.API_TOKEN+'/user/update-password' , async (req,res) => {
+    const user = await User.findOne({ email: req.body.email });
+    bcrypt.compare(req.body.oldPassword, user.hash,
+        async function (err, isMatch) {
+            // Comparing the original password to
+            // encrypted password
+            if (isMatch) {
+                bcrypt.genSalt(5, function (err, Salt) {
+                    // The bcrypt is used for encrypting password.
+                    bcrypt.hash(req.body.newPassword, Salt, function (err, hash) {
+                        if (err) {
+                            return res.json('Cannot encrypt');
+                        }
+                        user.hash = hash
+                        user.save();
+                        res.json(user);
+                    });
+                });
+            }
+            if (!isMatch) {
+                res.json("No match");
+            }
+      });
+});
 
 app.post('/'+process.env.API_TOKEN+'/user/update-skills/:email', async (req,res) => {
     const user = await User.findOne({ email: req.params.email })
