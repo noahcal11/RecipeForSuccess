@@ -116,28 +116,8 @@ export default function Home({ navigation, route }){
                         <FilterIcon style={styles.filterIcon}></FilterIcon>
                 </Pressable> */}
 
-                <Pressable style={{...global.buttonMinor, alignSelf: 'left', alignItems: 'center', TextAlign: 'center', justifyContent: 'center'}}
-                onPress={() => {
-                    navigation.navigate('submitRecipe');}}
-                >
-                
-                    <Text>
-                        Created 
-                        Recipes
-                    </Text>
 
-                </Pressable>
-                    
                 
-                <Pressable style={{...global.buttonMinor, alignSelf: 'left', alignItems: 'center', TextAlign: 'center', justifyContent: 'center'}}
-                 onPress={() => {
-                    navigation.navigate('Home');}}>
-                    <Text>
-                        Completed
-                        Recipes
-                    </Text>
-                    
-                </Pressable>
 
                 <Pressable
                     style={{...global.buttonMinor, position: 'relative', marginLeft: '70%', marginTop: '5%', width: 60}}
