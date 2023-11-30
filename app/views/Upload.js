@@ -12,7 +12,7 @@ import RNPickerSelect from 'react-native-picker-select';
 
 EStyleSheet.build();
 
-export default function Upload() {
+export default function upload() {
     const navigation = useNavigation();
     const [ingredients, setIngredients] = useState([{ ingredient: '', qty: '', unit: '' }]);
     const [steps, setSteps] = useState([{ step: '' }]);
@@ -72,7 +72,7 @@ export default function Upload() {
 
     return(
         <View style={global.whiteBackground}>
-            <Banner title="Upload"/>
+            <Banner title="upload"/>
                 <ScrollView>
                     <View style={global.grayForeground}>
                         <Text style={global.titleText}>Save area for picture</Text>

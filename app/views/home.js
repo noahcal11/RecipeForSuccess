@@ -137,7 +137,7 @@ export default function Home({ navigation, route }){
                         ListHeaderComponent={<Text style={global.titleText}>Popular Recipes</Text>}
                         data={popularRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
+                            <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
                                 style={({ pressed }) => [
                                     {
                                         opacity: pressed
@@ -156,7 +156,7 @@ export default function Home({ navigation, route }){
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("SearchResults")
+                                    navigation.navigate("searchResults")
                                 }}
 
                                 style={({ pressed }) => [
@@ -175,7 +175,7 @@ export default function Home({ navigation, route }){
                         ListHeaderComponent={<Text style={global.titleText}>Top Desserts</Text>}
                         data={dessertRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
+                            <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
                                 style={({ pressed }) => [
                                     {
                                         opacity: pressed
@@ -194,7 +194,7 @@ export default function Home({ navigation, route }){
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("SearchResults")
+                                    navigation.navigate("searchResults")
                                 }}
 
                                 style={({ pressed }) => [
@@ -214,7 +214,7 @@ export default function Home({ navigation, route }){
                         horizontal
                         data={chickenRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}
+                            <Pressable onPress={() => navigation.navigate('recipePages',{'_id':item._id})}
                                 style={({ pressed }) => [
                                     {
                                     opacity: pressed
@@ -232,7 +232,7 @@ export default function Home({ navigation, route }){
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("SearchResults")
+                                    navigation.navigate("searchResults")
                                 }}
                                 
                                 style={({ pressed }) => [
@@ -252,7 +252,7 @@ export default function Home({ navigation, route }){
                         ListHeaderComponent={<Text style={global.titleText}>Breakfast Creations</Text>}
                         data={breakfastRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
+                            <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
                                 style={({ pressed }) => [
                                     {
                                         opacity: pressed
@@ -271,7 +271,7 @@ export default function Home({ navigation, route }){
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("SearchResults")
+                                    navigation.navigate("searchResults")
                                 }}
 
                                 style={({ pressed }) => [

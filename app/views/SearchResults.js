@@ -13,14 +13,14 @@ import { TouchableHighlight } from 'react-native';
 
 EStyleSheet.build();
 
-export default function SearchResults({ navigation, route }) {
+export default function searchResults({ navigation, route }) {
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/" + process.env.REACT_APP_API_TOKEN
     const {isSearchFilterModalVisible, setSearchFilterModalVisible} = useContext(Context);
 
     //time, cuisine, category
     const [showDropdown, setShowDropdown] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null); //No initial option selected
-    const [searchResults, setSearchResults] = useState([]);
+    const [searchResults, setsearchResults] = useState([]);
 
     const sortOptions = ['A to Z', 'Newest', 'Oldest']; // Your sorting options
 
@@ -34,7 +34,7 @@ export default function SearchResults({ navigation, route }) {
             body: JSON.stringify({ general: searchTerm })
         })
             .then(res => res.json())
-            .then(data => setSearchResults(data))
+            .then(data => setsearchResults(data))
             .catch(error => console.error(error));
     }
 
@@ -102,7 +102,7 @@ export default function SearchResults({ navigation, route }) {
                     <FlatList scrollEnabled={false}
                         data={searchResults}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
+                            <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
                                 style={({ pressed }) => [
                                     {
                                         opacity: pressed

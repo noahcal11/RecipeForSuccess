@@ -92,7 +92,7 @@ const SearchFilterModal = ({ blurb }) => {
                             onPress={() => {
                                 setSearchFilterModalVisible(!isSearchFilterModalVisible);
                                 setSearchFilterModalVisible(false);
-                                navigation.navigate('SearchResults');
+                                navigation.navigate('searchResults');
                             }}>
                             <Text style={global.buttonText}>OK</Text>
                         </Pressable>

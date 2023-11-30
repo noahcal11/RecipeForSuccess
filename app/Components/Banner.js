@@ -54,8 +54,8 @@ const BannerTitle = ({ title }) => {
             style={styles.searchInput}
             autoFocus
             onSubmitEditing={({ nativeEvent: { text } }) => {
-              route.name === "SearchResults" ? navigation.navigate("Home") :
-              navigation.navigate("SearchResults",{"searchTerm":text});
+              route.name === "searchResults" ? navigation.navigate("Home") :
+              navigation.navigate("searchResults",{"searchTerm":text});
               toggleSearchBar();
             }}
           />
