@@ -14,7 +14,7 @@ EStyleSheet.build();
 
 export default function Upload() {
     const navigation = useNavigation();
-    const [ingredients, setIngredients] = useState([]);
+    const [ingredients, setIngredients] = useState([{ ingredient: '', qty: '', unit: '' }]);
     const [steps, setSteps] = useState([{ step: '' }]);
 
 
@@ -59,9 +59,14 @@ export default function Upload() {
     };
 
     const units = [
-        { label: 'Unit 1', value: 'unit1' },
-        { label: 'Unit 2', value: 'unit2' },
-        { label: 'Unit 3', value: 'unit3' },
+        { label: 'Standard Unit', value: 'Standard Unit' },
+        { label: 'Cup', value: 'Cup' },
+        { label: 'Pinch', value: 'Pinch' },
+        { label: 'Pound', value: 'Pound' },
+        { label: 'Teaspoon', value: 'Teaspoon' },
+        { label: 'Tablespoon', value: 'Tablespoon' },
+        { label: 'Teaspoon', value: 'Teaspoon' },
+        
         // Add more units as necessary
     ];
 
@@ -104,9 +109,9 @@ export default function Upload() {
                                     items={units}
                                     useNativeAndroidPickerStyle={false}
                                     style={{
-                                        inputIOS: {...styles.QtyUnits, color: '#000'},
-                                        inputAndroid: {...styles.QtyUnits, color: '#000'},
-                                        placeholder: {...styles.QtyUnits, color: '#000'},
+                                        inputIOS: {...styles.QtyUnits, color: '#000', width:100},
+                                        inputAndroid: {...styles.QtyUnits, color: '#000', width:100},
+                                        placeholder: {...styles.QtyUnits, color: '#000', width:100},
                                     }}
                                     placeholder={{ label: "Select unit", value: null }}
                                     value={ingredient.unit}
@@ -148,8 +153,27 @@ export default function Upload() {
                     )}
                 </View>
 
-                    
-                    
+                <View style={global.grayForeground}> 
+                    <Text style={styles.titleText}>Prep Time</Text>
+                    <TextInput 
+                        style={styles.QtyUnits} 
+                        keyboardType='numeric'
+                        placeholder="Enter number of total minutes" 
+                    />
+                    <Text style={styles.titleText}>Servings</Text>
+                    <TextInput 
+                        style={styles.QtyUnits} 
+                        keyboardType='numeric'
+                        placeholder="Enter number of total servings" 
+                    />
+                    <Text style={styles.titleText}>Category</Text>
+
+                </View>
+                
+                <Pressable style={global.button} > 
+                    <Text>Submit</Text>
+                </Pressable>
+
                 </ScrollView> 
             <Footer/>
         </View>
