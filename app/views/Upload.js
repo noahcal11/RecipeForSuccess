@@ -80,10 +80,10 @@ export default function upload() {
 
                     <View style={global.grayForeground}>
                         <Text style={styles.titleText}>Title</Text>
-                        <TextInput style={styles.input} placeholder="Enter your title..." />
+                        <TextInput style={styles.input} placeholder="Enter your recipe title..." />
 
                         <Text style={styles.titleText}>Description</Text>
-                        <TextInput style={styles.input} placeholder="Enter your description..." />
+                        <TextInput style={styles.input} placeholder="Enter your recipe description..." />
                     </View>
                     
                     <View style={global.grayForeground}> 
