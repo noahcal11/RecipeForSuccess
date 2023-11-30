@@ -19,7 +19,7 @@ jobs:
   build-app:
     name: Install and Build App
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/yippe'
+    if: github.ref == 'refs/heads/staging'
     defaults:
       run:
         working-directory: app
