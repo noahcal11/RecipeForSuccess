@@ -17,15 +17,24 @@ const Footer = () => {
   return (
 
     <View style={styles.footerContainer}>
-      <Pressable onPress={() => {navigation.navigate("Favorites"); setRecipePageState("details");}} style={{marginHorizontal: "12.5%"}}>
+      <Pressable onPress={() => {navigation.navigate("Favorites"); setRecipePageState("details");}} style={({ pressed }) => [
+                                    { opacity: pressed
+                                            ? 0.2
+                                            : 1, }, {marginHorizontal: "12.5%"}]}>
         <HeartIcon width="40" height='100' stroke="black" fill="red" strokeWidth="0.25"/>
       </Pressable>
 
-      <Pressable onPress={() => {navigation.navigate("Home"); setRecipePageState("details");}} style={{marginHorizontal: "12.5%"}}>
+      <Pressable onPress={() => {navigation.navigate("Home"); setRecipePageState("details");}} style={({ pressed }) => [
+                                    { opacity: pressed
+                                            ? 0.2
+                                            : 1, }, {marginHorizontal: "12.5%"}]}>
         <HomeIcon width="40" height='100' stroke="black" strokeWidth="0.25"/>
       </Pressable>
 
-      <Pressable onPress={() => {navigation.navigate("Skills"); setRecipePageState("details");}} style={{marginHorizontal: "12.5%"}}>
+      <Pressable onPress={() => {navigation.navigate("Skills"); setRecipePageState("details");}} style={({ pressed }) => [
+                                    { opacity: pressed
+                                            ? 0.2
+                                            : 1, }, {marginHorizontal: "12.5%"}]}>
         <RibbonIcon width="40" height='100' stroke="black" strokeWidth="0.25"/>
       </Pressable>
     </View>

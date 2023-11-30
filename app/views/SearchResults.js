@@ -1,18 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
-import { Text, Image, View, Pressable, ScrollView, TextInput, FlatList, Dimensions } from 'react-native';
+import { Text, Image, View, Pressable, ScrollView, TextInput, FlatList, Dimensions, Modal } from 'react-native';
 import Banner from '../Components/Banner';
 import Footer from '../Components/Footer';
+import SearchFilterModal from '../Components/SearchFilterModal';
+import FilterIcon from '../assets/svg/filter';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import global from '../Genstyle';
+import { Context } from '../Context';
 import Icon from 'react-native-vector-icons/FontAwesome'; // Adjust the library and icon as needed
 import { TouchableHighlight } from 'react-native';
 
 EStyleSheet.build();
 
-export default function Home({ navigation, route }) {
-    //From Home page
+export default function SearchResults({ navigation, route }) {
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/" + process.env.REACT_APP_API_TOKEN
+    const {isSearchFilterModalVisible, setSearchFilterModalVisible} = useContext(Context);
 
     //time, cuisine, category
     const [showDropdown, setShowDropdown] = useState(false);
@@ -58,8 +61,17 @@ export default function Home({ navigation, route }) {
             <View style={global.grayForeground}>
                 <ScrollView styles={{ flex: 1 }}>
                     {/* Filter Button */}
-                    <Pressable style={styles.filterButton}>
-                        <Text style={styles.filterButtonText}>Filter</Text>
+                    <Pressable style={({ pressed }) => [
+                        {
+                            opacity: pressed
+                                ? 0.2
+                                : 1,
+                        },
+                        { ...global.buttonMinor, position: 'relative', marginLeft: '70%', marginBottom: '2%', width: 60 }]}
+                        onPress={() => {
+                            setSearchFilterModalVisible(true);
+                        }}>
+                        <FilterIcon style={styles.filterIcon} />
                     </Pressable>
 
                     {/* Sort By Dropdown */}
@@ -108,6 +120,10 @@ export default function Home({ navigation, route }) {
                         keyExtractor={(item, index) => index}
 
                     />
+
+                    <View style={{ alignItems: 'center' }}>
+                        {isSearchFilterModalVisible ? <SearchFilterModal blurb="Filter Search Results"/> : null}
+                    </View>
                 </ScrollView>
             </View>
             <Footer />
@@ -156,24 +172,16 @@ const styles = EStyleSheet.create({
         paddingBottom: 20,
         overflow: 'visible',
     },
-    filterButton: {
-        backgroundColor: '#F74F4F',
-        paddingHorizontal: '3%',
-        paddingVertical: '1.5%',
-        borderRadius: 25,
-        alignSelf: 'flex-start',
-        marginTop: '5%',
-        marginLeft: '5%'
-    },
-    filterButtonText: {
-        color: 'white',
-        fontFamily: 'Cairo_500Medium',
+    filterIcon: {
+        height: 40,
+        width: 40,
+        alignItems: 'left'
     },
     sortByContainer: {
         flexDirection: 'row',
-        justifyContent: 'flex-end', //align to right
+        justifyContent: 'flex', //align to right
         alignItems: 'center',
-        marginRight: '2%'
+        marginLeft: '2%'
     },
 
     sortByText: {
@@ -190,7 +198,7 @@ const styles = EStyleSheet.create({
         borderWidth: '0.1rem',
         borderColor: 'gray',
         borderRadius: 5,
-        width: Dimensions.get('window').width*0.35, // Adjust the width as needed
+        width: Dimensions.get('window').width * 0.35, // Adjust the width as needed
         zIndex: 1,
     },
     dropdownOption: {

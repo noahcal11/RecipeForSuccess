@@ -28,6 +28,7 @@ export default function App() {
   const [completed, setCompleted] = useState([]);
   const [isChangePasswordModelVisible, setChangePasswordModelVisible] = useState(false);
   const [isHomeFiltersModelVisible, setHomeFiltersModelVisible] = useState(false);
+  const [isSearchFilterModalVisible, setSearchFilterModalVisible] = useState(false)
 
   let [fontsLoaded, fontError] = useFonts({
     Cairo_500Medium,
@@ -48,7 +49,8 @@ export default function App() {
         favorited, setFavorited,
         completed, setCompleted,
         created, setCreated,
-        isChangePasswordModelVisible, setChangePasswordModelVisible 
+        isChangePasswordModelVisible, setChangePasswordModelVisible,
+        isSearchFilterModalVisible, setSearchFilterModalVisible
       }}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{
