@@ -88,7 +88,7 @@ export default function Upload() {
                     
                     <View style={global.grayForeground}> 
                         <Text style={styles.titleText}>Ingredients</Text>
-                                                
+                        <Text>Need a better name than standard unit for 1x of the ingredient</Text>
                         {ingredients.map((ingredient, index) => (
                             <View key={index} style={{flexDirection: 'row'}}> 
                                 <TextInput 
