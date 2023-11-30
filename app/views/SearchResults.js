@@ -2,11 +2,12 @@ import { StatusBar } from 'expo-status-bar';
 import { Text, Image, View, Pressable, ScrollView, TextInput, FlatList, Dimensions, Modal } from 'react-native';
 import Banner from '../Components/Banner';
 import Footer from '../Components/Footer';
-import SearchFilterModel from '../Components/SearchFilterModel';
+import SearchFilterModal from '../Components/SearchFilterModal';
 import FilterIcon from '../assets/svg/filter';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import global from '../Genstyle';
+import { Context } from '../Context';
 import Icon from 'react-native-vector-icons/FontAwesome'; // Adjust the library and icon as needed
 import { TouchableHighlight } from 'react-native';
 
@@ -14,7 +15,7 @@ EStyleSheet.build();
 
 export default function SearchResults({ navigation, route }) {
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/" + process.env.REACT_APP_API_TOKEN
-    const [isSearchFilterModelVisible, setSearchFilterModelVisible] = useState(false);
+    const {isSearchFilterModalVisible, setSearchFilterModalVisible} = useContext(Context);
 
     //time, cuisine, category
     const [showDropdown, setShowDropdown] = useState(false);
@@ -68,7 +69,7 @@ export default function SearchResults({ navigation, route }) {
                         },
                         { ...global.buttonMinor, position: 'relative', marginLeft: '70%', marginBottom: '2%', width: 60 }]}
                         onPress={() => {
-                            setSearchFilterModelVisible(true);
+                            setSearchFilterModalVisible(true);
                         }}>
                         <FilterIcon style={styles.filterIcon} />
                     </Pressable>
@@ -120,13 +121,9 @@ export default function SearchResults({ navigation, route }) {
 
                     />
 
-                    <Modal
-                        animationType="slide"
-                        transparent={true}
-                        visible={isSearchFilterModelVisible}
-                        onRequestClose={() => setSearchFilterModelVisible(false)}>
-                        <SearchFilterModel blurb="Filter Search" onClose={() => setSearchFilterModelVisible(false)} />
-                    </Modal>
+                    <View style={{ alignItems: 'center' }}>
+                        {isSearchFilterModalVisible ? <SearchFilterModal blurb="Filter Search Results"/> : null}
+                    </View>
                 </ScrollView>
             </View>
             <Footer />
