@@ -15,14 +15,14 @@ EStyleSheet.build();
 
 export default function searchResults({ navigation, route }) {
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/" + process.env.REACT_APP_API_TOKEN
-    const {isSearchFilterModalVisible, setSearchFilterModalVisible} = useContext(Context);
+    const { isSearchFilterModalVisible, setSearchFilterModalVisible } = useContext(Context);
 
     //time, cuisine, category
     const [showDropdown, setShowDropdown] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null); //No initial option selected
-    const [searchResults, setsearchResults] = useState([]);
+    const [searchResults, setSearchResults] = useState([]);
 
-    const sortOptions = ['A to Z', 'Newest', 'Oldest']; // Your sorting options
+    const sortOptions = ['A to Z', 'Z to A']; // Your sorting options
 
     const getSearch = async (searchTerm) => {
         const response = await fetch(API_BASE + "/recipe/get/", {
@@ -34,7 +34,7 @@ export default function searchResults({ navigation, route }) {
             body: JSON.stringify({ general: searchTerm })
         })
             .then(res => res.json())
-            .then(data => setsearchResults(data))
+            .then(data => setSearchResults(data))
             .catch(error => console.error(error));
     }
 
@@ -47,8 +47,18 @@ export default function searchResults({ navigation, route }) {
         setShowDropdown(false);
         // Perform sorting based on the selected option
         // Update searchResults accordingly
+        if(option='A to Z') sortAZ(searchResults);
+        if(option='Z to A') sortZA(searchResults);
+    }
 
+    const sortAZ = (data) => {
+        data.sort((a, b) => (a.title > b.title) ? 1 : -1);
+        setSearchResults(data);
+    }
 
+    const sortZA = (data) => {
+        data.sort((a, b) => (a.title < b.title) ? 1 : -1);
+        setSearchResults(data);
     }
 
     useState(() => {
@@ -122,7 +132,7 @@ export default function searchResults({ navigation, route }) {
                     />
 
                     <View style={{ alignItems: 'center' }}>
-                        {isSearchFilterModalVisible ? <SearchFilterModal blurb="Filter Search Results"/> : null}
+                        {isSearchFilterModalVisible ? <SearchFilterModal blurb="Filter Search Results" /> : null}
                     </View>
                 </ScrollView>
             </View>
@@ -193,7 +203,7 @@ const styles = EStyleSheet.create({
     dropdown: {
         position: 'absolute',
         top: '120%', // Adjust the distance from the button as needed
-        right: '0%',
+        left: '20%',
         backgroundColor: 'white',
         borderWidth: '0.1rem',
         borderColor: 'gray',
