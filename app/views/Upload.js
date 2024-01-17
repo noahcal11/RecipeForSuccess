@@ -1,18 +1,35 @@
 import Footer from '../Components/Footer';
 import React, { useRef } from 'react';
-import { Text, View, Pressable, FlatList, SafeAreaView, StyleSheet, Modal, ScrollView, TextInput} from "react-native";
+import { Text, View, Pressable, FlatList, SafeAreaView, StyleSheet, Modal, TouchableOpacity, ScrollView, TextInput, Button, Image, Platform} from "react-native";
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { useState,useContext } from 'react';
+import { useState,useContext,useEffect } from 'react';
 import { Context } from '../Context'
 import Banner from '../Components/Banner';
 import global from '../Genstyle';
 import { useNavigation } from '@react-navigation/core';
 import RNPickerSelect from 'react-native-picker-select';
+import * as ImagePicker from 'expo-image-picker';
 
 
 EStyleSheet.build();
 
 export default function upload() {
+
+        const [image, setImage] = useState(null);
+      
+        const pickImage = async () => {
+          // No permissions request is necessary for launching the image library
+          let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+          });      
+          if (!result.canceled) {
+            setImage(result.assets[0].uri);
+          }
+        };
+
     const navigation = useNavigation();
     const [ingredients, setIngredients] = useState([{ ingredient: '', qty: '', unit: '' }]);
     const [steps, setSteps] = useState([{ step: '' }]);
@@ -59,7 +76,7 @@ export default function upload() {
     };
 
     const units = [
-        { label: 'Standard Unit', value: 'Standard Unit' },
+        { label: 'Count', value: 'Count'},
         { label: 'Cup', value: 'Cup' },
         { label: 'Pinch', value: 'Pinch' },
         { label: 'Pound', value: 'Pound' },
@@ -72,11 +89,18 @@ export default function upload() {
 
     return(
         <View style={global.whiteBackground}>
-            <Banner title="upload"/>
+            <Banner title="Upload"/>
                 <ScrollView>
-                    <View style={global.grayForeground}>
-                        <Text style={global.titleText}>Save area for picture</Text>
-                    </View>
+                    
+                <View style={styles.grayForeground}>
+                    <TouchableOpacity onPress={pickImage} style={styles.opacityStyle}>
+                        <Text style={styles.titleText}>Select Image</Text>
+                    </TouchableOpacity>
+                    {image && <Image source={{ uri: image }} style={styles.image} />}
+                </View>
+
+
+                    
 
                     <View style={global.grayForeground}>
                         <Text style={styles.titleText}>Title</Text>
@@ -88,12 +112,11 @@ export default function upload() {
                     
                     <View style={global.grayForeground}> 
                         <Text style={styles.titleText}>Ingredients</Text>
-                        <Text>Need a better name than standard unit for 1x of the ingredient</Text>
                         {ingredients.map((ingredient, index) => (
                             <View key={index} style={{flexDirection: 'row'}}> 
                                 <TextInput 
                                     style={styles.IngredientInput} 
-                                    placeholder="Enter your ingredient..." z
+                                    placeholder="Enter your ingredient..."
                                     value={ingredient.ingredient}
                                     onChangeText={(value) => handleIngredientChange(index, 'ingredient', value)}
                                 />
@@ -109,9 +132,9 @@ export default function upload() {
                                     items={units}
                                     useNativeAndroidPickerStyle={false}
                                     style={{
-                                        inputIOS: {...styles.QtyUnits, color: '#000', width:100},
-                                        inputAndroid: {...styles.QtyUnits, color: '#000', width:100},
-                                        placeholder: {...styles.QtyUnits, color: '#000', width:100},
+                                        inputIOS: {...styles.QtyUnits, color: 'black', width:100},
+                                        inputAndroid: {...styles.QtyUnits, color: 'black', width:100},
+                                        placeholder: {...styles.QtyUnits, color: 'black', width:100},
                                     }}
                                     placeholder={{ label: "Select unit", value: null }}
                                     value={ingredient.unit}
@@ -171,6 +194,10 @@ export default function upload() {
                 </View>
                 
                 <Pressable style={global.button} > 
+                    <Text>Preview</Text>
+                </Pressable>
+
+                <Pressable style={global.button} > 
                     <Text>Submit</Text>
                 </Pressable>
 
@@ -211,7 +238,7 @@ const styles = EStyleSheet.create({
         marginBottom: '1rem',
       },
       QtyUnits: {
-        flex: 1,
+        flex: 2,
         backgroundColor: '#D1D1D1',
         borderRadius: '2rem',
         fontSize: '1rem',
@@ -229,5 +256,23 @@ const styles = EStyleSheet.create({
         flex: 0.3,
         paddingLeft: '0.5rem'
       },
-
+      image: {
+        width: '20rem',
+        height: '20rem',
+        alignSelf: 'center',
+        marginBottom: '1rem'
+      },
+      grayForeground: {
+        backgroundColor: '#eee',
+        marginHorizontal: '5%',
+        marginVertical: '5%',
+        borderRadius: 25,
+        flex:1,
+        hheight: '30rem',
+      },
+      opacityStyle: {
+        fontSize: '100rem',
+        justifyContent: 'center', 
+        alignItems: 'center',
+      }
 })
