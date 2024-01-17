@@ -74,7 +74,7 @@ const global = EStyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#ddd',
     borderRadius: 25,
-    marginVertical: '1rem',
+    marginVertical: '4%',
     width: Dimensions.get('window').width*0.5,
     height:  Dimensions.get('window').height*0.06,
     textAlign: 'center',

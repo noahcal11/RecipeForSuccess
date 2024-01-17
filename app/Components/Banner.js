@@ -29,7 +29,14 @@ const BannerTitle = ({ title }) => {
                 navigation.navigate("Profile");
                 setRecipePageState("details");
               }
-            } style={styles.profileIcon}>
+            }
+            style={({ pressed }) => [
+              {
+                  opacity: pressed
+                      ? 0.2
+                      : 1,
+              },
+              styles.profileIcon]}>
               <ProfileIcon />
             </Pressable>
           </View>
@@ -47,8 +54,8 @@ const BannerTitle = ({ title }) => {
             style={styles.searchInput}
             autoFocus
             onSubmitEditing={({ nativeEvent: { text } }) => {
-              route.name === "SearchResults" ? navigation.navigate("Home") :
-              navigation.navigate("SearchResults",{"searchTerm":text});
+              route.name === "searchResults" ? navigation.navigate("Home") :
+              navigation.navigate("searchResults",{"searchTerm":text});
               toggleSearchBar();
             }}
           />

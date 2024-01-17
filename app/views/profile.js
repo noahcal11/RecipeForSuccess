@@ -138,9 +138,9 @@ export default function Profile() {
           <Pressable
                     style={global.button}
                     onPress={() => {
-                      navigation.navigate('Upload');
+                      navigation.navigate('upload');
                     }}>
-                        <Text style={styles.guestText}>Upload</Text>
+                        <Text style={styles.guestText}>upload</Text>
           </Pressable>
 
         </View>

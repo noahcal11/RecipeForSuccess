@@ -2,14 +2,14 @@ import { useEffect, useState, createContext } from 'react';
 import Login from "./views/login";
 import Home from "./views/home";
 import Skills from "./views/skills";
-import RecipePages from "./views/RecipePages";
+import recipePages from "./views/recipePages";
 import Profile from "./views/profile";
 import Favorites from './views/favorites';
-import SearchResults from './views/SearchResults'
+import searchResults from './views/searchResults'
 import PageTemplate from './views/pageTemplate';
-import Created from './views/Created';
-import Completed from './views/Completed';
-import Upload from './views/Upload';
+import Created from './views/created';
+import Completed from './views/completed';
+import upload from './views/upload';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
@@ -28,6 +28,7 @@ export default function App() {
   const [completed, setCompleted] = useState([]);
   const [isChangePasswordModelVisible, setChangePasswordModelVisible] = useState(false);
   const [isHomeFiltersModelVisible, setHomeFiltersModelVisible] = useState(false);
+  const [isSearchFilterModalVisible, setSearchFilterModalVisible] = useState(false)
 
   let [fontsLoaded, fontError] = useFonts({
     Cairo_500Medium,
@@ -48,7 +49,8 @@ export default function App() {
         favorited, setFavorited,
         completed, setCompleted,
         created, setCreated,
-        isChangePasswordModelVisible, setChangePasswordModelVisible 
+        isChangePasswordModelVisible, setChangePasswordModelVisible,
+        isSearchFilterModalVisible, setSearchFilterModalVisible
       }}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{
@@ -57,14 +59,14 @@ export default function App() {
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Skills" component={Skills}/>
-          <Stack.Screen name="RecipePages" component={RecipePages}/>
+          <Stack.Screen name="recipePages" component={recipePages}/>
           <Stack.Screen name="Profile" component={Profile}/>
           <Stack.Screen name="Favorites" component={Favorites}/>
-          <Stack.Screen name="SearchResults" component={SearchResults}/>
+          <Stack.Screen name="searchResults" component={searchResults}/>
           <Stack.Screen name="PageTemplate" component={PageTemplate}/>
           <Stack.Screen name="Created" component={Created}/>
           <Stack.Screen name="Completed" component={Completed}/>
-          <Stack.Screen name="Upload" component={Upload}/>
+          <Stack.Screen name="upload" component={upload}/>
         </Stack.Navigator>
       </NavigationContainer>
     </Context.Provider>
