@@ -77,12 +77,17 @@ export default function upload() {
 
     const units = [
         { label: 'Count', value: 'Count'},
-        { label: 'Cup', value: 'Cup' },
-        { label: 'Pinch', value: 'Pinch' },
-        { label: 'Pound', value: 'Pound' },
         { label: 'Teaspoon', value: 'Teaspoon' },
         { label: 'Tablespoon', value: 'Tablespoon' },
-        { label: 'Teaspoon', value: 'Teaspoon' },
+        { label: 'Floud ounce', value: 'Fluid ounce' },
+        { label: 'Cup', value: 'Cup' },
+        { label: 'Pint', value: 'Pint' },
+        { label: 'Quart', value: 'Quart' },
+        { label: 'Gallon', value: 'Gallon' },
+        { label: 'Pinch', value: 'Pinch' },
+        { label: 'Pound', value: 'Pound' },
+        { label: 'Ounce', value: 'Ounce' },
+        
         
         // Add more units as necessary
     ];
@@ -94,7 +99,7 @@ export default function upload() {
                     
                 <View style={styles.grayForeground}>
                     <TouchableOpacity onPress={pickImage} style={styles.opacityStyle}>
-                        <Text style={styles.titleText}>Select Image</Text>
+                        <Text style={{...styles.titleText,color:'blue'}}>Press to Select Image</Text>
                     </TouchableOpacity>
                     {image && <Image source={{ uri: image }} style={styles.image} />}
                 </View>
@@ -190,6 +195,9 @@ export default function upload() {
                         placeholder="Enter number of total servings" 
                     />
                     <Text style={styles.titleText}>Category</Text>
+                    <Text style={styles.titleText}>I need the categories</Text>
+                    
+
 
                 </View>
                 
@@ -274,5 +282,10 @@ const styles = EStyleSheet.create({
         fontSize: '100rem',
         justifyContent: 'center', 
         alignItems: 'center',
-      }
+      },
+      icon: {
+        height: 200,
+        width: 200,
+        alignItems: 'left'
+    },
 })

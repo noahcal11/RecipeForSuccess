@@ -13,7 +13,6 @@ import { useNavigation } from '@react-navigation/core';
 import ChangePasswordModel from '../Components/ChangePasswordModel';
 import MessageModel from '../Components/MessageModel';
 
-
 EStyleSheet.build();
 
 const SECTIONS = [
@@ -138,9 +137,9 @@ export default function Profile() {
           <Pressable
                     style={global.button}
                     onPress={() => {
-                      navigation.navigate('upload');
+                      navigation.navigate('Upload');
                     }}>
-                        <Text style={styles.guestText}>upload</Text>
+                        <Text style={styles.guestText}>Upload</Text>
           </Pressable>
 
         </View>
@@ -180,6 +179,7 @@ export default function Profile() {
                     }}>
                         <Text style={styles.guestText}>Logout</Text>
           </Pressable>
+
           <Pressable
                     style={global.buttonMinor}
                     onPress={() => {
