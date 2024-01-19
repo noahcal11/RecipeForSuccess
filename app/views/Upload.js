@@ -13,7 +13,19 @@ import * as ImagePicker from 'expo-image-picker';
 
 EStyleSheet.build();
 
-export default function upload() {
+export default function Upload() {
+
+        const uploadRecipe = async () => {
+            setNotification("")
+            const data = await fetch(API_BASE+"/recipe/new", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({title: title, desc: desc, total_time_min: prepTime, yields: servings, steps: steps, ingredients: ingredients, cuisine: cusine, category: category})
+            }).then(navigation.navigate('Profile'));
+        }
 
         const [image, setImage] = useState(null);
       
@@ -31,8 +43,14 @@ export default function upload() {
         };
 
     const navigation = useNavigation();
+    const [title, setTitle] = useState('')
+    const [desc, setDesc] = useState('')
     const [ingredients, setIngredients] = useState([{ ingredient: '', qty: '', unit: '' }]);
     const [steps, setSteps] = useState([{ step: '' }]);
+    const [prepTime, setPrepTime] = useState('')
+    const [servings, setServings] = useState('')
+    const [category, setCategory] = useState('category')
+    const [cusine, setCusine] = useState('cusine')
 
 
     const handleAddIngredient = () => {
@@ -109,10 +127,11 @@ export default function upload() {
 
                     <View style={global.grayForeground}>
                         <Text style={styles.titleText}>Title</Text>
-                        <TextInput style={styles.input} placeholder="Enter your recipe title..." />
+                        <TextInput style={styles.input} placeholder="Enter your recipe title..." onChangeText={setTitle}/>
+
 
                         <Text style={styles.titleText}>Description</Text>
-                        <TextInput style={styles.input} placeholder="Enter your recipe description..." />
+                        <TextInput style={styles.input} placeholder="Enter your recipe description..." onChangeText={setDesc}/>
                     </View>
                     
                     <View style={global.grayForeground}> 
@@ -187,12 +206,14 @@ export default function upload() {
                         style={styles.QtyUnits} 
                         keyboardType='numeric'
                         placeholder="Enter number of total minutes" 
+                        onChangeText={setPrepTime}
                     />
                     <Text style={styles.titleText}>Servings</Text>
                     <TextInput 
                         style={styles.QtyUnits} 
                         keyboardType='numeric'
-                        placeholder="Enter number of total servings" 
+                        placeholder="Enter number of total servings"
+                        onChangeText={setServings}
                     />
                     <Text style={styles.titleText}>Category</Text>
                     <Text style={styles.titleText}>I need the categories</Text>
@@ -205,8 +226,8 @@ export default function upload() {
                     <Text>Preview</Text>
                 </Pressable>
 
-                <Pressable style={global.button} > 
-                    <Text>Submit</Text>
+                <Pressable style={global.button} OnPress={uploadRecipe}> 
+                    <Text>Submit</Text>                  
                 </Pressable>
 
                 </ScrollView> 

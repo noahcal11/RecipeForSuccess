@@ -9,7 +9,7 @@ import searchResults from './views/searchResults'
 import PageTemplate from './views/pageTemplate';
 import Created from './views/created';
 import Completed from './views/completed';
-import upload from './views/upload';
+import Upload from './views/Upload';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
@@ -66,7 +66,7 @@ export default function App() {
           <Stack.Screen name="PageTemplate" component={PageTemplate}/>
           <Stack.Screen name="Created" component={Created}/>
           <Stack.Screen name="Completed" component={Completed}/>
-          <Stack.Screen name="upload" component={upload}/>
+          <Stack.Screen name="Upload" component={Upload}/>
         </Stack.Navigator>
       </NavigationContainer>
     </Context.Provider>
