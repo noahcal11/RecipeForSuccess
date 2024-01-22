@@ -2,14 +2,14 @@ import { useEffect, useState, createContext } from 'react';
 import Login from "./views/login";
 import Home from "./views/home";
 import Skills from "./views/skills";
-import recipePages from "./views/RecipePages";
+import recipePages from "./views/recipePages";
 import Profile from "./views/profile";
 import Favorites from './views/favorites';
-import searchResults from './views/SearchResults'
+import searchResults from './views/searchResults'
 import PageTemplate from './views/pageTemplate';
 import Created from './views/Created';
 import Completed from './views/Completed';
-import upload from './views/Upload';
+import Upload from './views/Upload';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
@@ -66,7 +66,7 @@ export default function App() {
           <Stack.Screen name="PageTemplate" component={PageTemplate}/>
           <Stack.Screen name="Created" component={Created}/>
           <Stack.Screen name="Completed" component={Completed}/>
-          <Stack.Screen name="upload" component={upload}/>
+          <Stack.Screen name="Upload" component={Upload}/>
         </Stack.Navigator>
       </NavigationContainer>
     </Context.Provider>
