@@ -23,6 +23,7 @@ EStyleSheet.build();
 export default function recipePages({ navigation, route }) {
   const [recipe, setRecipe] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [rating, setRating] = useState(5.0);
   const { recipePageState, setRecipePageState, username,setUsername, email,setEmail, favorited,setFavorited } = useContext(Context);
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
@@ -86,7 +87,7 @@ export default function recipePages({ navigation, route }) {
               renderItem={({ item }) => (
                 <>
                 <Text style={global.titleText}> {recipe.title} </Text>
-                  {/* Recipe Description */}
+                  {/* Recipe Image */}
                   <View style={{ position: 'relative' }}>
                     <Image source={{uri:item.image}} style={styles.image} />
                     <Pressable
@@ -97,6 +98,13 @@ export default function recipePages({ navigation, route }) {
                         :<HeartIcon fill='white' width='40' height='40' />}
                     </Pressable>
                   </View>
+                  {/* Star Rating */}
+                  <View style={{ flexDirection: 'row' }}>
+                      {rating >= 1 ?
+                      <Text></Text>
+                      :<Text></Text>}
+                  </View>
+                  {/* Recipe Description */}
                   <View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
                     <View>
                       <Text style={global.subheaderText}>
