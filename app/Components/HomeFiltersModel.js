@@ -9,6 +9,7 @@ import { Context } from '../Context';
 EStyleSheet.build();
 
 const WIDGETS = [
+  { title: 'Popular'},
   { title: 'Breakfast' },
   { title: 'Lunch' },
   { title: 'Dinner' },
@@ -62,7 +63,7 @@ const HomeFiltersModel = ({blurb}) => {
             <Text style={global.titleText}>Select Widgets to Display</Text>
             <ScrollView style={{ marginTop: '10%' }}>
               {WIDGETS.map((item, index) => (
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'row' }} key={index}>
                   <Text style={{ ...global.bodyText, alignSelf: 'center' }}>{item.title}</Text>
                   <SwitchComp name={item.title} />
                 </View>

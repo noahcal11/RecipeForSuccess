@@ -15,7 +15,15 @@ export default function Home({ navigation, route }){
     const [popularRecs, setPopularRecs] = useState([]);
     const [dessertRecs, setDessertRecs] = useState([]);
     const [breakfastRecs, setBreakfastRecs] = useState([]);
+    const [lunchRecs, setLunchRecs] = useState([]);
+    const [dinnerRecs, setDinnerRecs] = useState([]);
     const [chickenRecs, setChickenRecs] = useState([]);
+    const [saladRecs, setSaladRecs] = useState([]);
+    const [americanRecs, setAmericanRecs] = useState([]);
+    const [mexicanRecs, setMexicanRecs] = useState([]);
+    const [italianRecs, setItalianRecs] = useState([]);
+    const [chineseRecs, setChineseRecs] = useState([]);
+    const [surpriseRecs, setSurpriseRecs] = useState([]);
     const {username,setUsername,email,setEmail,isHomeFiltersModelVisible, setHomeFiltersModelVisible} = useContext(Context)
 
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/" + process.env.REACT_APP_API_TOKEN
@@ -91,6 +99,118 @@ export default function Home({ navigation, route }){
             .catch(error => console.error(error));
     }
 
+    const getLunch = async () => {
+        const response = await fetch(API_BASE + "/recipe/get/", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({ category: "Lunch" })
+        })
+            .then(res => res.json())
+            .then(data => setLunchRecs(getRandom(data, 4)))
+            .catch(error => console.error(error));
+    }
+
+    const getDinner = async () => {
+        const response = await fetch(API_BASE + "/recipe/get/", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({ category: "Dinner" })
+        })
+            .then(res => res.json())
+            .then(data => setDinnerRecs(getRandom(data, 4)))
+            .catch(error => console.error(error));
+    }
+
+    const getSalad = async () => {
+        const response = await fetch(API_BASE + "/recipe/get/", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({ category: "Dinner" })
+        })
+            .then(res => res.json())
+            .then(data => setSaladRecs(getRandom(data, 4)))
+            .catch(error => console.error(error));
+    }
+    
+    const getAmerican = async () => {
+        const response = await fetch(API_BASE + "/recipe/get/", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({ cuisine: "American" })
+        })
+            .then(res => res.json())
+            .then(data => setAmericanRecs(getRandom(data, 4)))
+            .catch(error => console.error(error));
+    }
+
+    const getMexican = async () => {
+        const response = await fetch(API_BASE + "/recipe/get/", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({ cuisine: "Mexican" })
+        })
+            .then(res => res.json())
+            .then(data => setMexicanRecs(getRandom(data, 4)))
+            .catch(error => console.error(error));
+    }
+
+    const getItalian = async () => {
+        const response = await fetch(API_BASE + "/recipe/get/", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({ cuisine: "Italian" })
+        })
+            .then(res => res.json())
+            .then(data => setItalianRecs(getRandom(data, 4)))
+            .catch(error => console.error(error));
+    }
+
+    const getChinese = async () => {
+        const response = await fetch(API_BASE + "/recipe/get/", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({ cuisine: "Chinese" })
+        })
+            .then(res => res.json())
+            .then(data => setChineseRecs(getRandom(data, 4)))
+            .catch(error => console.error(error));
+    }
+
+    const getSurprise = async () => {
+        const response = await fetch(API_BASE + "/recipe/get/", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({})
+        })
+            .then(res => res.json())
+            .then(data => setSurpriseRecs(getRandom(data, 4)))
+            .catch(error => console.error(error));
+    }
+
     // Shortens longer titles so any given recipe title only takes up two lines
     function makeTwoLines(title) {
         if (title.length >= 25) {
@@ -98,26 +218,25 @@ export default function Home({ navigation, route }){
         } else return title;
     }
 
-        
     useState(() => {
         getPopular();
         getDessert();
         getBreakfast();
         getChicken();
+        getDinner();
+        getLunch();
+        getSalad();
+        getAmerican();
+        getMexican();
+        getItalian();
+        getChinese();
+        getSurprise();
     }, []);
 
     return (
         <View style={global.whiteBackground}>
             <Banner title="Home" />
             <ScrollView styles={{ flex: 1 }}>
-                {/* <Pressable
-                        style={{...global.buttonMinor, position: 'relative', marginLeft: '70%', marginTop: '5%', width: 60}}
-                        onPress={() => {email !== "Guest"? setFavorite():<View></View>}}>
-                        <FilterIcon style={styles.filterIcon}></FilterIcon>
-                </Pressable> */}
-
-
-                
 
                 <Pressable
                     style={{...global.buttonMinor, position: 'relative', marginLeft: '70%', marginTop: '5%', width: 60}}
@@ -208,10 +327,9 @@ export default function Home({ navigation, route }){
                             </Pressable>
                         }
                     />
-                    <View style={global.grayForeground}>
-                    <Text style={global.titleText}>Chicken!</Text>
-                    <FlatList
-                        horizontal
+                    <FlatList scrollEnabled={false}
+                        style={global.grayForeground}
+                        ListHeaderComponent={<Text style={global.titleText}>Chicken</Text>}
                         data={chickenRecs}
                         renderItem={({ item }) => (
                             <Pressable onPress={() => navigation.navigate('recipePages',{'_id':item._id})}
@@ -228,6 +346,7 @@ export default function Home({ navigation, route }){
                                 </View>
                             </Pressable>
                         )}
+                        numColumns={2}
                         keyExtractor={(item, index) => index}
                         ListFooterComponent={
                             <Pressable
@@ -246,11 +365,314 @@ export default function Home({ navigation, route }){
                             </Pressable>
                         }
                     />
-                    </View>
                     <FlatList scrollEnabled={false}
                         style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>Breakfast Creations</Text>}
                         data={breakfastRecs}
+                        renderItem={({ item }) => (
+                            <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
+                                style={({ pressed }) => [
+                                    {
+                                        opacity: pressed
+                                            ? 0.2
+                                            : 1,
+                                    }]}
+                            >
+                                <View style={styles.imageView} id={item._id}>
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
+                                    <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
+                                </View>
+                            </Pressable>
+                        )}
+                        numColumns={2}
+                        keyExtractor={(item, index) => index}
+                        ListFooterComponent={
+                            <Pressable
+                                onPress={() => {
+                                    navigation.navigate("searchResults")
+                                }}
+
+                                style={({ pressed }) => [
+                                    {
+                                        opacity: pressed
+                                            ? 0.2
+                                            : 1,
+                                    }]}
+                            >
+                                <Text style={{ ...global.clickableText, marginBottom: '5%' }}>View more</Text>
+                            </Pressable>
+                        }
+                    />
+                    <FlatList scrollEnabled={false}
+                        style={global.grayForeground}
+                        ListHeaderComponent={<Text style={global.titleText}>Lunch Options</Text>}
+                        data={lunchRecs}
+                        renderItem={({ item }) => (
+                            <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
+                                style={({ pressed }) => [
+                                    {
+                                        opacity: pressed
+                                            ? 0.2
+                                            : 1,
+                                    }]}
+                            >
+                                <View style={styles.imageView} id={item._id}>
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
+                                    <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
+                                </View>
+                            </Pressable>
+                        )}
+                        numColumns={2}
+                        keyExtractor={(item, index) => index}
+                        ListFooterComponent={
+                            <Pressable
+                                onPress={() => {
+                                    navigation.navigate("searchResults")
+                                }}
+
+                                style={({ pressed }) => [
+                                    {
+                                        opacity: pressed
+                                            ? 0.2
+                                            : 1,
+                                    }]}
+                            >
+                                <Text style={{ ...global.clickableText, marginBottom: '5%' }}>View more</Text>
+                            </Pressable>
+                        }
+                    />
+                    <FlatList scrollEnabled={false}
+                        style={global.grayForeground}
+                        ListHeaderComponent={<Text style={global.titleText}>Dinners</Text>}
+                        data={dinnerRecs}
+                        renderItem={({ item }) => (
+                            <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
+                                style={({ pressed }) => [
+                                    {
+                                        opacity: pressed
+                                            ? 0.2
+                                            : 1,
+                                    }]}
+                            >
+                                <View style={styles.imageView} id={item._id}>
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
+                                    <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
+                                </View>
+                            </Pressable>
+                        )}
+                        numColumns={2}
+                        keyExtractor={(item, index) => index}
+                        ListFooterComponent={
+                            <Pressable
+                                onPress={() => {
+                                    navigation.navigate("searchResults")
+                                }}
+
+                                style={({ pressed }) => [
+                                    {
+                                        opacity: pressed
+                                            ? 0.2
+                                            : 1,
+                                    }]}
+                            >
+                                <Text style={{ ...global.clickableText, marginBottom: '5%' }}>View more</Text>
+                            </Pressable>
+                        }
+                    />
+                    <FlatList scrollEnabled={false}
+                        style={global.grayForeground}
+                        ListHeaderComponent={<Text style={global.titleText}>Salads</Text>}
+                        data={saladRecs}
+                        renderItem={({ item }) => (
+                            <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
+                                style={({ pressed }) => [
+                                    {
+                                        opacity: pressed
+                                            ? 0.2
+                                            : 1,
+                                    }]}
+                            >
+                                <View style={styles.imageView} id={item._id}>
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
+                                    <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
+                                </View>
+                            </Pressable>
+                        )}
+                        numColumns={2}
+                        keyExtractor={(item, index) => index}
+                        ListFooterComponent={
+                            <Pressable
+                                onPress={() => {
+                                    navigation.navigate("searchResults")
+                                }}
+
+                                style={({ pressed }) => [
+                                    {
+                                        opacity: pressed
+                                            ? 0.2
+                                            : 1,
+                                    }]}
+                            >
+                                <Text style={{ ...global.clickableText, marginBottom: '5%' }}>View more</Text>
+                            </Pressable>
+                        }
+                    />
+                    <FlatList scrollEnabled={false}
+                        style={global.grayForeground}
+                        ListHeaderComponent={<Text style={global.titleText}>American</Text>}
+                        data={americanRecs}
+                        renderItem={({ item }) => (
+                            <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
+                                style={({ pressed }) => [
+                                    {
+                                        opacity: pressed
+                                            ? 0.2
+                                            : 1,
+                                    }]}
+                            >
+                                <View style={styles.imageView} id={item._id}>
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
+                                    <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
+                                </View>
+                            </Pressable>
+                        )}
+                        numColumns={2}
+                        keyExtractor={(item, index) => index}
+                        ListFooterComponent={
+                            <Pressable
+                                onPress={() => {
+                                    navigation.navigate("searchResults")
+                                }}
+
+                                style={({ pressed }) => [
+                                    {
+                                        opacity: pressed
+                                            ? 0.2
+                                            : 1,
+                                    }]}
+                            >
+                                <Text style={{ ...global.clickableText, marginBottom: '5%' }}>View more</Text>
+                            </Pressable>
+                        }
+                    />
+                    <FlatList scrollEnabled={false}
+                        style={global.grayForeground}
+                        ListHeaderComponent={<Text style={global.titleText}>Mexican</Text>}
+                        data={mexicanRecs}
+                        renderItem={({ item }) => (
+                            <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
+                                style={({ pressed }) => [
+                                    {
+                                        opacity: pressed
+                                            ? 0.2
+                                            : 1,
+                                    }]}
+                            >
+                                <View style={styles.imageView} id={item._id}>
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
+                                    <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
+                                </View>
+                            </Pressable>
+                        )}
+                        numColumns={2}
+                        keyExtractor={(item, index) => index}
+                        ListFooterComponent={
+                            <Pressable
+                                onPress={() => {
+                                    navigation.navigate("searchResults")
+                                }}
+
+                                style={({ pressed }) => [
+                                    {
+                                        opacity: pressed
+                                            ? 0.2
+                                            : 1,
+                                    }]}
+                            >
+                                <Text style={{ ...global.clickableText, marginBottom: '5%' }}>View more</Text>
+                            </Pressable>
+                        }
+                    />
+                    <FlatList scrollEnabled={false}
+                        style={global.grayForeground}
+                        ListHeaderComponent={<Text style={global.titleText}>Italian</Text>}
+                        data={italianRecs}
+                        renderItem={({ item }) => (
+                            <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
+                                style={({ pressed }) => [
+                                    {
+                                        opacity: pressed
+                                            ? 0.2
+                                            : 1,
+                                    }]}
+                            >
+                                <View style={styles.imageView} id={item._id}>
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
+                                    <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
+                                </View>
+                            </Pressable>
+                        )}
+                        numColumns={2}
+                        keyExtractor={(item, index) => index}
+                        ListFooterComponent={
+                            <Pressable
+                                onPress={() => {
+                                    navigation.navigate("searchResults")
+                                }}
+
+                                style={({ pressed }) => [
+                                    {
+                                        opacity: pressed
+                                            ? 0.2
+                                            : 1,
+                                    }]}
+                            >
+                                <Text style={{ ...global.clickableText, marginBottom: '5%' }}>View more</Text>
+                            </Pressable>
+                        }
+                    />
+                    <FlatList scrollEnabled={false}
+                        style={global.grayForeground}
+                        ListHeaderComponent={<Text style={global.titleText}>Chinese</Text>}
+                        data={chineseRecs}
+                        renderItem={({ item }) => (
+                            <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
+                                style={({ pressed }) => [
+                                    {
+                                        opacity: pressed
+                                            ? 0.2
+                                            : 1,
+                                    }]}
+                            >
+                                <View style={styles.imageView} id={item._id}>
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
+                                    <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
+                                </View>
+                            </Pressable>
+                        )}
+                        numColumns={2}
+                        keyExtractor={(item, index) => index}
+                        ListFooterComponent={
+                            <Pressable
+                                onPress={() => {
+                                    navigation.navigate("searchResults")
+                                }}
+
+                                style={({ pressed }) => [
+                                    {
+                                        opacity: pressed
+                                            ? 0.2
+                                            : 1,
+                                    }]}
+                            >
+                                <Text style={{ ...global.clickableText, marginBottom: '5%' }}>View more</Text>
+                            </Pressable>
+                        }
+                    />
+                    <FlatList scrollEnabled={false}
+                        style={global.grayForeground}
+                        ListHeaderComponent={<Text style={global.titleText}>Surprise me!</Text>}
+                        data={surpriseRecs}
                         renderItem={({ item }) => (
                             <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
                                 style={({ pressed }) => [
