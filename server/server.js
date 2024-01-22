@@ -69,7 +69,7 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', (req,res) => {
     const recipe = new Recipe({
         title: req.body.title,
         desc: req.body.desc,
-        total_time_min: req.body.total_time,
+        total_time: req.body.total_time,
         yields: req.body.yields,
         steps: req.body.steps,
         ingredients: req.body.ingredients,

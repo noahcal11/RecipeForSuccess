@@ -15,15 +15,16 @@ EStyleSheet.build();
 
 export default function Upload() {
 
+        const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
+        
         const uploadRecipe = async () => {
-            setNotification("")
             const data = await fetch(API_BASE+"/recipe/new", {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({title: title, desc: desc, total_time_min: prepTime, yields: servings, steps: steps, ingredients: ingredients, cuisine: cusine, category: category})
+            body: JSON.stringify({title: title, desc: desc, total_time: prepTime, yields: servings, steps: steps, ingredients: ingredients, cuisine: cusine, category: category, link: "yourmom.com"})
             }).then(navigation.navigate('Profile'));
         }
 
