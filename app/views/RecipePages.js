@@ -20,7 +20,7 @@ import global from '../Genstyle'
 
 EStyleSheet.build();
 
-export default function recipePages({ navigation, route }) {
+export default function RecipePages({ navigation, route }) {
   const [recipe, setRecipe] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
   const { recipePageState, setRecipePageState, username,setUsername, email,setEmail, favorited,setFavorited } = useContext(Context);

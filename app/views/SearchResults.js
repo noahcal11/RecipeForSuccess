@@ -13,7 +13,7 @@ import { TouchableHighlight } from 'react-native';
 
 EStyleSheet.build();
 
-export default function searchResults({ navigation, route }) {
+export default function SearchResults({ navigation, route }) {
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/" + process.env.REACT_APP_API_TOKEN
     const { isSearchFilterModalVisible, setSearchFilterModalVisible } = useContext(Context);
 

@@ -24,7 +24,7 @@ export default function Home({ navigation, route }){
     const [italianRecs, setItalianRecs] = useState([]);
     const [chineseRecs, setChineseRecs] = useState([]);
     const [surpriseRecs, setSurpriseRecs] = useState([]);
-    const {username,setUsername,email,setEmail,isHomeFiltersModelVisible, setHomeFiltersModelVisible} = useContext(Context)
+    const {username,setUsername,email,setEmail,isHomeFiltersModelVisible, setHomeFiltersModelVisible, visibleWidgets, setVisibleWidgets} = useContext(Context)
 
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/" + process.env.REACT_APP_API_TOKEN
 
@@ -247,11 +247,11 @@ export default function Home({ navigation, route }){
                 </Pressable>
                 
                 <View style={{ alignItems: 'center' }}>
-                    {isHomeFiltersModelVisible ? <HomeFiltersModel blurb="Set Home Page Filters"/> : null}
+                    {isHomeFiltersModelVisible ? <HomeFiltersModel widgets={visibleWidgets} setWidgets={setVisibleWidgets} /> : null}
                 </View>
 
                 <View style={{alignItems: 'center'}}>
-                    <FlatList scrollEnabled={false}
+                    {visibleWidgets[0] && <FlatList scrollEnabled={false}
                         style={{...global.grayForeground, marginVertical: '0%', marginBottom: '5%'}}
                         ListHeaderComponent={<Text style={global.titleText}>Popular Recipes</Text>}
                         data={popularRecs}
@@ -288,8 +288,8 @@ export default function Home({ navigation, route }){
                                 <Text style={{ ...global.clickableText, marginBottom: '5%' }}>View more</Text>
                             </Pressable>
                         }
-                    />
-                    <FlatList scrollEnabled={false}
+                    />}
+                    {<FlatList scrollEnabled={false}
                         style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>Top Desserts</Text>}
                         data={dessertRecs}
@@ -326,8 +326,8 @@ export default function Home({ navigation, route }){
                                 <Text style={{ ...global.clickableText, marginBottom: '5%' }}>View more</Text>
                             </Pressable>
                         }
-                    />
-                    <FlatList scrollEnabled={false}
+                    />}
+                    {<FlatList scrollEnabled={false}
                         style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>Chicken</Text>}
                         data={chickenRecs}
@@ -364,8 +364,8 @@ export default function Home({ navigation, route }){
                                 <Text style={global.clickableText}>View more</Text>
                             </Pressable>
                         }
-                    />
-                    <FlatList scrollEnabled={false}
+                    />}
+                    {<FlatList scrollEnabled={false}
                         style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>Breakfast Creations</Text>}
                         data={breakfastRecs}
@@ -402,8 +402,8 @@ export default function Home({ navigation, route }){
                                 <Text style={{ ...global.clickableText, marginBottom: '5%' }}>View more</Text>
                             </Pressable>
                         }
-                    />
-                    <FlatList scrollEnabled={false}
+                    />}
+                    {<FlatList scrollEnabled={false}
                         style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>Lunch Options</Text>}
                         data={lunchRecs}
@@ -440,8 +440,8 @@ export default function Home({ navigation, route }){
                                 <Text style={{ ...global.clickableText, marginBottom: '5%' }}>View more</Text>
                             </Pressable>
                         }
-                    />
-                    <FlatList scrollEnabled={false}
+                    />}
+                    {<FlatList scrollEnabled={false}
                         style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>Dinners</Text>}
                         data={dinnerRecs}
@@ -478,8 +478,8 @@ export default function Home({ navigation, route }){
                                 <Text style={{ ...global.clickableText, marginBottom: '5%' }}>View more</Text>
                             </Pressable>
                         }
-                    />
-                    <FlatList scrollEnabled={false}
+                    />}
+                    {<FlatList scrollEnabled={false}
                         style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>Salads</Text>}
                         data={saladRecs}
@@ -516,8 +516,8 @@ export default function Home({ navigation, route }){
                                 <Text style={{ ...global.clickableText, marginBottom: '5%' }}>View more</Text>
                             </Pressable>
                         }
-                    />
-                    <FlatList scrollEnabled={false}
+                    />}
+                    {<FlatList scrollEnabled={false}
                         style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>American</Text>}
                         data={americanRecs}
@@ -554,8 +554,8 @@ export default function Home({ navigation, route }){
                                 <Text style={{ ...global.clickableText, marginBottom: '5%' }}>View more</Text>
                             </Pressable>
                         }
-                    />
-                    <FlatList scrollEnabled={false}
+                    />}
+                    {<FlatList scrollEnabled={false}
                         style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>Mexican</Text>}
                         data={mexicanRecs}
@@ -592,8 +592,8 @@ export default function Home({ navigation, route }){
                                 <Text style={{ ...global.clickableText, marginBottom: '5%' }}>View more</Text>
                             </Pressable>
                         }
-                    />
-                    <FlatList scrollEnabled={false}
+                    />}
+                    {<FlatList scrollEnabled={false}
                         style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>Italian</Text>}
                         data={italianRecs}
@@ -630,8 +630,8 @@ export default function Home({ navigation, route }){
                                 <Text style={{ ...global.clickableText, marginBottom: '5%' }}>View more</Text>
                             </Pressable>
                         }
-                    />
-                    <FlatList scrollEnabled={false}
+                    />}
+                    {<FlatList scrollEnabled={false}
                         style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>Chinese</Text>}
                         data={chineseRecs}
@@ -668,8 +668,8 @@ export default function Home({ navigation, route }){
                                 <Text style={{ ...global.clickableText, marginBottom: '5%' }}>View more</Text>
                             </Pressable>
                         }
-                    />
-                    <FlatList scrollEnabled={false}
+                    />}
+                    {<FlatList scrollEnabled={false}
                         style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>Surprise me!</Text>}
                         data={surpriseRecs}
@@ -706,7 +706,7 @@ export default function Home({ navigation, route }){
                                 <Text style={{ ...global.clickableText, marginBottom: '5%' }}>View more</Text>
                             </Pressable>
                         }
-                    />
+                    />}
                 </View>
             </ScrollView>
             <Footer />

@@ -24,9 +24,23 @@ const WIDGETS = [
   // Add more widgets as necessary
 ];
 
-const HomeFiltersModel = ({blurb}) => {
+const HomeFiltersModel = ({widgets, setWidgets}) => {
   const {isHomeFiltersModelVisible, setHomeFiltersModelVisible} = useContext(Context);
   const navigation = useNavigation();
+  let tempWidgets = widgets;
+  
+  function updateWidgets(index) {
+    const nextWidgets = tempWidgets.map((c, i) => {
+      if (i === index) {
+        // Flip the true/false value
+        return !c;
+      } else {
+        // The rest haven't changed
+        return c;
+      }
+    });
+    tempWidgets = nextWidgets;
+  }
 
   return (
     <View style={styles.centeredView}>
@@ -39,30 +53,10 @@ const HomeFiltersModel = ({blurb}) => {
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            {/* <Text style={global.titleText}>{blurb}</Text>
-            
-            <Pressable
-              style={global.button}
-              onPress={() => {
-                setHomeFiltersModelVisible(!isHomeFiltersModelVisible);
-                setHomeFiltersModelVisible(false);
-                navigation.navigate('Home');
-            }}>
-            <Text style={global.buttonMinorText}>Return Home</Text>
-            </Pressable>
-            
-            <Pressable
-              style={global.button}
-              onPress={() => {
-                setHomeFiltersModelVisible(!isHomeFiltersModelVisible);
-                setHomeFiltersModelVisible(false);
-                navigation.navigate('Home');
-            }}>
-            <Text style={global.buttonMinorText}>Return Home</Text>
-            </Pressable> */}
             <Text style={global.titleText}>Select Widgets to Display</Text>
             <ScrollView style={{ marginTop: '10%' }}>
               {WIDGETS.map((item, index) => (
+                updateWidgets(index),
                 <View style={{ flexDirection: 'row' }} key={index}>
                   <Text style={{ ...global.bodyText, alignSelf: 'center' }}>{item.title}</Text>
                   <SwitchComp name={item.title} />
@@ -75,6 +69,7 @@ const HomeFiltersModel = ({blurb}) => {
               onPress={() => {
                 setHomeFiltersModelVisible(!isHomeFiltersModelVisible);
                 setHomeFiltersModelVisible(false);
+                setWidgets(tempWidgets);
                 navigation.navigate('Home');
             }}>
             <Text style={global.buttonText}>OK</Text>

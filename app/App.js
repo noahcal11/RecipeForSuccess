@@ -1,12 +1,12 @@
 import { useEffect, useState, createContext } from 'react';
-import Login from "./views/login";
-import Home from "./views/home";
-import Skills from "./views/skills";
+import Login from "./views/Login";
+import Home from "./views/Home";
+import Skills from "./views/Skills";
 import recipePages from "./views/RecipePages";
-import Profile from "./views/profile";
-import Favorites from './views/favorites';
+import Profile from "./views/Profile";
+import Favorites from './views/Favorites';
 import searchResults from './views/SearchResults'
-import PageTemplate from './views/pageTemplate';
+import PageTemplate from './views/PageTemplate';
 import Created from './views/Created';
 import Completed from './views/Completed';
 import upload from './views/Upload';
@@ -28,7 +28,8 @@ export default function App() {
   const [completed, setCompleted] = useState([]);
   const [isChangePasswordModelVisible, setChangePasswordModelVisible] = useState(false);
   const [isHomeFiltersModelVisible, setHomeFiltersModelVisible] = useState(false);
-  const [isSearchFilterModalVisible, setSearchFilterModalVisible] = useState(false)
+  const [isSearchFilterModalVisible, setSearchFilterModalVisible] = useState(false);
+  const [visibleWidgets, setVisibleWidgets] = useState([true, true, true, true, true, true, true, true, true, true, true, true]);
 
   let [fontsLoaded, fontError] = useFonts({
     Cairo_500Medium,
@@ -50,7 +51,8 @@ export default function App() {
         completed, setCompleted,
         created, setCreated,
         isChangePasswordModelVisible, setChangePasswordModelVisible,
-        isSearchFilterModalVisible, setSearchFilterModalVisible
+        isSearchFilterModalVisible, setSearchFilterModalVisible,
+        visibleWidgets, setVisibleWidgets,
       }}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{

@@ -13,7 +13,7 @@ import * as ImagePicker from 'expo-image-picker';
 
 EStyleSheet.build();
 
-export default function upload() {
+export default function Upload() {
 
         const [image, setImage] = useState(null);
       
