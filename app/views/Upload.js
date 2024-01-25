@@ -9,14 +9,66 @@ import global from '../Genstyle';
 import { useNavigation } from '@react-navigation/core';
 import RNPickerSelect from 'react-native-picker-select';
 import * as ImagePicker from 'expo-image-picker';
+import SwitchComp from '../Components/Switch';
+
 
 
 EStyleSheet.build();
 
 export default function Upload() {
 
+        const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
+        
+        const uploadRecipe = async () => {
+            const data = await fetch(API_BASE+"/recipe/new", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({title: title, desc: desc, total_time: prepTime, yields: servings, steps: steps, ingredients: ingredients, cuisine: cusine, category: category, link: "yourmom.com"})
+            }).then(navigation.navigate('Profile'));
+        }
+
         const [image, setImage] = useState(null);
       
+        const SECTIONS = [
+            {
+              content: [
+                { title: 'Dairy' },
+                { title: 'Eggs'},
+                { title: 'Fish'},
+                { title: 'Shellfish'},
+                { title: 'Tree Nuts'},
+                { title: 'Peanuts'},
+                { title: 'Wheat'},
+                { title: 'Soybeans'},
+                { title: 'Chicken'},
+                { title: 'Pork'},
+                { title: 'Red Meat'},
+                { title: 'Gluten'},
+              ],
+            },
+          ];
+
+          const renderContent = () => {
+            return (
+              <View>
+                {SECTIONS.map((section, sectionIndex) => (
+                  <View key={sectionIndex}>
+                    <Text style={global.centerBodyText}>{section.title}</Text>
+                    {section.content.map((item, index) => (
+                      <View style={global.horizontal} key={index}>
+                        <Text style={global.bodyText}>{item.title}</Text>
+                        <SwitchComp name={item.title}> </SwitchComp>
+                      </View>
+                    ))}
+                  </View>
+                ))}
+              </View>
+            );
+        };
+
         const pickImage = async () => {
           // No permissions request is necessary for launching the image library
           let result = await ImagePicker.launchImageLibraryAsync({
@@ -31,8 +83,14 @@ export default function Upload() {
         };
 
     const navigation = useNavigation();
+    const [title, setTitle] = useState('')
+    const [desc, setDesc] = useState('')
     const [ingredients, setIngredients] = useState([{ ingredient: '', qty: '', unit: '' }]);
     const [steps, setSteps] = useState([{ step: '' }]);
+    const [prepTime, setPrepTime] = useState('')
+    const [servings, setServings] = useState('')
+    const [category, setCategory] = useState('category')
+    const [cusine, setCusine] = useState('cusine')
 
 
     const handleAddIngredient = () => {
@@ -87,10 +145,8 @@ export default function Upload() {
         { label: 'Pinch', value: 'Pinch' },
         { label: 'Pound', value: 'Pound' },
         { label: 'Ounce', value: 'Ounce' },
-        
-        
-        // Add more units as necessary
     ];
+
 
     return(
         <View style={global.whiteBackground}>
@@ -109,10 +165,11 @@ export default function Upload() {
 
                     <View style={global.grayForeground}>
                         <Text style={styles.titleText}>Title</Text>
-                        <TextInput style={styles.input} placeholder="Enter your recipe title..." />
+                        <TextInput style={styles.input} placeholder="Enter your recipe title..." onChangeText={setTitle}/>
+
 
                         <Text style={styles.titleText}>Description</Text>
-                        <TextInput style={styles.input} placeholder="Enter your recipe description..." />
+                        <TextInput style={styles.input} placeholder="Enter your recipe description..." onChangeText={setDesc}/>
                     </View>
                     
                     <View style={global.grayForeground}> 
@@ -187,26 +244,31 @@ export default function Upload() {
                         style={styles.QtyUnits} 
                         keyboardType='numeric'
                         placeholder="Enter number of total minutes" 
+                        onChangeText={setPrepTime}
                     />
                     <Text style={styles.titleText}>Servings</Text>
                     <TextInput 
                         style={styles.QtyUnits} 
                         keyboardType='numeric'
-                        placeholder="Enter number of total servings" 
+                        placeholder="Enter number of total servings"
+                        onChangeText={setServings}
                     />
                     <Text style={styles.titleText}>Category</Text>
                     <Text style={styles.titleText}>I need the categories</Text>
-                    
-
-
                 </View>
                 
+                <View style={global.grayForeground}> 
+                    <Text style={styles.titleText}>Select Allergies</Text>
+                    <Text style={styles.bodyText}>Select any allergies that your recipe contains</Text>
+                    {renderContent()}
+                </View>
+
                 <Pressable style={global.button} > 
                     <Text>Preview</Text>
                 </Pressable>
 
-                <Pressable style={global.button} > 
-                    <Text>Submit</Text>
+                <Pressable style={global.button} OnPress={uploadRecipe}> 
+                    <Text>Submit</Text>                  
                 </Pressable>
 
                 </ScrollView> 
@@ -259,10 +321,11 @@ const styles = EStyleSheet.create({
       bodyText: {
         minWidth: 20,
         color: 'black',
-        fontSize: '1.5rem',
+        fontSize: '1rem',
         fontFamily: 'Cairo_500Medium',
         flex: 0.3,
-        paddingLeft: '0.5rem'
+        paddingLeft: '0.5rem',
+        textAlign: 'center',
       },
       image: {
         width: '20rem',

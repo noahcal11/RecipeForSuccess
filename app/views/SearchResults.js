@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { Text, Image, View, Pressable, ScrollView, TextInput, FlatList, Dimensions, Modal } from 'react-native';
+import { useEffect } from 'react';  // Import useEffect
 import Banner from '../Components/Banner';
 import Footer from '../Components/Footer';
 import SearchFilterModal from '../Components/SearchFilterModal';
@@ -21,21 +22,28 @@ export default function SearchResults({ navigation, route }) {
     const [showDropdown, setShowDropdown] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null); //No initial option selected
     const [searchResults, setSearchResults] = useState([]);
-
+    const [searchResultsExists, setSearchResultsExists] = useState(true);
     const sortOptions = ['A to Z', 'Z to A']; // Your sorting options
 
     const getSearch = async (searchTerm) => {
-        const response = await fetch(API_BASE + "/recipe/get/", {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify({ general: searchTerm })
-        })
-            .then(res => res.json())
-            .then(data => setSearchResults(data))
-            .catch(error => console.error(error));
+        try {
+            const response = await fetch(API_BASE + "/recipe/get/", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({ general: searchTerm })
+            });
+    
+            const data = await response.json();
+    
+            setSearchResults(data);
+            setSearchResultsExists(data.length > 0);  // Set searchResultsExists based on the length of data
+        } catch (error) {
+            console.error(error);
+            setSearchResultsExists(false);  // Set searchResultsExists to false in case of an error
+        }
     }
 
     const handleSortToggle = () => {
@@ -64,6 +72,8 @@ export default function SearchResults({ navigation, route }) {
     useState(() => {
         getSearch(route.params.searchTerm);
     }, []);
+
+
 
     return (
         <View style={global.whiteBackground}>
@@ -109,7 +119,34 @@ export default function SearchResults({ navigation, route }) {
                         )}
                     </View>
 
-                    <FlatList scrollEnabled={false}
+                    {!searchResultsExists ? (
+
+                        <Text style={styles.noResultsText}>No results found.</Text>
+                    ) : (
+                            <FlatList scrollEnabled={false}
+                            data={searchResults}
+                            renderItem={({ item }) => (
+                                <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
+                                    style={({ pressed }) => [
+                                        {
+                                            opacity: pressed
+                                                ? 0.2
+                                                : 1,
+                                        }]}
+                                >
+                                    <View style={styles.imageView} id={item._id}>
+                                        <Image style={styles.imageThumbnail} source={{ uri: item.image }} />
+                                        <Text style={global.subText}>{item.title}</Text>
+                                    </View>
+                                </Pressable>
+                            )}
+                            numColumns={2}
+                            keyExtractor={(item, index) => index}
+
+                        />
+                    )}
+                    
+                    {/* <FlatList scrollEnabled={false}
                         data={searchResults}
                         renderItem={({ item }) => (
                             <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
@@ -129,7 +166,7 @@ export default function SearchResults({ navigation, route }) {
                         numColumns={2}
                         keyExtractor={(item, index) => index}
 
-                    />
+                    /> */}
 
                     <View style={{ alignItems: 'center' }}>
                         {isSearchFilterModalVisible ? <SearchFilterModal blurb="Filter Search Results" /> : null}
@@ -217,6 +254,10 @@ const styles = EStyleSheet.create({
 
     dropdownOptionText: {
         fontSize: '1rem',
-
     },
+    noResultsText: {
+        textAlign: 'center',
+        fontSize: '2rem',
+        fontWeight: 'bold'
+    }
 });
