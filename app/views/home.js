@@ -289,7 +289,7 @@ export default function Home({ navigation, route }){
                             </Pressable>
                         }
                     />}
-                    {<FlatList scrollEnabled={false}
+                    {visibleWidgets[1] && <FlatList scrollEnabled={false}
                         style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>Top Desserts</Text>}
                         data={dessertRecs}
@@ -327,7 +327,7 @@ export default function Home({ navigation, route }){
                             </Pressable>
                         }
                     />}
-                    {<FlatList scrollEnabled={false}
+                    {visibleWidgets[2] && <FlatList scrollEnabled={false}
                         style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>Chicken</Text>}
                         data={chickenRecs}
@@ -365,7 +365,7 @@ export default function Home({ navigation, route }){
                             </Pressable>
                         }
                     />}
-                    {<FlatList scrollEnabled={false}
+                    {visibleWidgets[3] && <FlatList scrollEnabled={false}
                         style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>Breakfast Creations</Text>}
                         data={breakfastRecs}
@@ -403,7 +403,7 @@ export default function Home({ navigation, route }){
                             </Pressable>
                         }
                     />}
-                    {<FlatList scrollEnabled={false}
+                    {visibleWidgets[4] && <FlatList scrollEnabled={false}
                         style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>Lunch Options</Text>}
                         data={lunchRecs}
@@ -441,7 +441,7 @@ export default function Home({ navigation, route }){
                             </Pressable>
                         }
                     />}
-                    {<FlatList scrollEnabled={false}
+                    {visibleWidgets[5] && <FlatList scrollEnabled={false}
                         style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>Dinners</Text>}
                         data={dinnerRecs}
@@ -479,7 +479,7 @@ export default function Home({ navigation, route }){
                             </Pressable>
                         }
                     />}
-                    {<FlatList scrollEnabled={false}
+                    {visibleWidgets[6] && <FlatList scrollEnabled={false}
                         style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>Salads</Text>}
                         data={saladRecs}
@@ -517,7 +517,7 @@ export default function Home({ navigation, route }){
                             </Pressable>
                         }
                     />}
-                    {<FlatList scrollEnabled={false}
+                    {visibleWidgets[7] && <FlatList scrollEnabled={false}
                         style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>American</Text>}
                         data={americanRecs}
@@ -555,7 +555,7 @@ export default function Home({ navigation, route }){
                             </Pressable>
                         }
                     />}
-                    {<FlatList scrollEnabled={false}
+                    {visibleWidgets[8] && <FlatList scrollEnabled={false}
                         style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>Mexican</Text>}
                         data={mexicanRecs}
@@ -593,7 +593,7 @@ export default function Home({ navigation, route }){
                             </Pressable>
                         }
                     />}
-                    {<FlatList scrollEnabled={false}
+                    {visibleWidgets[9] && <FlatList scrollEnabled={false}
                         style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>Italian</Text>}
                         data={italianRecs}
@@ -631,7 +631,7 @@ export default function Home({ navigation, route }){
                             </Pressable>
                         }
                     />}
-                    {<FlatList scrollEnabled={false}
+                    {visibleWidgets[10] && <FlatList scrollEnabled={false}
                         style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>Chinese</Text>}
                         data={chineseRecs}
@@ -669,7 +669,7 @@ export default function Home({ navigation, route }){
                             </Pressable>
                         }
                     />}
-                    {<FlatList scrollEnabled={false}
+                    {visibleWidgets[11] && <FlatList scrollEnabled={false}
                         style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>Surprise me!</Text>}
                         data={surpriseRecs}

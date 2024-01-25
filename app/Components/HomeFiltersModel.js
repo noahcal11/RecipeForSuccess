@@ -59,7 +59,7 @@ const HomeFiltersModel = ({widgets, setWidgets}) => {
                 updateWidgets(index),
                 <View style={{ flexDirection: 'row' }} key={index}>
                   <Text style={{ ...global.bodyText, alignSelf: 'center' }}>{item.title}</Text>
-                  <SwitchComp name={item.title} />
+                  <SwitchComp name={item.title} index={index} />
                 </View>
               ))}
             </ScrollView>
