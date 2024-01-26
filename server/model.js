@@ -15,7 +15,8 @@ const RecipeSchema = new Schema({
     author: {type: String},
     skills: {type:Array},
     preferences: {type:Array},
-    keywords: {type:Array}
+    keywords: {type:Array},
+    rating: {type:Array, default: [0, 0]}
 })
 
 const UserSchema = new Schema({

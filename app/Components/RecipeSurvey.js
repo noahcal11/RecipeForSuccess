@@ -22,7 +22,7 @@ import global from '../Genstyle'
       - Have the question only appear if that skill is used
      - Add an API call that adds the on-page skill list to the user's skill list
 */
-const RecipeSurvey = ({directions, title}) => {
+const RecipeSurvey = ({directions, title, id}) => {
     const navigation = useNavigation()
     const [skillList, setSkillList] = useState([0,0,0,0]);
     const [usedSkills, setUsedSkills] = useState([true, true, true, true]);
@@ -46,7 +46,20 @@ const RecipeSurvey = ({directions, title}) => {
     }
 
     const updateRating = async () => {
-        
+        let ratingTotal = -5;
+        starValue.forEach(e => {
+            ratingTotal += e
+        });
+        if(ratingTotal > 0) {
+            await fetch(API_BASE+"/recipe/update-rating/" + id, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({rating: ratingTotal})
+            }).catch(err => console.error(err));
+        }
     }
 
     const RatingButtons = (skill, stepID) => {

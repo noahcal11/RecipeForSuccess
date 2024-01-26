@@ -26,7 +26,6 @@ EStyleSheet.build();
 export default function recipePages({ navigation, route }) {
   const [recipe, setRecipe] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [rating, setRating] = useState(3.5);
   const { recipePageState, setRecipePageState, username,setUsername, email,setEmail, favorited,setFavorited } = useContext(Context);
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
@@ -72,11 +71,7 @@ export default function recipePages({ navigation, route }) {
     setFavorited(data[0].favorited_recipes);
   }
 
-  const getRating = async () => {
-    
-  }
-
-  function displayRating() {
+  function displayRating(rating) {
     let star2, star3, star4, star5 = new Object;
     if (rating >= 2) {
       star2 = <FilledStar style={{ flex: 1 }} width='40' height='40' fill='#FFDF00' />
@@ -149,7 +144,7 @@ export default function recipePages({ navigation, route }) {
                     </Pressable>
                   </View>
                   {/* Star Rating */}
-                  {displayRating()}
+                  {displayRating(recipe.rating)}
                   {/* Recipe Description */}
                   <View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
                     <View>
@@ -206,6 +201,7 @@ export default function recipePages({ navigation, route }) {
               title = {recipe.title}
               username={route.params.username}
               email={route.params.email}
+              id={route.params._id}
             />
             <Footer />
           </View>
