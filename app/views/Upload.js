@@ -26,7 +26,7 @@ export default function Upload() {
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({title: title, desc: desc, total_time: prepTime, yields: servings, steps: steps, ingredients: ingredients, cuisine: cusine, category: category, link: "yourmom.com"})
+            body: JSON.stringify({title: title, desc: desc, total_time: prepTime, yields: servings, steps: steps, ingredients: ingredients, cuisine: cusine, category: category, link: "yourmom.com", allergies: allergies})
             }).then(navigation.navigate('Profile'));
         }
 
@@ -60,7 +60,7 @@ export default function Upload() {
                     {section.content.map((item, index) => (
                       <View style={global.horizontal} key={index}>
                         <Text style={global.bodyText}>{item.title}</Text>
-                        <SwitchComp name={item.title}> </SwitchComp>
+                        <SwitchComp name={item.title} checked={allergies[index]} onToggle={(checked) => handleToggle(index, checked)} />
                       </View>
                     ))}
                   </View>
@@ -91,6 +91,15 @@ export default function Upload() {
     const [servings, setServings] = useState('')
     const [category, setCategory] = useState('category')
     const [cusine, setCusine] = useState('cusine')
+    const [allergies, setAllergies] = useState(Array(SECTIONS[0].content.length).fill(false));
+
+    const handleToggle = (index, checked) => {
+        setAllergies(prevAllergies => {
+            const newAllergies = [...prevAllergies];
+            newAllergies[index] = checked;
+            return newAllergies;
+        });
+    };
 
 
     const handleAddIngredient = () => {
@@ -261,6 +270,7 @@ export default function Upload() {
                     <Text style={styles.titleText}>Select Allergies</Text>
                     <Text style={styles.bodyText}>Select any allergies that your recipe contains</Text>
                     {renderContent()}
+
                 </View>
 
                 <Pressable style={global.button} > 
