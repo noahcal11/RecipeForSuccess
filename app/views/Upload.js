@@ -26,7 +26,7 @@ export default function Upload() {
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({title: title, desc: desc, total_time: prepTime, yields: servings, steps: steps, ingredients: ingredients, cuisine: cusine, category: category, link: "yourmom.com", allergies: allergies})
+            body: JSON.stringify({title: title, desc: desc, total_time: prepTime, yields: servings, steps: steps, ingredients: ingredients, cuisine: cusine, category: category, link: "yourmomisfat2.com", allergies: allergies})
             }).then(navigation.navigate('Profile'));
         }
 
@@ -277,8 +277,16 @@ export default function Upload() {
                     <Text>Preview</Text>
                 </Pressable>
 
-                <Pressable style={global.button} OnPress={uploadRecipe}> 
-                    <Text>Submit</Text>                  
+                <Pressable 
+                    style={({ pressed }) => [
+                        global.button,
+                        {
+                            opacity: pressed ? 0.2 : 1,
+                        }
+                    ]}
+                    onPress={uploadRecipe}
+                >
+                    <Text>Submit</Text>
                 </Pressable>
 
                 </ScrollView> 

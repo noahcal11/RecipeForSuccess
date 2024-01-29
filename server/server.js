@@ -77,7 +77,8 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', (req,res) => {
         cuisine: req.body.cuisine,
         category: req.body.category,
         link: req.body.link,
-        keywords: keywords
+        keywords: keywords,
+        allergies: req.body.allergies,
     })
     recipe.save();
 
