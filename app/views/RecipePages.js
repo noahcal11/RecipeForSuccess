@@ -25,6 +25,8 @@ EStyleSheet.build();
 
 export default function recipePages({ navigation, route }) {
   const [recipe, setRecipe] = useState([]);
+  // Until rating is added to the database, this test variable is used
+  const [dummyRating, setDummyRating] = useState(3.5);
   const [isFavorite, setIsFavorite] = useState(false);
   const { recipePageState, setRecipePageState, username,setUsername, email,setEmail, favorited,setFavorited } = useContext(Context);
 
@@ -144,7 +146,8 @@ export default function recipePages({ navigation, route }) {
                     </Pressable>
                   </View>
                   {/* Star Rating */}
-                  {displayRating(recipe.rating)}
+                  {/* {displayRating(recipe.rating[0])} */}
+                  {displayRating(dummyRating)}
                   {/* Recipe Description */}
                   <View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
                     <View>

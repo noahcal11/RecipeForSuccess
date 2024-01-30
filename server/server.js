@@ -94,6 +94,7 @@ app.delete('/'+process.env.API_TOKEN+'/recipe/delete/:id', async (req, res) => {
 // Rating Section
 app.post('/'+process.env.API_TOKEN+'/recipe/update-rating/:id', async (req,res) => {
     const recipe = await Recipe.findOneById(req.body.id);
+    // rating[0] contains the aggregated rating, rating[1] contains how many ratings there are
     recipe.rating[0] = (recipe.rating[0] + req.body.rating) / (recipe.rating[1] + 1);
     recipe.rating[1]++;
     recipe.save();
