@@ -9,6 +9,8 @@ import global from '../Genstyle';
 import { useNavigation } from '@react-navigation/core';
 import RNPickerSelect from 'react-native-picker-select';
 import * as ImagePicker from 'expo-image-picker';
+import SwitchComp from '../Components/Switch';
+
 
 
 EStyleSheet.build();
@@ -30,6 +32,43 @@ export default function Upload() {
 
         const [image, setImage] = useState(null);
       
+        const SECTIONS = [
+            {
+              content: [
+                { title: 'Dairy' },
+                { title: 'Eggs'},
+                { title: 'Fish'},
+                { title: 'Shellfish'},
+                { title: 'Tree Nuts'},
+                { title: 'Peanuts'},
+                { title: 'Wheat'},
+                { title: 'Soybeans'},
+                { title: 'Chicken'},
+                { title: 'Pork'},
+                { title: 'Red Meat'},
+                { title: 'Gluten'},
+              ],
+            },
+          ];
+
+          const renderContent = () => {
+            return (
+              <View>
+                {SECTIONS.map((section, sectionIndex) => (
+                  <View key={sectionIndex}>
+                    <Text style={global.centerBodyText}>{section.title}</Text>
+                    {section.content.map((item, index) => (
+                      <View style={global.horizontal} key={index}>
+                        <Text style={global.bodyText}>{item.title}</Text>
+                        <SwitchComp name={item.title}> </SwitchComp>
+                      </View>
+                    ))}
+                  </View>
+                ))}
+              </View>
+            );
+        };
+
         const pickImage = async () => {
           // No permissions request is necessary for launching the image library
           let result = await ImagePicker.launchImageLibraryAsync({
@@ -106,10 +145,8 @@ export default function Upload() {
         { label: 'Pinch', value: 'Pinch' },
         { label: 'Pound', value: 'Pound' },
         { label: 'Ounce', value: 'Ounce' },
-        
-        
-        // Add more units as necessary
     ];
+
 
     return(
         <View style={global.whiteBackground}>
@@ -218,11 +255,14 @@ export default function Upload() {
                     />
                     <Text style={styles.titleText}>Category</Text>
                     <Text style={styles.titleText}>I need the categories</Text>
-                    
-
-
                 </View>
                 
+                <View style={global.grayForeground}> 
+                    <Text style={styles.titleText}>Select Allergies</Text>
+                    <Text style={styles.bodyText}>Select any allergies that your recipe contains</Text>
+                    {renderContent()}
+                </View>
+
                 <Pressable style={global.button} > 
                     <Text>Preview</Text>
                 </Pressable>
@@ -281,10 +321,11 @@ const styles = EStyleSheet.create({
       bodyText: {
         minWidth: 20,
         color: 'black',
-        fontSize: '1.5rem',
+        fontSize: '1rem',
         fontFamily: 'Cairo_500Medium',
         flex: 0.3,
-        paddingLeft: '0.5rem'
+        paddingLeft: '0.5rem',
+        textAlign: 'center',
       },
       image: {
         width: '20rem',
