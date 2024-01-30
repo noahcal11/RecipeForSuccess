@@ -14,6 +14,9 @@ import RecipeSurvey from '../Components/RecipeSurvey';
 import Footer from '../Components/Footer';
 import HeartIcon from '../assets/svg/heart';
 import FilledHeart from '../assets/svg/filledHeart';
+import FilledStar from '../assets/svg/filledStar';
+import HalfStar from '../assets/svg/halfStar';
+import EmptyStar from '../assets/svg/emptyStar';
 import { useState, useContext } from 'react';
 import { Context } from '../Context'
 import global from '../Genstyle'
@@ -22,6 +25,8 @@ EStyleSheet.build();
 
 export default function recipePages({ navigation, route }) {
   const [recipe, setRecipe] = useState([]);
+  // Until rating is added to the database, this test variable is used
+  const [dummyRating, setDummyRating] = useState(3.5);
   const [isFavorite, setIsFavorite] = useState(false);
   const { recipePageState, setRecipePageState, username,setUsername, email,setEmail, favorited,setFavorited } = useContext(Context);
 
@@ -68,10 +73,53 @@ export default function recipePages({ navigation, route }) {
     setFavorited(data[0].favorited_recipes);
   }
 
+  function displayRating(rating) {
+    let star2, star3, star4, star5 = new Object;
+    if (rating >= 2) {
+      star2 = <FilledStar style={{ flex: 1 }} width='40' height='40' fill='#FFDF00' />
+    } else if (rating >= 1.5) {
+      star2 = <HalfStar style={{ flex: 1 }} width='40' height='40' fill='#FFDF00'/>
+    } else {
+      star2 = <EmptyStar style={{ flex: 1 }} width='40' height='40' />
+    }
+    if (rating >= 3) {
+      star3 = <FilledStar style={{ flex: 1 }} width='40' height='40' fill='#FFDF00' />
+    } else if (rating >= 2.5) {
+      star3 = <HalfStar style={{ flex: 1 }} width='40' height='40' fill='#FFDF00' />
+    } else {
+      star3 = <EmptyStar style={{ flex: 1 }} width='40' height='40' />
+    }
+    if (rating >= 4) {
+      star4 = <FilledStar style={{ flex: 1 }} width='40' height='40' fill='#FFDF00' />
+    } else if (rating >= 3.5) {
+      star4 = <HalfStar style={{ flex: 1 }} width='40' height='40' fill='#FFDF00' />
+    } else {
+      star4 = <EmptyStar style={{ flex: 1 }} width='40' height='40' />
+    }
+    if (rating >= 5) {
+      star5 = <FilledStar style={{ flex: 1 }} width='40' height='40' fill='#FFDF00' />
+    } else if (rating >= 4.5) {
+      star5 = <HalfStar style={{ flex: 1 }} width='40' height='40' fill='#FFDF00' />
+    } else {
+      star5 = <EmptyStar style={{ flex: 1 }} width='40' height='40' />
+    }
+    return (
+      <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+        <FilledStar style={{ flex: 1 }} width='40' height='40' fill='#FFDF00' />
+        {star2}
+        {star3}
+        {star4}
+        {star5}
+        <Text style={global.centeredText}>{rating}</Text>
+      </View>
+    )
+  }
+
   useState(() => {
     getRecipes();
     getFavorite();
   }, []);
+
   switch(recipePageState) {
     case 'details':
       return (
@@ -86,7 +134,7 @@ export default function recipePages({ navigation, route }) {
               renderItem={({ item }) => (
                 <>
                 <Text style={global.titleText}> {recipe.title} </Text>
-                  {/* Recipe Description */}
+                  {/* Recipe Image */}
                   <View style={{ position: 'relative' }}>
                     <Image source={{uri:item.image}} style={styles.image} />
                     <Pressable
@@ -97,6 +145,10 @@ export default function recipePages({ navigation, route }) {
                         :<HeartIcon fill='white' width='40' height='40' />}
                     </Pressable>
                   </View>
+                  {/* Star Rating */}
+                  {/* {displayRating(recipe.rating[0])} */}
+                  {displayRating(dummyRating)}
+                  {/* Recipe Description */}
                   <View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
                     <View>
                       <Text style={global.subheaderText}>
@@ -152,6 +204,7 @@ export default function recipePages({ navigation, route }) {
               title = {recipe.title}
               username={route.params.username}
               email={route.params.email}
+              id={route.params._id}
             />
             <Footer />
           </View>
