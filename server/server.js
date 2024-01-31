@@ -80,6 +80,7 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', (req,res) => {
         keywords: keywords,
         allergies: req.body.allergies,
     })
+    console.log(req.body.allergies)
     recipe.save();
 
     res.json(recipe);
