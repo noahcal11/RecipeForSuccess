@@ -43,7 +43,6 @@
     "react-native-svg": "13.9.0",
     "react-native-vector-icons": "^10.0.0",
     "react-native-web": "~0.19.6",
-    "stream": "^0.0.2",
     "styled-component": "^2.8.0"
   },
   "devDependencies": {
