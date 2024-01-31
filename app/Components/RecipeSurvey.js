@@ -7,6 +7,8 @@ import Banner from './Banner'
 import Footer from '../Components/Footer'
 import { useContext } from 'react';
 import { Context } from '../Context'
+import FilledStar from '../assets/svg/filledStar';
+import EmptyStar from '../assets/svg/emptyStar';
 import global from '../Genstyle'
 /* TODO:
     - Update the skills page (and this page) so that the new
@@ -20,12 +22,13 @@ import global from '../Genstyle'
       - Have the question only appear if that skill is used
      - Add an API call that adds the on-page skill list to the user's skill list
 */
-const RecipeSurvey = ({directions, title}) => {
+const RecipeSurvey = ({directions, title, id}) => {
     const navigation = useNavigation()
     const [skillList, setSkillList] = useState([0,0,0,0]);
     const [usedSkills, setUsedSkills] = useState([true, true, true, true]);
     const [selectedButton, setSelectedButton] = useState(new Array(4).fill(0));
     const [allSelected, setAllSelected] = useState(false);
+    const [starValue, setStarValue] = useState([1, 1, 1, 1, 1])
     const { setRecipePageState, username, email } = useContext(Context);
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app";
 
@@ -40,7 +43,24 @@ const RecipeSurvey = ({directions, title}) => {
           method: "POST",
           body: JSON.stringify({"0":skillList[0],"1":skillList[1],"2":skillList[2],"3":skillList[3]})
         }).catch(err => console.error(err));
-      }
+    }
+
+    const updateRating = async () => {
+        let ratingTotal = -5;
+        starValue.forEach(e => {
+            ratingTotal += e
+        });
+        if(ratingTotal > 0) {
+            await fetch(API_BASE+"/recipe/update-rating/" + id, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({rating: ratingTotal})
+            }).catch(err => console.error(err));
+        }
+    }
 
     const RatingButtons = (skill, stepID) => {
         function setBackgroundColor(id) {
@@ -182,6 +202,67 @@ const RecipeSurvey = ({directions, title}) => {
         )
     }
 
+    const RatingValue = () => {
+        return (
+            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                <Pressable
+                    onPress={() => {
+                        setStarValue(starValue.map((item, index) => {
+                            if(index < 1) return 2
+                            else return 1
+                        }))
+                    }}>
+                    {starValue[0] == 2 ?
+                    <FilledStar style={{ flex: 1 }} width='50' height='50' fill='#FFDF00' />
+                    :<EmptyStar style={{ flex: 1 }} width='50' height='50' />}
+                </Pressable>
+                <Pressable
+                    onPress={() => {
+                        setStarValue(starValue.map((item, index) => {
+                            if(index < 2) return 2
+                            else return 1
+                        }))
+                    }}>
+                    {starValue[1] == 2 ?
+                    <FilledStar style={{ flex: 1 }} width='50' height='50' fill='#FFDF00' />
+                    :<EmptyStar style={{ flex: 1 }} width='50' height='50' />}
+                </Pressable>
+                <Pressable
+                    onPress={() => {
+                        setStarValue(starValue.map((item, index) => {
+                            if(index < 3) return 2
+                            else return 1
+                        }))
+                    }}>
+                    {starValue[2] == 2 ?
+                    <FilledStar style={{ flex: 1 }} width='50' height='50' fill='#FFDF00' />
+                    :<EmptyStar style={{ flex: 1 }} width='50' height='50' />}
+                </Pressable>
+                <Pressable
+                    onPress={() => {
+                        setStarValue(starValue.map((item, index) => {
+                            if(index < 4) return 2
+                            else return 1
+                        }))
+                    }}>
+                    {starValue[3] == 2 ?
+                    <FilledStar style={{ flex: 1 }} width='50' height='50' fill='#FFDF00' />
+                    :<EmptyStar style={{ flex: 1 }} width='50' height='50' />}
+                </Pressable>
+                <Pressable
+                    onPress={() => {
+                        setStarValue(starValue.map((item, index) => {
+                            return 2
+                        }))
+                    }}>
+                    {starValue[4] == 2 ?
+                    <FilledStar style={{ flex: 1 }} width='50' height='50' fill='#FFDF00' />
+                    :<EmptyStar style={{ flex: 1 }} width='50' height='50' />}
+                </Pressable>
+            </View>
+        )
+    }
+
     return(
         <View style={global.whiteBackground}>   
         {/* Header */}
@@ -209,6 +290,11 @@ const RecipeSurvey = ({directions, title}) => {
                 <Text style={global.centeredText}>How was your time management and temperature control?</Text>
                 {RatingButtons(3, 3)}
             </View> : <></>}
+            {/* Rating Submission */}
+            <View style={styles.question}>
+                <Text style={global.centeredText}>Did you like this recipe? Please rate it here:</Text>
+                {RatingValue()}
+            </View>
             </ScrollView>
             {/* <FlatList 
                 data={directions}
@@ -229,7 +315,7 @@ const RecipeSurvey = ({directions, title}) => {
             {allSelected ?
                 <Pressable
                     style={global.button}
-                    onPress={() => {updateSkills()}}>
+                    onPress={() => {updateRating(); updateSkills()}}>
                         <Text style={styles.buttonText}>Submit</Text>
                 </Pressable>
                 :
