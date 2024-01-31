@@ -74,7 +74,7 @@ for i,link in enumerate(link_lst):
         yields = scraper.yields()
         steps = scraper.instructions().split("\n")
     except:
-        break
+        pass
 
     skills = []
     for step in steps:
