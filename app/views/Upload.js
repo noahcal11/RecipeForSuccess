@@ -9,7 +9,9 @@ import global from '../Genstyle';
 import { useNavigation } from '@react-navigation/core';
 import RNPickerSelect from 'react-native-picker-select';
 import * as ImagePicker from 'expo-image-picker';
+import Service from "../service-account.json";
 import SwitchComp from '../Components/Switch';
+import { Storage } from '@google-cloud/storage';
 
 
 
@@ -17,9 +19,20 @@ EStyleSheet.build();
 
 export default function Upload() {
 
+        const storage = new Storage({
+        
+        projectId: "recipe-396801",
+        keyFilename: Service,
+        
+        });
+
         const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
         
         const uploadRecipe = async () => {
+            
+            let result= await uploadToGCP('/', title+'.jpg');
+            console.log(result);
+            
             const data = await fetch(API_BASE+"/recipe/new", {
             headers: {
                 'Accept': 'application/json',
@@ -28,6 +41,29 @@ export default function Upload() {
             method: "POST",
             body: JSON.stringify({title: title, desc: desc, total_time: prepTime, yields: servings, steps: steps, ingredients: ingredients, cuisine: cusine, category: category,link: "hello", allergies: allergies})
             }).then(navigation.navigate('Profile'));
+        }
+
+        const uploadToGCP = async (filepath, fileName) => {
+            try {
+        
+                const gcs = storage.bucket("gs://recipe-for-success-images");
+                const storagepath = fileName;
+        
+                const result = await gcs.upload(filepath, {
+                    destination: storagepath,
+                    public: true,
+                    metadata: {
+                        contentType: "application/plain", //application/csv for excel or csv file upload
+                    }
+                });
+                return result[0].metadata.mediaLink;
+        
+            } catch (error) {
+        
+                console.log(error);
+                throw new Error(error.message);
+        
+            }
         }
 
         const [image, setImage] = useState(null);
@@ -97,6 +133,7 @@ export default function Upload() {
         setAllergies(prevAllergies => {
             const newAllergies = [...prevAllergies];
             newAllergies[index] = checked;
+            console.log("Switch toggled:", value);
             return newAllergies;
         });
     };
