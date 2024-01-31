@@ -271,7 +271,7 @@ export default function Home({ navigation, route }) {
                         ListHeaderComponent={<Text style={global.titleText}>Popular Recipes</Text>}
                         data={popularRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
+                            <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
                                 style={({ pressed }) => [
                                     {
                                         opacity: pressed
@@ -309,7 +309,7 @@ export default function Home({ navigation, route }) {
                         ListHeaderComponent={<Text style={global.titleText}>Top Desserts</Text>}
                         data={dessertRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
+                            <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
                                 style={({ pressed }) => [
                                     {
                                         opacity: pressed
@@ -347,7 +347,7 @@ export default function Home({ navigation, route }) {
                         ListHeaderComponent={<Text style={global.titleText}>Chicken</Text>}
                         data={chickenRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
+                            <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
                                 style={({ pressed }) => [
                                     {
                                         opacity: pressed
@@ -385,7 +385,7 @@ export default function Home({ navigation, route }) {
                         ListHeaderComponent={<Text style={global.titleText}>Breakfast Creations</Text>}
                         data={breakfastRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
+                            <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
                                 style={({ pressed }) => [
                                     {
                                         opacity: pressed
@@ -423,7 +423,7 @@ export default function Home({ navigation, route }) {
                         ListHeaderComponent={<Text style={global.titleText}>Lunch Options</Text>}
                         data={lunchRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
+                            <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
                                 style={({ pressed }) => [
                                     {
                                         opacity: pressed
@@ -461,7 +461,7 @@ export default function Home({ navigation, route }) {
                         ListHeaderComponent={<Text style={global.titleText}>Dinners</Text>}
                         data={dinnerRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
+                            <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
                                 style={({ pressed }) => [
                                     {
                                         opacity: pressed
@@ -499,7 +499,7 @@ export default function Home({ navigation, route }) {
                         ListHeaderComponent={<Text style={global.titleText}>Salads</Text>}
                         data={saladRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
+                            <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
                                 style={({ pressed }) => [
                                     {
                                         opacity: pressed
@@ -537,7 +537,7 @@ export default function Home({ navigation, route }) {
                         ListHeaderComponent={<Text style={global.titleText}>American</Text>}
                         data={americanRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
+                            <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
                                 style={({ pressed }) => [
                                     {
                                         opacity: pressed
@@ -575,7 +575,7 @@ export default function Home({ navigation, route }) {
                         ListHeaderComponent={<Text style={global.titleText}>Mexican</Text>}
                         data={mexicanRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
+                            <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
                                 style={({ pressed }) => [
                                     {
                                         opacity: pressed
@@ -613,7 +613,7 @@ export default function Home({ navigation, route }) {
                         ListHeaderComponent={<Text style={global.titleText}>Italian</Text>}
                         data={italianRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
+                            <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
                                 style={({ pressed }) => [
                                     {
                                         opacity: pressed
@@ -651,7 +651,7 @@ export default function Home({ navigation, route }) {
                         ListHeaderComponent={<Text style={global.titleText}>Chinese</Text>}
                         data={chineseRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
+                            <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
                                 style={({ pressed }) => [
                                     {
                                         opacity: pressed
@@ -689,7 +689,7 @@ export default function Home({ navigation, route }) {
                         ListHeaderComponent={<Text style={global.titleText}>Surprise me!</Text>}
                         data={surpriseRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
+                            <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
                                 style={({ pressed }) => [
                                     {
                                         opacity: pressed

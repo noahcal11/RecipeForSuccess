@@ -126,7 +126,7 @@ export default function SearchResults({ navigation, route }) {
                             <FlatList scrollEnabled={false}
                             data={searchResults}
                             renderItem={({ item }) => (
-                                <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
+                                <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
                                     style={({ pressed }) => [
                                         {
                                             opacity: pressed
@@ -149,7 +149,7 @@ export default function SearchResults({ navigation, route }) {
                     {/* <FlatList scrollEnabled={false}
                         data={searchResults}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
+                            <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
                                 style={({ pressed }) => [
                                     {
                                         opacity: pressed
