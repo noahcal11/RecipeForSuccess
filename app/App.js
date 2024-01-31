@@ -62,7 +62,7 @@ export default function App() {
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Skills" component={Skills}/>
-          <Stack.Screen name="recipePages" component={RecipePages}/>
+          <Stack.Screen name="RecipePages" component={RecipePages}/>
           <Stack.Screen name="Profile" component={Profile}/>
           <Stack.Screen name="Favorites" component={Favorites}/>
           <Stack.Screen name="searchResults" component={SearchResults}/>
