@@ -23,7 +23,7 @@ import global from '../Genstyle'
 
 EStyleSheet.build();
 
-export default function recipePages({ navigation, route }) {
+export default function RecipePages({ navigation, route }) {
   const [recipe, setRecipe] = useState([]);
   // Until rating is added to the database, this test variable is used
   const [dummyRating, setDummyRating] = useState(3.5);
@@ -103,6 +103,7 @@ export default function recipePages({ navigation, route }) {
     } else {
       star5 = <EmptyStar style={{ flex: 1 }} width='40' height='40' />
     }
+    if(rating != 0) {
     return (
       <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
         <FilledStar style={{ flex: 1 }} width='40' height='40' fill='#FFDF00' />
@@ -112,7 +113,14 @@ export default function recipePages({ navigation, route }) {
         {star5}
         <Text style={global.centeredText}>{rating}</Text>
       </View>
-    )
+    )} else {
+      return (
+        <View>
+          <Text style={global.subheaderText}>This recipe has no ratings!</Text>
+          <Text style={global.centeredText}>Be the first to review it after completing it!</Text>
+        </View>
+      )
+    }
   }
 
   useState(() => {

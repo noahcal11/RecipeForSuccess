@@ -14,7 +14,7 @@ import { TouchableHighlight } from 'react-native';
 
 EStyleSheet.build();
 
-export default function searchResults({ navigation, route }) {
+export default function SearchResults({ navigation, route }) {
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/" + process.env.REACT_APP_API_TOKEN
     const { isSearchFilterModalVisible, setSearchFilterModalVisible } = useContext(Context);
 
@@ -126,7 +126,7 @@ export default function searchResults({ navigation, route }) {
                             <FlatList scrollEnabled={false}
                             data={searchResults}
                             renderItem={({ item }) => (
-                                <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
+                                <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
                                     style={({ pressed }) => [
                                         {
                                             opacity: pressed
@@ -149,7 +149,7 @@ export default function searchResults({ navigation, route }) {
                     {/* <FlatList scrollEnabled={false}
                         data={searchResults}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
+                            <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
                                 style={({ pressed }) => [
                                     {
                                         opacity: pressed

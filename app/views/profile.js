@@ -91,7 +91,7 @@ export default function Profile() {
         {section.content.map((item, index) => (
           <View style={global.horizontal} key={index}>
             <Text style={global.bodyText}>{item.title}</Text>
-            <SwitchComp name={item.title}> </SwitchComp>
+            <SwitchComp name={item.title} index={index}> </SwitchComp>
           </View>
         ))}
       </View>

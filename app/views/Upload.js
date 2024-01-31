@@ -9,7 +9,6 @@ import global from '../Genstyle';
 import { useNavigation } from '@react-navigation/core';
 import RNPickerSelect from 'react-native-picker-select';
 import * as ImagePicker from 'expo-image-picker';
-import Service from "../service-account.json";
 import SwitchComp from '../Components/Switch';
 
 
@@ -18,44 +17,23 @@ EStyleSheet.build();
 
 export default function Upload() {
 
-
         const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
         
         const uploadRecipe = async () => {
-            
-            
             const data = await fetch(API_BASE+"/recipe/new", {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({title: title, desc: desc, total_time: prepTime, yields: servings, steps: steps, ingredients: ingredients, cuisine: cusine, category: category,link: "hello", allergies: allergies})
+            body: JSON.stringify({title: title, desc: desc, total_time: prepTime, yields: servings, steps: steps, ingredients: ingredients, cuisine: cusine, category: category, link: "yourmom.com"})
             }).then(navigation.navigate('Profile'));
         }
-
-        // const uploadToGCP = async (filepath, fileName) => {
-        //     try {
         
-        //         const gcs = storage.bucket("gs://recipe-for-success-images");
-        //         const storagepath = fileName;
-        
-        //         const result = await gcs.upload(filepath, {
-        //             destination: storagepath,
-        //             public: true,
-        //             metadata: {
-        //                 contentType: "application/plain", //application/csv for excel or csv file upload
-        //             }
-        //         });
-        //         return result[0].metadata.mediaLink;
-        
-        //     } catch (error) {
-        
-        //         console.log(error);
-        //         throw new Error(error.message);
-        
-        //     }
-        // }
+        function preview() {
+            setPreviewInfo([title, desc, ingredients, steps]);
+            navigation.navigate('Preview', { info: previewInfo });
+        }
 
         const [image, setImage] = useState(null);
       
@@ -87,7 +65,7 @@ export default function Upload() {
                     {section.content.map((item, index) => (
                       <View style={global.horizontal} key={index}>
                         <Text style={global.bodyText}>{item.title}</Text>
-                        <SwitchComp name={item.title} checked={allergies[index]} onToggle={(checked) => handleToggle(index, checked)} />
+                        <SwitchComp name={item.title}> </SwitchComp>
                       </View>
                     ))}
                   </View>
@@ -96,18 +74,18 @@ export default function Upload() {
             );
         };
 
-        // const pickImage = async () => {
-        //   // No permissions request is necessary for launching the image library
-        //   let result = await ImagePicker.launchImageLibraryAsync({
-        //     mediaTypes: ImagePicker.MediaTypeOptions.All,
-        //     allowsEditing: true,
-        //     aspect: [4, 3],
-        //     quality: 1,
-        //   });      
-        //   if (!result.canceled) {
-        //     setImage(result.assets[0].uri);
-        //   }
-        // };
+        const pickImage = async () => {
+          // No permissions request is necessary for launching the image library
+          let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+          });      
+          if (!result.canceled) {
+            setImage(result.assets[0].uri);
+          }
+        };
 
     const navigation = useNavigation();
     const [title, setTitle] = useState('')
@@ -118,16 +96,7 @@ export default function Upload() {
     const [servings, setServings] = useState('')
     const [category, setCategory] = useState('category')
     const [cusine, setCusine] = useState('cusine')
-    const [allergies, setAllergies] = useState(Array(SECTIONS[0].content.length).fill(false));
-
-    const handleToggle = (index, checked) => {
-        setAllergies(prevAllergies => {
-            const newAllergies = [...prevAllergies];
-            newAllergies[index] = checked;
-            console.log("Switch toggled:", value);
-            return newAllergies;
-        });
-    };
+    const [previewInfo, setPreviewInfo] = useState([]);
 
 
     const handleAddIngredient = () => {
@@ -174,7 +143,7 @@ export default function Upload() {
         { label: 'Count', value: 'Count'},
         { label: 'Teaspoon', value: 'Teaspoon' },
         { label: 'Tablespoon', value: 'Tablespoon' },
-        { label: 'Floud ounce', value: 'Fluid ounce' },
+        { label: 'Fluid ounce', value: 'Fluid ounce' },
         { label: 'Cup', value: 'Cup' },
         { label: 'Pint', value: 'Pint' },
         { label: 'Quart', value: 'Quart' },
@@ -190,15 +159,12 @@ export default function Upload() {
             <Banner title="Upload"/>
                 <ScrollView>
                     
-                {/* <View style={styles.grayForeground}>
+                <View style={styles.grayForeground}>
                     <TouchableOpacity onPress={pickImage} style={styles.opacityStyle}>
                         <Text style={{...styles.titleText,color:'blue'}}>Press to Select Image</Text>
                     </TouchableOpacity>
                     {image && <Image source={{ uri: image }} style={styles.image} />}
-                </View> */}
-
-
-                    
+                </View>
 
                     <View style={global.grayForeground}>
                         <Text style={styles.titleText}>Title</Text>
@@ -298,23 +264,14 @@ export default function Upload() {
                     <Text style={styles.titleText}>Select Allergies</Text>
                     <Text style={styles.bodyText}>Select any allergies that your recipe contains</Text>
                     {renderContent()}
-
                 </View>
 
-                <Pressable style={global.button} > 
+                <Pressable style={global.button} onPress={preview}> 
                     <Text>Preview</Text>
                 </Pressable>
 
-                <Pressable 
-                    style={({ pressed }) => [
-                        global.button,
-                        {
-                            opacity: pressed ? 0.2 : 1,
-                        }
-                    ]}
-                    onPress={uploadRecipe}
-                >
-                    <Text>Submit</Text>
+                <Pressable style={global.button} OnPress={uploadRecipe}> 
+                    <Text>Submit</Text>                  
                 </Pressable>
 
                 </ScrollView> 
