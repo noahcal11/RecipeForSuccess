@@ -30,8 +30,6 @@ export default function Upload() {
         
         const uploadRecipe = async () => {
             
-            let result= await uploadToGCP('/', title+'.jpg');
-            console.log(result);
             
             const data = await fetch(API_BASE+"/recipe/new", {
             headers: {
@@ -43,28 +41,28 @@ export default function Upload() {
             }).then(navigation.navigate('Profile'));
         }
 
-        const uploadToGCP = async (filepath, fileName) => {
-            try {
+        // const uploadToGCP = async (filepath, fileName) => {
+        //     try {
         
-                const gcs = storage.bucket("gs://recipe-for-success-images");
-                const storagepath = fileName;
+        //         const gcs = storage.bucket("gs://recipe-for-success-images");
+        //         const storagepath = fileName;
         
-                const result = await gcs.upload(filepath, {
-                    destination: storagepath,
-                    public: true,
-                    metadata: {
-                        contentType: "application/plain", //application/csv for excel or csv file upload
-                    }
-                });
-                return result[0].metadata.mediaLink;
+        //         const result = await gcs.upload(filepath, {
+        //             destination: storagepath,
+        //             public: true,
+        //             metadata: {
+        //                 contentType: "application/plain", //application/csv for excel or csv file upload
+        //             }
+        //         });
+        //         return result[0].metadata.mediaLink;
         
-            } catch (error) {
+        //     } catch (error) {
         
-                console.log(error);
-                throw new Error(error.message);
+        //         console.log(error);
+        //         throw new Error(error.message);
         
-            }
-        }
+        //     }
+        // }
 
         const [image, setImage] = useState(null);
       
@@ -105,18 +103,18 @@ export default function Upload() {
             );
         };
 
-        const pickImage = async () => {
-          // No permissions request is necessary for launching the image library
-          let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
-            allowsEditing: true,
-            aspect: [4, 3],
-            quality: 1,
-          });      
-          if (!result.canceled) {
-            setImage(result.assets[0].uri);
-          }
-        };
+        // const pickImage = async () => {
+        //   // No permissions request is necessary for launching the image library
+        //   let result = await ImagePicker.launchImageLibraryAsync({
+        //     mediaTypes: ImagePicker.MediaTypeOptions.All,
+        //     allowsEditing: true,
+        //     aspect: [4, 3],
+        //     quality: 1,
+        //   });      
+        //   if (!result.canceled) {
+        //     setImage(result.assets[0].uri);
+        //   }
+        // };
 
     const navigation = useNavigation();
     const [title, setTitle] = useState('')
