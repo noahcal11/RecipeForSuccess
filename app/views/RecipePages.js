@@ -23,7 +23,7 @@ import global from '../Genstyle'
 
 EStyleSheet.build();
 
-export default function recipePages({ navigation, route }) {
+export default function RecipePages({ navigation, route }) {
   const [recipe, setRecipe] = useState([]);
   // Until rating is added to the database, this test variable is used
   const [dummyRating, setDummyRating] = useState(3.5);

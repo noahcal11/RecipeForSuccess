@@ -29,6 +29,11 @@ export default function Upload() {
             body: JSON.stringify({title: title, desc: desc, total_time: prepTime, yields: servings, steps: steps, ingredients: ingredients, cuisine: cusine, category: category, link: "yourmom.com"})
             }).then(navigation.navigate('Profile'));
         }
+        
+        function preview() {
+            setPreviewInfo([title, desc, ingredients, steps]);
+            navigation.navigate('Preview', { info: previewInfo });
+        }
 
         const [image, setImage] = useState(null);
       
@@ -91,6 +96,7 @@ export default function Upload() {
     const [servings, setServings] = useState('')
     const [category, setCategory] = useState('category')
     const [cusine, setCusine] = useState('cusine')
+    const [previewInfo, setPreviewInfo] = useState([]);
 
 
     const handleAddIngredient = () => {
@@ -137,7 +143,7 @@ export default function Upload() {
         { label: 'Count', value: 'Count'},
         { label: 'Teaspoon', value: 'Teaspoon' },
         { label: 'Tablespoon', value: 'Tablespoon' },
-        { label: 'Floud ounce', value: 'Fluid ounce' },
+        { label: 'Fluid ounce', value: 'Fluid ounce' },
         { label: 'Cup', value: 'Cup' },
         { label: 'Pint', value: 'Pint' },
         { label: 'Quart', value: 'Quart' },
@@ -159,9 +165,6 @@ export default function Upload() {
                     </TouchableOpacity>
                     {image && <Image source={{ uri: image }} style={styles.image} />}
                 </View>
-
-
-                    
 
                     <View style={global.grayForeground}>
                         <Text style={styles.titleText}>Title</Text>
@@ -263,7 +266,7 @@ export default function Upload() {
                     {renderContent()}
                 </View>
 
-                <Pressable style={global.button} > 
+                <Pressable style={global.button} onPress={preview}> 
                     <Text>Preview</Text>
                 </Pressable>
 
