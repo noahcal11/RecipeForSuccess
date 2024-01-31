@@ -28,11 +28,17 @@ export default function Preview({ navigation, route }) {
 
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/" + process.env.REACT_APP_API_TOKEN
 
-    if(info[2].length === 0) info[2] = [{ingredient: "dummy", qty: '0', unit: 'test'}]
+    if(info[0] == undefined) info[0] = "Title"
+    if(info[1] == undefined) info[1] = "Description here"
+    if(info[2] == undefined) info[2] = [{ingredient: "dummy", qty: '0', unit: 'test'}]
+    if(info[3] == undefined) info[2] = [{ingredient: "dummy", qty: '0', unit: 'test'}]
 
-    const ingPreview = info[2].map((i, q, u) => {
-        if(q != 1) u = u + 's'
-        return q + ' ' + u.toLowerCase() + ' ' + i;
+    const ingPreview = info[2].map((item, index) => {
+        return item.qty + ' ' + item.unit.toString().toLowerCase() + ' ' + item.ingredient;
+    });
+
+    const dirPreview = info[3].map((item, index) => {
+        return item.step;
     });
 
     return (
@@ -48,8 +54,8 @@ export default function Preview({ navigation, route }) {
                         <>
                             <Text style={global.titleText}> {info[0]} </Text>
                             {/* Recipe Description */}
-                            {/* <View style={{ position: 'relative' }}>
-                                <Image source={{ uri: item.image }} style={styles.image} />
+                            <View style={{ position: 'relative' }}>
+                                <Image source={{ uri: info[4] }} style={styles.image} />
                                 <Pressable
                                     style={{ position: 'absolute', marginTop: '15%', marginLeft: '75%' }}
                                     onPress={() => { email !== "Guest" ? setFavorite() : <View></View> }}>
@@ -57,7 +63,7 @@ export default function Preview({ navigation, route }) {
                                         <FilledHeart width='40' height='40' fill='red' />
                                         : <HeartIcon fill='white' width='40' height='40' />}
                                 </Pressable>
-                            </View> */}
+                            </View>
                             <View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
                                 <View>
                                     <Text style={global.subheaderText}>
@@ -80,7 +86,7 @@ export default function Preview({ navigation, route }) {
                                 <Text style={global.subheaderText}>
                                     Recipe Directions
                                 </Text>
-                                <RecipeDirections directions={item.steps} />
+                                <RecipeDirections directions={dirPreview} />
                             </View>
                             <Text style={global.creditsText} onPress={() => Linking.openURL('www.allrecipes.com')}>Credits</Text>
                         </>

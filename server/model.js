@@ -28,7 +28,8 @@ const UserSchema = new Schema({
     reset_password_expires: {type:String, default: ""},
     completed_recipes: {type:Array, default: []},
     favorited_recipes: {type:Array, default: []},
-    created_recipes: {type:Array, default: []}
+    created_recipes: {type:Array, default: []},
+    widgets: {type:Array, default:[true, true, true, true, true, true, true, true, true, true, true, true]}
 })
 
 const Recipe = mongoose.model("Recipe",RecipeSchema);
