@@ -9,6 +9,7 @@ import { Context } from '../Context';
 EStyleSheet.build();
 
 const WIDGETS = [
+  { title: 'Popular'},
   { title: 'Breakfast' },
   { title: 'Lunch' },
   { title: 'Dinner' },
@@ -23,8 +24,8 @@ const WIDGETS = [
   // Add more widgets as necessary
 ];
 
-const HomeFiltersModel = ({blurb}) => {
-  const {isHomeFiltersModelVisible, setHomeFiltersModelVisible} = useContext(Context);
+const HomeFiltersModel = () => {
+  const {isHomeFiltersModelVisible, setHomeFiltersModelVisible, visibleWidgets, setVisibleWidgets} = useContext(Context);
   const navigation = useNavigation();
 
   return (
@@ -38,33 +39,12 @@ const HomeFiltersModel = ({blurb}) => {
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            {/* <Text style={global.titleText}>{blurb}</Text>
-            
-            <Pressable
-              style={global.button}
-              onPress={() => {
-                setHomeFiltersModelVisible(!isHomeFiltersModelVisible);
-                setHomeFiltersModelVisible(false);
-                navigation.navigate('Home');
-            }}>
-            <Text style={global.buttonMinorText}>Return Home</Text>
-            </Pressable>
-            
-            <Pressable
-              style={global.button}
-              onPress={() => {
-                setHomeFiltersModelVisible(!isHomeFiltersModelVisible);
-                setHomeFiltersModelVisible(false);
-                navigation.navigate('Home');
-            }}>
-            <Text style={global.buttonMinorText}>Return Home</Text>
-            </Pressable> */}
             <Text style={global.titleText}>Select Widgets to Display</Text>
             <ScrollView style={{ marginTop: '10%' }}>
               {WIDGETS.map((item, index) => (
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'row' }} key={index}>
                   <Text style={{ ...global.bodyText, alignSelf: 'center' }}>{item.title}</Text>
-                  <SwitchComp name={item.title} />
+                  <SwitchComp name={item.title} index={index} state={visibleWidgets[index]} />
                 </View>
               ))}
             </ScrollView>
