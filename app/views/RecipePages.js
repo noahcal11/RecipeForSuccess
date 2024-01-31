@@ -72,6 +72,9 @@ export default function RecipePages({ navigation, route }) {
     getRecipes();
     getFavorite();
   }, []);
+
+  console.log(recipe);
+  
   switch(recipePageState) {
     case 'details':
       return (

@@ -233,6 +233,21 @@ export default function Home({ navigation, route }){
         getSurprise();
     }, []);
 
+    const WIDGETS=[
+        { title: 'Popular Recipes', data: popularRecs },
+        { title: 'Breakfast Creations', data: breakfastRecs },
+        { title: 'Lunch Options', data: lunchRecs },
+        { title: 'Dinners', data: dinnerRecs },
+        { title: 'Top Desserts', data: dessertRecs },
+        { title: 'Chicken', data: chickenRecs },
+        { title: 'Salads', data: saladRecs },
+        { title: 'American', data: americanRecs },
+        { title: 'Mexican', data: mexicanRecs },
+        { title: 'Italian', data: italianRecs },
+        { title: 'Chinese', data: chineseRecs },
+        { title: 'Surprise Me!', data: surpriseRecs },
+    ]
+
     return (
         <View style={global.whiteBackground}>
             <Banner title="Home" />
@@ -247,7 +262,7 @@ export default function Home({ navigation, route }){
                 </Pressable>
                 
                 <View style={{ alignItems: 'center' }}>
-                    {isHomeFiltersModelVisible ? <HomeFiltersModel widgets={visibleWidgets} setWidgets={setVisibleWidgets} /> : null}
+                    {isHomeFiltersModelVisible ? <HomeFiltersModel /> : null}
                 </View>
 
                 <View style={{alignItems: 'center'}}>

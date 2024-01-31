@@ -24,23 +24,9 @@ const WIDGETS = [
   // Add more widgets as necessary
 ];
 
-const HomeFiltersModel = ({widgets, setWidgets}) => {
-  const {isHomeFiltersModelVisible, setHomeFiltersModelVisible} = useContext(Context);
+const HomeFiltersModel = () => {
+  const {isHomeFiltersModelVisible, setHomeFiltersModelVisible, visibleWidgets, setVisibleWidgets} = useContext(Context);
   const navigation = useNavigation();
-  let tempWidgets = widgets;
-  
-  function updateWidgets(index) {
-    const nextWidgets = tempWidgets.map((c, i) => {
-      if (i === index) {
-        // Flip the true/false value
-        return !c;
-      } else {
-        // The rest haven't changed
-        return c;
-      }
-    });
-    tempWidgets = nextWidgets;
-  }
 
   return (
     <View style={styles.centeredView}>
@@ -56,10 +42,9 @@ const HomeFiltersModel = ({widgets, setWidgets}) => {
             <Text style={global.titleText}>Select Widgets to Display</Text>
             <ScrollView style={{ marginTop: '10%' }}>
               {WIDGETS.map((item, index) => (
-                updateWidgets(index),
                 <View style={{ flexDirection: 'row' }} key={index}>
                   <Text style={{ ...global.bodyText, alignSelf: 'center' }}>{item.title}</Text>
-                  <SwitchComp name={item.title} index={index} />
+                  <SwitchComp name={item.title} index={index} state={visibleWidgets[index]} />
                 </View>
               ))}
             </ScrollView>
@@ -69,7 +54,6 @@ const HomeFiltersModel = ({widgets, setWidgets}) => {
               onPress={() => {
                 setHomeFiltersModelVisible(!isHomeFiltersModelVisible);
                 setHomeFiltersModelVisible(false);
-                setWidgets(tempWidgets);
                 navigation.navigate('Home');
             }}>
             <Text style={global.buttonText}>OK</Text>
