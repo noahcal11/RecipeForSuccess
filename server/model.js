@@ -11,7 +11,7 @@ const RecipeSchema = new Schema({
     image: {type:String},
     cuisine: {type: String},
     category: {type: String},
-    link: {type: String, required: false, unique: false},
+    link: {type: String},
     author: {type: String},
     skills: {type:Array},
     preferences: {type:Array},
