@@ -2,6 +2,10 @@ from recipe_scrapers import scrape_me
 import requests
 import time
 import csv
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 from fractions import Fraction
 with open('scrape/links.csv', 'r') as read_obj:
   
@@ -60,16 +64,17 @@ skills_knife_lst = [
 ]
 
 for i,link in enumerate(link_lst):
-    if i == 2:
-        break
     t0 = time.time()
     print(str(i)+"/"+str(len(link_lst))+" Complete")
     scraper = scrape_me(link)
 
-    title = scraper.title()
-    total_time = scraper.total_time()
-    yields = scraper.yields()
-    steps = scraper.instructions().split("\n")
+    try:
+        title = scraper.title()
+        total_time = scraper.total_time()
+        yields = scraper.yields()
+        steps = scraper.instructions().split("\n")
+    except:
+        pass
 
     skills = []
     for step in steps:
@@ -122,7 +127,7 @@ for i,link in enumerate(link_lst):
     except:
         category = None
 
-    requests.post("http://localhost:8080/recipe/new",json={
+    requests.post("https://recipe-api-maamobyhea-uc.a.run.app/" + os.getenv('REACT_APP_API_TOKEN')+"/recipe/new",json={
         'title':title,
         'desc':desc,
         'total_time':total_time,
@@ -133,7 +138,7 @@ for i,link in enumerate(link_lst):
         'cuisine':cuisine,
         'category':category,
         'link': link,
-        'skills':skills
+        'skills': skills,
         })
 
     
@@ -144,4 +149,4 @@ for i,link in enumerate(link_lst):
     time.sleep(sleep)
     
 print(str(len(link_lst))+"/"+str(len(link_lst))+" Complete, Closing Server")
-requests.get("http://localhost:8080/quit")
+# requests.get("http://localhost:8080/quit")
