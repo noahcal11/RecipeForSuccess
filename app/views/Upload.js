@@ -11,7 +11,6 @@ import RNPickerSelect from 'react-native-picker-select';
 import * as ImagePicker from 'expo-image-picker';
 import Service from "../service-account.json";
 import SwitchComp from '../Components/Switch';
-import { Storage } from '@google-cloud/storage';
 
 
 
@@ -19,12 +18,6 @@ EStyleSheet.build();
 
 export default function Upload() {
 
-        const storage = new Storage({
-        
-        projectId: "recipe-396801",
-        keyFilename: Service,
-        
-        });
 
         const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
         
@@ -197,12 +190,12 @@ export default function Upload() {
             <Banner title="Upload"/>
                 <ScrollView>
                     
-                <View style={styles.grayForeground}>
+                {/* <View style={styles.grayForeground}>
                     <TouchableOpacity onPress={pickImage} style={styles.opacityStyle}>
                         <Text style={{...styles.titleText,color:'blue'}}>Press to Select Image</Text>
                     </TouchableOpacity>
                     {image && <Image source={{ uri: image }} style={styles.image} />}
-                </View>
+                </View> */}
 
 
                     
