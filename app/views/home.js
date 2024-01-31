@@ -11,7 +11,7 @@ import HomeFiltersModel from '../Components/HomeFiltersModel';
 
 EStyleSheet.build();
 
-export default function Home({ navigation, route }){
+export default function Home({ navigation, route }) {
     const [popularRecs, setPopularRecs] = useState([]);
     const [dessertRecs, setDessertRecs] = useState([]);
     const [breakfastRecs, setBreakfastRecs] = useState([]);
@@ -24,7 +24,7 @@ export default function Home({ navigation, route }){
     const [italianRecs, setItalianRecs] = useState([]);
     const [chineseRecs, setChineseRecs] = useState([]);
     const [surpriseRecs, setSurpriseRecs] = useState([]);
-    const {username,setUsername,email,setEmail,isHomeFiltersModelVisible, setHomeFiltersModelVisible, visibleWidgets, setVisibleWidgets} = useContext(Context)
+    const { username, setUsername, email, setEmail, isHomeFiltersModelVisible, setHomeFiltersModelVisible, visibleWidgets, setVisibleWidgets } = useContext(Context)
 
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/" + process.env.REACT_APP_API_TOKEN
 
@@ -140,7 +140,7 @@ export default function Home({ navigation, route }){
             .then(data => setSaladRecs(getRandom(data, 4)))
             .catch(error => console.error(error));
     }
-    
+
     const getAmerican = async () => {
         const response = await fetch(API_BASE + "/recipe/get/", {
             headers: {
@@ -233,7 +233,7 @@ export default function Home({ navigation, route }){
         getSurprise();
     }, []);
 
-    const WIDGETS=[
+    const WIDGETS = [
         { title: 'Popular Recipes', data: popularRecs },
         { title: 'Breakfast Creations', data: breakfastRecs },
         { title: 'Lunch Options', data: lunchRecs },
@@ -254,20 +254,20 @@ export default function Home({ navigation, route }){
             <ScrollView styles={{ flex: 1 }}>
 
                 <Pressable
-                    style={{...global.buttonMinor, position: 'relative', marginLeft: '70%', marginTop: '5%', width: 60}}
+                    style={{ ...global.buttonMinor, position: 'relative', marginLeft: '70%', marginTop: '5%', width: 60 }}
                     onPress={() => {
                         setHomeFiltersModelVisible(true);
                     }} >
                     <FilterIcon style={styles.filterIcon}></FilterIcon>
                 </Pressable>
-                
+
                 <View style={{ alignItems: 'center' }}>
                     {isHomeFiltersModelVisible ? <HomeFiltersModel /> : null}
                 </View>
 
-                <View style={{alignItems: 'center'}}>
+                <View style={{ alignItems: 'center' }}>
                     {visibleWidgets[0] && <FlatList scrollEnabled={false}
-                        style={{...global.grayForeground, marginVertical: '0%', marginBottom: '5%'}}
+                        style={{ ...global.grayForeground, marginVertical: '0%', marginBottom: '5%' }}
                         ListHeaderComponent={<Text style={global.titleText}>Popular Recipes</Text>}
                         data={popularRecs}
                         renderItem={({ item }) => (
@@ -280,7 +280,7 @@ export default function Home({ navigation, route }){
                                     }]}
                             >
                                 <View style={styles.imageView} id={item._id}>
-                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} />
                                     <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
                                 </View>
                             </Pressable>
@@ -318,7 +318,7 @@ export default function Home({ navigation, route }){
                                     }]}
                             >
                                 <View style={styles.imageView} id={item._id}>
-                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} />
                                     <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
                                 </View>
                             </Pressable>
@@ -347,16 +347,16 @@ export default function Home({ navigation, route }){
                         ListHeaderComponent={<Text style={global.titleText}>Chicken</Text>}
                         data={chickenRecs}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('recipePages',{'_id':item._id})}
+                            <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
                                 style={({ pressed }) => [
                                     {
-                                    opacity: pressed
-                                        ? 0.2
-                                        : 1,
+                                        opacity: pressed
+                                            ? 0.2
+                                            : 1,
                                     }]}
                             >
                                 <View style={styles.imageView} id={item._id}>
-                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} />
                                     <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
                                 </View>
                             </Pressable>
@@ -368,12 +368,12 @@ export default function Home({ navigation, route }){
                                 onPress={() => {
                                     navigation.navigate("searchResults")
                                 }}
-                                
+
                                 style={({ pressed }) => [
                                     {
-                                    opacity: pressed
-                                        ? 0.2
-                                        : 1,
+                                        opacity: pressed
+                                            ? 0.2
+                                            : 1,
                                     }]}
                             >
                                 <Text style={global.clickableText}>View more</Text>
@@ -394,7 +394,7 @@ export default function Home({ navigation, route }){
                                     }]}
                             >
                                 <View style={styles.imageView} id={item._id}>
-                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} />
                                     <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
                                 </View>
                             </Pressable>
@@ -432,7 +432,7 @@ export default function Home({ navigation, route }){
                                     }]}
                             >
                                 <View style={styles.imageView} id={item._id}>
-                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} />
                                     <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
                                 </View>
                             </Pressable>
@@ -470,7 +470,7 @@ export default function Home({ navigation, route }){
                                     }]}
                             >
                                 <View style={styles.imageView} id={item._id}>
-                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} />
                                     <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
                                 </View>
                             </Pressable>
@@ -508,7 +508,7 @@ export default function Home({ navigation, route }){
                                     }]}
                             >
                                 <View style={styles.imageView} id={item._id}>
-                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} />
                                     <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
                                 </View>
                             </Pressable>
@@ -546,7 +546,7 @@ export default function Home({ navigation, route }){
                                     }]}
                             >
                                 <View style={styles.imageView} id={item._id}>
-                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} />
                                     <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
                                 </View>
                             </Pressable>
@@ -584,7 +584,7 @@ export default function Home({ navigation, route }){
                                     }]}
                             >
                                 <View style={styles.imageView} id={item._id}>
-                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} />
                                     <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
                                 </View>
                             </Pressable>
@@ -622,7 +622,7 @@ export default function Home({ navigation, route }){
                                     }]}
                             >
                                 <View style={styles.imageView} id={item._id}>
-                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} />
                                     <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
                                 </View>
                             </Pressable>
@@ -660,7 +660,7 @@ export default function Home({ navigation, route }){
                                     }]}
                             >
                                 <View style={styles.imageView} id={item._id}>
-                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} />
                                     <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
                                 </View>
                             </Pressable>
@@ -698,7 +698,7 @@ export default function Home({ navigation, route }){
                                     }]}
                             >
                                 <View style={styles.imageView} id={item._id}>
-                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} /> 
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} />
                                     <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
                                 </View>
                             </Pressable>
