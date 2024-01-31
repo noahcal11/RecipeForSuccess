@@ -2,7 +2,7 @@ import { useEffect, useState, createContext } from 'react';
 import Login from "./views/login";
 import Home from "./views/home";
 import Skills from "./views/skills";
-import recipePages from "./views/recipePages";
+import recipePages from "./views/RecipePages";
 import Profile from "./views/profile";
 import Favorites from './views/favorites';
 import searchResults from './views/SearchResults'

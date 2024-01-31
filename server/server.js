@@ -43,13 +43,15 @@ app.post('/'+process.env.API_TOKEN+'/recipe/get',async (req,res) => {
         const total_time = req.body.total_time;
         const cuisine = req.body.cuisine;
         const category = req.body.category;
+        const rating = req.body.rating;
         recipes = await Recipe.find({
             total_time: total_time ? {$lte: total_time} : {$lte: 65535},
             cuisine: cuisine ? new RegExp(`\\b${cuisine}\\b`, "i") : new RegExp(`.*|`, "i"),
             category: category ? new RegExp(`\\b${category}\\b`, "i") : new RegExp(`.*|`, "i"),
             title: title ? new RegExp(`\\b${title}\\b`, "i") : new RegExp(`.*|`, "i"),
             desc: desc ? new RegExp(`\\b${desc}\\b`, "i") : new RegExp(`.*|`, "i"),
-            ingredients: ingredients ? new RegExp(`\\b${ingredients}\\b`, "i") : new RegExp(`.*|`, "i")
+            ingredients: ingredients ? new RegExp(`\\b${ingredients}\\b`, "i") : new RegExp(`.*|`, "i"),
+            rating: rating ? rating : new Array(2).fill(0)
         });
     }
     res.json(recipes);
@@ -89,6 +91,16 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', (req,res) => {
 app.delete('/'+process.env.API_TOKEN+'/recipe/delete/:id', async (req, res) => {
   const recipe = await Recipe.findByIdAndDelete(req.params.id);
   res.json(recipe);
+});
+
+// Rating Section
+app.post('/'+process.env.API_TOKEN+'/recipe/update-rating/:id', async (req,res) => {
+    const recipe = await Recipe.findOneById(req.body.id);
+    // rating[0] contains the aggregated rating, rating[1] contains how many ratings there are
+    recipe.rating[0] = (recipe.rating[0] + req.body.rating) / (recipe.rating[1] + 1);
+    recipe.rating[1]++;
+    recipe.save();
+    res.json(recipe);
 });
 
 // User Section
