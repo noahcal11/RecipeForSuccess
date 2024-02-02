@@ -191,6 +191,13 @@ app.post('/'+process.env.API_TOKEN+'/user/update-favorite/', async (req,res) => 
     res.json(user);
 })
 
+app.post('/'+process.env.API_TOKEN+'/user/update-widgets/:email', async (req,res) => {
+    const user = await User.findOne({ email: req.params.email })
+    user.widgets = req.body.widgets;
+    user.save()
+    res.json(user);
+})
+
 app.delete('/'+process.env.API_TOKEN+'/user/delete/:id', async (req, res) => {
   const user = await User.findByIdAndDelete(req.params.id);
   res.json(user);
