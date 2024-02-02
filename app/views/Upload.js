@@ -31,7 +31,6 @@ export default function Upload() {
         }
         
         function preview() {
-            console.log(steps);
             setPreviewInfo([title, desc, ingredients, steps, image]);
             navigation.navigate('Preview', { info: previewInfo });
         }

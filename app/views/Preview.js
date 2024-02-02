@@ -21,9 +21,8 @@ import global from '../Genstyle'
 EStyleSheet.build();
 
 export default function Preview({ navigation, route }) {
-    const [recipe, setRecipe] = useState([]);
     const [isFavorite, setIsFavorite] = useState(false);
-    const { recipePageState, setRecipePageState, username, setUsername, email, setEmail, favorited, setFavorited } = useContext(Context);
+    const { email, setEmail } = useContext(Context);
     const { info } = route.params;
 
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/" + process.env.REACT_APP_API_TOKEN
@@ -31,7 +30,7 @@ export default function Preview({ navigation, route }) {
     if(info[0] == undefined) info[0] = "Title"
     if(info[1] == undefined) info[1] = "Description here"
     if(info[2] == undefined) info[2] = [{ingredient: "dummy", qty: '0', unit: 'test'}]
-    if(info[3] == undefined) info[2] = [{ingredient: "dummy", qty: '0', unit: 'test'}]
+    if(info[3] == undefined) info[3] = [{step: "placeholder"}]
 
     const ingPreview = info[2].map((item, index) => {
         return item.qty + ' ' + item.unit.toString().toLowerCase() + ' ' + item.ingredient;
