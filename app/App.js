@@ -31,6 +31,7 @@ export default function App() {
   const [isHomeFiltersModelVisible, setHomeFiltersModelVisible] = useState(false);
   const [isSearchFilterModalVisible, setSearchFilterModalVisible] = useState(false);
   const [visibleWidgets, setVisibleWidgets] = useState([true, true, true, true, true, true, true, true, true, true, true, true]);
+  const [uploadAllergies, setUploadAllergies] = useState([false, false, false, false, false, false, false, false, false, false, false, false]);
 
   let [fontsLoaded, fontError] = useFonts({
     Cairo_500Medium,
@@ -54,6 +55,7 @@ export default function App() {
         isChangePasswordModelVisible, setChangePasswordModelVisible,
         isSearchFilterModalVisible, setSearchFilterModalVisible,
         visibleWidgets, setVisibleWidgets,
+        uploadAllergies, setUploadAllergies,
       }}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{
