@@ -137,6 +137,14 @@ app.post('/'+process.env.API_TOKEN+'/user/update-user' , async (req,res) => {
     const user = await User.findOne({ email: req.body.oldEmail });
     user.email = req.body.newEmail;
     user.username = req.body.username;
+    user.allergies = req.body.allergies;
+    user.save();
+    res.json(user);
+});
+
+app.post('/'+process.env.API_TOKEN+'/user/update-user-allergies' , async (req,res) => {
+    const user = await User.findOne({ email: req.body.email });
+    user.allergies = req.body.allergies;
     user.save();
     res.json(user);
 });

@@ -45,8 +45,6 @@ export default function Profile() {
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
-  const {profileAllergies, setProfileAllergies} = useContext(Context)
-
   const handleEmailChange = (newEmail) => {
     setNewEmail(newEmail);
     setIsProfileModified(true);
@@ -77,6 +75,20 @@ export default function Profile() {
     );
   };
 
+  const {profileAllergies, setProfileAllergies} = useContext(Context)
+
+  const updateProfileAllergies = async () => {
+    const data = await fetch(API_BASE + "/user/update-user-allergies", {
+       headers: {
+         Accept: "application/json",
+         "Content-Type": "application/json",
+       },
+       method: "POST",
+       body: JSON.stringify({ email: email, allergies: profileAllergies }),
+    });
+    // Handle the response from the server
+   };
+
   const renderContent = (section) => {
     let contentText = '';
 
@@ -87,6 +99,8 @@ export default function Profile() {
       contentText = 'Any selected widgets will be shown on the home screen.';
     }
 
+    
+
     return (
       <View>
         <Text style={global.centerBodyText}>{contentText}</Text>
@@ -96,6 +110,13 @@ export default function Profile() {
             <SwitchComp name={item.title} index={index} state={profileAllergies[index]}> </SwitchComp>
           </View>
         ))}
+        <Pressable
+                    style={global.button}
+                    onPress={() => {
+                      updateProfileAllergies();
+                    }}>
+                        <Text style={styles.guestText}>Save</Text>
+          </Pressable>
       </View>
     );
   };
