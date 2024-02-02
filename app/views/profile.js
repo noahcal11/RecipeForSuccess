@@ -45,7 +45,7 @@ export default function Profile() {
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
-  const [profileAllergies, setProfileAllergies] = useContext(Context)
+  const {profileAllergies, setProfileAllergies} = useContext(Context)
 
   const handleEmailChange = (newEmail) => {
     setNewEmail(newEmail);

@@ -57,6 +57,7 @@ export default function App() {
         isSearchFilterModalVisible, setSearchFilterModalVisible,
         visibleWidgets, setVisibleWidgets,
         uploadAllergies, setUploadAllergies,
+        profileAllergies, setProfileAllergies,
       }}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{

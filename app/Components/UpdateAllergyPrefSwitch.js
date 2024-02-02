@@ -3,22 +3,17 @@ import { Context } from '../Context';
 import { View, Switch, StyleSheet } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
-
 EStyleSheet.build();
 
 const SwitchComp = ({ name, index, state }) => {
-  // const { uploadAllergies, setUploadAllergies } = useContext(Context)
-  const [profileAllergies, setProfileAllergies] = useContext(Context)
+  const { profileAllergies, setProfileAllergies } = useContext(Context);
   const [isEnabled, setIsEnabled] = useState(state);
-  
-
 
   const toggleSwitch = () => {
     const newState = !isEnabled;
     setIsEnabled(newState);
-    profileAllergies(index, newState);
-    console.log(`Switch ${index}: ${newState}`);
- };
+    updateProfileAllergies(index, newState);
+  };
 
   function updateProfileAllergies(index, value) {
     const toggleToggle = profileAllergies.map((c, i) => {
@@ -50,6 +45,5 @@ const styles = EStyleSheet.create({
     alignItems: 'flex-end',
   },
 });
-
 
 export default SwitchComp;
