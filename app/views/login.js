@@ -16,7 +16,7 @@ export default function Login({navigation}) {
   const [password, setPassword] = useState('');
   const [notification, setNotification] = useState('');
   const [token, setToken] = useState('');
-  const {username,setUsername,email,setEmail,setFavorited,setCompleted,setCreated} = useContext(Context)
+  const {username,setUsername,email,setEmail,setFavorited,setCompleted,setCreated,setVisibleWidgets} = useContext(Context)
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
@@ -53,6 +53,7 @@ export default function Login({navigation}) {
                 await setFavorited(data[0].favorited_recipes);
                 await setCreated(data[0].created_recipes);
                 await setCompleted(data[0].completed_recipes);
+                await setVisibleWidgets(data[0].widgets);
                 navigation.navigate('Home');
 
             }

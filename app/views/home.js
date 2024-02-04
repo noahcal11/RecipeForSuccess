@@ -306,82 +306,6 @@ export default function Home({ navigation, route }) {
                     />}
                     {visibleWidgets[1] && <FlatList scrollEnabled={false}
                         style={global.grayForeground}
-                        ListHeaderComponent={<Text style={global.titleText}>Top Desserts</Text>}
-                        data={dessertRecs}
-                        renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
-                                style={({ pressed }) => [
-                                    {
-                                        opacity: pressed
-                                            ? 0.2
-                                            : 1,
-                                    }]}
-                            >
-                                <View style={styles.imageView} id={item._id}>
-                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} />
-                                    <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
-                                </View>
-                            </Pressable>
-                        )}
-                        numColumns={2}
-                        keyExtractor={(item, index) => index}
-                        ListFooterComponent={
-                            <Pressable
-                                onPress={() => {
-                                    navigation.navigate("searchResults")
-                                }}
-
-                                style={({ pressed }) => [
-                                    {
-                                        opacity: pressed
-                                            ? 0.2
-                                            : 1,
-                                    }]}
-                            >
-                                <Text style={{ ...global.clickableText, marginBottom: '5%' }}>View more</Text>
-                            </Pressable>
-                        }
-                    />}
-                    {visibleWidgets[2] && <FlatList scrollEnabled={false}
-                        style={global.grayForeground}
-                        ListHeaderComponent={<Text style={global.titleText}>Chicken</Text>}
-                        data={chickenRecs}
-                        renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
-                                style={({ pressed }) => [
-                                    {
-                                        opacity: pressed
-                                            ? 0.2
-                                            : 1,
-                                    }]}
-                            >
-                                <View style={styles.imageView} id={item._id}>
-                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} />
-                                    <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
-                                </View>
-                            </Pressable>
-                        )}
-                        numColumns={2}
-                        keyExtractor={(item, index) => index}
-                        ListFooterComponent={
-                            <Pressable
-                                onPress={() => {
-                                    navigation.navigate("searchResults")
-                                }}
-
-                                style={({ pressed }) => [
-                                    {
-                                        opacity: pressed
-                                            ? 0.2
-                                            : 1,
-                                    }]}
-                            >
-                                <Text style={global.clickableText}>View more</Text>
-                            </Pressable>
-                        }
-                    />}
-                    {visibleWidgets[3] && <FlatList scrollEnabled={false}
-                        style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>Breakfast Creations</Text>}
                         data={breakfastRecs}
                         renderItem={({ item }) => (
@@ -418,7 +342,7 @@ export default function Home({ navigation, route }) {
                             </Pressable>
                         }
                     />}
-                    {visibleWidgets[4] && <FlatList scrollEnabled={false}
+                    {visibleWidgets[2] && <FlatList scrollEnabled={false}
                         style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>Lunch Options</Text>}
                         data={lunchRecs}
@@ -456,7 +380,7 @@ export default function Home({ navigation, route }) {
                             </Pressable>
                         }
                     />}
-                    {visibleWidgets[5] && <FlatList scrollEnabled={false}
+                    {visibleWidgets[3] && <FlatList scrollEnabled={false}
                         style={global.grayForeground}
                         ListHeaderComponent={<Text style={global.titleText}>Dinners</Text>}
                         data={dinnerRecs}
@@ -491,6 +415,82 @@ export default function Home({ navigation, route }) {
                                     }]}
                             >
                                 <Text style={{ ...global.clickableText, marginBottom: '5%' }}>View more</Text>
+                            </Pressable>
+                        }
+                    />}
+                    {visibleWidgets[4] && <FlatList scrollEnabled={false}
+                        style={global.grayForeground}
+                        ListHeaderComponent={<Text style={global.titleText}>Top Desserts</Text>}
+                        data={dessertRecs}
+                        renderItem={({ item }) => (
+                            <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
+                                style={({ pressed }) => [
+                                    {
+                                        opacity: pressed
+                                            ? 0.2
+                                            : 1,
+                                    }]}
+                            >
+                                <View style={styles.imageView} id={item._id}>
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} />
+                                    <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
+                                </View>
+                            </Pressable>
+                        )}
+                        numColumns={2}
+                        keyExtractor={(item, index) => index}
+                        ListFooterComponent={
+                            <Pressable
+                                onPress={() => {
+                                    navigation.navigate("searchResults")
+                                }}
+
+                                style={({ pressed }) => [
+                                    {
+                                        opacity: pressed
+                                            ? 0.2
+                                            : 1,
+                                    }]}
+                            >
+                                <Text style={{ ...global.clickableText, marginBottom: '5%' }}>View more</Text>
+                            </Pressable>
+                        }
+                    />}
+                    {visibleWidgets[5] && <FlatList scrollEnabled={false}
+                        style={global.grayForeground}
+                        ListHeaderComponent={<Text style={global.titleText}>Chicken</Text>}
+                        data={chickenRecs}
+                        renderItem={({ item }) => (
+                            <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
+                                style={({ pressed }) => [
+                                    {
+                                        opacity: pressed
+                                            ? 0.2
+                                            : 1,
+                                    }]}
+                            >
+                                <View style={styles.imageView} id={item._id}>
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} />
+                                    <Text style={global.subText}>{makeTwoLines(item.title)}</Text>
+                                </View>
+                            </Pressable>
+                        )}
+                        numColumns={2}
+                        keyExtractor={(item, index) => index}
+                        ListFooterComponent={
+                            <Pressable
+                                onPress={() => {
+                                    navigation.navigate("searchResults")
+                                }}
+
+                                style={({ pressed }) => [
+                                    {
+                                        opacity: pressed
+                                            ? 0.2
+                                            : 1,
+                                    }]}
+                            >
+                                <Text style={global.clickableText}>View more</Text>
                             </Pressable>
                         }
                     />}

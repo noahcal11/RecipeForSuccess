@@ -30,6 +30,7 @@ const UserSchema = new Schema({
     completed_recipes: {type:Array, default: []},
     favorited_recipes: {type:Array, default: []},
     created_recipes: {type:Array, default: []},
+    widgets: {type:Array, default:[true, true, true, true, true, true, true, true, true, true, true, true]},
     allergies: {type:Array, default: []}
 })
 
