@@ -11,11 +11,12 @@ const RecipeSchema = new Schema({
     image: {type:String},
     cuisine: {type: String},
     category: {type: String},
-    link: {type: String, required: true, unique: true},
+    link: {type: String},
     author: {type: String},
     skills: {type:Array},
     preferences: {type:Array},
     keywords: {type:Array},
+    allergies: {type:Array}, 
     rating: {type:Array, default: [0, 0]}
 })
 
@@ -28,7 +29,9 @@ const UserSchema = new Schema({
     reset_password_expires: {type:String, default: ""},
     completed_recipes: {type:Array, default: []},
     favorited_recipes: {type:Array, default: []},
-    created_recipes: {type:Array, default: []}
+    created_recipes: {type:Array, default: []},
+    widgets: {type:Array, default:[true, true, true, true, true, true, true, true, true, true, true, true]},
+    allergies: {type:Array, default: []}
 })
 
 const Recipe = mongoose.model("Recipe",RecipeSchema);
