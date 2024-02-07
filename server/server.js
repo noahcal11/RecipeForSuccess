@@ -179,6 +179,18 @@ app.post('/'+process.env.API_TOKEN+'/user/update-skills/:email', async (req,res)
     res.json(user);
 })
 
+app.post('/'+process.env.API_TOKEN+'/user/update-completed/:email', async (req, res) => {
+    const user = await User.findOne({ email: req.params.email })
+    if (user.completed_recipes.includes(req.body.recipe)) {
+        user.completed_recipes.splice(user.favorited_recipes.indexOf(req.body.recipe),1);
+    } else {
+        user.completed_recipes.push(req.body.recipe);
+    }
+
+    user.save();
+    res.json(user);
+})
+
 app.post('/'+process.env.API_TOKEN+'/user/update-favorite/', async (req,res) => {
     const user = await User.findOne({ email: req.body.email });
     if (user.favorited_recipes.includes(req.body.id)) {

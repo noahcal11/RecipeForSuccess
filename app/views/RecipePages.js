@@ -24,7 +24,7 @@ import global from '../Genstyle'
 EStyleSheet.build();
 
 export default function RecipePages({ navigation, route }) {
-  const [recipe, setRecipe] = useState([]);
+  const [recipe, setRecipe] = useState({rating: [0,0]});
   // Until rating is added to the database, this test variable is used
   const [dummyRating, setDummyRating] = useState(3.5);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -154,8 +154,7 @@ export default function RecipePages({ navigation, route }) {
                     </Pressable>
                   </View>
                   {/* Star Rating */}
-                  {/* {displayRating(recipe.rating[0])} */}
-                  {displayRating(dummyRating)}
+                  {displayRating(recipe.rating[0])}
                   {/* Recipe Description */}
                   <View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
                     <View>
