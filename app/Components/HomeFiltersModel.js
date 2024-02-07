@@ -1,5 +1,5 @@
-import React, {useContext, useState} from 'react';
-import {Alert, Modal, StyleSheet, Text, Pressable, View, ScrollView} from 'react-native';
+import React, { useContext, useState } from 'react';
+import { Alert, Modal, StyleSheet, Text, Pressable, View, ScrollView } from 'react-native';
 import global from '../Genstyle';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import SwitchComp from '../Components/Switch';
@@ -9,7 +9,7 @@ import { Context } from '../Context';
 EStyleSheet.build();
 
 const WIDGETS = [
-  { title: 'Popular'},
+  { title: 'Popular' },
   { title: 'Breakfast' },
   { title: 'Lunch' },
   { title: 'Dinner' },
@@ -24,9 +24,22 @@ const WIDGETS = [
   // Add more widgets as necessary
 ];
 
+const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/" + process.env.REACT_APP_API_TOKEN
+
 const HomeFiltersModel = () => {
-  const {isHomeFiltersModelVisible, setHomeFiltersModelVisible, visibleWidgets, setVisibleWidgets} = useContext(Context);
+  const { isHomeFiltersModelVisible, setHomeFiltersModelVisible, visibleWidgets, setVisibleWidgets, email } = useContext(Context);
   const navigation = useNavigation();
+
+  const updateWidgets = async () => {
+    await fetch(API_BASE + "/user/update-widgets/" + email, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: "POST",
+      body: JSON.stringify({widgets: visibleWidgets})
+    }).catch(err => console.error(err));
+  }
 
   return (
     <View style={styles.centeredView}>
@@ -54,9 +67,10 @@ const HomeFiltersModel = () => {
               onPress={() => {
                 setHomeFiltersModelVisible(!isHomeFiltersModelVisible);
                 setHomeFiltersModelVisible(false);
+                updateWidgets();
                 navigation.navigate('Home');
-            }}>
-            <Text style={global.buttonText}>OK</Text>
+              }}>
+              <Text style={global.buttonText}>OK</Text>
             </Pressable>
           </View>
         </View>
@@ -75,7 +89,7 @@ const styles = EStyleSheet.create({
     flex: 0.7,
     backgroundColor: 'white',
     borderRadius: 25,
-    padding: '10%', 
+    padding: '10%',
     //alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {

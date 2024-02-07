@@ -3,7 +3,7 @@ import React, { useContext, useState } from 'react';
 import { Text, View, ScrollView, Pressable, TextInput, Modal } from "react-native";
 import EStyleSheet from 'react-native-extended-stylesheet';
 import global from '../Genstyle';
-import SwitchComp from '../Components/Switch';
+import SwitchComp from '../Components/UpdateAllergyPrefSwitch';
 import Accordion from 'react-native-collapsible/Accordion';
 import BannerTitle from '../Components/Banner';
 import DownArrowIcon from '../assets/svg/downArrow';
@@ -75,6 +75,20 @@ export default function Profile() {
     );
   };
 
+  const {profileAllergies, setProfileAllergies} = useContext(Context)
+
+  const updateProfileAllergies = async () => {
+    const data = await fetch(API_BASE + "/user/update-user-allergies", {
+       headers: {
+         Accept: "application/json",
+         "Content-Type": "application/json",
+       },
+       method: "POST",
+       body: JSON.stringify({ email: email, allergies: profileAllergies }),
+    });
+    // Handle the response from the server
+   };
+
   const renderContent = (section) => {
     let contentText = '';
 
@@ -85,15 +99,24 @@ export default function Profile() {
       contentText = 'Any selected widgets will be shown on the home screen.';
     }
 
+    
+
     return (
       <View>
         <Text style={global.centerBodyText}>{contentText}</Text>
         {section.content.map((item, index) => (
           <View style={global.horizontal} key={index}>
             <Text style={global.bodyText}>{item.title}</Text>
-            <SwitchComp name={item.title} index={index}> </SwitchComp>
+            <SwitchComp name={item.title} index={index} state={profileAllergies[index]}> </SwitchComp>
           </View>
         ))}
+        <Pressable
+                    style={global.button}
+                    onPress={() => {
+                      updateProfileAllergies();
+                    }}>
+                        <Text style={styles.guestText}>Save</Text>
+          </Pressable>
       </View>
     );
   };

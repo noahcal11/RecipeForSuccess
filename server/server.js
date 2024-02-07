@@ -67,6 +67,7 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', (req,res) => {
     keywords.push(req.body.title.split(" "));
     keywords.push(req.body.cuisine.split(" "));
     keywords.push(req.body.category.split(" "));
+    keywords = keywords.flat(1);
 
     const recipe = new Recipe({
         title: req.body.title,
@@ -79,7 +80,8 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', (req,res) => {
         cuisine: req.body.cuisine,
         category: req.body.category,
         link: req.body.link,
-        keywords: keywords
+        keywords: keywords,
+        allergies: req.body.allergies,
     })
     recipe.save();
 
@@ -135,6 +137,14 @@ app.post('/'+process.env.API_TOKEN+'/user/update-user' , async (req,res) => {
     const user = await User.findOne({ email: req.body.oldEmail });
     user.email = req.body.newEmail;
     user.username = req.body.username;
+    user.allergies = req.body.allergies;
+    user.save();
+    res.json(user);
+});
+
+app.post('/'+process.env.API_TOKEN+'/user/update-user-allergies' , async (req,res) => {
+    const user = await User.findOne({ email: req.body.email });
+    user.allergies = req.body.allergies;
     user.save();
     res.json(user);
 });
@@ -200,6 +210,13 @@ app.post('/'+process.env.API_TOKEN+'/user/update-favorite/', async (req,res) => 
     }
 
     user.save();
+    res.json(user);
+})
+
+app.post('/'+process.env.API_TOKEN+'/user/update-widgets/:email', async (req,res) => {
+    const user = await User.findOne({ email: req.params.email })
+    user.widgets = req.body.widgets;
+    user.save()
     res.json(user);
 })
 

@@ -9,7 +9,7 @@ import global from '../Genstyle';
 import { useNavigation } from '@react-navigation/core';
 import RNPickerSelect from 'react-native-picker-select';
 import * as ImagePicker from 'expo-image-picker';
-import SwitchComp from '../Components/Switch';
+import SwitchComp from '../Components/UploadAllergySwitch';
 
 
 
@@ -19,6 +19,7 @@ export default function Upload() {
 
         const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
         
+
         const uploadRecipe = async () => {
             const data = await fetch(API_BASE+"/recipe/new", {
             headers: {
@@ -26,12 +27,12 @@ export default function Upload() {
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({title: title, desc: desc, total_time: prepTime, yields: servings, steps: steps, ingredients: ingredients, cuisine: cusine, category: category, link: "yourmom.com"})
+            body: JSON.stringify({title: title, desc: desc, total_time: prepTime, yields: servings, steps: steps, ingredients: ingredients, cuisine: cusine, category: category, link: "yourmom.com", allergies: uploadAllergies})
             }).then(navigation.navigate('Profile'));
         }
         
         function preview() {
-            setPreviewInfo([title, desc, ingredients, steps]);
+            setPreviewInfo([title, desc, ingredients, steps, image]);
             navigation.navigate('Preview', { info: previewInfo });
         }
 
@@ -56,6 +57,8 @@ export default function Upload() {
             },
           ];
 
+          const {uploadAllergies, setUploadAllergies} = useContext(Context);
+
           const renderContent = () => {
             return (
               <View>
@@ -65,7 +68,7 @@ export default function Upload() {
                     {section.content.map((item, index) => (
                       <View style={global.horizontal} key={index}>
                         <Text style={global.bodyText}>{item.title}</Text>
-                        <SwitchComp name={item.title}> </SwitchComp>
+                        <SwitchComp name={item.title} index={index} state={uploadAllergies[index]}> </SwitchComp>
                       </View>
                     ))}
                   </View>
@@ -96,8 +99,7 @@ export default function Upload() {
     const [servings, setServings] = useState('')
     const [category, setCategory] = useState('category')
     const [cusine, setCusine] = useState('cusine')
-    const [previewInfo, setPreviewInfo] = useState([]);
-
+    const [previewInfo, setPreviewInfo] = useState([]); 
 
     const handleAddIngredient = () => {
         setIngredients(prevIngredients => [...prevIngredients, { ingredient: '', qty: '', unit: '' }]);
@@ -270,9 +272,10 @@ export default function Upload() {
                     <Text>Preview</Text>
                 </Pressable>
 
-                <Pressable style={global.button} OnPress={uploadRecipe}> 
+                <Pressable onPress={uploadRecipe} style={global.button }>
                     <Text>Submit</Text>                  
                 </Pressable>
+
 
                 </ScrollView> 
             <Footer/>
