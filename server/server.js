@@ -62,7 +62,7 @@ app.get('/'+process.env.API_TOKEN+'/recipe/get/all',async (req,res) => {
     res.json(recipes);
 });
 
-app.post('/'+process.env.API_TOKEN+'/recipe/new', (req,res) => {
+app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
     let keywords = [];
     keywords.push(req.body.title.split(" "));
     keywords.push(req.body.cuisine.split(" "));
@@ -84,7 +84,15 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', (req,res) => {
         allergies: req.body.allergies,
     })
     recipe.save();
+    const user = await User.find({ email: req.body.email });
+    if (user.created_recipes.includes(recipe)) {
+        user.created_recipes.splice(user.favorited_recipes.indexOf(recipe),1);
+    } else {
+        user.created_recipes.push(recipe);
+    }
 
+    user.save();
+    res.json(user);
     res.json(recipe);
 });  
 
