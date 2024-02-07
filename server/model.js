@@ -34,6 +34,11 @@ const UserSchema = new Schema({
     allergies: {type:Array, default: []}
 })
 
+const keywords = new Schema({
+    keyword: {type:String, required: true, unique: true},
+    definition: {type:String, required: true, unique: true},
+})
+
 const Recipe = mongoose.model("Recipe",RecipeSchema);
 const User = mongoose.model("User",UserSchema);
 

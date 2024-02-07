@@ -21,13 +21,14 @@ export default function Upload() {
         
 
         const uploadRecipe = async () => {
+            handleIngredientObjectToString
             const data = await fetch(API_BASE+"/recipe/new", {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({title: title, desc: desc, total_time: prepTime, yields: servings, steps: steps, ingredients: ingredients, cuisine: cusine, category: category, link: "yourmom.com", allergies: uploadAllergies})
+            body: JSON.stringify({title: title, desc: desc, total_time: prepTime, yields: servings, steps: steps, ingredients: handleIngredientObjectToString, cuisine: cusine, category: category, link: "yourmom.com", allergies: uploadAllergies})
             }).then(navigation.navigate('Profile'));
         }
         
@@ -94,7 +95,7 @@ export default function Upload() {
     const [title, setTitle] = useState('')
     const [desc, setDesc] = useState('')
     const [ingredients, setIngredients] = useState([{ ingredient: '', qty: '', unit: '' }]);
-    const [steps, setSteps] = useState([{ step: '' }]);
+    const [steps, setSteps] = useState([]);
     const [prepTime, setPrepTime] = useState('')
     const [servings, setServings] = useState('')
     const [category, setCategory] = useState('category')
@@ -121,8 +122,12 @@ export default function Upload() {
         });
     };
 
+    const handleIngredientObjectToString = ingredients.map((item, index) => {
+        return item.qty + ' ' + item.unit.toString().toLowerCase() + ' ' + item.ingredient;
+    })
+
     const handleAddStep = () => {
-        setSteps(prevSteps => [...prevSteps, { step: '' }]);
+        setSteps(prevSteps => [...prevSteps, '']);
     };
 
     const handleRemoveStep = () => {
@@ -136,7 +141,7 @@ export default function Upload() {
     const handleStepChange = (index, value) => {
         setSteps(prevSteps => {
             const updatedSteps = [...prevSteps];
-            updatedSteps[index].step = value;
+            updatedSteps[index] = value;
             return updatedSteps;
         });
     };
