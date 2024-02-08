@@ -14,7 +14,7 @@ const DietSwitchComp = ({ name, index, state }) => {
   const toggleSwitch = () => {
     const newState = !isEnabled;
     setIsEnabled(newState);
-    updateDiets(index, newState);
+    updateDiet(index, newState);
  };
 
   function updateDiet(index, value) {

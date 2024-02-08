@@ -58,17 +58,6 @@ export default function Upload() {
             },
           ];
 
-          const dietToggles = [
-            {
-                content: [
-                  { title: 'Dairy-Free' },
-                  { title: 'Gluten-Free'},
-                  { title: 'Vegan'},
-                  { title: 'Vegetarian'},
-                ],
-              },
-          ]
-
           const {uploadAllergies, setUploadAllergies} = useContext(Context);
           const renderAllergyContent = () => {
             return (
@@ -88,11 +77,22 @@ export default function Upload() {
             );
         };
 
+        const dietToggles = [
+            {
+              content: [
+                { title: 'Dairy-Free' },
+                { title: 'Gluten-Free'},
+                { title: 'Vegan'},
+                { title: 'Vegetarian'},
+              ],
+            },
+          ];
+
         const {uploadDiet, setUploadDiet} = useContext(Context);
         const renderDietContent = () => {
             return (
               <View>
-                {dietToggles && dietToggles.map((section, sectionIndex) => (
+                {dietToggles.map((section, sectionIndex) => (
                   <View key={sectionIndex}>
                     <Text style={global.centerBodyText}>{section.title}</Text>
                     {section.content.map((item, index) => (
