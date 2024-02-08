@@ -39,7 +39,7 @@ export default function Upload() {
 
         const [image, setImage] = useState(null);
       
-        const SECTIONS = [
+        const allergies = [
             {
               content: [
                 { title: 'Dairy' },
@@ -63,7 +63,7 @@ export default function Upload() {
           const renderContent = () => {
             return (
               <View>
-                {SECTIONS.map((section, sectionIndex) => (
+                {allergies.map((section, sectionIndex) => (
                   <View key={sectionIndex}>
                     <Text style={global.centerBodyText}>{section.title}</Text>
                     {section.content.map((item, index) => (
@@ -122,6 +122,14 @@ export default function Upload() {
         });
     };
 
+    const handleCategoryChange = (value) => {
+        setCategory(value);
+    };
+
+    const handleCuisineChange = (value) => {
+        setCusine(value);
+    };
+
     const handleIngredientObjectToString = ingredients.map((item, index) => {
         return item.qty + ' ' + item.unit.toString().toLowerCase() + ' ' + item.ingredient;
     })
@@ -158,6 +166,29 @@ export default function Upload() {
         { label: 'Pinch', value: 'Pinch' },
         { label: 'Pound', value: 'Pound' },
         { label: 'Ounce', value: 'Ounce' },
+    ];
+
+    const categories = [
+        { label: 'Snack', value: 'Snack'},
+        { label: 'Appetizer', value: 'Appetizer'},
+        { label: 'Breakfast', value: 'Breakfast'},
+        { label: 'Lunch', value: 'Lunch' },
+        { label: 'Dinner', value: 'Dinner' },
+        { label: 'Dessert', value: 'Dessert' },
+    ];
+
+    const cuisine = [
+        { label: 'African', value: 'African'},
+        { label: 'American', value: 'American'},
+        { label: 'Asian', value: 'Asian'},
+        { label: 'Australian', value: 'Australian' },
+        { label: 'European', value: 'European' },
+        { label: 'Indian', value: 'Indian'},
+        { label: 'Italian', value: 'Italian'},
+        { label: 'Latin American', value: 'Latin American' },
+        { label: 'Mediterranean', value: 'Mediterranean' },
+        { label: 'Mexican', value: 'Mexican' },
+        { label: 'Middle Eastern', value: 'Middle Eastern' },
     ];
 
 
@@ -200,7 +231,7 @@ export default function Upload() {
                                     onChangeText={(value) => handleIngredientChange(index, 'qty', value)}
                                 />
                                 <RNPickerSelect
-                                    onValueChange={(value) => handleIngredientChange(index, 'unit', value)}
+                                    onValueChange={(value) => handleIngredientChange(index, 'unit', value || '')}
                                     items={units}
                                     useNativeAndroidPickerStyle={false}
                                     style={{
@@ -208,8 +239,8 @@ export default function Upload() {
                                         inputAndroid: {...styles.QtyUnits, color: 'black', width:100},
                                         placeholder: {...styles.QtyUnits, color: 'black', width:100},
                                     }}
-                                    placeholder={{ label: "Select unit", value: null }}
-                                    value={ingredient.unit}
+                                    placeholder={{ label: "Select", value: null }}
+                                    value={ingredient.unit  || ''}
                                 />
                             </View>
                         ))}
@@ -264,7 +295,30 @@ export default function Upload() {
                         onChangeText={setServings}
                     />
                     <Text style={styles.titleText}>Category</Text>
-                    <Text style={styles.titleText}>I need the categories</Text>
+                    <Text style={styles.bodyText}>Select Category</Text>
+                    <RNPickerSelect
+                        items={categories}
+                        useNativeAndroidPickerStyle={false}
+                        style={{
+                            inputIOS: {...styles.QtyUnits, color: 'black', width:200, alignSelf: 'center'},
+                            inputAndroid: {...styles.QtyUnits, color: 'black', width:200, alignSelf: 'center'},
+                            placeholder: {...styles.QtyUnits, color: 'black', width:200, alignSelf: 'center'},
+                        }}
+                        placeholder={{ label: "Select", value: null }}
+                        onValueChange={handleCategoryChange}
+                    />
+                    <Text style={styles.bodyText}>Select Cuisine</Text>
+                    <RNPickerSelect
+                        items={cuisine}
+                        useNativeAndroidPickerStyle={false}
+                        style={{
+                            inputIOS: {...styles.QtyUnits, color: 'black', width:200, alignSelf: 'center'},
+                            inputAndroid: {...styles.QtyUnits, color: 'black', width:200, alignSelf: 'center'},
+                            placeholder: {...styles.QtyUnits, color: 'black', width:200, alignSelf: 'center'},
+                        }}
+                        placeholder={{ label: "Select", value: null }}
+                        onValueChange={handleCuisineChange}
+                    />
                 </View>
                 
                 <View style={global.grayForeground}> 
