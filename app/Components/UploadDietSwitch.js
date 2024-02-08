@@ -7,7 +7,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 EStyleSheet.build();
 
 const DietSwitchComp = ({ name, index, state }) => {
-  const { uploadDiet, setuploadDiet } = useContext(Context)
+  const { uploadDiet, setUploadDiet } = useContext(Context)
   const [isEnabled, setIsEnabled] = useState(state);
   
 
@@ -27,7 +27,7 @@ const DietSwitchComp = ({ name, index, state }) => {
         return c;
       }
     });
-    setuploadDiet(toggleToggle);
+    setUploadDiet(toggleToggle);
   }
 
   return (
