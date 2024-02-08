@@ -9,7 +9,8 @@ import global from '../Genstyle';
 import { useNavigation } from '@react-navigation/core';
 import RNPickerSelect from 'react-native-picker-select';
 import * as ImagePicker from 'expo-image-picker';
-import SwitchComp from '../Components/UploadAllergySwitch';
+import AllergySwitchComp from '../Components/UploadAllergySwitch';
+import DietSwitchComp from '../Components/UploadDietSwitch';
 
 
 
@@ -28,7 +29,7 @@ export default function Upload() {
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({title: title, desc: desc, total_time: prepTime, yields: servings, steps: steps, ingredients: handleIngredientObjectToString, cuisine: cusine, category: category, link: "yourmom.com", allergies: uploadAllergies})
+            body: JSON.stringify({title: title, desc: desc, total_time: prepTime, yields: servings, steps: steps, ingredients: handleIngredientObjectToString, cuisine: cusine, category: category, link: "yourmom.com", allergies: uploadAllergies, diets: uploadDiet})
             }).then(navigation.navigate('Profile'));
         }
         
@@ -53,14 +54,23 @@ export default function Upload() {
                 { title: 'Chicken'},
                 { title: 'Pork'},
                 { title: 'Red Meat'},
-                { title: 'Gluten'},
               ],
             },
           ];
 
-          const {uploadAllergies, setUploadAllergies} = useContext(Context);
+          const dietToggles = [
+            {
+                content: [
+                  { title: 'Dairy-Free' },
+                  { title: 'Gluten-Free'},
+                  { title: 'Vegan'},
+                  { title: 'Vegetarian'},
+                ],
+              },
+          ]
 
-          const renderContent = () => {
+          const {uploadAllergies, setUploadAllergies} = useContext(Context);
+          const renderAllergyContent = () => {
             return (
               <View>
                 {allergies.map((section, sectionIndex) => (
@@ -69,7 +79,7 @@ export default function Upload() {
                     {section.content.map((item, index) => (
                       <View style={global.horizontal} key={index}>
                         <Text style={global.bodyText}>{item.title}</Text>
-                        <SwitchComp name={item.title} index={index} state={uploadAllergies[index]}> </SwitchComp>
+                        <AllergySwitchComp name={item.title} index={index} state={uploadAllergies[index]}> </AllergySwitchComp>
                       </View>
                     ))}
                   </View>
@@ -77,6 +87,25 @@ export default function Upload() {
               </View>
             );
         };
+
+        const {uploadDiet, setUploadDiet} = useContext(Context);
+        const renderDietContent = () => {
+            return (
+              <View>
+                {dietToggles && dietToggles.map((section, sectionIndex) => (
+                  <View key={sectionIndex}>
+                    <Text style={global.centerBodyText}>{section.title}</Text>
+                    {section.content.map((item, index) => (
+                      <View style={global.horizontal} key={index}>
+                        <Text style={global.bodyText}>{item.title}</Text>
+                        <DietSwitchComp name={item.title} index={index} state={uploadDiet[index]}> </DietSwitchComp>
+                      </View>
+                    ))}
+                  </View>
+                ))}
+              </View>
+            );
+          };
 
         const pickImage = async () => {
           // No permissions request is necessary for launching the image library
@@ -324,7 +353,13 @@ export default function Upload() {
                 <View style={global.grayForeground}> 
                     <Text style={styles.titleText}>Select Allergies</Text>
                     <Text style={styles.bodyText}>Select any allergies that your recipe contains</Text>
-                    {renderContent()}
+                    {renderAllergyContent()}
+                </View>
+
+                <View style={global.grayForeground}> 
+                    <Text style={styles.titleText}>Select Diets</Text>
+                    <Text style={styles.bodyText}>Select any diets that your recipe aheres to</Text>
+                    {renderDietContent()}
                 </View>
 
                 <Pressable style={global.button} onPress={preview}> 
