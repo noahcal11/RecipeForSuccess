@@ -58,7 +58,7 @@ export default function Upload() {
 
           const {uploadAllergies, setUploadAllergies, email} = useContext(Context);
 
-          const renderContent = () => {
+          const renderAllergyContent = () => {
             return (
               <View>
                 {allergies.map((section, sectionIndex) => (
