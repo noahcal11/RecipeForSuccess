@@ -1,6 +1,6 @@
 import Footer from '../Components/Footer';
 import React, { useRef } from 'react';
-import { Text, View, FlatList, SafeAreaView, StyleSheet, Modal, TouchableOpacity, ScrollView, TextInput, Button, Image, Platform} from "react-native";
+import { Text, View, FlatList, SafeAreaView, StyleSheet, Modal, TouchableOpacity, ScrollView, TextInput, Button, Image, Platform, Pressable} from "react-native";
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState,useContext,useEffect } from 'react';
 import { Context } from '../Context'

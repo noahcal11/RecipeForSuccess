@@ -183,7 +183,7 @@ export default function RecipePages({ navigation, route }) {
 
                     <Text style={global.subheaderText}>Recipe Allergens</Text>
                     <Text style={[global.bodyText, {textAlign: 'center'}]}>Check all ingredients for any missed allergies.</Text>
-                    <RecipeAllergens allergies={item.allergies} />
+                    <RecipeAllergens allergies={item.allergies} diets={item.diets} />
 
                   </View>
                   <Text style={global.creditsText} onPress={() => Linking.openURL(item.link)}>Credits</Text>

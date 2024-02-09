@@ -19,10 +19,10 @@ const allergenMapping = [
     'Wheat',
 ];
 
-const RecipeAllergens = ({ allergies }) => {
-  if (!allergies || allergies.length === 0) {
-    return <Text style={[global.bodyText, {textAlign: 'center'}]}>No allergens have been uploaded for this recipe.</Text>;
-}
+const RecipeAllergens = ({ allergies, diets }) => {
+    if ((!allergies || allergies.length === 0) && (!diets || diets.length === 0)) {
+        return <Text style={[global.bodyText, {textAlign: 'center'}]}>There are no allergies or diets for this recipe.</Text>;
+      }
 
   const allergenNames = allergies.map((hasAllergen, index) => {
     if (hasAllergen) {
@@ -38,6 +38,12 @@ const RecipeAllergens = ({ allergies }) => {
             <Text style={global.buttonText}>{allergy}</Text>
         </Pressable>
       ))}
+
+      {/* Displaying diets */}
+      {diets.length > 0 && (
+        <Text style={global.bodyText}>Diets: {diets}</Text>
+      )}
+
     </View>
   );
 };
@@ -54,7 +60,7 @@ const styles = EStyleSheet.create({
     },
     button: {
         backgroundColor: '#f56c42',
-        borderRadius: 25,
+        borderRadius: 10,
         width: (Dimensions.get('window').width - 60) / 3, // Adjusting the width dynamically for 3 buttons per row
         height:  50, // Adjust height as needed
         justifyContent: 'center',
