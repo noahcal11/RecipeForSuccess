@@ -45,6 +45,17 @@ const RecipeSurvey = ({directions, title, id}) => {
         }).catch(err => console.error(err));
     }
 
+    const addCompleted = async () => {
+        await fetch(API_BASE+"/user/update-completed/" + email, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application.json'
+            },
+            method: "POST",
+            body: JSON.stringify({recipe: id})
+        }).catch(err => console.error(err));
+    }
+
     const updateRating = async () => {
         let ratingTotal = -5;
         starValue.forEach(e => {
@@ -315,7 +326,7 @@ const RecipeSurvey = ({directions, title, id}) => {
             {allSelected ?
                 <Pressable
                     style={global.button}
-                    onPress={() => {updateRating(); updateSkills()}}>
+                    onPress={() => {updateRating(); addCompleted(); updateSkills()}}>
                         <Text style={styles.buttonText}>Submit</Text>
                 </Pressable>
                 :

@@ -10,6 +10,7 @@ import RecipeIngredients from '../Components/IngredientsList';
 import RecipeDirections from '../Components/RecipeDirections';
 import RecipeDescription from '../Components/RecipeDescription';
 import RecipeProgression from '../Components/RecipeProgression';
+import RecipeAllergens from '../Components/RecipeAllergens';
 import RecipeSurvey from '../Components/RecipeSurvey';
 import Footer from '../Components/Footer';
 import HeartIcon from '../assets/svg/heart';
@@ -24,7 +25,7 @@ import global from '../Genstyle'
 EStyleSheet.build();
 
 export default function RecipePages({ navigation, route }) {
-  const [recipe, setRecipe] = useState([]);
+  const [recipe, setRecipe] = useState({rating: [0,0]});
   // Until rating is added to the database, this test variable is used
   const [dummyRating, setDummyRating] = useState(3.5);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -154,8 +155,7 @@ export default function RecipePages({ navigation, route }) {
                     </Pressable>
                   </View>
                   {/* Star Rating */}
-                  {/* {displayRating(recipe.rating[0])} */}
-                  {displayRating(dummyRating)}
+                  {displayRating(recipe.rating[0])}
                   {/* Recipe Description */}
                   <View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
                     <View>
@@ -180,6 +180,11 @@ export default function RecipePages({ navigation, route }) {
                       Recipe Directions
                     </Text>
                     <RecipeDirections directions={item.steps} />
+
+                    <Text style={global.subheaderText}>Recipe Allergens</Text>
+                    <Text style={[global.bodyText, {textAlign: 'center'}]}>Check all ingredients for any missed allergies.</Text>
+                    <RecipeAllergens allergies={item.allergies} diets={item.diets} />
+
                   </View>
                   <Text style={global.creditsText} onPress={() => Linking.openURL(item.link)}>Credits</Text>
                 </>

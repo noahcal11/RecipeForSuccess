@@ -6,19 +6,19 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 EStyleSheet.build();
 
-const AllergySwitchComp = ({ name, index, state }) => {
-  const { uploadAllergies, setUploadAllergies } = useContext(Context)
+const DietSwitchComp = ({ name, index, state }) => {
+  const { uploadDiet, setUploadDiet } = useContext(Context)
   const [isEnabled, setIsEnabled] = useState(state);
   
 
   const toggleSwitch = () => {
     const newState = !isEnabled;
     setIsEnabled(newState);
-    updateAllergies(index, newState);
+    updateDiet(index, newState);
  };
 
-  function updateAllergies(index, value) {
-    const toggleToggle = uploadAllergies.map((c, i) => {
+  function updateDiet(index, value) {
+    const toggleToggle = uploadDiet.map((c, i) => {
       if (i === index) {
         // Flip the true/false value
         return value;
@@ -27,7 +27,7 @@ const AllergySwitchComp = ({ name, index, state }) => {
         return c;
       }
     });
-    setUploadAllergies(toggleToggle);
+    setUploadDiet(toggleToggle);
   }
 
   return (
@@ -49,4 +49,4 @@ const styles = EStyleSheet.create({
 });
 
 
-export default AllergySwitchComp;
+export default DietSwitchComp;
