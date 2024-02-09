@@ -98,7 +98,6 @@ export default function Profile() {
     } else if (section.title === 'Select Widgets') {
       contentText = 'Any selected widgets will be shown on the home screen.';
     }
-
     
 
     return (

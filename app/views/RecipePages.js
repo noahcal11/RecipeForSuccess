@@ -10,6 +10,7 @@ import RecipeIngredients from '../Components/IngredientsList';
 import RecipeDirections from '../Components/RecipeDirections';
 import RecipeDescription from '../Components/RecipeDescription';
 import RecipeProgression from '../Components/RecipeProgression';
+import RecipeAllergens from '../Components/RecipeAllergens';
 import RecipeSurvey from '../Components/RecipeSurvey';
 import Footer from '../Components/Footer';
 import HeartIcon from '../assets/svg/heart';
@@ -179,6 +180,11 @@ export default function RecipePages({ navigation, route }) {
                       Recipe Directions
                     </Text>
                     <RecipeDirections directions={item.steps} />
+
+                    <Text style={global.subheaderText}>Recipe Allergens</Text>
+                    <Text style={[global.bodyText, {textAlign: 'center'}]}>Check all ingredients for any missed allergies.</Text>
+                    <RecipeAllergens allergies={item.allergies} />
+
                   </View>
                   <Text style={global.creditsText} onPress={() => Linking.openURL(item.link)}>Credits</Text>
                 </>

@@ -1,6 +1,6 @@
 import Footer from '../Components/Footer';
 import React, { useRef } from 'react';
-import { Text, View, Pressable, FlatList, SafeAreaView, StyleSheet, Modal, TouchableOpacity, ScrollView, TextInput, Button, Image, Platform} from "react-native";
+import { Text, View, FlatList, SafeAreaView, StyleSheet, Modal, TouchableOpacity, ScrollView, TextInput, Button, Image, Platform} from "react-native";
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState,useContext,useEffect } from 'react';
 import { Context } from '../Context'
@@ -43,17 +43,17 @@ export default function Upload() {
         const allergies = [
             {
               content: [
-                { title: 'Dairy' },
+                { title: 'Chicken' },
+                { title: 'Dairy'},
                 { title: 'Eggs'},
                 { title: 'Fish'},
-                { title: 'Shellfish'},
-                { title: 'Tree Nuts'},
                 { title: 'Peanuts'},
-                { title: 'Wheat'},
-                { title: 'Soybeans'},
-                { title: 'Chicken'},
                 { title: 'Pork'},
                 { title: 'Red Meat'},
+                { title: 'Shellfish'},
+                { title: 'Soybeans'},
+                { title: 'Tree Nuts'},
+                { title: 'Wheat'},
               ],
             },
           ];
