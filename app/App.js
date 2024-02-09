@@ -60,6 +60,8 @@ export default function App() {
         visibleWidgets, setVisibleWidgets,
         uploadAllergies, setUploadAllergies,
         profileAllergies, setProfileAllergies,
+        uploadDiet, setUploadDiet,
+        searchFilter, setSearchFilter,
       }}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{
