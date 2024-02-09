@@ -6,7 +6,7 @@ import { View, Pressable, Text, TextInput } from 'react-native';
 import SearchIcon from '../assets/svg/search';
 import { useNavigation,useRoute } from '@react-navigation/core';
 import { Context } from "../Context";
-import SignInModel from "./SignInModel";
+import SignInModal from "./SignInModal";
 
 EStyleSheet.build();
 

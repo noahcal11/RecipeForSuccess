@@ -7,11 +7,11 @@ import { Context } from '../Context';
 
 EStyleSheet.build();
 
-const ChangePasswordModel = ({ blurb }) => {
+const ChangePasswordModal = ({ blurb }) => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const {isChangePasswordModelVisible, setChangePasswordModelVisible, email} = useContext(Context);
+  const {isChangePasswordModalVisible, setChangePasswordModalVisible, email} = useContext(Context);
   const navigation = useNavigation();
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
@@ -25,7 +25,7 @@ const ChangePasswordModel = ({ blurb }) => {
         method: "POST",
         body: JSON.stringify({email: email, oldPassword: oldPassword, newPassword: newPassword})
       }).then(res => res.json())
-    setChangePasswordModelVisible(!isChangePasswordModelVisible);
+    setChangePasswordModalVisible(!isChangePasswordModalVisible);
   };
 
   const isButtonActive = oldPassword !== '' && newPassword !== '' && confirmPassword !== '';
@@ -35,9 +35,9 @@ const ChangePasswordModel = ({ blurb }) => {
       <Modal
         animationType="slide"
         transparent={true}
-        visible={isChangePasswordModelVisible}
+        visible={isChangePasswordModalVisible}
         onRequestClose={() => {
-          setChangePasswordModelVisible(!isChangePasswordModelVisible);
+          setChangePasswordModalVisible(!isChangePasswordModalVisible);
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
@@ -68,7 +68,7 @@ const ChangePasswordModel = ({ blurb }) => {
             <Pressable
               style={global.buttonMinor}
               onPress={() => {
-                setChangePasswordModelVisible(!isChangePasswordModelVisible);
+                setChangePasswordModalVisible(!isChangePasswordModalVisible);
                 navigation.navigate('Profile');
               }}>
               <Text style={global.buttonMinorText}>Cancel</Text>
@@ -114,4 +114,4 @@ const styles = EStyleSheet.create({
   },
 });
 
-export default ChangePasswordModel;
+export default ChangePasswordModal;

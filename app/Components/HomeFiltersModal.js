@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Alert, Modal, StyleSheet, Text, Pressable, View, ScrollView } from 'react-native';
 import global from '../Genstyle';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import SwitchComp from '../Components/Switch';
+import SwitchComp from './WidgetsSwitch';
 import { useNavigation } from '@react-navigation/native';
 import { Context } from '../Context';
 
@@ -26,7 +26,7 @@ const WIDGETS = [
 
 const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/" + process.env.REACT_APP_API_TOKEN
 
-const HomeFiltersModel = () => {
+const HomeFiltersModal = () => {
   const { isHomeFiltersModelVisible, setHomeFiltersModelVisible, visibleWidgets, setVisibleWidgets, email } = useContext(Context);
   const navigation = useNavigation();
 
@@ -102,4 +102,4 @@ const styles = EStyleSheet.create({
   }
 });
 
-export default HomeFiltersModel
+export default HomeFiltersModal
