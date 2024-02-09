@@ -1,11 +1,12 @@
 import { StatusBar } from 'expo-status-bar'; 
-import { StyleSheet, Text, Image, View, Pressable, TextInput } from 'react-native';
+import { StyleSheet, Text, Image, View, Pressable, TextInput, Keyboard } from 'react-native';
 import { useContext, useState} from 'react';
 import bcrypt from 'bcryptjs';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { Context } from '../Context';
 import global from '../Genstyle';
 import LogoIcon from '../assets/svg/logo';
+import { ScrollView } from 'react-native-gesture-handler';
 
 EStyleSheet.build();
 
@@ -203,60 +204,62 @@ export default function Login({navigation}) {
     }
 
     return (
-    <View style={global.grayBackground}>
-        <View style={global.whiteForeground}>
-            <View style={styles.top}>
-                <LogoIcon style={styles.logo}></LogoIcon>
-                {/* <Text style={styles.text}>Welcome to Recipe For Success</Text> */}
-                <Text style={{ ...global.titleText, marginTop: 10 }}>Welcome to Recipe For Success</Text>
-                <Text style={styles.undertext}>{notification}</Text>
-                    {displayPopup(popupType)}
-                    <View style={global.horizontal}>
-                        {popupType === "Create" ?
-                        <Pressable
-                        style={styles.createAcct}
-                        onPress={() => {
-                        setPopupType('Login')
-                        }}>
-                          <Text style={styles.createText}>Login</Text>
-                        </Pressable> :
-                        <Pressable
-                            style={styles.createAcct}
-                            onPress={() => {
-                            setPopupType('Create')
-                        }}>
-                        <Text style={styles.createText}>Create Account</Text>
-                        </Pressable> }
-                        {popupType === "Forgot" ?
-                        <Pressable
-                            style={styles.createAcct}
-                            onPress={() => {
-                            setPopupType('Login')
-                        }}>
-                          <Text style={styles.createText}>Login</Text>
-                        </Pressable> :
-                        <Pressable
-                            style={styles.createAcct}
-                            onPress={() => {
-                            setPopupType('Forgot')
-                        }}>
-                        <Text style={styles.createText}>Forgot Password?</Text>
-                        </Pressable> }
-                    </View>
-                    <Text style={global.centeredText}>Don't have an account?</Text>
-                    <Pressable
-                    style={global.buttonMinor}
-                    onPress={() => {
-                      navigation.navigate('Home');
-                      setUsername("Guest");
-                      setEmail("Guest");
-                    }}>
-                        <Text style={styles.guestText}>Continue As Guest</Text>
-                    </Pressable>
-                <StatusBar style="auto" />
-            </View>
-        </View>
-    </View>
+    <Pressable style={{ flex: 1 }} onPress={Keyboard.dismiss}>
+      <View style={global.grayBackground}>
+          <View style={global.whiteForeground}>
+              <View style={styles.top}>
+                  <LogoIcon style={styles.logo}></LogoIcon>
+                  {/* <Text style={styles.text}>Welcome to Recipe For Success</Text> */}
+                  <Text style={{ ...global.titleText, marginTop: 10 }}>Welcome to Recipe For Success</Text>
+                  <Text style={styles.undertext}>{notification}</Text>
+                      {displayPopup(popupType)}
+                      <View style={global.horizontal}>
+                          {popupType === "Create" ?
+                          <Pressable
+                          style={styles.createAcct}
+                          onPress={() => {
+                          setPopupType('Login')
+                          }}>
+                            <Text style={styles.createText}>Login</Text>
+                          </Pressable> :
+                          <Pressable
+                              style={styles.createAcct}
+                              onPress={() => {
+                              setPopupType('Create')
+                          }}>
+                          <Text style={styles.createText}>Create Account</Text>
+                          </Pressable> }
+                          {popupType === "Forgot" ?
+                          <Pressable
+                              style={styles.createAcct}
+                              onPress={() => {
+                              setPopupType('Login')
+                          }}>
+                            <Text style={styles.createText}>Login</Text>
+                          </Pressable> :
+                          <Pressable
+                              style={styles.createAcct}
+                              onPress={() => {
+                              setPopupType('Forgot')
+                          }}>
+                          <Text style={styles.createText}>Forgot Password?</Text>
+                          </Pressable> }
+                      </View>
+                      <Text style={global.centeredText}>Don't have an account?</Text>
+                      <Pressable
+                      style={global.buttonMinor}
+                      onPress={() => {
+                        navigation.navigate('Home');
+                        setUsername("Guest");
+                        setEmail("Guest");
+                      }}>
+                          <Text style={styles.guestText}>Continue As Guest</Text>
+                      </Pressable>
+                  <StatusBar style="auto" />
+              </View>
+          </View>
+      </View>
+    </Pressable>
     )
 }
 
