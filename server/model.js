@@ -18,7 +18,6 @@ const RecipeSchema = new Schema({
     keywords: {type:Array},
     allergies: {type:Array}, 
     rating: {type:Array, default: [0, 0]},
-    diets: {type:Array},
 })
 
 const UserSchema = new Schema({

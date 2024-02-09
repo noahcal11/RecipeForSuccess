@@ -19,10 +19,11 @@ const allergenMapping = [
     'Wheat',
 ];
 
-const RecipeAllergens = ({ allergies, diets }) => {
-    if ((!allergies || allergies.length === 0) && (!diets || diets.length === 0)) {
-        return <Text style={[global.bodyText, {textAlign: 'center'}]}>There are no allergies or diets for this recipe.</Text>;
+const RecipeAllergens = ({ allergies }) => {
+    if (!allergies || allergies.length === 0) {
+        return <Text style={[global.bodyText, {textAlign: 'center'}]}>There are no allergies for this recipe.</Text>;
       }
+      
 
   const allergenNames = allergies.map((hasAllergen, index) => {
     if (hasAllergen) {
@@ -38,12 +39,6 @@ const RecipeAllergens = ({ allergies, diets }) => {
             <Text style={global.buttonText}>{allergy}</Text>
         </Pressable>
       ))}
-
-      {/* Displaying diets */}
-      {diets.length > 0 && (
-        <Text style={global.bodyText}>Diets: {diets}</Text>
-      )}
-
     </View>
   );
 };

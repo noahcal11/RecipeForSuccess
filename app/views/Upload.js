@@ -10,8 +10,6 @@ import { useNavigation } from '@react-navigation/core';
 import RNPickerSelect from 'react-native-picker-select';
 import * as ImagePicker from 'expo-image-picker';
 import AllergySwitchComp from '../Components/UploadAllergySwitch';
-import DietSwitchComp from '../Components/UploadDietSwitch';
-
 
 
 EStyleSheet.build();
@@ -29,7 +27,7 @@ export default function Upload() {
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({title: title, desc: desc, total_time: prepTime, yields: servings, steps: steps, ingredients: handleIngredientObjectToString, cuisine: cusine, category: category, link: "yourmom.com", allergies: uploadAllergies, diets: uploadDiet})
+            body: JSON.stringify({title: title, desc: desc, total_time: prepTime, yields: servings, steps: steps, ingredients: handleIngredientObjectToString, cuisine: cusine, category: category, link: "yourmom.com", allergies: uploadAllergies})
             }).then(navigation.navigate('Profile'));
         }
         
@@ -77,35 +75,6 @@ export default function Upload() {
             );
         };
 
-        const dietToggles = [
-            {
-              content: [
-                { title: 'Dairy-Free' },
-                { title: 'Gluten-Free'},
-                { title: 'Vegan'},
-                { title: 'Vegetarian'},
-              ],
-            },
-          ];
-
-        const {uploadDiet, setUploadDiet} = useContext(Context);
-        const renderDietContent = () => {
-            return (
-              <View>
-                {dietToggles.map((section, sectionIndex) => (
-                  <View key={sectionIndex}>
-                    <Text style={global.centerBodyText}>{section.title}</Text>
-                    {section.content.map((item, index) => (
-                      <View style={global.horizontal} key={index}>
-                        <Text style={global.bodyText}>{item.title}</Text>
-                        <DietSwitchComp name={item.title} index={index} state={uploadDiet[index]}> </DietSwitchComp>
-                      </View>
-                    ))}
-                  </View>
-                ))}
-              </View>
-            );
-          };
 
         const pickImage = async () => {
           // No permissions request is necessary for launching the image library
@@ -354,12 +323,6 @@ export default function Upload() {
                     <Text style={styles.titleText}>Select Allergies</Text>
                     <Text style={styles.bodyText}>Select any allergies that your recipe contains</Text>
                     {renderAllergyContent()}
-                </View>
-
-                <View style={global.grayForeground}> 
-                    <Text style={styles.titleText}>Select Diets</Text>
-                    <Text style={styles.bodyText}>Select any diets that your recipe aheres to</Text>
-                    {renderDietContent()}
                 </View>
 
                 <Pressable style={global.button} onPress={preview}> 
