@@ -29,7 +29,7 @@ export default function Upload() {
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({title: title, desc: desc, total_time: prepTime, yields: servings, steps: steps, ingredients: handleIngredientObjectToString, cuisine: cusine, category: category, link: "yourmom.com", allergies: uploadAllergies, diets: uploadDiet})
+            body: JSON.stringify({title: title, desc: desc, total_time: prepTime, yields: servings, steps: steps, ingredients: handleIngredientObjectToString, cuisine: cusine, category: category, link: "yourmom.com", allergies: uploadAllergies, diets: uploadDiet, email: email})
             }).then(navigation.navigate('Profile'));
         }
         
@@ -57,8 +57,8 @@ export default function Upload() {
               ],
             },
           ];
-
-          const {uploadAllergies, setUploadAllergies} = useContext(Context);
+  
+          const {uploadAllergies, setUploadAllergies, email} = useContext(Context);
           const renderAllergyContent = () => {
             return (
               <View>
