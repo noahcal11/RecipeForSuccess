@@ -24,31 +24,33 @@ const SearchBar = () => {
   };
 
   return (
-    <View style={styles.searchContainer}>
-      <View>
-        <Pressable onPress={openSearchBar}>
-          {!isTextInputVisible ? (
-            <SearchIcon style={styles.icon}></SearchIcon>
-          ) : null}
-        </Pressable>
-      </View>
-
-      {isTextInputVisible ? (
+    <Pressable style={{ flex: 1 }} onPress={Keyboard.dismiss}>
+      <View style={styles.searchContainer}>
         <View>
-          <TextInput
-            placeholder="Search..."
-            style={styles.searchInput}
-            autoFocus
-            onSubmitEditing={({ nativeEvent: { text } }) => {navigation.navigate("Favorites"); closeSearchBar();}}
-          />
-          <Pressable onPress={closeSearchBar}>
-            <View style={styles.xBox}> 
-              <Text>X</Text>
-            </View>
+          <Pressable onPress={openSearchBar}>
+            {!isTextInputVisible ? (
+              <SearchIcon style={styles.icon}></SearchIcon>
+            ) : null}
           </Pressable>
         </View>
-      ) : null}
-    </View>
+
+        {isTextInputVisible ? (
+          <View>
+            <TextInput
+              placeholder="Search..."
+              style={styles.searchInput}
+              autoFocus
+              onSubmitEditing={({ nativeEvent: { text } }) => {navigation.navigate("Favorites"); closeSearchBar();}}
+            />
+            <Pressable onPress={closeSearchBar}>
+              <View style={styles.xBox}> 
+                <Text>X</Text>
+              </View>
+            </Pressable>
+          </View>
+        ) : null}
+      </View>
+    </Pressable>
   );
 };
 

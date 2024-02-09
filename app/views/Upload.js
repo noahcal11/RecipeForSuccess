@@ -1,6 +1,6 @@
 import Footer from '../Components/Footer';
 import React, { useRef } from 'react';
-import { Text, View, Pressable, FlatList, SafeAreaView, StyleSheet, Modal, TouchableOpacity, ScrollView, TextInput, Button, Image, Platform} from "react-native";
+import { Text, View, FlatList, SafeAreaView, StyleSheet, Modal, TouchableOpacity, ScrollView, TextInput, Button, Image, Platform, Pressable} from "react-native";
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState,useContext,useEffect } from 'react';
 import { Context } from '../Context'
@@ -9,7 +9,8 @@ import global from '../Genstyle';
 import { useNavigation } from '@react-navigation/core';
 import RNPickerSelect from 'react-native-picker-select';
 import * as ImagePicker from 'expo-image-picker';
-import SwitchComp from '../Components/UploadAllergySwitch';
+import AllergySwitchComp from '../Components/UploadAllergySwitch';
+import DietSwitchComp from '../Components/UploadDietSwitch';
 
 
 
@@ -21,13 +22,14 @@ export default function Upload() {
         
 
         const uploadRecipe = async () => {
+            handleIngredientObjectToString
             const data = await fetch(API_BASE+"/recipe/new", {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({title: title, desc: desc, total_time: prepTime, yields: servings, steps: steps, ingredients: ingredients, cuisine: cusine, category: category, link: "yourmom.com", allergies: uploadAllergies, email: email})
+            body: JSON.stringify({title: title, desc: desc, total_time: prepTime, yields: servings, steps: steps, ingredients: handleIngredientObjectToString, cuisine: cusine, category: category, link: "yourmom.com", allergies: uploadAllergies, diets: uploadDiet, email: email})
             }).then(navigation.navigate('Profile'));
         }
         
@@ -38,37 +40,35 @@ export default function Upload() {
 
         const [image, setImage] = useState(null);
       
-        const SECTIONS = [
+        const allergies = [
             {
               content: [
-                { title: 'Dairy' },
+                { title: 'Chicken' },
+                { title: 'Dairy'},
                 { title: 'Eggs'},
                 { title: 'Fish'},
-                { title: 'Shellfish'},
-                { title: 'Tree Nuts'},
                 { title: 'Peanuts'},
-                { title: 'Wheat'},
-                { title: 'Soybeans'},
-                { title: 'Chicken'},
                 { title: 'Pork'},
                 { title: 'Red Meat'},
-                { title: 'Gluten'},
+                { title: 'Shellfish'},
+                { title: 'Soybeans'},
+                { title: 'Tree Nuts'},
+                { title: 'Wheat'},
               ],
             },
           ];
-
+  
           const {uploadAllergies, setUploadAllergies, email} = useContext(Context);
-
-          const renderContent = () => {
+          const renderAllergyContent = () => {
             return (
               <View>
-                {SECTIONS.map((section, sectionIndex) => (
+                {allergies.map((section, sectionIndex) => (
                   <View key={sectionIndex}>
                     <Text style={global.centerBodyText}>{section.title}</Text>
                     {section.content.map((item, index) => (
                       <View style={global.horizontal} key={index}>
                         <Text style={global.bodyText}>{item.title}</Text>
-                        <SwitchComp name={item.title} index={index} state={uploadAllergies[index]}> </SwitchComp>
+                        <AllergySwitchComp name={item.title} index={index} state={uploadAllergies[index]}> </AllergySwitchComp>
                       </View>
                     ))}
                   </View>
@@ -76,6 +76,36 @@ export default function Upload() {
               </View>
             );
         };
+
+        const dietToggles = [
+            {
+              content: [
+                { title: 'Dairy-Free' },
+                { title: 'Gluten-Free'},
+                { title: 'Vegan'},
+                { title: 'Vegetarian'},
+              ],
+            },
+          ];
+
+        const {uploadDiet, setUploadDiet} = useContext(Context);
+        const renderDietContent = () => {
+            return (
+              <View>
+                {dietToggles.map((section, sectionIndex) => (
+                  <View key={sectionIndex}>
+                    <Text style={global.centerBodyText}>{section.title}</Text>
+                    {section.content.map((item, index) => (
+                      <View style={global.horizontal} key={index}>
+                        <Text style={global.bodyText}>{item.title}</Text>
+                        <DietSwitchComp name={item.title} index={index} state={uploadDiet[index]}> </DietSwitchComp>
+                      </View>
+                    ))}
+                  </View>
+                ))}
+              </View>
+            );
+          };
 
         const pickImage = async () => {
           // No permissions request is necessary for launching the image library
@@ -94,7 +124,7 @@ export default function Upload() {
     const [title, setTitle] = useState('')
     const [desc, setDesc] = useState('')
     const [ingredients, setIngredients] = useState([{ ingredient: '', qty: '', unit: '' }]);
-    const [steps, setSteps] = useState([{ step: '' }]);
+    const [steps, setSteps] = useState([]);
     const [prepTime, setPrepTime] = useState('')
     const [servings, setServings] = useState('')
     const [category, setCategory] = useState('category')
@@ -121,8 +151,20 @@ export default function Upload() {
         });
     };
 
+    const handleCategoryChange = (value) => {
+        setCategory(value);
+    };
+
+    const handleCuisineChange = (value) => {
+        setCusine(value);
+    };
+
+    const handleIngredientObjectToString = ingredients.map((item, index) => {
+        return item.qty + ' ' + item.unit.toString().toLowerCase() + ' ' + item.ingredient;
+    })
+
     const handleAddStep = () => {
-        setSteps(prevSteps => [...prevSteps, { step: '' }]);
+        setSteps(prevSteps => [...prevSteps, '']);
     };
 
     const handleRemoveStep = () => {
@@ -136,7 +178,7 @@ export default function Upload() {
     const handleStepChange = (index, value) => {
         setSteps(prevSteps => {
             const updatedSteps = [...prevSteps];
-            updatedSteps[index].step = value;
+            updatedSteps[index] = value;
             return updatedSteps;
         });
     };
@@ -153,6 +195,29 @@ export default function Upload() {
         { label: 'Pinch', value: 'Pinch' },
         { label: 'Pound', value: 'Pound' },
         { label: 'Ounce', value: 'Ounce' },
+    ];
+
+    const categories = [
+        { label: 'Snack', value: 'Snack'},
+        { label: 'Appetizer', value: 'Appetizer'},
+        { label: 'Breakfast', value: 'Breakfast'},
+        { label: 'Lunch', value: 'Lunch' },
+        { label: 'Dinner', value: 'Dinner' },
+        { label: 'Dessert', value: 'Dessert' },
+    ];
+
+    const cuisine = [
+        { label: 'African', value: 'African'},
+        { label: 'American', value: 'American'},
+        { label: 'Asian', value: 'Asian'},
+        { label: 'Australian', value: 'Australian' },
+        { label: 'European', value: 'European' },
+        { label: 'Indian', value: 'Indian'},
+        { label: 'Italian', value: 'Italian'},
+        { label: 'Latin American', value: 'Latin American' },
+        { label: 'Mediterranean', value: 'Mediterranean' },
+        { label: 'Mexican', value: 'Mexican' },
+        { label: 'Middle Eastern', value: 'Middle Eastern' },
     ];
 
 
@@ -195,7 +260,7 @@ export default function Upload() {
                                     onChangeText={(value) => handleIngredientChange(index, 'qty', value)}
                                 />
                                 <RNPickerSelect
-                                    onValueChange={(value) => handleIngredientChange(index, 'unit', value)}
+                                    onValueChange={(value) => handleIngredientChange(index, 'unit', value || '')}
                                     items={units}
                                     useNativeAndroidPickerStyle={false}
                                     style={{
@@ -203,8 +268,8 @@ export default function Upload() {
                                         inputAndroid: {...styles.QtyUnits, color: 'black', width:100},
                                         placeholder: {...styles.QtyUnits, color: 'black', width:100},
                                     }}
-                                    placeholder={{ label: "Select unit", value: null }}
-                                    value={ingredient.unit}
+                                    placeholder={{ label: "Select", value: null }}
+                                    value={ingredient.unit  || ''}
                                 />
                             </View>
                         ))}
@@ -259,13 +324,42 @@ export default function Upload() {
                         onChangeText={setServings}
                     />
                     <Text style={styles.titleText}>Category</Text>
-                    <Text style={styles.titleText}>I need the categories</Text>
+                    <Text style={styles.bodyText}>Select Category</Text>
+                    <RNPickerSelect
+                        items={categories}
+                        useNativeAndroidPickerStyle={false}
+                        style={{
+                            inputIOS: {...styles.QtyUnits, color: 'black', width:200, alignSelf: 'center'},
+                            inputAndroid: {...styles.QtyUnits, color: 'black', width:200, alignSelf: 'center'},
+                            placeholder: {...styles.QtyUnits, color: 'black', width:200, alignSelf: 'center'},
+                        }}
+                        placeholder={{ label: "Select", value: null }}
+                        onValueChange={handleCategoryChange}
+                    />
+                    <Text style={styles.bodyText}>Select Cuisine</Text>
+                    <RNPickerSelect
+                        items={cuisine}
+                        useNativeAndroidPickerStyle={false}
+                        style={{
+                            inputIOS: {...styles.QtyUnits, color: 'black', width:200, alignSelf: 'center'},
+                            inputAndroid: {...styles.QtyUnits, color: 'black', width:200, alignSelf: 'center'},
+                            placeholder: {...styles.QtyUnits, color: 'black', width:200, alignSelf: 'center'},
+                        }}
+                        placeholder={{ label: "Select", value: null }}
+                        onValueChange={handleCuisineChange}
+                    />
                 </View>
                 
                 <View style={global.grayForeground}> 
                     <Text style={styles.titleText}>Select Allergies</Text>
                     <Text style={styles.bodyText}>Select any allergies that your recipe contains</Text>
-                    {renderContent()}
+                    {renderAllergyContent()}
+                </View>
+
+                <View style={global.grayForeground}> 
+                    <Text style={styles.titleText}>Select Diets</Text>
+                    <Text style={styles.bodyText}>Select any diets that your recipe aheres to</Text>
+                    {renderDietContent()}
                 </View>
 
                 <Pressable style={global.button} onPress={preview}> 

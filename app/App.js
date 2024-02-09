@@ -33,6 +33,7 @@ export default function App() {
   const [visibleWidgets, setVisibleWidgets] = useState([true, true, true, true, true, true, true, true, true, true, true, true]);
   const [uploadAllergies, setUploadAllergies] = useState([false, false, false, false, false, false, false, false, false, false, false, false]);
   const [profileAllergies, setProfileAllergies] = useState([false, false, false, false, false, false, false, false, false, false, false, false]);
+  const [uploadDiet, setUploadDiet] = useState([false,false,false,false]);
 
   let [fontsLoaded, fontError] = useFonts({
     Cairo_500Medium,
@@ -58,6 +59,7 @@ export default function App() {
         visibleWidgets, setVisibleWidgets,
         uploadAllergies, setUploadAllergies,
         profileAllergies, setProfileAllergies,
+        uploadDiet, setUploadDiet,
       }}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{
