@@ -26,10 +26,10 @@ skills_cooking_lst = [
     'sous-vides', 'deglaze', 'deglazes', 'marinate', 'marinates', 'caramelize', 'caramelizes', 
     'pickle', 'pickles', 'ferment', 'ferments', 'macerate', 'macerates', 'render', 
     'renders', 'brown', 'browns', 'reduce', 'reduces', 'blitz', 'blitzes', 
-    'infuse', 'infuses', 'baste', 'bastes', 'butterfly', 'butterflies', 
-    'debone', 'debones', 'fillet', 'fillets', 'flambé', 'flambés', 'parboil', 
-    'parboils', 'melt', 'melts', 'shallow-fry', 'shallow-fries', 'sweat', 'sweats', 'coddle', 
-    'coddles', 'pressure-cook', 'pressure-cooks', 'stew', 'stews', 'pot-roast', 'pot-roasts', 'deep-fry', 'deep-fries',  
+    'infuse', 'infuses', 'baste', 'bastes', 'debone', 'debones', 'fillet', 'fillets',
+    'flambé', 'flambés', 'parboil', 'parboils', 'melt', 'melts', 'shallow-fry', 'shallow-fries',
+    'sweat', 'sweats', 'coddle', 'coddles', 'pressure-cook', 'pressure-cooks', 'stew', 'stews',
+    'pot-roast', 'pot-roasts', 'deep-fry', 'deep-fries',  
 ]
 
 skills_ingredients_lst = [
