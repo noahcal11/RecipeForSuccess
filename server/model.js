@@ -36,8 +36,9 @@ const UserSchema = new Schema({
 
 const keywords = new Schema({
     keyword: {type:String, required: true, unique: true},
-    definition: {type:String, required: true, unique: true},
-    suffixes: {type:Array, required: true}
+    definition: {type:String, required: true},
+    suffixes: {type:Array, required: true},
+    skill: {type:String, required: true},
 })
 
 const Recipe = mongoose.model("Recipe",RecipeSchema);
