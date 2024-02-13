@@ -66,9 +66,11 @@ const styles = EStyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+    width: '22.5rem',
+    height: '35rem',
   },
   instructionsContainer: {
-    height: '2.1rem', // Set the desired height for the instructions container
+    //height: '2.1rem', // Set the desired height for the instructions container
     justifyContent: 'center', // Center the content vertically
   }
 });
