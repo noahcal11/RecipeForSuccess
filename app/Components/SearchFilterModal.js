@@ -33,13 +33,6 @@ const MEALTYPE = [
     { title: 'Snack' },
 ];
 
-const DIET = [
-    { title: 'Dairy-Free' },
-    { title: 'Gluten-Free' },
-    { title: 'Vegetarian' },
-    { title: 'Vegan' }
-];
-
 const SearchFilterModal = ({ blurb }) => {
     const { isSearchFilterModalVisible, setSearchFilterModalVisible, searchFilter, setSearchFilter } = useContext(Context);
     const navigation = useNavigation();
@@ -61,28 +54,21 @@ const SearchFilterModal = ({ blurb }) => {
                             {COOKTIME.map((item, index) => (
                                 <View style={{ flexDirection: 'row' }} key={index}>
                                     <Text style={{ ...global.bodyText, alignSelf: 'center' }}>{item.title}</Text>
-                                    <SwitchComp name={item.title} />
+                                    <SwitchComp name={item.title} index={index} state={searchFilter[index]} />
                                 </View>
                             ))}
                             <Text style={global.subheaderText}>Cuisine</Text>
                             {CUISINE.map((item, index) => (
                                 <View style={{ flexDirection: 'row' }} key={index}>
                                     <Text style={{ ...global.bodyText, alignSelf: 'center' }}>{item.title}</Text>
-                                    <SwitchComp name={item.title} />
+                                    <SwitchComp name={item.title} index={index+4} state={searchFilter[index+4]} />
                                 </View>
                             ))}
                             <Text style={global.subheaderText}>Meal Type</Text>
                             {MEALTYPE.map((item, index) => (
                                 <View style={{ flexDirection: 'row' }} key={index}>
                                     <Text style={{ ...global.bodyText, alignSelf: 'center' }}>{item.title}</Text>
-                                    <SwitchComp name={item.title} />
-                                </View>
-                            ))}
-                            <Text style={global.subheaderText}>Diet</Text>
-                            {DIET.map((item, index) => (
-                                <View style={{ flexDirection: 'row' }} key={index}>
-                                    <Text style={{ ...global.bodyText, alignSelf: 'center' }}>{item.title}</Text>
-                                    <SwitchComp name={item.title} />
+                                    <SwitchComp name={item.title} index={index+10} state={searchFilter[index+10]}/>
                                 </View>
                             ))}
                         </ScrollView>

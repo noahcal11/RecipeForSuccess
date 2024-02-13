@@ -14,7 +14,7 @@ const BannerTitle = ({ title }) => {
   const navigation = useNavigation();
   const route = useRoute();
   const [isTextInputVisible, setTextInputVisible] = useState(false);
-  const {setRecipePageState, email} = useContext(Context);
+  const {setRecipePageState, email, searchFilter, setSearchFilter} = useContext(Context);
 
     const toggleSearchBar = () => {
         setTextInputVisible(!isTextInputVisible);
@@ -56,6 +56,7 @@ const BannerTitle = ({ title }) => {
             onSubmitEditing={({ nativeEvent: { text } }) => {
                   navigation.navigate("Home");
                   navigation.navigate("searchResults", { searchTerm: text });
+                  setSearchFilter([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false])
               // route.name === "searchResults" ? ({navigation.navigate("Home"), navigation.navigate("searchResults")}) :
               // navigation.navigate("searchResults",{"searchTerm":text});
               toggleSearchBar();

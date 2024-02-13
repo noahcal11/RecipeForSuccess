@@ -73,8 +73,6 @@ export default function SearchResults({ navigation, route }) {
         getSearch(route.params.searchTerm);
     }, []);
 
-
-
     return (
         <View style={global.whiteBackground}>
             <Banner title="Search Results" />

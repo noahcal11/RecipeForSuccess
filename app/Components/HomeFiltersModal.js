@@ -27,7 +27,7 @@ const WIDGETS = [
 const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/" + process.env.REACT_APP_API_TOKEN
 
 const HomeFiltersModal = () => {
-  const { isHomeFiltersModelVisible, setHomeFiltersModelVisible, visibleWidgets, setVisibleWidgets, email } = useContext(Context);
+  const { isHomeFiltersModalVisible, setHomeFiltersModalVisible, visibleWidgets, setVisibleWidgets, email } = useContext(Context);
   const navigation = useNavigation();
 
   const updateWidgets = async () => {
@@ -46,9 +46,9 @@ const HomeFiltersModal = () => {
       <Modal
         animationType="slide"
         transparent={true}
-        visible={isHomeFiltersModelVisible}
+        visible={isHomeFiltersModalVisible}
         onRequestClose={() => {
-          setHomeFiltersModelVisible(!isHomeFiltersModelVisible);
+          setHomeFiltersModalVisible(!isHomeFiltersModalVisible);
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
@@ -65,8 +65,8 @@ const HomeFiltersModal = () => {
             <Pressable
               style={global.button}
               onPress={() => {
-                setHomeFiltersModelVisible(!isHomeFiltersModelVisible);
-                setHomeFiltersModelVisible(false);
+                setHomeFiltersModalVisible(!isHomeFiltersModalVisible);
+                setHomeFiltersModalVisible(false);
                 updateWidgets();
                 navigation.navigate('Home');
               }}>
