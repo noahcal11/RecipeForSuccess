@@ -99,6 +99,12 @@ export default function Upload() {
     const [category, setCategory] = useState('category')
     const [cusine, setCusine] = useState('cusine')
     const [previewInfo, setPreviewInfo] = useState([]); 
+    const [titleError, setTitleError] = useState('');
+    const [descError, setDescError] = useState('');
+    const [stepError, setStepError] = useState('');
+    const [prepError, setPrepError] = useState('');
+    const [servingError, setServingError] = useState('');
+
 
     const handleAddIngredient = () => {
         setIngredients(prevIngredients => [...prevIngredients, { ingredient: '', qty: '', unit: '' }]);
@@ -128,9 +134,11 @@ export default function Upload() {
         setCusine(value);
     };
 
-    const handleIngredientObjectToString = ingredients.map((item, index) => {
-        return item.qty + ' ' + item.unit.toString().toLowerCase() + ' ' + item.ingredient;
-    })
+    function handleIngredientObjectToString() {
+        return ingredients.map((item, index) => {
+            return item.qty + ' ' + item.unit.toString().toLowerCase() + ' ' + item.ingredient;
+        });
+    }
 
     const handleAddStep = () => {
         setSteps(prevSteps => [...prevSteps, '']);
@@ -191,6 +199,7 @@ export default function Upload() {
 
 
     return(
+        
         <View style={global.whiteBackground}>
             <Banner title="Upload"/>
                 <ScrollView>
@@ -204,11 +213,40 @@ export default function Upload() {
 
                     <View style={global.grayForeground}>
                         <Text style={styles.titleText}>Title</Text>
-                        <TextInput style={styles.input} placeholder="Enter your recipe title..." onChangeText={setTitle}/>
+                        <TextInput  
+                            style={styles.input}  
+                            maxLength={50}
+                            placeholder="Enter your recipe title..."  
+                            onChangeText={(text) => {
+                                
+                                if (text.length === 50) {
+                                    setTitleError('Maximum character limit reached');
+                                } else if (titleError && text.length < 50) {
+                                    setTitleError('');
+                                }       
+                                setTitle(text);
+                            }}
+                        />
+                        {titleError ? <Text style={{ ...styles.bodyText, color: 'red' }}>{titleError}</Text> : null}
 
+              
 
                         <Text style={styles.titleText}>Description</Text>
-                        <TextInput style={styles.input} placeholder="Enter your recipe description..." onChangeText={setDesc}/>
+                        <TextInput 
+                            style={styles.input} 
+                            maxLength={250}
+                            placeholder="Enter your recipe description..." 
+                            onChangeText={(text) => {
+                                
+                                if (text.length === 250) {
+                                    setDescError('Maximum character limit reached');
+                                } else if (descError && text.length < 250) {
+                                    setDescError('');
+                                }       
+                                setDesc(text);
+                            }}
+                        />
+                        {descError ? <Text style={{ ...styles.bodyText, color: 'red' }}>{descError}</Text> : null}
                     </View>
                     
                     <View style={global.grayForeground}> 
@@ -217,12 +255,14 @@ export default function Upload() {
                             <View key={index} style={{flexDirection: 'row'}}> 
                                 <TextInput 
                                     style={styles.IngredientInput} 
+                                    maxLength={50}
                                     placeholder="Enter your ingredient..."
                                     value={ingredient.ingredient}
                                     onChangeText={(value) => handleIngredientChange(index, 'ingredient', value)}
                                 />
                                 <TextInput 
                                     style={styles.QtyUnits} 
+                                    maxLength={5}
                                     keyboardType='numeric'
                                     placeholder="Qty" 
                                     value={ingredient.qty}
@@ -261,12 +301,23 @@ export default function Upload() {
                         <Text style={styles.bodyText}>{index + 1}</Text>
                         <TextInput 
                             style={styles.IngredientInput} 
+                            maxLength={250}
                             placeholder="Enter your step..." 
                             value={step.step}
-                            onChangeText={(value) => handleStepChange(index, value)}
+                            // onChangeText={(value) => handleStepChange(index, value)}
+                            onChangeText={(value) => {
+                                
+                                if (value.length === 250) {
+                                    setStepError('Maximum character limit reached');
+                                } else if (descError && value.length < 250) {
+                                    setStepError('');
+                                }       
+                                handleStepChange(index, value)}
+                            }
                         />
                         </View>
                     ))}
+                    <View>{stepError ? <Text style={{ ...styles.bodyText, color: 'red' }}>{stepError}</Text> : null}</View>
                     <Pressable style={global.button} onPress={handleAddStep}>
                         <Text>Add step</Text>
                     </Pressable>
@@ -281,17 +332,37 @@ export default function Upload() {
                     <Text style={styles.titleText}>Prep Time</Text>
                     <TextInput 
                         style={styles.QtyUnits} 
+                        maxLength={5}
                         keyboardType='numeric'
                         placeholder="Enter number of total minutes" 
-                        onChangeText={setPrepTime}
+                        onChangeText={(text) => {
+                                
+                            if (text.length === 5) {
+                                setPrepError('Maximum character limit reached');
+                            } else if (titleError && text.length < 5) {
+                                setPrepError('');
+                            }       
+                            setPrepTime(text);
+                        }}
                     />
+                    {prepError ? <Text style={{ ...styles.bodyText, color: 'red' }}>{prepError}</Text> : null}
                     <Text style={styles.titleText}>Servings</Text>
                     <TextInput 
                         style={styles.QtyUnits} 
+                        maxLength={5}
                         keyboardType='numeric'
                         placeholder="Enter number of total servings"
-                        onChangeText={setServings}
+                        onChangeText={(text) => {
+                                
+                            if (text.length === 5) {
+                                setServingError('Maximum character limit reached');
+                            } else if (titleError && text.length < 5) {
+                                setServingError('');
+                            }       
+                            setServings(text);
+                        }}
                     />
+                    {servingError ? <Text style={{ ...styles.bodyText, color: 'red' }}>{servingError}</Text> : null}
                     <Text style={styles.titleText}>Category</Text>
                     <Text style={styles.bodyText}>Select Category</Text>
                     <RNPickerSelect
