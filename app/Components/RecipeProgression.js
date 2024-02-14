@@ -20,6 +20,9 @@ const RecipeProgression = ({ingredients, directions, title}) => {
     const [isActive, setIsActive] = useState(false);
     const [passedTime, setPassedTime] = useState(0);
     const [time, setTime] = useState("00:00:00");
+    // Variables for Keyword Display
+    const [keywords, setKeywords] = useState(['abfhbfaifbiabifae']);
+    const [hasRun, setHasRun] = useState(false);
     var startTime = new Date();
     // Global variables
     const { recipePageState, setRecipePageState, username, email } = useContext(Context);
@@ -99,8 +102,11 @@ const RecipeProgression = ({ingredients, directions, title}) => {
             return (
                 <ScrollView style={{ flex: 1 }}>
                     <Text style={global.titleText}>Step {stepNum}:</Text>
-                    <Text style={global.centeredText}>{directions[stepNum - 1]}</Text>
-                    {/* TODO: Add a timer to track time spent on recipe */}
+                    {/* TODO: Make keywords display as buttons */}
+                    <Text style={global.centeredText}>
+                        {/* {parseStep(directions[stepNum - 1])} */}
+                        {directions[stepNum - 1]}
+                    </Text>
                     {/* Next button */}
                     {stepNum == directions.length ?
                         <Pressable // If on the last step, button sends user to the survey page
@@ -109,14 +115,14 @@ const RecipeProgression = ({ingredients, directions, title}) => {
                                 <Text style={global.buttonText}>Finish!</Text>
                         </Pressable>
                         :<Pressable // Otherwise, button just leads to the next step
-                            onPress={() => {setStepNum(stepNum + 1)}}
+                            onPress={() => {setStepNum(stepNum + 1); setHasRun(false);}}
                             style={global.button}>
                                 <Text style={global.buttonText}>Next</Text>
                         </Pressable>
                     }
                     {/* Back button */}
                     <Pressable // Decrement step count when going back
-                        onPress={() => {setStepNum(stepNum - 1)}}
+                        onPress={() => {setStepNum(stepNum - 1); setHasRun(false);}}
                         style={global.buttonMinor}>
                             <Text style={global.subText}>Go Back</Text>
                     </Pressable>
@@ -160,6 +166,41 @@ const RecipeProgression = ({ingredients, directions, title}) => {
             setPassedTime(0);
         }
     }, [isActive, passedTime])
+
+    const getKeywords = async () => {
+        // Fill "keywords" with the list of keywords from the database
+
+    }
+
+    function parseStep(step) {
+        // Ensures this function is only run once per step
+        if(!hasRun) {
+            setHasRun(true);
+            // Parse the step into an array, with each value being an individual word.
+            let words = step.split(' ');
+            // Create a new array with both text and pressables
+            let objects = words.map((word, index) => {
+                // Conform the word to match the format of the keywords
+                let newWord = word.toUpperCase();
+                if(newWord.includes(".") || newWord.includes(",")) {
+                    newWord = newWord.slice(0, newWord.length)
+                }
+                // Compare the word to the list of keywords
+                const match = keywords.find((keyword) => keyword === newWord)
+                if(typeof(match) !== "undefined") {
+                    // If a match is found, turn the word into a pressable
+                    <Pressable
+                        style={styles.keyword}
+                        onPress={(() => {})}>
+                        {word}
+                    </Pressable>
+                    // If not match, keep the word as-is
+                } else word
+            })
+            // Display the resulting array of objects
+            // TODO: make a variable that condenses the array into one object, then return it
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -248,6 +289,9 @@ const styles=EStyleSheet.create({
     step: {
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    keyword: {
+
     },
     container: {
         flex: 1,

@@ -45,7 +45,7 @@ export default function Favorites( {navigation, route} ) {
                         ListHeaderComponent={<Text style={global.titleText}>Favorites</Text>}
                         data={favesList}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('recipePages',{'_id':item._id})}
+                            <Pressable onPress={() => navigation.navigate('RecipePages',{'_id':item._id})}
                                 style={({ pressed }) => [
                                     {
                                     opacity: pressed

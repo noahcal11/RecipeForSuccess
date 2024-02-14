@@ -17,6 +17,7 @@ export default function PageTemplate() {
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
     const getCompleted = async () => {
+        // Get recipe data by calling recipe/get using user.completed_recipes
         const response = await fetch(API_BASE + '/user/get/' + email)
         .then(res => res.json())
         .then(data => setCompleted(data[0].completed_recipes))
@@ -47,7 +48,7 @@ export default function PageTemplate() {
                         ListHeaderComponent={<Text style={global.titleText}>Finished Recipes</Text>}
                         data={completed}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
+                            <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
                                 style={({ pressed }) => [
                                     {
                                         opacity: pressed

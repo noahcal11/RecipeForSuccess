@@ -17,6 +17,7 @@ export default function PageTemplate() {
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
     const getCreated = async () => {
+        // Copy getCompleted from completed.js once it's done
         const response = await fetch(API_BASE + '/user/get/' + email)
         .then(res => res.json())
         .then(data => setCreated(data[0].created_recipes))
@@ -47,7 +48,7 @@ export default function PageTemplate() {
                         ListHeaderComponent={<Text style={global.titleText}>Your Recipes</Text>}
                         data={created}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
+                            <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
                                 style={({ pressed }) => [
                                     {
                                         opacity: pressed
