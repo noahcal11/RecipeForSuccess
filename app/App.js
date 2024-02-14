@@ -11,6 +11,7 @@ import Created from './views/Created';
 import Completed from './views/Completed';
 import Upload from './views/Upload';
 import Preview from './views/Preview';
+import Test from './views/Test';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
@@ -33,8 +34,8 @@ export default function App() {
   const [visibleWidgets, setVisibleWidgets] = useState([true, true, true, true, true, true, true, true, true, true, true, true]);
   const [uploadAllergies, setUploadAllergies] = useState([false, false, false, false, false, false, false, false, false, false, false, false]);
   const [profileAllergies, setProfileAllergies] = useState([false, false, false, false, false, false, false, false, false, false, false, false]);
-  const [uploadDiet, setUploadDiet] = useState([false,false,false,false]);
   const [searchFilter, setSearchFilter] = useState([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]);
+  const [isIngInstructionsModelVisible, setIngInstructionsModelVisible] = useState(false);
 
   let [fontsLoaded, fontError] = useFonts({
     Cairo_500Medium,
@@ -60,8 +61,8 @@ export default function App() {
         visibleWidgets, setVisibleWidgets,
         uploadAllergies, setUploadAllergies,
         profileAllergies, setProfileAllergies,
-        uploadDiet, setUploadDiet,
         searchFilter, setSearchFilter,
+        isIngInstructionsModelVisible, setIngInstructionsModelVisible,
       }}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{
@@ -79,6 +80,7 @@ export default function App() {
           <Stack.Screen name="Completed" component={Completed}/>
           <Stack.Screen name="Upload" component={Upload}/>
           <Stack.Screen name="Preview" component={Preview}/>
+          <Stack.Screen name="Test" component={Test}/>
         </Stack.Navigator>
       </NavigationContainer>
     </Context.Provider>

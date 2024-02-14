@@ -12,6 +12,7 @@ import { Context } from '../Context';
 import { useNavigation } from '@react-navigation/core';
 import ChangePasswordModal from '../Components/ChangePasswordModal';
 import MessageModal from '../Components/MessageModal';
+import Test from './Test';
 
 EStyleSheet.build();
 
@@ -129,6 +130,17 @@ export default function Profile() {
       <BannerTitle title="Profile" />
       <ScrollView>
       
+      <View style={global.grayForeground}>
+          <Text style={global.titleText}>Testy Model</Text>
+          <Pressable
+            style={global.buttonMinor}
+            onPress={() => {
+              navigation.navigate('Test');
+            }}>
+                <Text style={styles.guestText}>Testy Model</Text>
+          </Pressable>
+        </View>
+
         <View style={global.grayForeground}>
           <Text style={global.titleText}>Preferences</Text>
             <Accordion

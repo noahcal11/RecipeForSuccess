@@ -18,7 +18,6 @@ const RecipeSchema = new Schema({
     keywords: {type:Array},
     allergies: {type:Array}, 
     rating: {type:Array, default: [0, 0]},
-    diets: {type:Array},
 })
 
 const UserSchema = new Schema({
@@ -37,7 +36,9 @@ const UserSchema = new Schema({
 
 const keywords = new Schema({
     keyword: {type:String, required: true, unique: true},
-    definition: {type:String, required: true, unique: true},
+    definition: {type:String, required: true},
+    suffixes: {type:Array, required: true},
+    skill: {type:String, required: true},
 })
 
 const Recipe = mongoose.model("Recipe",RecipeSchema);
