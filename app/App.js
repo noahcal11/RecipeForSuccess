@@ -61,6 +61,7 @@ export default function App() {
         uploadAllergies, setUploadAllergies,
         profileAllergies, setProfileAllergies,
         isIngInstructionsModelVisible, setIngInstructionsModelVisible,
+        setRecipePageState,
       }}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{
