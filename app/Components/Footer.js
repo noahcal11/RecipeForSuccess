@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { View, Pressable } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import HeartIcon from '../assets/svg/heart';
@@ -7,7 +7,7 @@ import RibbonIcon from '../assets/svg/ribbon';
 import HeartSelected from '../assets/svg/heartSelected';
 import HomeSelected from '../assets/svg/homeSelected';
 import RibbonSelected from '../assets/svg/ribbonSelected';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { Context } from '../Context';
 
 EStyleSheet.build();
@@ -16,6 +16,15 @@ const Footer = () => {
   const navigation = useNavigation();
   const [selectedIcon, setSelectedIcon] = useState('Home');
   const { setRecipePageState } = useContext(Context);
+  const route = useRoute();
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      setSelectedIcon(route.name);
+    });
+
+    return unsubscribe;
+  }, [navigation, route]);
 
   const navigateAndSetState = (page) => {
     setSelectedIcon(page);
@@ -25,7 +34,7 @@ const Footer = () => {
 
   const IconComponent = ({ page, SelectedComponent, UnselectedComponent }) => (
     <Pressable onPress={() => navigateAndSetState(page)} style={({ pressed }) => [
-        { opacity: pressed ? 0.2 : 1 },
+        { opacity: pressed ?  0.2 :  1 },
         { marginHorizontal: "12.5%" },
       ]}>
       {selectedIcon === page ? <SelectedComponent width="40" height="100" stroke="black" strokeWidth="0.25"/> : <UnselectedComponent width="40" height="100" stroke="black" strokeWidth="0.25"/>}
