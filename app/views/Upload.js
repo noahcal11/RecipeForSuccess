@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/core';
 import RNPickerSelect from 'react-native-picker-select';
 import * as ImagePicker from 'expo-image-picker';
 import AllergySwitchComp from '../Components/UploadAllergySwitch';
+import {AutoGrowingTextInput} from 'react-native-autogrow-textinput';
 
 
 EStyleSheet.build();
@@ -213,7 +214,7 @@ export default function Upload() {
 
                     <View style={global.grayForeground}>
                         <Text style={styles.titleText}>Title</Text>
-                        <TextInput  
+                        <AutoGrowingTextInput
                             style={styles.input}  
                             maxLength={50}
                             placeholder="Enter your recipe title..."  
@@ -232,7 +233,7 @@ export default function Upload() {
               
 
                         <Text style={styles.titleText}>Description</Text>
-                        <TextInput 
+                        <AutoGrowingTextInput  
                             style={styles.input} 
                             maxLength={250}
                             placeholder="Enter your recipe description..." 
@@ -253,7 +254,7 @@ export default function Upload() {
                         <Text style={styles.titleText}>Ingredients</Text>
                         {ingredients.map((ingredient, index) => (
                             <View key={index} style={{flexDirection: 'row'}}> 
-                                <TextInput 
+                                <AutoGrowingTextInput 
                                     style={styles.IngredientInput} 
                                     maxLength={50}
                                     placeholder="Enter your ingredient..."
@@ -299,8 +300,8 @@ export default function Upload() {
                     {steps.map((step, index) => (
                         <View key={index} style={{flexDirection: 'row'}}> 
                         <Text style={styles.bodyText}>{index + 1}</Text>
-                        <TextInput 
-                            style={styles.IngredientInput} 
+                        <AutoGrowingTextInput 
+                            style={styles.input} 
                             maxLength={250}
                             placeholder="Enter your step..." 
                             value={step.step}
@@ -309,7 +310,7 @@ export default function Upload() {
                                 
                                 if (value.length === 250) {
                                     setStepError('Maximum character limit reached');
-                                } else if (descError && value.length < 250) {
+                                } else if (stepError && value.length < 250) {
                                     setStepError('');
                                 }       
                                 handleStepChange(index, value)}
@@ -331,10 +332,10 @@ export default function Upload() {
                 <View style={global.grayForeground}> 
                     <Text style={styles.titleText}>Prep Time</Text>
                     <TextInput 
-                        style={styles.QtyUnits} 
+                        style={styles.prepServ} 
                         maxLength={5}
                         keyboardType='numeric'
-                        placeholder="Enter number of total minutes" 
+                        placeholder="Time in Minutes" 
                         onChangeText={(text) => {
                                 
                             if (text.length === 5) {
@@ -348,10 +349,10 @@ export default function Upload() {
                     {prepError ? <Text style={{ ...styles.bodyText, color: 'red' }}>{prepError}</Text> : null}
                     <Text style={styles.titleText}>Servings</Text>
                     <TextInput 
-                        style={styles.QtyUnits} 
+                        style={styles.prepServ} 
                         maxLength={5}
                         keyboardType='numeric'
-                        placeholder="Enter number of total servings"
+                        placeholder="Total Servings"
                         onChangeText={(text) => {
                                 
                             if (text.length === 5) {
@@ -421,15 +422,26 @@ const styles = EStyleSheet.create({
         paddingBottom: '1rem',
       },
       input: {
+        flex: 5,
         backgroundColor: '#D1D1D1',
         borderRadius: '2rem',
-        fontSize: '1rem',
+        fontSize: '1.5rem',
         fontFamily: 'Cairo_500Medium',
         width: '20rem',
-        height: '3rem',
         paddingLeft: '1rem',
         marginBottom: '1rem',
         alignSelf: 'center'
+      },
+      prepServ: {
+        flex: 5,
+        backgroundColor: '#D1D1D1',
+        borderRadius: '2rem',
+        fontSize: '1.5rem',
+        fontFamily: 'Cairo_500Medium',
+        width: 200,
+        marginBottom: '1rem',
+        alignSelf: 'center',
+        textAlign: 'center',
       },
       IngredientInput: {
         flex: 5,
@@ -437,12 +449,12 @@ const styles = EStyleSheet.create({
         borderRadius: '2rem',
         fontSize: '1rem',
         fontFamily: 'Cairo_500Medium',
-        height: '3rem',
+        height: '8rem',
         paddingLeft: '1rem',
         marginBottom: '1rem',
       },
       QtyUnits: {
-        flex: 2,
+        flex:  2,
         backgroundColor: '#D1D1D1',
         borderRadius: '2rem',
         fontSize: '1rem',
@@ -450,7 +462,12 @@ const styles = EStyleSheet.create({
         height: '3rem',
         marginLeft: '1rem',
         marginBottom: '1rem',
-        textAlign: 'center',
+        alignItems: 'center', // Add this to center content vertically
+        justifyContent: 'center', // Add this to center content horizontally
+        textAlign: 'center', // Add this to center text horizontally
+      },
+      prepServings: {
+
       },
       bodyText: {
         minWidth: 20,
