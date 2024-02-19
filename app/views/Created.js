@@ -1,6 +1,6 @@
 import Footer from '../Components/Footer';
 import React from 'react';
-import { Text, View, Pressable, FlatList, SafeAreaView, Modal, ScrollView, Dimensions } from "react-native";
+import { Text, View, Pressable, FlatList, SafeAreaView, Modal, ScrollView, Dimensions, Image } from "react-native";
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState,useContext } from 'react';
 import { Context } from '../Context'

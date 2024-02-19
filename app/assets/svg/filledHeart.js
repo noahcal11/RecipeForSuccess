@@ -1,6 +1,6 @@
 import * as React from "react";
 import Svg, { Path } from "react-native-svg";
-const filledHeart = (props) => (
+const FilledHeart = (props) => (
   <Svg
     xmlns="http://www.w3.org/2000/svg"
     className="ionicon"
@@ -17,4 +17,4 @@ const filledHeart = (props) => (
       />
   </Svg>
 );
-export default filledHeart;
+export default FilledHeart;
