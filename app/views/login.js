@@ -17,6 +17,8 @@ export default function Login({navigation}) {
   const [password, setPassword] = useState('');
   const [notification, setNotification] = useState('');
   const [token, setToken] = useState('');
+  const [emailValid, setEmailValid] = useState(false);
+  const [emailErrorMessage, setEmailErrorMessage] = useState('');
   const {username,setUsername,email,setEmail,setFavorited,setCompleted,setCreated,setVisibleWidgets} = useContext(Context)
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
@@ -89,6 +91,13 @@ export default function Login({navigation}) {
     }).then(getUser()).catch(err => console.error(err));
   }
 
+  const validateIsEmail = async (email) => {
+    const isValid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+    setEmailValid(isValid);
+    setEmailErrorMessage(isValid ? '' : 'Invalid email format');
+    return isValid;
+  };
+
   function displayPopup(type) {
       switch(type) {
         case 'Login':
@@ -117,38 +126,51 @@ export default function Login({navigation}) {
             </Pressable>
           </View>
           );
-        case 'Create':
-          return(
-            <View>
-            <TextInput
-              style={global.input}
-              onChangeText={setEmail}
-              value={email}
-              placeholder="Email"
-            />
-            <TextInput 
-              style={global.input}
-              onChangeText={setUsername}
-              value={username}
-              placeholder="Username"
-            />
-            <TextInput
-              style={global.input}
-              onChangeText={setPassword}
-              value={password}
-              placeholder="Password"
-              secureTextEntry={true}
-            />
-            <Pressable
-              style={global.button}
-              onPress={() => {
-                createUser(email,username,password)
-              }}
-            >
-              <Text style={global.buttonText}>Register</Text>
-            </Pressable>
-            </View>
-          );
+          case 'Create':
+            return (
+              <View>
+                <TextInput
+                  style={[global.input, !emailValid && { marginBottom: 0 }, {padding:0}]}
+                  onChangeText={(text) => {
+                    setEmail(text);
+                    validateIsEmail(text);
+                  }}
+                  value={email}
+                  placeholder="Email"
+                />
+                {!emailValid && (
+                  <Text style={[global.centerBodyText, {flex: 0, margin: '0%', color: 'red'}]}>{emailErrorMessage}</Text>
+                )}
+                <TextInput
+                  style={global.input}
+                  onChangeText={setUsername}
+                  value={username}
+                  placeholder="Username"
+                />
+                <TextInput
+                  style={global.input}
+                  onChangeText={setPassword}
+                  value={password}
+                  placeholder="Password"
+                  secureTextEntry={true}
+                />
+                <Pressable
+                  style={[
+                    global.button,
+                    !emailValid && { backgroundColor: 'grey', borderColor: 'grey' },
+                  ]}
+                  onPress={() => {
+                    if (emailValid) {
+                      createUser(email, username, password);
+                    }
+                  }}
+                  disabled={!emailValid}
+                >
+                  <Text style={global.buttonText}>Register</Text>
+                </Pressable>
+              </View>
+            );
+
         case 'Forgot':
           return(
             <View>
