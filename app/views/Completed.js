@@ -18,10 +18,23 @@ export default function PageTemplate() {
 
     const getCompleted = async () => {
         // Get recipe data by calling recipe/get using user.completed_recipes
-        const response = await fetch(API_BASE + '/user/get/' + email)
+        const response = await fetch(API_BASE + '/user/get/' + email, {method: "GET"})
         .then(res => res.json())
-        .then(data => setCompleted(data[0].completed_recipes))
-        .catch(error => console.error(error));
+
+        let recipeList = response[0].completed_recipes;
+        console.log(recipeList);
+
+        const responsetwo = await fetch(API_BASE+"/recipe/get/", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({ids: recipeList})
+            })
+            .then(res => res.json())
+        setCompleted(responsetwo);
+        console.log("Hello");
     }
 
     // Shortens longer titles so any given recipe title only takes up two lines

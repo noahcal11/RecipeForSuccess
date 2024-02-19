@@ -18,6 +18,7 @@ export default function PageTemplate() {
 
     const getCreated = async () => {
         // Copy getCompleted from completed.js once it's done
+        // Also add a setCreated to the upload page and server.js
         const response = await fetch(API_BASE + '/user/get/' + email)
         .then(res => res.json())
         .then(data => setCreated(data[0].created_recipes))

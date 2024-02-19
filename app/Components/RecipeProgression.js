@@ -181,24 +181,35 @@ const RecipeProgression = ({ingredients, directions, title}) => {
             // Create a new array with both text and pressables
             let objects = words.map((word, index) => {
                 // Conform the word to match the format of the keywords
-                let newWord = word.toUpperCase();
+                let newWord = word.slice(0,1).toUpperCase() + word.slice(1, word.length);
                 if(newWord.includes(".") || newWord.includes(",")) {
-                    newWord = newWord.slice(0, newWord.length)
+                    newWord = newWord.slice(0, newWord.length - 1)
                 }
                 // Compare the word to the list of keywords
+                // TODO: Add an API call that gets keywords.suffixes for all keywords
                 const match = keywords.find((keyword) => keyword === newWord)
-                if(typeof(match) !== "undefined") {
+                if(typeof match !== "undefined") {
                     // If a match is found, turn the word into a pressable
                     <Pressable
                         style={styles.keyword}
                         onPress={(() => {})}>
-                        {word}
+                        <Text>{word}</Text>
                     </Pressable>
                     // If not match, keep the word as-is
                 } else word
             })
             // Display the resulting array of objects
             // TODO: make a variable that condenses the array into one object, then return it
+            let output = "<Text>";
+            objects.forEach(item => {
+                if(typeof item === 'string') {
+                    output += item + " ";
+                } else {
+                    output += "</Text>" + item + "<Text> ";
+                }
+            });
+            output += "</Text>";
+            return output;
         }
     }
 
@@ -291,7 +302,7 @@ const styles=EStyleSheet.create({
         justifyContent: 'center',
     },
     keyword: {
-
+        backgroundColor: '#bbb'
     },
     container: {
         flex: 1,
