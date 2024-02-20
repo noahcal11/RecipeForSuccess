@@ -226,8 +226,8 @@ app.post('/'+process.env.API_TOKEN+'/user/update-widgets/:email', async (req,res
     res.json(user);
 })
 
-app.delete('/'+process.env.API_TOKEN+'/user/delete/:id', async (req, res) => {
-  const user = await User.findByIdAndDelete(req.params.id);
+app.delete('/'+process.env.API_TOKEN+'/user/delete/:email', async (req, res) => {
+  const user = await User.findAndDelete({ email: req.params.email });
   res.json(user);
 });
 

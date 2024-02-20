@@ -24,14 +24,10 @@ const SignInModel = ({blurb}) => {
             <Text style={global.titleText}>{blurb}</Text>
             <Pressable
               style={global.button}
-              onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={global.buttonText}>Sign In</Text>
+              onPress={() => {setModalVisible(!modalVisible); navigation.navigate('Login');}}>
+              <Text style={global.buttonText}>Sign In / Register</Text>
             </Pressable>
-            <Pressable
-              style={global.button}
-              onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={global.buttonText}>Register</Text>
-            </Pressable>
+            
             <Pressable
               style={global.buttonMinor}
               onPress={() => {setModalVisible(!modalVisible); navigation.navigate('Home');}}>

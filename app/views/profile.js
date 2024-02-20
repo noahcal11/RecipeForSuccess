@@ -67,6 +67,17 @@ export default function Profile() {
     setIsProfileModified(false);
   };
 
+  const handleDeleteAccount = async () => {
+    const data = await fetch(API_BASE+"/user/delete/"+email, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: "DELETE"
+    })
+    navigation.navigate('Login');
+  };
+
   const renderHeader = (section) => {
     return (
       <View style={global.horizontal}>
@@ -207,19 +218,19 @@ export default function Profile() {
           <Pressable
                     style={global.buttonMinor}
                     onPress={() => {
-                      navigation.navigate('Login');
-                      setEmail('');
-                      setUsername('');
+                      handleDeleteAccount()
                     }}>
-                        <Text style={styles.guestText}>Logout</Text>
+                        <Text style={styles.guestText}>Delete Account </Text>
           </Pressable>
 
           <Pressable
                     style={global.buttonMinor}
                     onPress={() => {
-                      navigation.navigate('Home');
+                      navigation.navigate('Login');
+                      setEmail('');
+                      setUsername('');
                     }}>
-                        <Text style={styles.guestText}>Delete Account </Text>
+                        <Text style={styles.guestText}>Logout</Text>
           </Pressable>
           
           <ChangePasswordModel blurb="Change Password"/>
@@ -228,7 +239,7 @@ export default function Profile() {
         </View>
 
       </ScrollView>
-      {/* {email === 'Guest' ? <SignInModel blurb="In order to use this feature, you have to be signed in!" /> : <View></View>} */}
+      {email === 'Guest' ? <SignInModel blurb="In order to use this feature, you have to be signed in!" /> : <View></View>}
       <Footer />
     </View>
   );
