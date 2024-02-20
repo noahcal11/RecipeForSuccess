@@ -1,12 +1,11 @@
 import { StatusBar } from 'expo-status-bar'; 
-import { StyleSheet, Text, Image, View, Pressable, TextInput, Keyboard } from 'react-native';
+import { StyleSheet, Text, Image, View, Pressable, TextInput, Keyboard, ScrollView } from 'react-native';
 import { useContext, useState} from 'react';
 import bcrypt from 'bcryptjs';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { Context } from '../Context';
 import global from '../Genstyle';
 import LogoIcon from '../assets/svg/logo';
-import { ScrollView } from 'react-native-gesture-handler';
 
 EStyleSheet.build();
 
@@ -18,6 +17,8 @@ export default function Login({navigation}) {
   const [notification, setNotification] = useState('');
   const [token, setToken] = useState('');
   const [emailValid, setEmailValid] = useState(false);
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
   const [emailErrorMessage, setEmailErrorMessage] = useState('');
   const {username,setUsername,email,setEmail,setFavorited,setCompleted,setCreated,setVisibleWidgets} = useContext(Context)
 
@@ -98,6 +99,14 @@ export default function Login({navigation}) {
     return isValid;
   };
 
+  const validatePassword = (password) => {
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
+    const isValid = passwordRegex.test(password);
+    setIsPasswordValid(isValid);
+    setPasswordErrorMessage(isValid ? '' : 'Password must have at least 8 characters with at least one uppercase letter, one number, and one symbol.');
+    return isValid;
+  };  
+
   function displayPopup(type) {
       switch(type) {
         case 'Login':
@@ -148,26 +157,33 @@ export default function Login({navigation}) {
                   placeholder="Username"
                 />
                 <TextInput
-                  style={global.input}
-                  onChangeText={setPassword}
+                  style={[global.input, !emailValid && { marginBottom: 0 }]}
+                  onChangeText={(text) => {
+                    setPassword(text);
+                    validatePassword(text);
+                  }}
                   value={password}
                   placeholder="Password"
                   secureTextEntry={true}
                 />
+                {!isPasswordValid && (
+                  <Text style={[global.centerBodyText, {flex: 0, margin: '0%', color: 'red'}]}>{passwordErrorMessage}</Text>
+                )}
                 <Pressable
-                  style={[
-                    global.button,
-                    !emailValid && { backgroundColor: 'grey', borderColor: 'grey' },
-                  ]}
-                  onPress={() => {
-                    if (emailValid) {
-                      createUser(email, username, password);
-                    }
-                  }}
-                  disabled={!emailValid}
+                    style={[
+                      global.button,
+                      !emailValid || !isPasswordValid && { backgroundColor: 'grey', borderColor: 'grey' },
+                    ]}
+                    onPress={() => {
+                      if (emailValid && isPasswordValid) {
+                        createUser(email, username, password);
+                      }
+                    }}
+                    disabled={!emailValid || !isPasswordValid}
                 >
-                  <Text style={global.buttonText}>Register</Text>
+                <Text style={global.buttonText}>Register</Text>
                 </Pressable>
+
               </View>
             );
 
@@ -226,7 +242,8 @@ export default function Login({navigation}) {
     }
 
     return (
-    <Pressable style={{ flex: 1 }} onPress={Keyboard.dismiss}>
+    <ScrollView>
+    <Pressable style={{flex: 1 }} onPress={Keyboard.dismiss}>
       <View style={global.grayBackground}>
           <View style={global.whiteForeground}>
               <View style={styles.top}>
@@ -282,6 +299,7 @@ export default function Login({navigation}) {
           </View>
       </View>
     </Pressable>
+    </ScrollView>
     )
 }
 
