@@ -278,9 +278,9 @@ const RecipeSurvey = ({directions, title, id}) => {
         <View style={global.whiteBackground}>   
         {/* Header */}
         <Banner title={"Survey"}/>
-            <Text style={global.titleText}>Great Job! Let us know how you did:</Text>
             {/* Each question corresponds to a skill */}
             <ScrollView styles={{ flex: 1 }}>
+            <Text style={global.titleText}>Great Job! Let us know how you did:</Text>
             {usedSkills[0] ?
             <View style={styles.question}>
                 <Text style={global.centeredText}>How good were you at cooking the dish?</Text>

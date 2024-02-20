@@ -134,7 +134,7 @@ export default function RecipePages({ navigation, route }) {
       return (
         <View style={global.whiteBackground}>
           <BannerTitle title={'Recipe'} />
-          <View style= {global.grayForeground}>
+          <View style={[global.grayForeground, { padding:   20 }]}>
             {/* Your app content */}
             <FlatList
               data={[recipe]}
