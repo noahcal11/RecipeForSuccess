@@ -56,7 +56,7 @@ const BannerTitle = ({ title }) => {
             onSubmitEditing={({ nativeEvent: { text } }) => {
                   navigation.navigate("Home");
                   navigation.navigate("searchResults", { searchTerm: text });
-                  setSearchFilter([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false])
+                  setSearchFilter([true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true])
               // route.name === "searchResults" ? ({navigation.navigate("Home"), navigation.navigate("searchResults")}) :
               // navigation.navigate("searchResults",{"searchTerm":text});
               toggleSearchBar();

@@ -34,8 +34,9 @@ export default function App() {
   const [visibleWidgets, setVisibleWidgets] = useState([true, true, true, true, true, true, true, true, true, true, true, true]);
   const [uploadAllergies, setUploadAllergies] = useState([false, false, false, false, false, false, false, false, false, false, false, false]);
   const [profileAllergies, setProfileAllergies] = useState([false, false, false, false, false, false, false, false, false, false, false, false]);
-  const [searchFilter, setSearchFilter] = useState([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]);
+  const [searchFilter, setSearchFilter] = useState([true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]);
   const [isIngInstructionsModelVisible, setIngInstructionsModelVisible] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
 
   let [fontsLoaded, fontError] = useFonts({
     Cairo_500Medium,
@@ -63,6 +64,7 @@ export default function App() {
         profileAllergies, setProfileAllergies,
         searchFilter, setSearchFilter,
         isIngInstructionsModelVisible, setIngInstructionsModelVisible,
+        searchResults, setSearchResults,
       }}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{

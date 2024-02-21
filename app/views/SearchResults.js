@@ -16,14 +16,18 @@ EStyleSheet.build();
 
 export default function SearchResults({ navigation, route }) {
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/" + process.env.REACT_APP_API_TOKEN
-    const { isSearchFilterModalVisible, setSearchFilterModalVisible, searchFilter, setSearchFilter } = useContext(Context);
+    const { isSearchFilterModalVisible, setSearchFilterModalVisible, searchResults, setSearchResults } = useContext(Context);
 
     //time, cuisine, category
     const [showDropdown, setShowDropdown] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null); //No initial option selected
-    const [searchResults, setSearchResults] = useState([]);
     const [searchResultsExists, setSearchResultsExists] = useState(true);
     const sortOptions = ['A to Z', 'Z to A']; // Your sorting options
+
+    const setSearchResultsState = (results, callback) => {
+        setSearchResults(results);
+        if (callback) callback();
+    }
 
     const getSearch = async (searchTerm) => {
         try {
@@ -37,23 +41,22 @@ export default function SearchResults({ navigation, route }) {
             });
     
             const data = await response.json();
-
+    
             // adding visibility prop for searchresults filter
             const resultsWithVis = data.map((recipe, index) => {
                 return {
-                  ...recipe,
-                  visibility: true,
+                    ...recipe,
+                    visibility: true,
                 };
-              });
-        
-            setSearchResults(resultsWithVis);
+            });
 
+            setSearchResults(resultsWithVis);
             setSearchResultsExists(data.length > 0);  // Set searchResultsExists based on the length of data
         } catch (error) {
             console.error(error);
             setSearchResultsExists(false);  // Set searchResultsExists to false in case of an error
         }
-    }
+    };
 
     const handleSortToggle = () => {
         setShowDropdown(!showDropdown);
@@ -64,8 +67,8 @@ export default function SearchResults({ navigation, route }) {
         setShowDropdown(false);
         // Perform sorting based on the selected option
         // Update searchResults accordingly
-        if(option='A to Z') sortAZ(searchResults);
-        if(option='Z to A') sortZA(searchResults);
+        if (option = 'A to Z') sortAZ(searchResults);
+        if (option = 'Z to A') sortZA(searchResults);
     }
 
     const sortAZ = (data) => {
@@ -81,55 +84,6 @@ export default function SearchResults({ navigation, route }) {
     useState(() => {
         getSearch(route.params.searchTerm);
     }, []);
-
-    function filterSearch() {
-        filterCookTime();
-        filterCuisine();
-        filterMealType();
-    }
-
-    function filterCookTime() {
-        const filteredData = searchResults.map((recipe, index) => {
-            if (recipe.visibility) {
-                if (recipe.total_time < 15) recipe.visibility=searchFilter[0];
-                else if (recipe.total_time < 30) recipe.visibility=searchFilter[1];
-                else if (recipe.total_time < 60) recipe.visibility=searchFilter[2];
-                else recipe.visibility=searchFilter[3];   
-            }
-        });
-        
-        cookTime=filteredData;
-    }
-
-    function filterCuisine() {
-        const filteredData = searchResults.map((recipe, index) => {
-            if (recipe.visibility) {
-                if (recipe.cuisine='African') recipe.visibility=searchFilter[4];
-                else if (recipe.cuisine='American') recipe.visibility=searchFilter[5];
-                else if (recipe.cuisine='Asian') recipe.visibility=searchFilter[6];
-                else if (recipe.cuisine='Italian') recipe.visibility=searchFilter[7];
-                else if (recipe.cuisine='Mexican') recipe.visibility=searchFilter[8];
-                else if (recipe.cuisine='Spanish') recipe.visibility=searchFilter[9];  
-            }
-        });
-        
-        cookTime=filteredData;
-    }
-
-    function filterMealType() {
-        const filteredData = searchResults.map((recipe, index) => {
-            if (recipe.visibility) {
-                if (recipe.category='Appetizer') recipe.visibility=searchFilter[10];
-                else if (recipe.category='Breakfast') recipe.visibility=searchFilter[11];
-                else if (recipe.category='Lunch') recipe.visibility=searchFilter[12];
-                else if (recipe.category='Dinner') recipe.visibility=searchFilter[13];
-                else if (recipe.category='Dessert') recipe.visibility=searchFilter[14];
-                else if (recipe.category='Snack') recipe.visibility=searchFilter[15];  
-            }
-        });
-        
-        cookTime=filteredData;
-    }
 
     return (
         <View style={global.whiteBackground}>
@@ -179,7 +133,7 @@ export default function SearchResults({ navigation, route }) {
 
                         <Text style={styles.noResultsText}>No results found.</Text>
                     ) : (
-                            <FlatList scrollEnabled={false}
+                        <FlatList scrollEnabled={false}
                             data={searchResults}
                             renderItem={({ item }) => (
                                 item.visibility && <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
@@ -201,7 +155,7 @@ export default function SearchResults({ navigation, route }) {
 
                         />
                     )}
-                    
+
                     {/* <FlatList scrollEnabled={false}
                         data={searchResults}
                         renderItem={({ item }) => (
