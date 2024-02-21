@@ -117,8 +117,7 @@ export default function RecipePages({ navigation, route }) {
     )} else {
       return (
         <View>
-          <Text style={global.subheaderText}>This recipe has no ratings!</Text>
-          <Text style={global.centeredText}>Be the first to review it after completing it!</Text>
+          <Text style={global.subheaderText}>This recipe has no ratings yet!</Text>
         </View>
       )
     }
@@ -182,9 +181,7 @@ export default function RecipePages({ navigation, route }) {
                     <RecipeDirections directions={item.steps} />
 
                     <Text style={global.subheaderText}>Recipe Allergens</Text>
-                    <Text style={[global.bodyText, {textAlign: 'center'}]}>Check all ingredients for any missed allergies.</Text>
                     <RecipeAllergens allergies={item.allergies} />
-
                   </View>
                   <Text style={global.creditsText} onPress={() => Linking.openURL(item.link)}>Credits</Text>
                 </>
