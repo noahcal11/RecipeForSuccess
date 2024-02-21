@@ -11,6 +11,10 @@ const ChangePasswordModel = ({ blurb }) => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+  const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState(false);
+  const [confirmPasswordErrorMessage, setConfirmPasswordErrorMessage] = useState('');
   const {isChangePasswordModelVisible, setChangePasswordModelVisible, email} = useContext(Context);
   const navigation = useNavigation();
 
@@ -26,6 +30,23 @@ const ChangePasswordModel = ({ blurb }) => {
         body: JSON.stringify({email: email, oldPassword: oldPassword, newPassword: newPassword})
       }).then(res => res.json())
     setChangePasswordModelVisible(!isChangePasswordModelVisible);
+  };
+
+  const validatePassword = (password) => {
+    const isLengthValid = password.length <= 50;
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
+    const isValid = passwordRegex.test(password);
+    setIsPasswordValid(isValid && isLengthValid);
+    //setPasswordErrorMessage(isValid ? '' : 'Password must have at least 8 characters with at least one uppercase letter, one number, and one symbol.');
+    setPasswordErrorMessage(isValid && isLengthValid ? '' : isLengthValid ? 'Password must have at least 8 characters with at least one uppercase letter, one number, and one symbol.' : 'Maximum character limit reached');
+    return isValid;
+  };  
+
+  const validateConfirmPassword = (confirmPassword) => {
+    const isMatch = newPassword === confirmPassword;
+    setIsConfirmPasswordValid(isMatch);
+    setConfirmPasswordErrorMessage(isMatch ? '' : 'Passwords do not match');
+    return isMatch;
   };
 
   const isButtonActive = oldPassword !== '' && newPassword !== '' && confirmPassword !== '';
@@ -46,20 +67,38 @@ const ChangePasswordModel = ({ blurb }) => {
               style={global.input}
               placeholder="old password"
               placeholderTextColor="black"
-              onChangeText={(text) => setOldPassword(text)}
+              onChangeText={(text) => {
+                setOldPassword(text);
+                setConfirmPassword(text);
+              }}
             />
             <TextInput
               style={global.input}
               placeholder="new password"
               placeholderTextColor="black"
-              onChangeText={(text) => setNewPassword(text)}
+              //onChangeText={(text) => setNewPassword(text)}
+              onChangeText={(text) => {
+                validatePassword(text);
+                setNewPassword(text)
+              }}
             />
+
+            {!isPasswordValid && (
+                  <Text style={[global.centerBodyText, {flex: 0, margin: '0%',color: 'red'}]}>{passwordErrorMessage}</Text>
+                )}
+
             <TextInput
               style={global.input}
               placeholder="confirm new password"
               placeholderTextColor="black"
-              onChangeText={(text) => setConfirmPassword(text)}
+              onChangeText={(text) => {
+                validateConfirmPassword(text);
+                setConfirmPassword(text);
+              }}
             />
+            {!isConfirmPasswordValid && (
+              <Text style={[global.centerBodyText, {flex: 0, margin: '0%',color: 'red'}]}>{confirmPasswordErrorMessage}</Text>
+            )}
             <Pressable
               style={isButtonActive ? global.button : global.buttonInactive}
               onPress={handlePasswordChange}>
@@ -99,6 +138,7 @@ const styles = EStyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+    width: '85%',
   },
   searchInput: {
     backgroundColor: 'white',

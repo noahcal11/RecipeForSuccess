@@ -207,13 +207,13 @@ export default function Profile() {
             </Pressable>
           )}
 
-          <Pressable
+          {/* <Pressable
                     style={global.buttonMinor}
                     onPress={() => {
                       setChangePasswordModelVisible(true)
                     }}>
                         <Text style={styles.guestText}>Change Password</Text>
-          </Pressable>
+          </Pressable> */}
 
           <Pressable
                     style={global.buttonMinor}
