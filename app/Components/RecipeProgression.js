@@ -23,10 +23,13 @@ const RecipeProgression = ({ingredients, directions, title}) => {
     // Variables for Keyword Display
     const [keywords, setKeywords] = useState(['abfhbfaifbiabifae']);
     const [hasRun, setHasRun] = useState(false);
+    const [keyDataGet, setKeyDataGet] = useState(false);
     var startTime = new Date();
     // Global variables
     const { recipePageState, setRecipePageState, username, email } = useContext(Context);
     const recipeTitle = title;
+
+    const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
     // Handler for when you click on a checkbox
     function changeHandler(pos) {
@@ -155,6 +158,7 @@ const RecipeProgression = ({ingredients, directions, title}) => {
 
     // Ensures the timer updates constantly
     useEffect(() => {
+        if(!keyDataGet) getKeywords();
         if(!isActive) return;
         timeout(1000).then(() => {
             setPassedTime(passedTime + 1)
@@ -168,8 +172,37 @@ const RecipeProgression = ({ingredients, directions, title}) => {
     }, [isActive, passedTime])
 
     const getKeywords = async () => {
+        setKeyDataGet(true);
         // Fill "keywords" with the list of keywords from the database
-
+        const key = await fetch(API_BASE+"/keyword/get-all", {
+            method: "GET"
+        }).then(res => res.json())
+        .catch(error => console.error(error));
+        // Get the list of suffixes
+        let list = [];
+        key.forEach(e => {
+            // Turn the suffix list into an array
+            sfx = e.suffixes.split(' ');
+            // Trim commas off the end of each word
+            sfx = sfx.map((item, index) => {
+                if(item.includes(",")) {
+                    item.slice(0, item.length - 1)
+                } else item
+            })
+            // Add the current list to the overall list
+            sfx.forEach(element => {
+                let oldList = list;
+                list = new Array(oldList.length + element.length);
+                // Add the previous list into the new one
+                for(i = 0; i < oldList.length; i++) {
+                    list[i] = oldList[i];
+                } // Add the new list on top of the previous
+                for(i = oldList.length; i < oldList.length + element.length; i++) {
+                    list[i] = element[i];
+                }
+            })
+        });
+        setKeywords(list);
     }
 
     function parseStep(step) {

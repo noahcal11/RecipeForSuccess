@@ -17,7 +17,7 @@ app.use(cors());
 
 mongoose.connect("mongodb+srv://"+process.env.MDB_USERNAME+":"+process.env.MDB_PASSWORD+"@cluster0.iwfcbm2.mongodb.net/recipes").then(() => console.log("Connected")).catch(console.error())
 
-const { Recipe,User } = require('./model');
+const { Recipe,User,Keyword } = require('./model');
 
 // Recipe Section
 
@@ -300,6 +300,12 @@ app.post('/'+process.env.API_TOKEN+'/user/reset-password/', async (req, res) => 
     // Save the updated user document
     user.save()
     res.send('Password has been reset.');
+});
+
+// Keyword Section
+app.get('/'+process.env.API_TOKEN+'/keyword/get-all', async (req,res) => {
+    const keywords = await Keyword.find({});
+    res.json(keywords);
 });
 
 // Other Section
