@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/core';
 import RNPickerSelect from 'react-native-picker-select';
 import * as ImagePicker from 'expo-image-picker';
 import AllergySwitchComp from '../Components/UploadAllergySwitch';
+import {AutoGrowingTextInput} from 'react-native-autogrow-textinput';
 
 
 EStyleSheet.build();
@@ -99,6 +100,12 @@ export default function Upload() {
     const [category, setCategory] = useState('category')
     const [cusine, setCusine] = useState('cusine')
     const [previewInfo, setPreviewInfo] = useState([]); 
+    const [titleError, setTitleError] = useState('');
+    const [descError, setDescError] = useState('');
+    const [stepError, setStepError] = useState('');
+    const [prepError, setPrepError] = useState('');
+    const [servingError, setServingError] = useState('');
+
 
     const handleAddIngredient = () => {
         setIngredients(prevIngredients => [...prevIngredients, { ingredient: '', qty: '', unit: '' }]);
@@ -128,9 +135,11 @@ export default function Upload() {
         setCusine(value);
     };
 
-    const handleIngredientObjectToString = ingredients.map((item, index) => {
-        return item.qty + ' ' + item.unit.toString().toLowerCase() + ' ' + item.ingredient;
-    })
+    function handleIngredientObjectToString() {
+        return ingredients.map((item, index) => {
+            return item.qty + ' ' + item.unit.toString().toLowerCase() + ' ' + item.ingredient;
+        });
+    }
 
     const handleAddStep = () => {
         setSteps(prevSteps => [...prevSteps, '']);
@@ -191,6 +200,7 @@ export default function Upload() {
 
 
     return(
+        
         <View style={global.whiteBackground}>
             <Banner title="Upload"/>
                 <ScrollView>
@@ -204,25 +214,56 @@ export default function Upload() {
 
                     <View style={global.grayForeground}>
                         <Text style={styles.titleText}>Title</Text>
-                        <TextInput style={styles.input} placeholder="Enter your recipe title..." onChangeText={setTitle}/>
+                        <AutoGrowingTextInput
+                            style={styles.input}  
+                            maxLength={50}
+                            placeholder="Enter your recipe title..."  
+                            onChangeText={(text) => {
+                                
+                                if (text.length === 50) {
+                                    setTitleError('Maximum character limit reached');
+                                } else if (titleError && text.length < 50) {
+                                    setTitleError('');
+                                }       
+                                setTitle(text);
+                            }}
+                        />
+                        {titleError ? <Text style={{ ...styles.bodyText, color: 'red' }}>{titleError}</Text> : null}
 
+              
 
                         <Text style={styles.titleText}>Description</Text>
-                        <TextInput style={styles.input} placeholder="Enter your recipe description..." onChangeText={setDesc}/>
+                        <AutoGrowingTextInput  
+                            style={styles.input} 
+                            maxLength={250}
+                            placeholder="Enter your recipe description..." 
+                            onChangeText={(text) => {
+                                
+                                if (text.length === 250) {
+                                    setDescError('Maximum character limit reached');
+                                } else if (descError && text.length < 250) {
+                                    setDescError('');
+                                }       
+                                setDesc(text);
+                            }}
+                        />
+                        {descError ? <Text style={{ ...styles.bodyText, color: 'red' }}>{descError}</Text> : null}
                     </View>
                     
                     <View style={global.grayForeground}> 
                         <Text style={styles.titleText}>Ingredients</Text>
                         {ingredients.map((ingredient, index) => (
                             <View key={index} style={{flexDirection: 'row'}}> 
-                                <TextInput 
+                                <AutoGrowingTextInput 
                                     style={styles.IngredientInput} 
+                                    maxLength={50}
                                     placeholder="Enter your ingredient..."
                                     value={ingredient.ingredient}
                                     onChangeText={(value) => handleIngredientChange(index, 'ingredient', value)}
                                 />
                                 <TextInput 
                                     style={styles.QtyUnits} 
+                                    maxLength={5}
                                     keyboardType='numeric'
                                     placeholder="Qty" 
                                     value={ingredient.qty}
@@ -259,14 +300,25 @@ export default function Upload() {
                     {steps.map((step, index) => (
                         <View key={index} style={{flexDirection: 'row'}}> 
                         <Text style={styles.bodyText}>{index + 1}</Text>
-                        <TextInput 
-                            style={styles.IngredientInput} 
+                        <AutoGrowingTextInput 
+                            style={styles.input} 
+                            maxLength={250}
                             placeholder="Enter your step..." 
                             value={step.step}
-                            onChangeText={(value) => handleStepChange(index, value)}
+                            // onChangeText={(value) => handleStepChange(index, value)}
+                            onChangeText={(value) => {
+                                
+                                if (value.length === 250) {
+                                    setStepError('Maximum character limit reached');
+                                } else if (stepError && value.length < 250) {
+                                    setStepError('');
+                                }       
+                                handleStepChange(index, value)}
+                            }
                         />
                         </View>
                     ))}
+                    <View>{stepError ? <Text style={{ ...styles.bodyText, color: 'red' }}>{stepError}</Text> : null}</View>
                     <Pressable style={global.button} onPress={handleAddStep}>
                         <Text>Add step</Text>
                     </Pressable>
@@ -280,18 +332,38 @@ export default function Upload() {
                 <View style={global.grayForeground}> 
                     <Text style={styles.titleText}>Prep Time</Text>
                     <TextInput 
-                        style={styles.QtyUnits} 
+                        style={styles.prepServ} 
+                        maxLength={5}
                         keyboardType='numeric'
-                        placeholder="Enter number of total minutes" 
-                        onChangeText={setPrepTime}
+                        placeholder="Time in Minutes" 
+                        onChangeText={(text) => {
+                                
+                            if (text.length === 5) {
+                                setPrepError('Maximum character limit reached');
+                            } else if (titleError && text.length < 5) {
+                                setPrepError('');
+                            }       
+                            setPrepTime(text);
+                        }}
                     />
+                    {prepError ? <Text style={{ ...styles.bodyText, color: 'red' }}>{prepError}</Text> : null}
                     <Text style={styles.titleText}>Servings</Text>
                     <TextInput 
-                        style={styles.QtyUnits} 
+                        style={styles.prepServ} 
+                        maxLength={5}
                         keyboardType='numeric'
-                        placeholder="Enter number of total servings"
-                        onChangeText={setServings}
+                        placeholder="Total Servings"
+                        onChangeText={(text) => {
+                                
+                            if (text.length === 5) {
+                                setServingError('Maximum character limit reached');
+                            } else if (titleError && text.length < 5) {
+                                setServingError('');
+                            }       
+                            setServings(text);
+                        }}
                     />
+                    {servingError ? <Text style={{ ...styles.bodyText, color: 'red' }}>{servingError}</Text> : null}
                     <Text style={styles.titleText}>Category</Text>
                     <Text style={styles.bodyText}>Select Category</Text>
                     <RNPickerSelect
@@ -350,15 +422,26 @@ const styles = EStyleSheet.create({
         paddingBottom: '1rem',
       },
       input: {
+        flex: 5,
         backgroundColor: '#D1D1D1',
         borderRadius: '2rem',
-        fontSize: '1rem',
+        fontSize: '1.5rem',
         fontFamily: 'Cairo_500Medium',
         width: '20rem',
-        height: '3rem',
         paddingLeft: '1rem',
         marginBottom: '1rem',
         alignSelf: 'center'
+      },
+      prepServ: {
+        flex: 5,
+        backgroundColor: '#D1D1D1',
+        borderRadius: '2rem',
+        fontSize: '1.5rem',
+        fontFamily: 'Cairo_500Medium',
+        width: 200,
+        marginBottom: '1rem',
+        alignSelf: 'center',
+        textAlign: 'center',
       },
       IngredientInput: {
         flex: 5,
@@ -366,12 +449,12 @@ const styles = EStyleSheet.create({
         borderRadius: '2rem',
         fontSize: '1rem',
         fontFamily: 'Cairo_500Medium',
-        height: '3rem',
+        height: '8rem',
         paddingLeft: '1rem',
         marginBottom: '1rem',
       },
       QtyUnits: {
-        flex: 2,
+        flex:  2,
         backgroundColor: '#D1D1D1',
         borderRadius: '2rem',
         fontSize: '1rem',
@@ -379,7 +462,12 @@ const styles = EStyleSheet.create({
         height: '3rem',
         marginLeft: '1rem',
         marginBottom: '1rem',
-        textAlign: 'center',
+        alignItems: 'center', // Add this to center content vertically
+        justifyContent: 'center', // Add this to center content horizontally
+        textAlign: 'center', // Add this to center text horizontally
+      },
+      prepServings: {
+
       },
       bodyText: {
         minWidth: 20,

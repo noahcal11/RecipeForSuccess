@@ -67,6 +67,17 @@ export default function Profile() {
     setIsProfileModified(false);
   };
 
+  const handleDeleteAccount = async () => {
+    const data = await fetch(API_BASE+"/user/delete/"+email, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: "DELETE"
+    })
+    navigation.navigate('Login');
+  };
+
   const renderHeader = (section) => {
     return (
       <View style={global.horizontal}>
@@ -196,12 +207,20 @@ export default function Profile() {
             </Pressable>
           )}
 
-          <Pressable
+          {/* <Pressable
                     style={global.buttonMinor}
                     onPress={() => {
                       setChangePasswordModalVisible(true)
                     }}>
                         <Text style={styles.guestText}>Change Password</Text>
+          </Pressable> */}
+
+          <Pressable
+                    style={global.buttonMinor}
+                    onPress={() => {
+                      handleDeleteAccount()
+                    }}>
+                        <Text style={styles.guestText}>Delete Account </Text>
           </Pressable>
 
           <Pressable
@@ -213,14 +232,6 @@ export default function Profile() {
                     }}>
                         <Text style={styles.guestText}>Logout</Text>
           </Pressable>
-
-          <Pressable
-                    style={global.buttonMinor}
-                    onPress={() => {
-                      navigation.navigate('Home');
-                    }}>
-                        <Text style={styles.guestText}>Delete Account </Text>
-          </Pressable>
           
           <ChangePasswordModal blurb="Change Password"/>
           {/* <MessageModel blurb="Account Settings Updated" /> */}
@@ -228,7 +239,7 @@ export default function Profile() {
         </View>
 
       </ScrollView>
-      {/* {email === 'Guest' ? <SignInModel blurb="In order to use this feature, you have to be signed in!" /> : <View></View>} */}
+      {email === 'Guest' ? <SignInModel blurb="In order to use this feature, you have to be signed in!" /> : <View></View>}
       <Footer />
     </View>
   );

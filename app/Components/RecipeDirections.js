@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
   directionNumber: {
     marginRight: 10,
     fontWeight: 'bold',
+    paddingTop: 6.5,
   },
   directionText: {
     flex: 1,

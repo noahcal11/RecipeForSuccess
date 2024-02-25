@@ -65,6 +65,7 @@ export default function App() {
         searchFilter, setSearchFilter,
         isIngInstructionsModelVisible, setIngInstructionsModelVisible,
         searchResults, setSearchResults,
+        setRecipePageState,
       }}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{

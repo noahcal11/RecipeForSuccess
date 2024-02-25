@@ -51,6 +51,7 @@ const BannerTitle = ({ title }) => {
         <View style={styles.searchBar}>
           <TextInput
             placeholder="Search..."
+            maxLength={100}
             style={styles.searchInput}
             autoFocus
             onSubmitEditing={({ nativeEvent: { text } }) => {
@@ -63,7 +64,7 @@ const BannerTitle = ({ title }) => {
             }}
           />
           <Pressable onPress={toggleSearchBar}>
-            <View style={styles.xBox}><Text>X</Text></View>
+            <View style={styles.xBox}><Text style={styles.xSize}>X</Text></View>
           </Pressable>
         </View>
       )}
@@ -129,4 +130,9 @@ const styles = EStyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    xSize: {
+      fontSize: '2rem',
+      fontWeight: 'bold',
+      marginTop: '.25rem'
+    }
 });

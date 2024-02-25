@@ -1,6 +1,9 @@
 import React from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import global from '../Genstyle'
+import EStyleSheet from 'react-native-extended-stylesheet';
+
+EStyleSheet.build();
 
 const RecipeIngredients = ({ ingredients }) => {
   return (
@@ -17,7 +20,7 @@ const RecipeIngredients = ({ ingredients }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   ingredientItem: {
     flexDirection: 'row',
     // alignItems: 'center',
@@ -26,6 +29,7 @@ const styles = StyleSheet.create({
   bullet: {
     fontSize: 16,
     marginRight: 8,
+    paddingTop: 5,
   },
   ingredientText: {
     fontSize: 16,
