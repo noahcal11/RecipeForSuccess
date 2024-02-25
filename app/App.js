@@ -28,13 +28,15 @@ export default function App() {
   const [favorited, setFavorited] = useState([]);
   const [created, setCreated] = useState([]);
   const [completed, setCompleted] = useState([]);
-  const [isChangePasswordModelVisible, setChangePasswordModelVisible] = useState(false);
-  const [isHomeFiltersModelVisible, setHomeFiltersModelVisible] = useState(false);
+  const [isChangePasswordModalVisible, setChangePasswordModalVisible] = useState(false);
+  const [isHomeFiltersModalVisible, setHomeFiltersModalVisible] = useState(false);
   const [isSearchFilterModalVisible, setSearchFilterModalVisible] = useState(false);
   const [visibleWidgets, setVisibleWidgets] = useState([true, true, true, true, true, true, true, true, true, true, true, true]);
   const [uploadAllergies, setUploadAllergies] = useState([false, false, false, false, false, false, false, false, false, false, false, false]);
   const [profileAllergies, setProfileAllergies] = useState([false, false, false, false, false, false, false, false, false, false, false, false]);
+  const [searchFilter, setSearchFilter] = useState([true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]);
   const [isIngInstructionsModelVisible, setIngInstructionsModelVisible] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
 
   let [fontsLoaded, fontError] = useFonts({
     Cairo_500Medium,
@@ -48,19 +50,21 @@ export default function App() {
 
   return (
     <Context.Provider value={{ 
-        isHomeFiltersModelVisible, setHomeFiltersModelVisible,
+        isHomeFiltersModalVisible, setHomeFiltersModalVisible,
         recipePageState, setRecipePageState, 
         username, setUsername, 
         email, setEmail, 
         favorited, setFavorited,
         completed, setCompleted,
         created, setCreated,
-        isChangePasswordModelVisible, setChangePasswordModelVisible,
+        isChangePasswordModalVisible, setChangePasswordModalVisible,
         isSearchFilterModalVisible, setSearchFilterModalVisible,
         visibleWidgets, setVisibleWidgets,
         uploadAllergies, setUploadAllergies,
         profileAllergies, setProfileAllergies,
+        searchFilter, setSearchFilter,
         isIngInstructionsModelVisible, setIngInstructionsModelVisible,
+        searchResults, setSearchResults,
         setRecipePageState,
       }}>
       <NavigationContainer>

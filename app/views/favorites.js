@@ -7,7 +7,7 @@ import { Context } from '../Context'
 import Banner from '../Components/Banner';
 import global from '../Genstyle';
 import { Dimensions } from 'react-native';
-import SignInModel from '../Components/SignInModel';
+import SignInModal from '../Components/SignInModal';
 
 EStyleSheet.build();
 
@@ -68,7 +68,7 @@ export default function Favorites( {navigation, route} ) {
                     </View>}
                 </View>
             </ScrollView>
-            {email === 'Guest' ? <SignInModel blurb="In order to use this feature, you have to be signed in!" /> : <View></View>}
+            {email === 'Guest' ? <SignInModal blurb="In order to use this feature, you have to be signed in!" /> : <View></View>}
             <Footer/>
         </View>
     )

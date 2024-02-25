@@ -16,14 +16,18 @@ EStyleSheet.build();
 
 export default function SearchResults({ navigation, route }) {
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/" + process.env.REACT_APP_API_TOKEN
-    const { isSearchFilterModalVisible, setSearchFilterModalVisible } = useContext(Context);
+    const { isSearchFilterModalVisible, setSearchFilterModalVisible, searchResults, setSearchResults } = useContext(Context);
 
     //time, cuisine, category
     const [showDropdown, setShowDropdown] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null); //No initial option selected
-    const [searchResults, setSearchResults] = useState([]);
     const [searchResultsExists, setSearchResultsExists] = useState(true);
     const sortOptions = ['A to Z', 'Z to A']; // Your sorting options
+
+    const setSearchResultsState = (results, callback) => {
+        setSearchResults(results);
+        if (callback) callback();
+    }
 
     const getSearch = async (searchTerm) => {
         try {
@@ -38,13 +42,21 @@ export default function SearchResults({ navigation, route }) {
     
             const data = await response.json();
     
-            setSearchResults(data);
+            // adding visibility prop for searchresults filter
+            const resultsWithVis = data.map((recipe, index) => {
+                return {
+                    ...recipe,
+                    visibility: true,
+                };
+            });
+
+            setSearchResults(resultsWithVis);
             setSearchResultsExists(data.length > 0);  // Set searchResultsExists based on the length of data
         } catch (error) {
             console.error(error);
             setSearchResultsExists(false);  // Set searchResultsExists to false in case of an error
         }
-    }
+    };
 
     const handleSortToggle = () => {
         setShowDropdown(!showDropdown);
@@ -55,8 +67,8 @@ export default function SearchResults({ navigation, route }) {
         setShowDropdown(false);
         // Perform sorting based on the selected option
         // Update searchResults accordingly
-        if(option='A to Z') sortAZ(searchResults);
-        if(option='Z to A') sortZA(searchResults);
+        if (option = 'A to Z') sortAZ(searchResults);
+        if (option = 'Z to A') sortZA(searchResults);
     }
 
     const sortAZ = (data) => {
@@ -72,8 +84,6 @@ export default function SearchResults({ navigation, route }) {
     useState(() => {
         getSearch(route.params.searchTerm);
     }, []);
-
-
 
     return (
         <View style={global.whiteBackground}>
@@ -123,29 +133,28 @@ export default function SearchResults({ navigation, route }) {
 
                         <Text style={styles.noResultsText}>No results found.</Text>
                     ) : (
-                            <FlatList scrollEnabled={false}
-                            data={searchResults}
+                        <FlatList
+                            scrollEnabled={false}
+                            data={searchResults.filter(item => item.visibility)}
                             renderItem={({ item }) => (
                                 <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
-                                    style={({ pressed }) => [
-                                        {
-                                            opacity: pressed
-                                                ? 0.2
-                                                : 1,
-                                        }]}
+                                style={({ pressed }) => [
+                                    {
+                                    opacity: pressed ?  0.2 :  1,
+                                    }]}
                                 >
-                                    <View style={styles.imageView} id={item._id}>
-                                        <Image style={styles.imageThumbnail} source={{ uri: item.image }} />
-                                        <Text style={global.subText}>{item.title}</Text>
-                                    </View>
+                                <View style={styles.imageView} id={item._id}>
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} />
+                                    <Text style={global.subText}>{item.title}</Text>
+                                </View>
                                 </Pressable>
                             )}
                             numColumns={2}
-                            keyExtractor={(item, index) => index}
-
+                            keyExtractor={(item, index) => index.toString()}
                         />
+
                     )}
-                    
+
                     {/* <FlatList scrollEnabled={false}
                         data={searchResults}
                         renderItem={({ item }) => (

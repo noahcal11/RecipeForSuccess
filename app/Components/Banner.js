@@ -6,7 +6,7 @@ import { View, Pressable, Text, TextInput } from 'react-native';
 import SearchIcon from '../assets/svg/search';
 import { useNavigation,useRoute } from '@react-navigation/core';
 import { Context } from "../Context";
-import SignInModel from "./SignInModel";
+import SignInModal from "./SignInModal";
 
 EStyleSheet.build();
 
@@ -14,7 +14,7 @@ const BannerTitle = ({ title }) => {
   const navigation = useNavigation();
   const route = useRoute();
   const [isTextInputVisible, setTextInputVisible] = useState(false);
-  const {setRecipePageState, email} = useContext(Context);
+  const {setRecipePageState, email, searchFilter, setSearchFilter} = useContext(Context);
 
     const toggleSearchBar = () => {
         setTextInputVisible(!isTextInputVisible);
@@ -57,6 +57,7 @@ const BannerTitle = ({ title }) => {
             onSubmitEditing={({ nativeEvent: { text } }) => {
                   navigation.navigate("Home");
                   navigation.navigate("searchResults", { searchTerm: text });
+                  setSearchFilter([true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true])
               // route.name === "searchResults" ? ({navigation.navigate("Home"), navigation.navigate("searchResults")}) :
               // navigation.navigate("searchResults",{"searchTerm":text});
               toggleSearchBar();

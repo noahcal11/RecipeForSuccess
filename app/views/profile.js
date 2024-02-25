@@ -7,11 +7,11 @@ import SwitchComp from '../Components/UpdateAllergyPrefSwitch';
 import Accordion from 'react-native-collapsible/Accordion';
 import BannerTitle from '../Components/Banner';
 import DownArrowIcon from '../assets/svg/downArrow';
-import SignInModel from '../Components/SignInModel';
+import SignInModal from '../Components/SignInModal';
 import { Context } from '../Context';
 import { useNavigation } from '@react-navigation/core';
-import ChangePasswordModel from '../Components/ChangePasswordModel';
-import MessageModel from '../Components/MessageModel';
+import ChangePasswordModal from '../Components/ChangePasswordModal';
+import MessageModal from '../Components/MessageModal';
 import Test from './Test';
 
 EStyleSheet.build();
@@ -38,11 +38,11 @@ const SECTIONS = [
 
 export default function Profile() {
   const [activeSections, setActiveSections] = useState([]);
-  const {username,setUsername,email,setEmail,setChangePasswordModelVisible} = useContext(Context);
+  const {username,setUsername,email,setEmail,setChangePasswordModalVisible} = useContext(Context);
   const [newEmail, setNewEmail] = useState(email);
   const navigation = useNavigation();
   const [isProfileModified, setIsProfileModified] = useState(false);
-  const [isMessageModelVisible, setMessageModelVisible] = useState(false);
+  const [isMessageModalVisible, setMessageModalVisible] = useState(false);
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
@@ -201,7 +201,7 @@ export default function Profile() {
               style={global.button}
               onPress={() => {
                 handleUpdateAccount();
-                setMessageModelVisible(true);
+                setMessageModalVisible(true);
               }} >
               <Text style={styles.guestText}>Update Account</Text>
             </Pressable>
@@ -210,7 +210,7 @@ export default function Profile() {
           {/* <Pressable
                     style={global.buttonMinor}
                     onPress={() => {
-                      setChangePasswordModelVisible(true)
+                      setChangePasswordModalVisible(true)
                     }}>
                         <Text style={styles.guestText}>Change Password</Text>
           </Pressable> */}
@@ -233,7 +233,7 @@ export default function Profile() {
                         <Text style={styles.guestText}>Logout</Text>
           </Pressable>
           
-          <ChangePasswordModel blurb="Change Password"/>
+          <ChangePasswordModal blurb="Change Password"/>
           {/* <MessageModel blurb="Account Settings Updated" /> */}
 
         </View>
