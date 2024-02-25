@@ -48,19 +48,19 @@ const SearchFilterModal = ({ blurb }) => {
             // we run filterCookTime first, so we do not check if recipe is already hidden - this "resets" the filter
             if (recipe.total_time < 15) return {
                 ...recipe,
-                visibility: searchFilter[0]
+                ...recipe.visibility = searchFilter[0]
             }
-            if (recipe.total_time < 30) return {
+            if (recipe.total_time <= 30) return {
                 ...recipe,
-                visibility: searchFilter[1]
+                ...recipe.visibility = searchFilter[1]
             }
-            if (recipe.total_time < 60) return {
+            if (recipe.total_time <= 60) return {
                 ...recipe,
-                visibility: searchFilter[2]
+                ...recipe.visibility = searchFilter[2]
             }
             return {
                 ...recipe,
-                visibility: searchFilter[3]
+                ...recipe.visibility = searchFilter[3]
             };
         }))
     }
@@ -71,27 +71,27 @@ const SearchFilterModal = ({ blurb }) => {
             if (recipe.visibility) {
                 if (recipe.cuisine='African') return {
                     ...recipe,
-                    visibility: searchFilter[4]
+                    ...recipe.visibility = searchFilter[4]
                 };
                 else if (recipe.cuisine='American') return {
                     ...recipe,
-                    visibility: searchFilter[5]
+                    ...recipe.visibility = searchFilter[5]
                 };
                 else if (recipe.cuisine='Asian') return {
                     ...recipe,
-                    visibility: searchFilter[6]
+                    ...recipe.visibility = searchFilter[6]
                 };
                 else if (recipe.cuisine='Italian') return {
                     ...recipe,
-                    visibility: searchFilter[7]
+                    ...recipe.visibility = searchFilter[7]
                 };
                 else if (recipe.cuisine='Mexican') return {
                     ...recipe,
-                    visibility: searchFilter[8]
+                    ...recipe.visibility = searchFilter[8]
                 };
                 else if (recipe.cuisine='Spanish') return {
                     ...recipe,
-                    visibility: searchFilter[9]
+                    ...recipe.visibility = searchFilter[9]
                 };
             } else return recipe;
         }))
@@ -103,27 +103,27 @@ const SearchFilterModal = ({ blurb }) => {
             if (recipe.visibility) {
                 if (recipe.category='Appetizer') return {
                     ...recipe,
-                    visibility: searchFilter[10]
+                    ...recipe.visibility = searchFilter[10]
                 };
                 else if (recipe.category='Breakfast') return {
                     ...recipe,
-                    visibility: searchFilter[11]
+                    ...recipe.visibility = searchFilter[11]
                 };
                 else if (recipe.category='Lunch') return {
                     ...recipe,
-                    visibility: searchFilter[12]
+                    ...recipe.visibility = searchFilter[12]
                 };
                 else if (recipe.category='Dinner') return {
                     ...recipe,
-                    visibility: searchFilter[13]
+                    ...recipe.visibility = searchFilter[13]
                 };
                 else if (recipe.category='Dessert') return {
                     ...recipe,
-                    visibility: searchFilter[14]
+                    ...recipe.visibility = searchFilter[14]
                 };
                 else if (recipe.category='Snack') return {
                     ...recipe,
-                    visibility: searchFilter[15]
+                    ...recipe.visibility = searchFilter[15]
                 }; 
             } else return recipe;
         }))
@@ -169,7 +169,6 @@ const SearchFilterModal = ({ blurb }) => {
                             style={global.button}
                             onPress={() => {
                                 filterSearch();
-                                console.log(searchResults);
                                 setSearchFilterModalVisible(!isSearchFilterModalVisible);
                                 setSearchFilterModalVisible(false);
                                 navigation.navigate('searchResults');

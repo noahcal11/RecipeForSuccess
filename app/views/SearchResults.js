@@ -133,27 +133,26 @@ export default function SearchResults({ navigation, route }) {
 
                         <Text style={styles.noResultsText}>No results found.</Text>
                     ) : (
-                        <FlatList scrollEnabled={false}
-                            data={searchResults}
+                        <FlatList
+                            scrollEnabled={false}
+                            data={searchResults.filter(item => item.visibility)}
                             renderItem={({ item }) => (
-                                item.visibility && <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
-                                    style={({ pressed }) => [
-                                        {
-                                            opacity: pressed
-                                                ? 0.2
-                                                : 1,
-                                        }]}
+                                <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
+                                style={({ pressed }) => [
+                                    {
+                                    opacity: pressed ?  0.2 :  1,
+                                    }]}
                                 >
-                                    <View style={styles.imageView} id={item._id}>
-                                        <Image style={styles.imageThumbnail} source={{ uri: item.image }} />
-                                        <Text style={global.subText}>{item.title}</Text>
-                                    </View>
+                                <View style={styles.imageView} id={item._id}>
+                                    <Image style={styles.imageThumbnail} source={{ uri: item.image }} />
+                                    <Text style={global.subText}>{item.title}</Text>
+                                </View>
                                 </Pressable>
                             )}
                             numColumns={2}
-                            keyExtractor={(item, index) => index}
-
+                            keyExtractor={(item, index) => index.toString()}
                         />
+
                     )}
 
                     {/* <FlatList scrollEnabled={false}
