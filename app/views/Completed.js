@@ -17,10 +17,24 @@ export default function PageTemplate() {
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
     const getCompleted = async () => {
-        const response = await fetch(API_BASE + '/user/get/' + email)
+        // Get recipe data by calling recipe/get using user.completed_recipes
+        const response = await fetch(API_BASE + '/user/get/' + email, {method: "GET"})
         .then(res => res.json())
-        .then(data => setCompleted(data[0].completed_recipes))
-        .catch(error => console.error(error));
+
+        let recipeList = response[0].completed_recipes;
+        console.log(recipeList);
+
+        const responsetwo = await fetch(API_BASE+"/recipe/get/", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({ids: recipeList})
+            })
+            .then(res => res.json())
+        setCompleted(responsetwo);
+        console.log("Hello");
     }
 
     // Shortens longer titles so any given recipe title only takes up two lines
@@ -47,7 +61,7 @@ export default function PageTemplate() {
                         ListHeaderComponent={<Text style={global.titleText}>Finished Recipes</Text>}
                         data={completed}
                         renderItem={({ item }) => (
-                            <Pressable onPress={() => navigation.navigate('recipePages', { '_id': item._id })}
+                            <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
                                 style={({ pressed }) => [
                                     {
                                         opacity: pressed

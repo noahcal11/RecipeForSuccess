@@ -30,7 +30,7 @@ const RecipeSurvey = ({directions, title, id}) => {
     const [allSelected, setAllSelected] = useState(false);
     const [starValue, setStarValue] = useState([1, 1, 1, 1, 1])
     const { setRecipePageState, username, email } = useContext(Context);
-    const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app";
+    const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN;
 
     const updateSkills = async () => {
         navigation.navigate("Skills");
@@ -47,12 +47,12 @@ const RecipeSurvey = ({directions, title, id}) => {
 
     const addCompleted = async () => {
         await fetch(API_BASE+"/user/update-completed/" + email, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application.json'
-            },
-            method: "POST",
-            body: JSON.stringify({recipe: id})
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          method: "POST",
+          body: JSON.stringify({recipe: id})
         }).catch(err => console.error(err));
     }
 
@@ -63,12 +63,12 @@ const RecipeSurvey = ({directions, title, id}) => {
         });
         if(ratingTotal > 0) {
             await fetch(API_BASE+"/recipe/update-rating/" + id, {
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                method: "POST",
-                body: JSON.stringify({rating: ratingTotal})
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+              method: "POST",
+              body: JSON.stringify({rating: ratingTotal})
             }).catch(err => console.error(err));
         }
     }

@@ -43,5 +43,6 @@ const keywords = new Schema({
 
 const Recipe = mongoose.model("Recipe",RecipeSchema);
 const User = mongoose.model("User",UserSchema);
+const Keyword = mongoose.model("Keyword", keywords);
 
-module.exports = {Recipe,User};
+module.exports = {Recipe,User,Keyword};
