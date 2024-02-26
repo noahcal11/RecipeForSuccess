@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 
 EStyleSheet.build();
 
-const MessageModel = ({blurb}) => {
+const MessageModal = ({blurb}) => {
   const [modalVisible, setModalVisible] = useState(true);
   const navigation = useNavigation();
 
@@ -56,4 +56,4 @@ const styles = EStyleSheet.create({
   }
 });
 
-export default MessageModel
+export default MessageModal

@@ -7,7 +7,7 @@ import { Context } from '../Context'
 import Banner from '../Components/Banner';
 import global from '../Genstyle';
 import { useNavigation } from '@react-navigation/core';
-import SignInModel from '../Components/SignInModel';
+import SignInModal from '../Components/SignInModal';
 
 EStyleSheet.build();
 
@@ -84,7 +84,7 @@ export default function PageTemplate() {
                     </View>}
                     </ScrollView>
                 </View>
-                {email === 'Guest' ? <SignInModel blurb="In order to use this feature, you have to be signed in!" /> : <View></View>}
+                {email === 'Guest' ? <SignInModal blurb="In order to use this feature, you have to be signed in!" /> : <View></View>}
             <Footer/>
         </View>
     )
