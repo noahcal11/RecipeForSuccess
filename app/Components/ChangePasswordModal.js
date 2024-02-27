@@ -7,11 +7,15 @@ import { Context } from '../Context';
 
 EStyleSheet.build();
 
-const ChangePasswordModel = ({ blurb }) => {
+const ChangePasswordModal = ({ blurb }) => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const {isChangePasswordModelVisible, setChangePasswordModelVisible, email} = useContext(Context);
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+  const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState(false);
+  const [confirmPasswordErrorMessage, setConfirmPasswordErrorMessage] = useState('');
+  const {isChangePasswordModalVisible, setChangePasswordModalVisible, email} = useContext(Context);
   const navigation = useNavigation();
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
@@ -25,7 +29,24 @@ const ChangePasswordModel = ({ blurb }) => {
         method: "POST",
         body: JSON.stringify({email: email, oldPassword: oldPassword, newPassword: newPassword})
       }).then(res => res.json())
-    setChangePasswordModelVisible(!isChangePasswordModelVisible);
+    setChangePasswordModalVisible(!isChangePasswordModalVisible);
+  };
+
+  const validatePassword = (password) => {
+    const isLengthValid = password.length <= 50;
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
+    const isValid = passwordRegex.test(password);
+    setIsPasswordValid(isValid && isLengthValid);
+    //setPasswordErrorMessage(isValid ? '' : 'Password must have at least 8 characters with at least one uppercase letter, one number, and one symbol.');
+    setPasswordErrorMessage(isValid && isLengthValid ? '' : isLengthValid ? 'Password must have at least 8 characters with at least one uppercase letter, one number, and one symbol.' : 'Maximum character limit reached');
+    return isValid;
+  };  
+
+  const validateConfirmPassword = (confirmPassword) => {
+    const isMatch = newPassword === confirmPassword;
+    setIsConfirmPasswordValid(isMatch);
+    setConfirmPasswordErrorMessage(isMatch ? '' : 'Passwords do not match');
+    return isMatch;
   };
 
   const isButtonActive = oldPassword !== '' && newPassword !== '' && confirmPassword !== '';
@@ -35,9 +56,9 @@ const ChangePasswordModel = ({ blurb }) => {
       <Modal
         animationType="slide"
         transparent={true}
-        visible={isChangePasswordModelVisible}
+        visible={isChangePasswordModalVisible}
         onRequestClose={() => {
-          setChangePasswordModelVisible(!isChangePasswordModelVisible);
+          setChangePasswordModalVisible(!isChangePasswordModalVisible);
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
@@ -46,20 +67,38 @@ const ChangePasswordModel = ({ blurb }) => {
               style={global.input}
               placeholder="old password"
               placeholderTextColor="black"
-              onChangeText={(text) => setOldPassword(text)}
+              onChangeText={(text) => {
+                setOldPassword(text);
+                setConfirmPassword(text);
+              }}
             />
             <TextInput
               style={global.input}
               placeholder="new password"
               placeholderTextColor="black"
-              onChangeText={(text) => setNewPassword(text)}
+              //onChangeText={(text) => setNewPassword(text)}
+              onChangeText={(text) => {
+                validatePassword(text);
+                setNewPassword(text)
+              }}
             />
+
+            {!isPasswordValid && (
+                  <Text style={[global.centerBodyText, {flex: 0, margin: '0%',color: 'red'}]}>{passwordErrorMessage}</Text>
+                )}
+
             <TextInput
               style={global.input}
               placeholder="confirm new password"
               placeholderTextColor="black"
-              onChangeText={(text) => setConfirmPassword(text)}
+              onChangeText={(text) => {
+                validateConfirmPassword(text);
+                setConfirmPassword(text);
+              }}
             />
+            {!isConfirmPasswordValid && (
+              <Text style={[global.centerBodyText, {flex: 0, margin: '0%',color: 'red'}]}>{confirmPasswordErrorMessage}</Text>
+            )}
             <Pressable
               style={isButtonActive ? global.button : global.buttonInactive}
               onPress={handlePasswordChange}>
@@ -68,7 +107,7 @@ const ChangePasswordModel = ({ blurb }) => {
             <Pressable
               style={global.buttonMinor}
               onPress={() => {
-                setChangePasswordModelVisible(!isChangePasswordModelVisible);
+                setChangePasswordModalVisible(!isChangePasswordModalVisible);
                 navigation.navigate('Profile');
               }}>
               <Text style={global.buttonMinorText}>Cancel</Text>
@@ -99,6 +138,7 @@ const styles = EStyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+    width: '85%',
   },
   searchInput: {
     backgroundColor: 'white',
@@ -114,4 +154,4 @@ const styles = EStyleSheet.create({
   },
 });
 
-export default ChangePasswordModel;
+export default ChangePasswordModal;

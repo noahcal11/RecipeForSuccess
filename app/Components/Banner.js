@@ -6,7 +6,7 @@ import { View, Pressable, Text, TextInput } from 'react-native';
 import SearchIcon from '../assets/svg/search';
 import { useNavigation,useRoute } from '@react-navigation/core';
 import { Context } from "../Context";
-import SignInModel from "./SignInModel";
+import SignInModal from "./SignInModal";
 
 EStyleSheet.build();
 
@@ -14,7 +14,7 @@ const BannerTitle = ({ title }) => {
   const navigation = useNavigation();
   const route = useRoute();
   const [isTextInputVisible, setTextInputVisible] = useState(false);
-  const {setRecipePageState, email} = useContext(Context);
+  const {setRecipePageState, email, searchFilter, setSearchFilter} = useContext(Context);
 
     const toggleSearchBar = () => {
         setTextInputVisible(!isTextInputVisible);
@@ -51,18 +51,20 @@ const BannerTitle = ({ title }) => {
         <View style={styles.searchBar}>
           <TextInput
             placeholder="Search..."
+            maxLength={100}
             style={styles.searchInput}
             autoFocus
             onSubmitEditing={({ nativeEvent: { text } }) => {
                   navigation.navigate("Home");
                   navigation.navigate("searchResults", { searchTerm: text });
+                  setSearchFilter([true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true])
               // route.name === "searchResults" ? ({navigation.navigate("Home"), navigation.navigate("searchResults")}) :
               // navigation.navigate("searchResults",{"searchTerm":text});
               toggleSearchBar();
             }}
           />
           <Pressable onPress={toggleSearchBar}>
-            <View style={styles.xBox}><Text>X</Text></View>
+            <View style={styles.xBox}><Text style={styles.xSize}>X</Text></View>
           </Pressable>
         </View>
       )}
@@ -128,4 +130,9 @@ const styles = EStyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    xSize: {
+      fontSize: '2rem',
+      fontWeight: 'bold',
+      marginTop: '.25rem'
+    }
 });

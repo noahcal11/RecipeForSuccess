@@ -6,7 +6,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 EStyleSheet.build();
 
-const SwitchComp = ({ name, index, state }) => {
+const WidgetsSwitch = ({ name, index, state }) => {
   const { visibleWidgets, setVisibleWidgets } = useContext(Context)
   const [isEnabled, setIsEnabled] = useState(state);
   const toggleSwitch = (previousState) => {
@@ -46,4 +46,4 @@ const styles = EStyleSheet.create({
 });
 
 
-export default SwitchComp;
+export default WidgetsSwitch;

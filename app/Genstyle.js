@@ -28,9 +28,9 @@ const global = EStyleSheet.create({
   whiteForeground: {
     backgroundColor: '#f6f6f6',
     marginHorizontal: '5%',
-    marginVertical: '5%',
+    marginVertical: '15%',
     borderRadius: 25,
-    flex:1
+    flex:1,
   },
   // Gray foreground
   grayForeground: {

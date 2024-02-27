@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Alert, Modal, StyleSheet, Text, Pressable, View, ScrollView } from 'react-native';
 import global from '../Genstyle';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import SwitchComp from '../Components/Switch';
+import SwitchComp from './SearchFilterSwitch';
 import { useNavigation } from '@react-navigation/native';
 import { Context } from '../Context';
 
@@ -33,16 +33,101 @@ const MEALTYPE = [
     { title: 'Snack' },
 ];
 
-const DIET = [
-    { title: 'Dairy-Free' },
-    { title: 'Gluten-Free' },
-    { title: 'Vegetarian' },
-    { title: 'Vegan' }
-];
-
 const SearchFilterModal = ({ blurb }) => {
-    const { isSearchFilterModalVisible, setSearchFilterModalVisible } = useContext(Context);
+    const { isSearchFilterModalVisible, setSearchFilterModalVisible, searchFilter, setSearchFilter, searchResults, setSearchResults } = useContext(Context);
     const navigation = useNavigation();
+
+    function filterSearch() {
+        filterCookTime();
+        filterCuisine();
+        filterMealType();
+    }
+
+    function filterCookTime() {
+        setSearchResults(searchResults.map((recipe) => {
+            // we run filterCookTime first, so we do not check if recipe is already hidden - this "resets" the filter
+            if (recipe.total_time < 15) return {
+                ...recipe,
+                ...recipe.visibility = searchFilter[0]
+            }
+            if (recipe.total_time <= 30) return {
+                ...recipe,
+                ...recipe.visibility = searchFilter[1]
+            }
+            if (recipe.total_time <= 60) return {
+                ...recipe,
+                ...recipe.visibility = searchFilter[2]
+            }
+            return {
+                ...recipe,
+                ...recipe.visibility = searchFilter[3]
+            };
+        }))
+    }
+
+    function filterCuisine() {
+        setSearchResults(searchResults.map((recipe, index) => {
+            // we first check if recipe has already been hidden by filterCookTime
+            if (recipe.visibility) {
+                if (recipe.cuisine='African') return {
+                    ...recipe,
+                    ...recipe.visibility = searchFilter[4]
+                };
+                else if (recipe.cuisine='American') return {
+                    ...recipe,
+                    ...recipe.visibility = searchFilter[5]
+                };
+                else if (recipe.cuisine='Asian') return {
+                    ...recipe,
+                    ...recipe.visibility = searchFilter[6]
+                };
+                else if (recipe.cuisine='Italian') return {
+                    ...recipe,
+                    ...recipe.visibility = searchFilter[7]
+                };
+                else if (recipe.cuisine='Mexican') return {
+                    ...recipe,
+                    ...recipe.visibility = searchFilter[8]
+                };
+                else if (recipe.cuisine='Spanish') return {
+                    ...recipe,
+                    ...recipe.visibility = searchFilter[9]
+                };
+            } else return recipe;
+        }))
+    }
+
+    function filterMealType() {
+        setSearchResults(searchResults.map((recipe, index) => {
+            // we first check if recipe has already been hidden by filterCookTime or filterCuisine
+            if (recipe.visibility) {
+                if (recipe.category='Appetizer') return {
+                    ...recipe,
+                    ...recipe.visibility = searchFilter[10]
+                };
+                else if (recipe.category='Breakfast') return {
+                    ...recipe,
+                    ...recipe.visibility = searchFilter[11]
+                };
+                else if (recipe.category='Lunch') return {
+                    ...recipe,
+                    ...recipe.visibility = searchFilter[12]
+                };
+                else if (recipe.category='Dinner') return {
+                    ...recipe,
+                    ...recipe.visibility = searchFilter[13]
+                };
+                else if (recipe.category='Dessert') return {
+                    ...recipe,
+                    ...recipe.visibility = searchFilter[14]
+                };
+                else if (recipe.category='Snack') return {
+                    ...recipe,
+                    ...recipe.visibility = searchFilter[15]
+                }; 
+            } else return recipe;
+        }))
+    }
 
     return (
         <View style={styles.centeredView}>
@@ -59,30 +144,23 @@ const SearchFilterModal = ({ blurb }) => {
                         <ScrollView style={{ marginTop: '10%' }}>
                             <Text style={global.subheaderText}>Cook Time</Text>
                             {COOKTIME.map((item, index) => (
-                                <View style={{ flexDirection: 'row' }}>
+                                <View style={{ flexDirection: 'row' }} key={index}>
                                     <Text style={{ ...global.bodyText, alignSelf: 'center' }}>{item.title}</Text>
-                                    <SwitchComp name={item.title} />
+                                    <SwitchComp name={item.title} index={index} state={searchFilter[index]} />
                                 </View>
                             ))}
                             <Text style={global.subheaderText}>Cuisine</Text>
                             {CUISINE.map((item, index) => (
-                                <View style={{ flexDirection: 'row' }}>
+                                <View style={{ flexDirection: 'row' }} key={index}>
                                     <Text style={{ ...global.bodyText, alignSelf: 'center' }}>{item.title}</Text>
-                                    <SwitchComp name={item.title} />
+                                    <SwitchComp name={item.title} index={index+4} state={searchFilter[index+4]} />
                                 </View>
                             ))}
                             <Text style={global.subheaderText}>Meal Type</Text>
                             {MEALTYPE.map((item, index) => (
-                                <View style={{ flexDirection: 'row' }}>
+                                <View style={{ flexDirection: 'row' }} key={index}>
                                     <Text style={{ ...global.bodyText, alignSelf: 'center' }}>{item.title}</Text>
-                                    <SwitchComp name={item.title} />
-                                </View>
-                            ))}
-                            <Text style={global.subheaderText}>Diet</Text>
-                            {DIET.map((item, index) => (
-                                <View style={{ flexDirection: 'row' }}>
-                                    <Text style={{ ...global.bodyText, alignSelf: 'center' }}>{item.title}</Text>
-                                    <SwitchComp name={item.title} />
+                                    <SwitchComp name={item.title} index={index+10} state={searchFilter[index+10]}/>
                                 </View>
                             ))}
                         </ScrollView>
@@ -90,6 +168,7 @@ const SearchFilterModal = ({ blurb }) => {
                         <Pressable
                             style={global.button}
                             onPress={() => {
+                                filterSearch();
                                 setSearchFilterModalVisible(!isSearchFilterModalVisible);
                                 setSearchFilterModalVisible(false);
                                 navigation.navigate('searchResults');

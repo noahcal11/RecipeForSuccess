@@ -7,7 +7,7 @@ import { useState, useContext } from 'react';
 import { Context } from '../Context';
 import global from '../Genstyle';
 import FilterIcon from '../assets/svg/filter';
-import HomeFiltersModel from '../Components/HomeFiltersModel';
+import HomeFiltersModal from '../Components/HomeFiltersModal';
 
 EStyleSheet.build();
 
@@ -24,7 +24,7 @@ export default function Home({ navigation, route }) {
     const [italianRecs, setItalianRecs] = useState([]);
     const [chineseRecs, setChineseRecs] = useState([]);
     const [surpriseRecs, setSurpriseRecs] = useState([]);
-    const { username, setUsername, email, setEmail, isHomeFiltersModelVisible, setHomeFiltersModelVisible, visibleWidgets, setVisibleWidgets } = useContext(Context)
+    const { username, setUsername, email, setEmail, isHomeFiltersModalVisible, setHomeFiltersModalVisible, visibleWidgets, setVisibleWidgets } = useContext(Context)
 
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/" + process.env.REACT_APP_API_TOKEN
 
@@ -256,13 +256,13 @@ export default function Home({ navigation, route }) {
                 <Pressable
                     style={{ ...global.buttonMinor, position: 'relative', marginLeft: '70%', marginTop: '5%', width: 60 }}
                     onPress={() => {
-                        setHomeFiltersModelVisible(true);
+                        setHomeFiltersModalVisible(true);
                     }} >
                     <FilterIcon style={styles.filterIcon}></FilterIcon>
                 </Pressable>
 
                 <View style={{ alignItems: 'center' }}>
-                    {isHomeFiltersModelVisible ? <HomeFiltersModel /> : null}
+                    {isHomeFiltersModalVisible ? <HomeFiltersModal /> : null}
                 </View>
 
                 <View style={{ alignItems: 'center' }}>
