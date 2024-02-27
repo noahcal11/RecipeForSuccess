@@ -120,15 +120,16 @@ const styles = EStyleSheet.create({
     },
     searchInput: {
         flex: 1,
-        fontSize: '1.5rem',
-        paddingLeft: 10,
-        fontFamily: 'Cairo_500Medium'
+        fontSize: '1rem',
+        paddingLeft: 15,
+        fontFamily: 'Cairo_500Medium',
+        paddingTop: 5
     },
     xBox: {
         width: '2.5rem',
         height: '2.5rem',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     xSize: {
       fontSize: '2rem',

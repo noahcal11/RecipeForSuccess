@@ -73,6 +73,7 @@ export default function Login({navigation}) {
                 // message will be sent
                 setNotification('Wrong Password');
                 setPassword("");
+                setUsername("");
             }
       });
     }
