@@ -22,8 +22,6 @@ const RecipeProgression = ({ingredients, directions, title}) => {
     const [time, setTime] = useState("00:00:00");
     // Variables for Keyword Display
     const [keywords, setKeywords] = useState(['abfhbfaifbiabifae']);
-    const [hasRun, setHasRun] = useState(false);
-    const [keyDataGet, setKeyDataGet] = useState(false);
     var startTime = new Date();
     // Global variables
     const { recipePageState, setRecipePageState, username, email } = useContext(Context);
@@ -107,8 +105,8 @@ const RecipeProgression = ({ingredients, directions, title}) => {
                     <Text style={global.titleText}>Step {stepNum}:</Text>
                     {/* TODO: Make keywords display as buttons */}
                     <Text style={global.centeredText}>
-                        {/* {parseStep(directions[stepNum - 1])} */}
-                        {directions[stepNum - 1]}
+                        {parseStep(directions[stepNum - 1])}
+                        {/* {directions[stepNum - 1]} */}
                     </Text>
                     {/* Next button */}
                     {stepNum == directions.length ?
@@ -118,14 +116,14 @@ const RecipeProgression = ({ingredients, directions, title}) => {
                                 <Text style={global.buttonText}>Finish!</Text>
                         </Pressable>
                         :<Pressable // Otherwise, button just leads to the next step
-                            onPress={() => {setStepNum(stepNum + 1); setHasRun(false);}}
+                            onPress={() => {setStepNum(stepNum + 1)}}
                             style={global.button}>
                                 <Text style={global.buttonText}>Next</Text>
                         </Pressable>
                     }
                     {/* Back button */}
                     <Pressable // Decrement step count when going back
-                        onPress={() => {setStepNum(stepNum - 1); setHasRun(false);}}
+                        onPress={() => {setStepNum(stepNum - 1)}}
                         style={global.buttonMinor}>
                             <Text style={global.subText}>Go Back</Text>
                     </Pressable>
@@ -158,7 +156,6 @@ const RecipeProgression = ({ingredients, directions, title}) => {
 
     // Ensures the timer updates constantly
     useEffect(() => {
-        if(!keyDataGet) getKeywords();
         if(!isActive) return;
         timeout(1000).then(() => {
             setPassedTime(passedTime + 1)
@@ -171,8 +168,12 @@ const RecipeProgression = ({ingredients, directions, title}) => {
         }
     }, [isActive, passedTime])
 
+    // Get the keyword data
+    useEffect(() => {
+        getKeywords();
+    }, [])
+
     const getKeywords = async () => {
-        setKeyDataGet(true);
         // Fill "keywords" with the list of keywords from the database
         const key = await fetch(API_BASE+"/keyword/get-all", {
             method: "GET"
@@ -182,68 +183,48 @@ const RecipeProgression = ({ingredients, directions, title}) => {
         let list = [];
         key.forEach(e => {
             // Turn the suffix list into an array
-            sfx = e.suffixes.split(' ');
+            sfx = e.suffixes[0].split(' ');
             // Trim commas off the end of each word
             sfx = sfx.map((item, index) => {
                 if(item.includes(",")) {
-                    item.slice(0, item.length - 1)
-                } else item
+                    return item.slice(0, item.length - 1);
+                } else return item;
             })
             // Add the current list to the overall list
-            sfx.forEach(element => {
-                let oldList = list;
-                list = new Array(oldList.length + element.length);
-                // Add the previous list into the new one
-                for(i = 0; i < oldList.length; i++) {
-                    list[i] = oldList[i];
-                } // Add the new list on top of the previous
-                for(i = oldList.length; i < oldList.length + element.length; i++) {
-                    list[i] = element[i];
-                }
-            })
+            list = list.concat(sfx);
         });
         setKeywords(list);
     }
 
     function parseStep(step) {
-        // Ensures this function is only run once per step
-        if(!hasRun) {
-            setHasRun(true);
-            // Parse the step into an array, with each value being an individual word.
-            let words = step.split(' ');
-            // Create a new array with both text and pressables
-            let objects = words.map((word, index) => {
-                // Conform the word to match the format of the keywords
-                let newWord = word.slice(0,1).toUpperCase() + word.slice(1, word.length);
-                if(newWord.includes(".") || newWord.includes(",")) {
-                    newWord = newWord.slice(0, newWord.length - 1)
-                }
-                // Compare the word to the list of keywords
-                // TODO: Add an API call that gets keywords.suffixes for all keywords
-                const match = keywords.find((keyword) => keyword === newWord)
-                if(typeof match !== "undefined") {
-                    // If a match is found, turn the word into a pressable
-                    <Pressable
-                        style={styles.keyword}
-                        onPress={(() => {})}>
-                        <Text>{word}</Text>
-                    </Pressable>
-                    // If not match, keep the word as-is
-                } else word
-            })
-            // Display the resulting array of objects
-            // TODO: make a variable that condenses the array into one object, then return it
-            let output = "<Text>";
-            objects.forEach(item => {
-                if(typeof item === 'string') {
-                    output += item + " ";
-                } else {
-                    output += "</Text>" + item + "<Text> ";
-                }
-            });
-            output += "</Text>";
-            return output;
-        }
+        // Parse the step into an array, with each value being an individual word.
+        let words = step.split(' ');
+        // Create a new array with both text and pressables
+        let objects = words.map((word, index) => {
+            // Conform the word to match the format of the keywords
+            let newWord = word.slice(0,1).toUpperCase() + word.slice(1, word.length);
+            if(newWord.includes(".") || newWord.includes(",")) {
+                newWord = newWord.slice(0, newWord.length - 1)
+            }
+            // Compare the word to the list of keywords
+            // TODO: Add an API call that gets keywords.suffixes for all keywords
+            const match = keywords.find((keyword) => keyword === newWord)
+            if(typeof match !== "undefined") {
+                // If a match is found, turn the word into a pressable
+                return <Pressable
+                 style={styles.keyword}
+                 onPress={(() => {})}>
+                    <Text style={global.centeredText}>{word}</Text>
+                </Pressable>
+                // If not match, keep the word as-is
+            } else return word + " "
+        })
+        // Display the resulting array of objects
+        return <Text>
+            {objects.map(item => {
+                return item
+            })}
+        </Text>
     }
 
     return (
