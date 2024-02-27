@@ -141,7 +141,8 @@ export default function Profile() {
       <BannerTitle title="Profile" />
       <ScrollView>
       
-      <View style={global.grayForeground}>
+
+      {/* <View style={global.grayForeground}>
           <Text style={global.titleText}>Testy Model</Text>
           <Pressable
             style={global.buttonMinor}
@@ -150,7 +151,7 @@ export default function Profile() {
             }}>
                 <Text style={styles.guestText}>Testy Model</Text>
           </Pressable>
-        </View>
+        </View> */}
 
         <View style={global.grayForeground}>
           <Text style={global.titleText}>Preferences</Text>
