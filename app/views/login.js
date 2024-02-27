@@ -292,7 +292,7 @@ export default function Login({navigation}) {
     <ScrollView>
     <Pressable style={{flex: 1 }} onPress={Keyboard.dismiss}>
       <View style={global.grayBackground}>
-          <View style={global.whiteForeground}>
+          <View style={{ ...global.whiteForeground, marginBottom: 100 }}>
               <View style={styles.top}>
                   <LogoIcon style={styles.logo}></LogoIcon>
                   {/* <Text style={styles.text}>Welcome to Recipe For Success</Text> */}
@@ -354,7 +354,7 @@ const styles = EStyleSheet.create({
     logo: {
       position: 'relative',
       alignSelf: 'center',
-      marginTop: 50,
+      marginTop: 10,
     },
     text: {
       textAlign: 'center',
