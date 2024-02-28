@@ -24,7 +24,7 @@ export default function Home({ navigation, route }) {
     const [italianRecs, setItalianRecs] = useState([]);
     const [chineseRecs, setChineseRecs] = useState([]);
     const [surpriseRecs, setSurpriseRecs] = useState([]);
-    const { username, setUsername, email, setEmail, isHomeFiltersModalVisible, setHomeFiltersModalVisible, visibleWidgets, setVisibleWidgets } = useContext(Context)
+    const { username, setUsername, email, setEmail, isHomeFiltersModalVisible, setHomeFiltersModalVisible, visibleWidgets, setVisibleWidgets, searchFilter, setSearchFilter } = useContext(Context)
 
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/" + process.env.REACT_APP_API_TOKEN
 
@@ -290,7 +290,7 @@ export default function Home({ navigation, route }) {
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("searchResults")
+                                    navigation.navigate("searchResults", { searchTerm: "" });
                                 }}
 
                                 style={({ pressed }) => [
@@ -328,7 +328,8 @@ export default function Home({ navigation, route }) {
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("searchResults")
+                                    setSearchFilter([true, true, true, true, true, true, true, true, true, true, false, true, false, false, false, false])
+                                    navigation.navigate("searchResults", { searchTerm: "" });
                                 }}
 
                                 style={({ pressed }) => [
