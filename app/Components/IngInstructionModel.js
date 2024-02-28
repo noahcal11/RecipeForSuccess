@@ -53,7 +53,7 @@ const IngInstructionsModel = ({word}) => {
 
             <Pressable
               style={global.buttonMinor}
-              onPress={() => {setIngInstructionsModelVisible(!isIngInstructionsModelVisible); navigation.navigate('Test');}}>
+              onPress={() => {setIngInstructionsModelVisible(!isIngInstructionsModelVisible);}}>
               <Text style={global.buttonMinorText}>Close</Text>
             </Pressable>
           </View>
