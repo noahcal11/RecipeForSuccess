@@ -3,10 +3,11 @@ import { View, Text, Pressable, FlatList, ScrollView } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import CheckBox from 'expo-checkbox';
 import { useState, useContext, useEffect } from 'react';
-import { Context } from '../Context'
+import { Context } from '../Context';
+import DefinitionModal from './IngInstructionModel';
 import Banner from './Banner';
-import Footer from '../Components/Footer'
-import global from '../Genstyle'
+import Footer from '../Components/Footer';
+import global from '../Genstyle';
 
 // TODO: Make buttons go to the bottom of the page, add a timer
 const RecipeProgression = ({ingredients, directions, title}) => {
@@ -22,9 +23,10 @@ const RecipeProgression = ({ingredients, directions, title}) => {
     const [time, setTime] = useState("00:00:00");
     // Variables for Keyword Display
     const [keywords, setKeywords] = useState(['abfhbfaifbiabifae']);
+    const [selKey, setSelKey] = useState("");
     var startTime = new Date();
     // Global variables
-    const { recipePageState, setRecipePageState, username, email } = useContext(Context);
+    const { recipePageState, setRecipePageState, username, email, isIngInstructionsModelVisible, setIngInstructionsModelVisible } = useContext(Context);
     const recipeTitle = title;
 
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
@@ -108,6 +110,10 @@ const RecipeProgression = ({ingredients, directions, title}) => {
                         {parseStep(directions[stepNum - 1])}
                         {/* {directions[stepNum - 1]} */}
                     </Text>
+                    {/* Definition Modal */}
+                    {isIngInstructionsModelVisible ?
+                        <DefinitionModal word={selKey} />
+                        :<></>}
                     {/* Next button */}
                     {stepNum == directions.length ?
                         <Pressable // If on the last step, button sends user to the survey page
@@ -213,7 +219,7 @@ const RecipeProgression = ({ingredients, directions, title}) => {
                 // If a match is found, turn the word into a pressable
                 return <Pressable
                  style={styles.keyword}
-                 onPress={(() => {})}>
+                 onPress={(() => {setSelKey(word); setIngInstructionsModelVisible(true);})}>
                     <Text style={global.centeredText}>{word}</Text>
                 </Pressable>
                 // If not match, keep the word as-is

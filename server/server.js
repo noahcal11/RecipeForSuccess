@@ -308,6 +308,11 @@ app.get('/'+process.env.API_TOKEN+'/keyword/get-all', async (req,res) => {
     res.json(keywords);
 });
 
+app.get('/'+process.env.API_TOKEN+'/keyword/get', async (req,res) => {
+    const keyword = await Keyword.findOne({keyword: req.body.key});
+    res.json(keyword);
+});
+
 // Other Section
 app.get('/'+process.env.API_TOKEN+'/quit',async (req,res) => {
     res.send("closing...");
