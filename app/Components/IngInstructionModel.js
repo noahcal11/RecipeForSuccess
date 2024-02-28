@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import { Alert, Modal, StyleSheet, Text, Pressable, View, TextInput } from 'react-native';
 import global from '../Genstyle';
 import EStyleSheet from 'react-native-extended-stylesheet';
@@ -10,9 +10,26 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'; // Import
 
 EStyleSheet.build();
 
-const IngInstructionsModel = ({blurb}) => {
+const IngInstructionsModel = ({word}) => {
+  const [def, setDef] = useState("");
   const {isIngInstructionsModelVisible, setIngInstructionsModelVisible} = useContext(Context);
   const navigation = useNavigation();
+
+  const getInfo = async () => {
+    const keyData = await fetch(API_BASE+"/keyword/get", {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({key: word})
+    }).then(res => res.json())
+    setDef(keyData.definition);
+  }
+
+  useEffect(() => {
+    getInfo();
+  }, [])
 
   return (
     <GestureHandlerRootView>
@@ -26,11 +43,11 @@ const IngInstructionsModel = ({blurb}) => {
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={global.titleText}>Instruction Name</Text>
+            <Text style={global.titleText}>{word}</Text>
 
             <ScrollView>
             <View style={styles.instructionsContainer}>
-              <Text style={global.bodyText}>Instructions go here Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem donec massa sapien faucibus. In ante metus dictum at tempor commodo ullamcorper a. Urna neque viverra justo nec ultrices dui sapien. Nunc congue nisi vitae suscipit tellus mauris a. Elit sed vulputate mi sit. Rutrum quisque non tellus orci ac auctor augue mauris augue. Cras sed felis eget velit aliquet. Ornare massa eget egestas purus viverra accumsan in nisl nisi. Bibendum neque egestas congue quisque egestas. Cursus euismod quis viverra nibh. Non enim praesent elementum facilisis leo vel.</Text>
+              <Text style={global.bodyText}>{def}</Text>
             </View>
             </ScrollView>
 
