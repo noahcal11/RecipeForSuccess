@@ -220,7 +220,7 @@ const RecipeProgression = ({ingredients, directions, title}) => {
                 return <Pressable
                  style={styles.keyword}
                  onPress={(() => {setSelKey(word); setIngInstructionsModelVisible(true);})}>
-                    <Text style={global.centeredText}>{word}</Text>
+                    <Text style={{ ...global.centeredText, textDecorationLine: 'underline'}}>{word}</Text>
                 </Pressable>
                 // If not match, keep the word as-is
             } else return word + " "
@@ -322,7 +322,7 @@ const styles=EStyleSheet.create({
         justifyContent: 'center',
     },
     keyword: {
-        backgroundColor: '#bbb'
+        
     },
     container: {
         flex: 1,
