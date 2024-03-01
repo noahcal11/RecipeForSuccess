@@ -141,7 +141,8 @@ export default function Profile() {
       <BannerTitle title="Profile" />
       <ScrollView>
       
-      <View style={global.grayForeground}>
+
+      {/* <View style={global.grayForeground}>
           <Text style={global.titleText}>Testy Model</Text>
           <Pressable
             style={global.buttonMinor}
@@ -150,7 +151,7 @@ export default function Profile() {
             }}>
                 <Text style={styles.guestText}>Testy Model</Text>
           </Pressable>
-        </View>
+        </View> */}
 
         <View style={global.grayForeground}>
           <Text style={global.titleText}>Preferences</Text>
@@ -239,7 +240,7 @@ export default function Profile() {
         </View>
 
       </ScrollView>
-      {email === 'Guest' ? <SignInModel blurb="In order to use this feature, you have to be signed in!" /> : <View></View>}
+      {email === 'Guest' ? <SignInModal blurb="In order to use this feature, you have to be signed in!" /> : <View></View>}
       <Footer />
     </View>
   );

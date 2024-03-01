@@ -74,6 +74,7 @@ for i,link in enumerate(link_lst):
         yields = scraper.yields()
         steps = scraper.instructions().split("\n")
     except:
+        print("fail")
         pass
 
     skills = []
@@ -138,7 +139,7 @@ for i,link in enumerate(link_lst):
         'cuisine':cuisine,
         'category':category,
         'link': link,
-        'skills': skills,
+        'allergies': []
         })
 
     
