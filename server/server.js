@@ -101,10 +101,9 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
         console.log(recipe._id);
         console.log(user.email);
         user.created_recipes.push(recipe._id);
-    } 
-
-    await user.save();
-    res.json(user);
+        await user.save();
+        res.json(user);
+    }
     res.json(recipe);
 });  
 
