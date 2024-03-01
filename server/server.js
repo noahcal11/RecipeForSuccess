@@ -64,9 +64,21 @@ app.get('/'+process.env.API_TOKEN+'/recipe/get/all',async (req,res) => {
 
 app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
     let keywords = [];
-    keywords.push(req.body.title.split(" "));
-    keywords.push(req.body.cuisine.split(" "));
-    keywords.push(req.body.category.split(" "));
+    try {
+        keywords.push(req.body.title.split(" "));
+    } catch {
+        // no keywords
+    }
+    try {
+        keywords.push(req.body.cuisine.split(" "));
+    } catch {
+        // no keywords
+    }
+    try {
+        keywords.push(req.body.category.split(" "));
+    } catch {
+        // no keywords
+    }
     keywords = keywords.flat(1);
 
     const recipe = new Recipe({
