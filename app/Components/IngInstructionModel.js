@@ -14,6 +14,7 @@ const IngInstructionsModel = ({word}) => {
   const [def, setDef] = useState("");
   const {isIngInstructionsModelVisible, setIngInstructionsModelVisible} = useContext(Context);
   const navigation = useNavigation();
+  const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN;
 
   const getInfo = async () => {
     const keyData = await fetch(API_BASE+"/keyword/get", {
