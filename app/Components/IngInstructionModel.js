@@ -25,7 +25,8 @@ const IngInstructionsModel = ({word}) => {
         method: "POST",
         body: JSON.stringify({key: word})
     }).then(res => res.json())
-    setDef(keyData.definition);
+    .then(data => setDef(data[0].definition))
+    .catch(err => console.error(err));
   }
 
   useEffect(() => {
@@ -54,7 +55,7 @@ const IngInstructionsModel = ({word}) => {
 
             <Pressable
               style={global.buttonMinor}
-              onPress={() => {setIngInstructionsModelVisible(!isIngInstructionsModelVisible); navigation.navigate('Test');}}>
+              onPress={() => {setIngInstructionsModelVisible(!isIngInstructionsModelVisible)}}>
               <Text style={global.buttonMinorText}>Close</Text>
             </Pressable>
           </View>
