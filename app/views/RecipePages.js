@@ -30,7 +30,7 @@ export default function RecipePages({ navigation, route }) {
   // Until rating is added to the database, this test variable is used
   const [dummyRating, setDummyRating] = useState(3.5);
   const [isFavorite, setIsFavorite] = useState(false);
-  const { recipePageState, setRecipePageState, username,setUsername, email,setEmail, favorited,setFavorited,isRecipeAllergiesModalVisible, setRecipeAllergiesModalVisible } = useContext(Context);
+  const {profileAllergies, setProfileAllergies, recipePageState, setRecipePageState, username,setUsername, email,setEmail, favorited,setFavorited,isRecipeAllergiesModalVisible, setRecipeAllergiesModalVisible } = useContext(Context);
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
@@ -141,14 +141,16 @@ export default function RecipePages({ navigation, route }) {
           <BannerTitle title={'Recipe'} />
           <View style={[global.grayForeground, { padding:   20 }]}>
             {/* Your app content */}
-
-            {isRecipeAllergiesModalVisible ?
-                        <RecipeAllergiesModal
-                        visible={isRecipeAllergiesModalVisible}
-                        setVisible={setRecipeAllergiesModalVisible}
-                        allergies={recipe.allergies} // Pass the allergies directly from the recipe state
-                       />
-            :<></>}
+            {
+              (isRecipeAllergiesModalVisible && email !== "Guest") ? (
+                <RecipeAllergiesModal
+                  visible={isRecipeAllergiesModalVisible}
+                  setVisible={setRecipeAllergiesModalVisible}
+                  recipeAllergies={recipe.allergies} // Pass the allergies directly from the recipe state
+                  profileAllergies={profileAllergies}
+                />
+              ) : null
+            }
 
             <FlatList
               data={[recipe]}
