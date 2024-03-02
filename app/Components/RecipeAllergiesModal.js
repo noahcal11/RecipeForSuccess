@@ -47,6 +47,11 @@ const RecipeAllergiesModal = ({ recipeAllergies }) => {
   // Filter the recipeAllergies array against matchingAllergens
   const matchingRecipeAllergies = recipeAllergies ? recipeAllergies.filter(allergy => matchingAllergens.includes(allergy)) : [];
 
+  if (matchingRecipeAllergies.length === 0) {
+    setRecipeAllergiesModalVisible(false);
+  }
+ 
+
   return (
     <GestureHandlerRootView>
       <View style={styles.centeredView}>
@@ -59,18 +64,18 @@ const RecipeAllergiesModal = ({ recipeAllergies }) => {
           }}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={global.titleText}>Allergy Warning</Text>
-
+            <Text style={global.titleText}>
+                      Warning: This recipe contains allergens that match your profile. 
+                      </Text>
               <ScrollView>
                 <View style={styles.instructionsContainer}>
                   {matchingRecipeAllergies.length > 0 ? (
                     <>
-                      <Text style={global.bodyText}>
-                        Caution you have allergies in your profile selected that this recipe contains.
+                      
+                      <Text style={global.subheaderText}>
+                        This recipe contains the following allergies: {matchingRecipeAllergies.slice(0, -1).join(', ') + (matchingRecipeAllergies.length > 1 ? ',' : '')} & {matchingRecipeAllergies[matchingRecipeAllergies.length - 1]}.
                       </Text>
-                      <Text style={global.bodyText}>
-                        This recipe contains the following allergies: {matchingRecipeAllergies.join(', ')}.
-                      </Text>
+
                     </>
                   ) : (
                     <Text style={global.bodyText}>
@@ -113,7 +118,7 @@ const styles = EStyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     width: '22.5rem',
-    height: '35rem',
+    height: '25rem',
   },
   instructionsContainer: {
     justifyContent: 'center',
