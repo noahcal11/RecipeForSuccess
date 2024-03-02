@@ -5,7 +5,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import { SearchBar } from 'react-native-screens';
 import Footer from '../Components/Footer';
 import ProgressBar from '../Components/ProgressBar';
-import { useState,useContext } from 'react';
+import { useState,useContext,useEffect } from 'react';
 import { Context } from '../Context'
 import global from '../Genstyle';
 import SignInModal from '../Components/SignInModal';
@@ -20,11 +20,13 @@ export default function Skills({ navigation, route }){
     const getPopular = async () => {
         const response = await fetch(API_BASE+"/user/get/"+email)
         .then(res => res.json())
-        .then(data => setSkills(data[0].skill_levels))
+        .then(data => setSkills(skills.map((item, index) => {
+            return data[0].skill_levels[index];
+        })))
         .catch(error => console.error(error));
     }
 
-    useState(() => {
+    useEffect(() => {
         if (email !== "Guest") {
             getPopular();
         }

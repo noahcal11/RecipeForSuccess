@@ -14,6 +14,7 @@ const IngInstructionsModel = ({word}) => {
   const [def, setDef] = useState("");
   const {isIngInstructionsModelVisible, setIngInstructionsModelVisible} = useContext(Context);
   const navigation = useNavigation();
+  const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN;
 
   const getInfo = async () => {
     const keyData = await fetch(API_BASE+"/keyword/get", {
@@ -24,7 +25,8 @@ const IngInstructionsModel = ({word}) => {
         method: "POST",
         body: JSON.stringify({key: word})
     }).then(res => res.json())
-    setDef(keyData.definition);
+    .then(data => setDef(data[0].definition))
+    .catch(err => console.error(err));
   }
 
   useEffect(() => {
@@ -53,7 +55,7 @@ const IngInstructionsModel = ({word}) => {
 
             <Pressable
               style={global.buttonMinor}
-              onPress={() => {setIngInstructionsModelVisible(!isIngInstructionsModelVisible);}}>
+              onPress={() => {setIngInstructionsModelVisible(!isIngInstructionsModelVisible)}}>
               <Text style={global.buttonMinorText}>Close</Text>
             </Pressable>
           </View>
