@@ -11,26 +11,40 @@ import SignInModal from '../Components/SignInModal';
 
 EStyleSheet.build();
 
-export default function PageTemplate() {
+export default function Created( {navigation, route} ) {
     const {username, setUsername, email, setEmail} = useContext(Context)
     const [created, setCreated] = useState([]);
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
     const getCreated = async () => {
-        // Copy getCompleted from completed.js once it's done
-        // Also add a setCreated to the upload page and server.js
-        const response = await fetch(API_BASE + '/user/get/' + email)
-        .then(res => res.json())
-        .then(data => setCreated(data[0].created_recipes))
-        .catch(error => console.error(error));
+        try {
+            const response = await fetch(API_BASE + '/user/get/' + email);
+            const data = await response.json();
+            const recipeIds = data[0].created_recipes;
+    
+            // Make a POST request to the /recipe/get endpoint with the recipe IDs in the request body
+            const recipeResponse = await fetch(API_BASE + '/recipe/get', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ ids: recipeIds })
+            });
+            const recipeData = await recipeResponse.json();
+            setCreated(recipeData);
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     // Shortens longer titles so any given recipe title only takes up two lines
     function makeTwoLines(title) {
-        if (title.length >= 25) {
+        if (title && title.length >= 25) {
             return title.substring(0, 25) + "...";
         } else return title;
     }
+    
 
     useState(() => {
         if (email !== "Guest") {
