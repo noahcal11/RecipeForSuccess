@@ -44,3 +44,10 @@ Content-Type: application/json
 {
     "key": "roasted"
 }
+###
+POST http://localhost:8080/54pgn7tCy42af5pTRz92ZF2Piu92CQeWsx7cZSW5owfTasAJ3HqGwwvU3yNNqoAo9sy8VmETrnZ8UkVLgyUoxRtU2CCjZCJafFCViAVf93ceLW8ex6yFXsc79kqNWjBK/recipe/get/allergyFilter
+Content-Type: application/json
+
+{
+  "allergies": "Wheat"
+}
