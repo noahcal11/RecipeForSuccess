@@ -95,7 +95,7 @@ const bucket = storage.bucket(bucketName);
 
 // Sending the upload request
 bucket.upload(
-  image_UUID + `.jpeg`,
+  `./${image_UUID}.jpeg`,
   {
     destination: `images/${image_UUID}.jpeg`,
   },
