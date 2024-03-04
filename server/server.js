@@ -358,8 +358,8 @@ app.get('/'+process.env.API_TOKEN+'/keyword/get-all', async (req,res) => {
     res.json(keywords);
 });
 
-app.get('/'+process.env.API_TOKEN+'/keyword/get', async (req,res) => {
-    const keyword = await Keyword.findOne({keyword: req.body.key});
+app.post('/'+process.env.API_TOKEN+'/keyword/get', async (req,res) => {
+    const keyword = await Keyword.findOne({suffixes: new RegExp(`^${req.body.key}$`, 'i')});
     res.json(keyword);
 });
 
