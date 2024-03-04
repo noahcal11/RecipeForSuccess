@@ -1,8 +1,6 @@
 import Footer from '../Components/Footer';
 import React, { useRef } from 'react';
 import { Text, View, FlatList, SafeAreaView, StyleSheet, Modal, TouchableOpacity, ScrollView, TextInput, Button, Image, Platform, Pressable} from "react-native";
-import fs from 'fs';
-import RNFetchBlob from 'react-native-fetch-blob';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState,useContext,useEffect } from 'react';
 import { Context } from '../Context'
@@ -24,9 +22,6 @@ export default function Upload() {
 
         const uploadRecipe = async () => {
             handleIngredientObjectToString
-            const imagePath = await RNFetchBlob.fs.pathForURI(image);
-            const tempImagePath = '/path/to/temporary/location/' + imagePath.split('/').pop();
-            await RNFetchBlob.fs.cp(imagePath, tempImagePath);
             const data = await fetch(API_BASE+"/recipe/new", {
             headers: {
                 'Accept': 'application/json',
