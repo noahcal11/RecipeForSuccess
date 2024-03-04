@@ -358,7 +358,7 @@ app.get('/'+process.env.API_TOKEN+'/keyword/get-all', async (req,res) => {
     res.json(keywords);
 });
 
-app.post('/'+process.env.API_TOKEN+'/keyword/get', async (req,res) => {
+app.get('/'+process.env.API_TOKEN+'/keyword/get', async (req,res) => {
     const keyword = await Keyword.findOne({keyword: req.body.key});
     res.json(keyword);
 });
