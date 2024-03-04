@@ -96,9 +96,6 @@ const bucket = storage.bucket(bucketName);
 // Sending the upload request
 bucket.upload(
   `./${image_UUID}.jpeg`,
-  {
-    destination: `images/${image_UUID}.jpeg`,
-  },
   function (err, file) {
     if (err) {
       console.error(`Error uploading image ${image_UUID}.jpeg: ${err}`)
