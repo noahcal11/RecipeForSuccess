@@ -369,47 +369,4 @@ app.get('/'+process.env.API_TOKEN+'/quit',async (req,res) => {
     process.exit(0);
 });
 
-app.post('/' + process.env.API_TOKEN + '/recipe/get/allergyFilter', async (req, res) => {
-    let recipes;
-    const id = req.body.id;
-    const ids = req.body.ids;
-    const general = req.body.general;
-    const allergies = req.body.allergies;
-  
-    if (allergies !== undefined) {
-      recipes = await Recipe.find({ allergies: { $not: { $in: [allergies] } } });
-    } else if (general !== undefined) {
-      recipes = await Recipe.find({
-        $or: [
-          { title: new RegExp(`\\b${general}\\b`, "i") },
-          { desc: new RegExp(`\\b${general}\\b`, "i") },
-          { ingredients: new RegExp(`\\b${general}\\b`, "i") }
-        ]
-      });
-    } else if (id !== undefined) {
-      recipes = await Recipe.findById(id);
-    } else if (ids !== undefined) {
-      recipes = await Recipe.find({ '_id': { $in: ids } });
-    } else {
-      const title = req.body.title;
-      const desc = req.body.desc;
-      const ingredients = req.body.ingredients;
-      const total_time = req.body.total_time;
-      const cuisine = req.body.cuisine;
-      const category = req.body.category;
-      const rating = req.body.rating;
-      recipes = await Recipe.find({
-        total_time: total_time ? { $lte: total_time } : { $lte: 65535 },
-        cuisine: cuisine ? new RegExp(`\\b${cuisine}\\b`, "i") : new RegExp(`.*|`, "i"),
-        category: category ? new RegExp(`\\b${category}\\b`, "i") : new RegExp(`.*|`, "i"),
-        title: title ? new RegExp(`\\b${title}\\b`, "i") : new RegExp(`.*|`, "i"),
-        desc: desc ? new RegExp(`\\b${desc}\\b`, "i") : new RegExp(`.*|`, "i"),
-        ingredients: ingredients ? new RegExp(`\\b${ingredients}\\b`, "i") : new RegExp(`.*|`, "i"),
-        rating: rating ? rating : new Array(2).fill(0)
-      });
-    }
-    res.json(recipes);
-  });
-  
-
 app.listen(PORT, () => console.log("Server started on port 8080"));
