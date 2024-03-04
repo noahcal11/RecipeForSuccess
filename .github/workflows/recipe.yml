@@ -63,7 +63,7 @@ jobs:
         build-args: |
           HTTP_PORT=8080
     
-    - run: echo ${{secrets.CLOUD_SERVICE_KEY}}
+    - run: echo $secrets.CLOUD_SERVICE_KEY
     - name: Deploy to Cloud Run
       uses: google-github-actions/deploy-cloudrun@v1
       with:
