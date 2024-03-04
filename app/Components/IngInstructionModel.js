@@ -17,27 +17,17 @@ const IngInstructionsModel = ({word}) => {
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN;
 
   const getInfo = async () => {
-    try {
-       const response = await fetch(API_BASE + "/keyword/get?key=" + encodeURIComponent(word), {
-         headers: {
-           'Accept': 'application/json',
-           'Content-Type': 'application/json'
-         }
-       });
-   
-       const data = await response.json();
-       console.log('Data from /keyword/get API call:', data); // Log the data
-   
-       // Check if data is not null before accessing its properties
-       if (data && data[0] && data[0].definition) {
-         setDef(data[0].definition);
-       } else {
-         console.error('No definition found for the keyword:', word);
-       }
-    } catch (err) {
-       console.error('Error fetching data from /keyword/get API:', err);
-    }
-   };
+    const keyData = await fetch(API_BASE+"/keyword/get", {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({key: word})
+    }).then(res => res.json())
+    .then(data => setDef(data[0].definition))
+    .catch(err => console.error(err));
+  }
 
   useEffect(() => {
     getInfo();
