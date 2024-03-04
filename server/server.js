@@ -359,9 +359,17 @@ app.get('/'+process.env.API_TOKEN+'/keyword/get-all', async (req,res) => {
 });
 
 app.get('/'+process.env.API_TOKEN+'/keyword/get', async (req,res) => {
-    const keyword = await Keyword.findOne({keyword: req.query.key});
-    if (keyword) {
-        res.json(keyword);
+    const keyword = req.query.key;
+    const regex = new RegExp(`\\b${keyword}\\b`, 'i'); // Case-insensitive regex
+    const keywords = await Keyword.find({ suffixes: { $in: [regex] } });
+    if (keywords.length > 0) {
+        const keywordWithSuffixes = keywords[0];
+        const suffixesArray = keywordWithSuffixes.suffixes.split(', '); // Split the string into an array
+        const matchingSuffix = suffixesArray.find(suffix => regex.test(suffix)); // Find the matching suffix
+        if (matchingSuffix) {
+            keywordWithSuffixes.matchingSuffix = matchingSuffix; // Add the matching suffix to the response
+        }
+        res.json(keywordWithSuffixes);
     } else {
         res.json({ message: 'No keyword found' });
     }
