@@ -95,26 +95,26 @@ const bucket = storage.bucket(bucketName);
 
 // Sending the upload request
 bucket.upload(
-  `./${image_UUID}.jpeg`,
-  function (err, file) {
-    if (err) {
-      console.error(`Error uploading image ${image_UUID}.jpeg: ${err}`)
-    } else {
-      console.log(`Image ${image_UUID}.jpeg uploaded to ${bucketName}.`)
-
-        // Making file public to the internet
-        file.makePublic(async function (err) {
+    path.join(__dirname, `${image_UUID}.jpeg`),
+    function (err, file) {
         if (err) {
-          console.error(`Error making file public: ${err}`)
+        console.error(`Error uploading image ${image_UUID}.jpeg: ${err}`)
         } else {
-          console.log(`File ${file.name} is now public.`)
-          const publicUrl = file.publicUrl()
-          console.log(`Public URL for ${file.name}: ${publicUrl}`)
-        }
-       })
+        console.log(`Image ${image_UUID}.jpeg uploaded to ${bucketName}.`)
 
+            // Making file public to the internet
+            file.makePublic(async function (err) {
+            if (err) {
+            console.error(`Error making file public: ${err}`)
+            } else {
+            console.log(`File ${file.name} is now public.`)
+            const publicUrl = file.publicUrl()
+            console.log(`Public URL for ${file.name}: ${publicUrl}`)
+            }
+        })
+
+        }
     }
-  }
 )
 
     // const recipe = new Recipe({
