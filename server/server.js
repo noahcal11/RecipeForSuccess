@@ -88,7 +88,7 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
 const storage = new Storage({
   credentials: process.env.CLOUD_SERVICE_KEY,
 })
-const image_UUID = crypto.generateUUID()
+const image_UUID = crypto.randomUUID()
 const bucketName = 'recipe-for-success-images'
 const bucket = storage.bucket(bucketName)
 
