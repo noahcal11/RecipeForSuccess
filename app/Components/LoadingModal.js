@@ -10,7 +10,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'; // Import
 
 EStyleSheet.build();
 
-const LoadingModal = ({word}) => {
+const LoadingModal = () => {
   const [def, setDef] = useState("");
   const {isIngInstructionsModelVisible, setIngInstructionsModelVisible} = useContext(Context);
   const navigation = useNavigation();
@@ -31,11 +31,6 @@ const LoadingModal = ({word}) => {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={global.titleText}>Please wait while the app loads</Text>
-            <Pressable
-              style={global.buttonMinor}
-              onPress={() => {setLoadingModalVisible(!isLoadingModalVisible)}}>
-              <Text style={global.buttonMinorText}>Close</Text>
-            </Pressable>
           </View>
         </View>
       </Modal>
@@ -64,7 +59,7 @@ const styles = EStyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     width: '22.5rem',
-    height: '35rem',
+    height: '10rem',
   },
   instructionsContainer: {
     //height: '2.1rem', // Set the desired height for the instructions container

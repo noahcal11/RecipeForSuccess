@@ -45,7 +45,7 @@ const allergenMapping = [
 
 export default function Profile() {
   const [activeSections, setActiveSections] = useState([]);
-  const {username,setUsername,email,setEmail,setChangePasswordModalVisible, profileAllergies, setProfileAllergies} = useContext(Context);
+  const {username,setUsername,email,setEmail,setChangePasswordModalVisible, profileAllergies, setProfileAllergies, isLoadingModalVisible, setLoadingModalVisible} = useContext(Context);
   const [newEmail, setNewEmail] = useState(email);
   const navigation = useNavigation();
   const [isProfileModified, setIsProfileModified] = useState(false);
@@ -104,6 +104,7 @@ export default function Profile() {
    }
 
     const getProfileAllergies = async () => {
+      setLoadingModalVisible(true)
       setLoading(true);
       try {
         const response = await fetch(`${API_BASE}/user/get/${email}`, {
@@ -117,6 +118,7 @@ export default function Profile() {
         const allergies = data[0].allergies;
         setProfileAllergies(allergies);
         setLoading(false); // Set loading to false after fetching and setting allergies
+        setLoadingModalVisible(false)
       } catch (error) {
         console.error(error);
       }
@@ -141,7 +143,10 @@ export default function Profile() {
     // Handle the response from the server
    };
 
+   
+
   const renderContent = (section) => {
+
     let contentText = '';
 
     // Conditionally set the content text based on the section title
@@ -177,35 +182,21 @@ export default function Profile() {
   };
 
   if (loading && email !== 'Guest') {
-    return
-    <View style={global.whiteBackground}>
-      <View style={global.grayForeground}>
-        <LoadingModal/>
+    return (
+      <View style={global.whiteBackground}>
+        <View style={global.grayForeground}>
+          <LoadingModal></LoadingModal>
+        </View>
       </View>
-    </View>
-   }
+    );
+ }
 
   return (
     <View style={global.whiteBackground}>
       <BannerTitle title="Profile" />
       {email === 'Guest' ? <SignInModal blurb="In order to use this feature, you have to be signed in!" /> : <View></View>}
       <ScrollView>
-
-      {/* <View style={global.grayForeground}>
-          <Text style={global.titleText}>Testy Model</Text>
-          <Pressable
-            style={global.buttonMinor}
-            onPress={() => {
-              navigation.navigate('Test');
-            }}>
-                <Text style={styles.guestText}>Testy Model</Text>
-          </Pressable>
-        </View> */}
-
-
         <View style={global.grayForeground}>
-
-
           <Text style={global.titleText}>Preferences</Text>
             <Accordion
               sections={SECTIONS}
