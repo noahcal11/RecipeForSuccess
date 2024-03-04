@@ -6,26 +6,27 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 EStyleSheet.build();
 
 const allergenMapping = [
-    'Chicken',
     'Dairy',
     'Eggs',
     'Fish',
+    'Shellfish',
+    'Tree Nuts',
     'Peanuts',
+    'Wheat',
+    'Soybeans',
+    'Chicken',
     'Pork',
     'Red Meat',
-    'Shellfish',
-    'Soybeans',
-    'Tree Nuts',
-    'Wheat',
+    'Gluten',
 ];
 
-const RecipeAllergens = ({ allergies }) => {
+/* const RecipeAllergens = ({ allergies }) => {
     if (!allergies || allergies.length === 0) {
         return <Text style={[global.bodyText, {textAlign: 'center'}]}>There are no allergies for this recipe.</Text>;
       }
       
 
-  const allergenNames = allergies.map((hasAllergen, index) => {
+  const allergenNames = allergies.((hasAllergen, index) => {
     if (hasAllergen) {
       return allergenMapping[index];
     }
@@ -43,7 +44,26 @@ const RecipeAllergens = ({ allergies }) => {
   );
 };
 
-export default RecipeAllergens;
+export default RecipeAllergens; */
+
+const RecipeAllergens = ({ allergies }) => {
+  if (!allergies || allergies.length === 0) {
+     return <Text style={[global.bodyText, {textAlign: 'center'}]}>There are no allergies for this recipe.</Text>;
+  }
+ 
+  return (
+     <View style={styles.container}>
+       {allergies.map((allergy, index) => (
+        <Pressable style={styles.button}>
+          <Text key={index} style={global.buttonText}>{allergy}</Text>
+        </Pressable>
+         
+       ))}
+     </View>
+  );
+ };
+ 
+ export default RecipeAllergens;
 
 const styles = EStyleSheet.create({
     container: {

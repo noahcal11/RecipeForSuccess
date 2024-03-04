@@ -28,6 +28,7 @@ const SearchFilterSwitch = ({ name, index, state }) => {
   }
 
   return (
+    <View style={styles.container}>
     <Switch
       trackColor={{ false: '#767577', true: '#F67D7D' }}
       thumbColor={isEnabled ? '#f4f3f4' : '#f4f3f4'}
@@ -35,12 +36,14 @@ const SearchFilterSwitch = ({ name, index, state }) => {
       onValueChange={toggleSwitch}
       value={isEnabled}
     />
+    </View>
   );
 };
 
 const styles = EStyleSheet.create({
   container: {
     flex: 1,
+    margin: 5,
     alignItems: 'flex-end',
   },
 });

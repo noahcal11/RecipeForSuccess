@@ -292,7 +292,7 @@ export default function Login({navigation}) {
     <ScrollView>
     <Pressable style={{flex: 1 }} onPress={Keyboard.dismiss}>
       <View style={global.grayBackground}>
-          <View style={{ ...global.whiteForeground, marginBottom: 100 }}>
+          <View style={{ ...global.whiteForeground, marginBottom: 100, paddingBottom: 50 }}>
               <View style={styles.top}>
                   <LogoIcon style={styles.logo}></LogoIcon>
                   {/* <Text style={styles.text}>Welcome to Recipe For Success</Text> */}

@@ -32,10 +32,11 @@ export default function App() {
   const [isHomeFiltersModalVisible, setHomeFiltersModalVisible] = useState(false);
   const [isSearchFilterModalVisible, setSearchFilterModalVisible] = useState(false);
   const [visibleWidgets, setVisibleWidgets] = useState([true, true, true, true, true, true, true, true, true, true, true, true]);
-  const [uploadAllergies, setUploadAllergies] = useState([false, false, false, false, false, false, false, false, false, false, false, false]);
+  const [uploadAllergies, setUploadAllergies] = useState([]);
   const [profileAllergies, setProfileAllergies] = useState([false, false, false, false, false, false, false, false, false, false, false, false]);
   const [searchFilter, setSearchFilter] = useState([true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]);
   const [isIngInstructionsModelVisible, setIngInstructionsModelVisible] = useState(false);
+  const [isRecipeAllergiesModalVisible, setRecipeAllergiesModalVisible] = useState(true);
   const [searchResults, setSearchResults] = useState([]);
 
   let [fontsLoaded, fontError] = useFonts({
@@ -66,6 +67,7 @@ export default function App() {
         isIngInstructionsModelVisible, setIngInstructionsModelVisible,
         searchResults, setSearchResults,
         setRecipePageState,
+        isRecipeAllergiesModalVisible, setRecipeAllergiesModalVisible, 
       }}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{

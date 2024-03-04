@@ -141,7 +141,7 @@ const SearchFilterModal = ({ blurb }) => {
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
                         <Text style={global.titleText}>{blurb}</Text>
-                        <ScrollView style={{ marginTop: '10%' }}>
+                        <ScrollView style={{ marginTop: '5%' }}>
                             <Text style={global.subheaderText}>Cook Time</Text>
                             {COOKTIME.map((item, index) => (
                                 <View style={{ flexDirection: 'row' }} key={index}>

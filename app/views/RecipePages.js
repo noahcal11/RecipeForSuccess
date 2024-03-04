@@ -18,7 +18,8 @@ import FilledHeart from '../assets/svg/filledHeart';
 import FilledStar from '../assets/svg/filledStar';
 import HalfStar from '../assets/svg/halfStar';
 import EmptyStar from '../assets/svg/emptyStar';
-import { useState, useContext } from 'react';
+import RecipeAllergiesModal from '../Components/RecipeAllergiesModal'
+import { useState, useContext, useEffect } from 'react';
 import { Context } from '../Context'
 import global from '../Genstyle'
 
@@ -29,7 +30,7 @@ export default function RecipePages({ navigation, route }) {
   // Until rating is added to the database, this test variable is used
   const [dummyRating, setDummyRating] = useState(3.5);
   const [isFavorite, setIsFavorite] = useState(false);
-  const { recipePageState, setRecipePageState, username,setUsername, email,setEmail, favorited,setFavorited } = useContext(Context);
+  const {profileAllergies, setProfileAllergies, recipePageState, setRecipePageState, username,setUsername, email,setEmail, favorited,setFavorited,isRecipeAllergiesModalVisible, setRecipeAllergiesModalVisible } = useContext(Context);
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
@@ -73,6 +74,11 @@ export default function RecipePages({ navigation, route }) {
     const data = await fetch(API_BASE+"/user/get/" + email, {method: "GET"}).then(res => res.json());
     setFavorited(data[0].favorited_recipes);
   }
+
+
+  useEffect(() => {
+    setRecipeAllergiesModalVisible(true);
+   }, [recipe]);
 
   function displayRating(rating) {
     let star2, star3, star4, star5 = new Object;
@@ -135,6 +141,17 @@ export default function RecipePages({ navigation, route }) {
           <BannerTitle title={'Recipe'} />
           <View style={[global.grayForeground, { padding:   20 }]}>
             {/* Your app content */}
+            {
+              (isRecipeAllergiesModalVisible && email !== "Guest") ? (
+                <RecipeAllergiesModal
+                  visible={isRecipeAllergiesModalVisible}
+                  setVisible={setRecipeAllergiesModalVisible}
+                  recipeAllergies={recipe.allergies} // Pass the allergies directly from the recipe state
+                  profileAllergies={profileAllergies}
+                />
+              ) : null
+            }
+
             <FlatList
               data={[recipe]}
               keyExtractor={(item, index) => index.toString()}
@@ -181,7 +198,7 @@ export default function RecipePages({ navigation, route }) {
                     <RecipeDirections directions={item.steps} />
 
                     <Text style={global.subheaderText}>Recipe Allergens</Text>
-                    <RecipeAllergens allergies={item.allergies} />
+                    <RecipeAllergens allergies={recipe.allergies} />
                   </View>
                   <Text style={global.creditsText} onPress={() => Linking.openURL(item.link)}>Credits</Text>
                 </>
