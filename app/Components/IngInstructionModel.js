@@ -18,16 +18,20 @@ const IngInstructionsModel = ({word}) => {
 
   const getInfo = async () => {
     const keyData = await fetch(API_BASE+"/keyword/get", {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-        },
-        method: "POST",
-        body: JSON.stringify({key: word})
+       headers: {
+         'Accept': 'application/json',
+         'Content-Type': 'application/json'
+       },
+       method: "POST",
+       body: JSON.stringify({key: word})
     }).then(res => res.json())
-    .then(data => setDef(data[0].definition))
+    .then(data => {
+       console.log('Data received:', data); // Log the entire data object
+       console.log(data.definition)
+       setDef(data.definition)
+    })
     .catch(err => console.error(err));
-  }
+   }
 
   useEffect(() => {
     getInfo();
