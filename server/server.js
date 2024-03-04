@@ -8,6 +8,7 @@ const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const { Storage } = require('@google-cloud/storage');
 const multer = require('multer');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
