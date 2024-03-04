@@ -65,7 +65,11 @@ app.get('/'+process.env.API_TOKEN+'/recipe/get/all',async (req,res) => {
     res.json(recipes);
 });
 
-app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
+
+app.post('/'+process.env.API_TOKEN+'/recipe/new', upload.single('image'), async (req, res) => {
+    const imagePath = req.file.path;
     let keywords = [];
     try {
         keywords.push(req.body.title.split(" "));
