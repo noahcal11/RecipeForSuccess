@@ -89,9 +89,9 @@ const storage = new Storage({
   credentials: process.env.CLOUD_SERVICE_KEY,
 })
 
-const image_UUID = crypto.randomUUID()
-const bucketName = 'recipe-for-success-images'
-const bucket = storage.bucket(bucketName)
+const image_UUID = crypto.randomUUID();
+const bucketName = 'recipe-for-success-images';
+const bucket = storage.bucket(bucketName);
 
 // Sending the upload request
 bucket.upload(
