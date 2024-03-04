@@ -1,6 +1,6 @@
 import Footer from '../Components/Footer';
 import React from 'react';
-import { Text, View, Pressable, FlatList, SafeAreaView, Modal, ScrollView, Dimensions } from "react-native";
+import { Text, View, Pressable, FlatList, SafeAreaView, Modal, ScrollView, Dimensions, Image } from "react-native";
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useState,useContext } from 'react';
 import { Context } from '../Context'
@@ -11,30 +11,32 @@ import SignInModal from '../Components/SignInModal';
 
 EStyleSheet.build();
 
-export default function PageTemplate() {
+export default function Completed( {navigation, route} ) {
     const {username, setUsername, email, setEmail} = useContext(Context)
     const [completed, setCompleted] = useState([]);
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
     const getCompleted = async () => {
-        // Get recipe data by calling recipe/get using user.completed_recipes
-        const response = await fetch(API_BASE + '/user/get/' + email, {method: "GET"})
-        .then(res => res.json())
-
-        let recipeList = response[0].completed_recipes;
-        console.log(recipeList);
-
-        const responsetwo = await fetch(API_BASE+"/recipe/get/", {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
+        try {
+            const response = await fetch(API_BASE + '/user/get/' + email);
+            const data = await response.json();
+            const recipeIds = data[0].completed_recipes;
+            console.log(recipeIds);
+    
+            // Make a POST request to the /recipe/get endpoint with the recipe IDs in the request body
+            const recipeResponse = await fetch(API_BASE + '/recipe/get', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 },
-                method: "POST",
-                body: JSON.stringify({ids: recipeList})
-            })
-            .then(res => res.json())
-        setCompleted(responsetwo);
-        console.log("Hello");
+                body: JSON.stringify({ ids: recipeIds })
+            });
+            const recipeData = await recipeResponse.json();
+            setCompleted(recipeData);
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     // Shortens longer titles so any given recipe title only takes up two lines
@@ -53,12 +55,12 @@ export default function PageTemplate() {
     return(
         <View style={global.whiteBackground}>
             <Banner title="Completed Recipes"/>
-                <View style={styles.settingsContainer}>
+            <View style={styles.settingsContainer}>
                     <ScrollView styles={{ flex: 1 }}>
                     {completed.length != 0 ?
                     <FlatList scrollEnabled={false}
                         style={{...global.grayForeground, marginVertical: '0%', marginBottom: '5%'}}
-                        ListHeaderComponent={<Text style={global.titleText}>Finished Recipes</Text>}
+                        ListHeaderComponent={<Text style={global.titleText}>Your Recipes</Text>}
                         data={completed}
                         renderItem={({ item }) => (
                             <Pressable onPress={() => navigation.navigate('RecipePages', { '_id': item._id })}
@@ -79,8 +81,8 @@ export default function PageTemplate() {
                         keyExtractor={(item, index) => index.toString()}
                     />:
                     <View style={global.grayForeground}>
-                        <Text style={global.subheaderText}>You have not completed any recipes!</Text>
-                        <Text style={global.centerBodyText}>Select any recipe and finish it to add it here!</Text>
+                        <Text style={global.subheaderText}>You have not uploaded any recipes!</Text>
+                        <Text style={global.centerBodyText}>Add your own recipes to the app through your profile!</Text>
                     </View>}
                     </ScrollView>
                 </View>
