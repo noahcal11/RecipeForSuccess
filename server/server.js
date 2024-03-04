@@ -97,13 +97,13 @@ const bucket = storage.bucket(bucketName)
 bucket.upload(
   image_UUID + `.jpeg`,
   {
-    destination: image_UUID + `.jpeg`,
+    destination: `images/${image_UUID}.jpeg`,
   },
   function (err, file) {
     if (err) {
       console.error(`Error uploading image ${image_UUID}.jpeg: ${err}`)
     } else {
-      console.log(`Image image_to_upload.jpeg uploaded to ${bucketName}.`)
+      console.log(`Image ${image_UUID}.jpeg uploaded to ${bucketName}.`)
 
         // Making file public to the internet
         file.makePublic(async function (err) {
