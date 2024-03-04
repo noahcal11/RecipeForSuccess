@@ -6,7 +6,7 @@ const process = require('process');
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
-const {Storage} = require('@google-cloud/storage');
+const { Storage } = require('@google-cloud/storage');
 const multer = require('multer');
 require('dotenv').config();
 
@@ -83,8 +83,6 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
     }
     keywords = keywords.flat(1);
 
-    // add image to cloud bucket
-    const { Storage } = require('@google-cloud/storage')
 
 // Initialize storage
 const storage = new Storage({
