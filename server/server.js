@@ -5,7 +5,9 @@ const cors = require('cors');
 const process = require('process');
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
-const crypto = require('crypto')
+const crypto = require('crypto');
+const {Storage} = require('@google-cloud/storage');
+const multer = require('multer');
 require('dotenv').config();
 
 const app = express();
@@ -81,6 +83,44 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
     }
     keywords = keywords.flat(1);
 
+    // add image to cloud bucket
+    const { Storage } = require('@google-cloud/storage')
+
+// Initialize storage
+const storage = new Storage({
+  credentials: process.env.CLOUD_SERVICE_KEY,
+})
+const image_UUID = crypto.generateUUID()
+const bucketName = 'recipe-for-success-images'
+const bucket = storage.bucket(bucketName)
+
+// Sending the upload request
+bucket.upload(
+  image_UUID + `.jpeg`,
+  {
+    destination: image_UUID + `.jpeg`,
+  },
+  function (err, file) {
+    if (err) {
+      console.error(`Error uploading image ${image_UUID}.jpeg: ${err}`)
+    } else {
+      console.log(`Image image_to_upload.jpeg uploaded to ${bucketName}.`)
+
+        // Making file public to the internet
+        file.makePublic(async function (err) {
+        if (err) {
+          console.error(`Error making file public: ${err}`)
+        } else {
+          console.log(`File ${file.name} is now public.`)
+          const publicUrl = file.publicUrl()
+          console.log(`Public URL for ${file.name}: ${publicUrl}`)
+        }
+       })
+
+    }
+  }
+)
+
     const recipe = new Recipe({
         title: req.body.title,
         desc: req.body.desc,
@@ -88,7 +128,7 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
         yields: req.body.yields,
         steps: req.body.steps,
         ingredients: req.body.ingredients,
-        image: req.body.image,
+        image: publicUrl,
         cuisine: req.body.cuisine,
         category: req.body.category,
         link: req.body.link,
