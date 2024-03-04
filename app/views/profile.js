@@ -11,6 +11,7 @@ import SignInModal from '../Components/SignInModal';
 import { Context } from '../Context';
 import { useNavigation } from '@react-navigation/core';
 import ChangePasswordModal from '../Components/ChangePasswordModal';
+import LoadingModal from '../Components/LoadingModal';
 import MessageModal from '../Components/MessageModal';
 import Test from './Test';
 
@@ -96,7 +97,14 @@ export default function Profile() {
 
 
   useEffect(() => {
+
+    if (email === 'Guest') {
+      // If the email is 'Guest', do not fetch allergies
+      return;
+   }
+
     const getProfileAllergies = async () => {
+      setLoading(true);
       try {
         const response = await fetch(`${API_BASE}/user/get/${email}`, {
           headers: {
@@ -142,10 +150,6 @@ export default function Profile() {
     } else if (section.title === 'Select Widgets') {
       contentText = 'Any selected widgets will be shown on the home screen.';
     }
-    
-    if (!profileAllergies) {
-      return <Text>Loading...</Text>; // Or any loading indicator you prefer
-   }
 
     return (
       <View>
@@ -172,15 +176,20 @@ export default function Profile() {
     setActiveSections(activeSections);
   };
 
-  if (loading) {
-    return <Text>Loading...</Text>; // Render a loading indicator while loading
- }
+  if (loading && email !== 'Guest') {
+    return
+    <View style={global.whiteBackground}>
+      <View style={global.grayForeground}>
+        <LoadingModal/>
+      </View>
+    </View>
+   }
 
   return (
     <View style={global.whiteBackground}>
       <BannerTitle title="Profile" />
+      {email === 'Guest' ? <SignInModal blurb="In order to use this feature, you have to be signed in!" /> : <View></View>}
       <ScrollView>
-      
 
       {/* <View style={global.grayForeground}>
           <Text style={global.titleText}>Testy Model</Text>
@@ -193,7 +202,10 @@ export default function Profile() {
           </Pressable>
         </View> */}
 
+
         <View style={global.grayForeground}>
+
+
           <Text style={global.titleText}>Preferences</Text>
             <Accordion
               sections={SECTIONS}
@@ -280,7 +292,6 @@ export default function Profile() {
         </View>
 
       </ScrollView>
-      {email === 'Guest' ? <SignInModal blurb="In order to use this feature, you have to be signed in!" /> : <View></View>}
       <Footer />
     </View>
   );
