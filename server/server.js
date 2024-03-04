@@ -88,6 +88,7 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
 const storage = new Storage({
   credentials: process.env.CLOUD_SERVICE_KEY,
 })
+
 const image_UUID = crypto.randomUUID()
 const bucketName = 'recipe-for-success-images'
 const bucket = storage.bucket(bucketName)
@@ -119,30 +120,30 @@ bucket.upload(
   }
 )
 
-    const recipe = new Recipe({
-        title: req.body.title,
-        desc: req.body.desc,
-        total_time: req.body.total_time,
-        yields: req.body.yields,
-        steps: req.body.steps,
-        ingredients: req.body.ingredients,
-        image: publicUrl,
-        cuisine: req.body.cuisine,
-        category: req.body.category,
-        link: req.body.link,
-        keywords: keywords,
-        allergies: req.body.allergies,
-    })
-    recipe.save();
-    if (req.body.email) {
-        const user = await User.findOne({ email: req.body.email });
-        console.log(recipe._id);
-        console.log(user.email);
-        user.created_recipes.push(recipe._id);
-        await user.save();
-        res.json(user);
-    }
-    res.json(recipe);
+    // const recipe = new Recipe({
+    //     title: req.body.title,
+    //     desc: req.body.desc,
+    //     total_time: req.body.total_time,
+    //     yields: req.body.yields,
+    //     steps: req.body.steps,
+    //     ingredients: req.body.ingredients,
+    //     image: publicUrl,
+    //     cuisine: req.body.cuisine,
+    //     category: req.body.category,
+    //     link: req.body.link,
+    //     keywords: keywords,
+    //     allergies: req.body.allergies,
+    // })
+    // recipe.save();
+    // if (req.body.email) {
+    //     const user = await User.findOne({ email: req.body.email });
+    //     console.log(recipe._id);
+    //     console.log(user.email);
+    //     user.created_recipes.push(recipe._id);
+    //     await user.save();
+    //     res.json(user);
+    // }
+    // res.json(recipe);
 });  
 
 app.delete('/'+process.env.API_TOKEN+'/recipe/delete/:id', async (req, res) => {
