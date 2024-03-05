@@ -134,7 +134,7 @@ export default function Home({ navigation, route }) {
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({ category: "Dinner" })
+            body: JSON.stringify({ title: "Salad" })
         })
             .then(res => res.json())
             .then(data => setSaladRecs(getRandom(data, 4)))
