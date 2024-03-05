@@ -96,52 +96,61 @@ export default function Profile() {
   };
 
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    if (email === 'Guest') {
-      // If the email is 'Guest', do not fetch allergies
-      return;
-   }
+  //   if (email === 'Guest') {
+  //     // If the email is 'Guest', do not fetch allergies
+  //     return;
+  //  }
 
-    const getProfileAllergies = async () => {
-      setLoadingModalVisible(true)
-      setLoading(true);
-      try {
-        const response = await fetch(`${API_BASE}/user/get/${email}`, {
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          method: "GET"
-        });
-        const data = await response.json();
-        const allergies = data[0].allergies;
-        setProfileAllergies(allergies);
-        setLoading(false); // Set loading to false after fetching and setting allergies
-        setLoadingModalVisible(false)
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getProfileAllergies();
-  }, [email, setProfileAllergies]);
+  //   const getProfileAllergies = async () => {
+  //     setLoadingModalVisible(true)
+  //     setLoading(true);
+  //     try {
+  //       const response = await fetch(`${API_BASE}/user/get/${email}`, {
+  //         headers: {
+  //           'Accept': 'application/json',
+  //           'Content-Type': 'application/json'
+  //         },
+  //         method: "GET"
+  //       });
+  //       const data = await response.json();
+  //       console.log(data)
+  //       const allergies = data[0].allergies;
+  //       console.log(allergies)
+  //       setProfileAllergies(allergies);
+  //       setLoading(false); // Set loading to false after fetching and setting allergies
+  //       setLoadingModalVisible(false)
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   getProfileAllergies();
+  // }, [email, setProfileAllergies]);
 
-  useEffect(() => {
-    //console.log(profileAllergies);
-   }, [profileAllergies]);
+  // useEffect(() => {
+    
+  //  }, [profileAllergies]);
 
 
-  const updateProfileAllergies = async () => {
+   const updateProfileAllergies = async () => {
+    // Map the profileAllergies array to include only allergen names from allergenMapping
+    const selectedAllergens = profileAllergies
+      .map((isSelected, index) => isSelected ? allergenMapping[index] : null)
+      .filter(Boolean); // Filter out null values
+      console.log("Selected Allergens:", selectedAllergens); // Log the selected allergen names
+    // Make API call with selected allergens
     const data = await fetch(API_BASE + "/user/update-user-allergies", {
-       headers: {
-         Accept: "application/json",
-         "Content-Type": "application/json",
-       },
-       method: "POST",
-       body: JSON.stringify({ email: email, allergies: profileAllergies }),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({ email: email, allergies: selectedAllergens }),
     });
     // Handle the response from the server
-   };
+  };
+  
 
    
 
@@ -181,15 +190,15 @@ export default function Profile() {
     setActiveSections(activeSections);
   };
 
-  if (loading && email !== 'Guest') {
-    return (
-      <View style={global.whiteBackground}>
-        <View style={global.grayForeground}>
-          <LoadingModal></LoadingModal>
-        </View>
-      </View>
-    );
- }
+//   if (loading && email !== 'Guest') {
+//     return (
+//       <View style={global.whiteBackground}>
+//         <View style={global.grayForeground}>
+//           <LoadingModal></LoadingModal>
+//         </View>
+//       </View>
+//     );
+//  }
 
   return (
     <View style={global.whiteBackground}>
