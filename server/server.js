@@ -7,6 +7,7 @@ const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const { Storage } = require('@google-cloud/storage');
+const fs = require('fs')
 const multer = require('multer');
 const path = require('path');
 require('dotenv').config();
@@ -60,6 +61,42 @@ app.post('/'+process.env.API_TOKEN+'/recipe/get',async (req,res) => {
     res.json(recipes);
 });
 
+app.post('/'+process.env.API_TOKEN+'/recipe/get-by-allergies', async (req, res) => {
+    const userAllergies = req.body.allergies;
+    const total_time = req.body.total_time;
+    const cuisine = req.body.cuisine;
+    const category = req.body.category;
+    const title = req.body.title;
+
+    if (!Array.isArray(userAllergies) || userAllergies.length === 0) {
+        return res.status(400).json({ error: 'Allergies array is required and must not be empty.' });
+    }
+
+    // Initialize the query object
+    const query = {
+        allergies: { $nin: userAllergies }
+    };
+
+    // Add additional filters if provided
+    if (total_time) {
+        query.total_time = { $lte: total_time };
+    }
+    if (cuisine) {
+        query.cuisine = new RegExp(`\\b${cuisine}\\b`, "i");
+    }
+    if (category) {
+        query.category = new RegExp(`\\b${category}\\b`, "i");
+    }
+    if (title) {
+        query.title = new RegExp(`\\b${title}\\b`, "i");
+    }
+
+    // Find recipes that match the filters
+    const recipes = await Recipe.find(query);
+
+    res.json(recipes);
+});
+
 app.get('/'+process.env.API_TOKEN+'/recipe/get/all',async (req,res) => {
     const recipes = await Recipe.find({});
     res.json(recipes);
@@ -84,65 +121,69 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
     }
     keywords = keywords.flat(1);
 
+    // Initialize storage
+    const storage = new Storage({
+      credentials: process.env.CLOUD_SERVICE_KEY,
+    })
 
-// Initialize storage
-const storage = new Storage({
-  credentials: process.env.CLOUD_SERVICE_KEY,
-})
+    const image_UUID = crypto.randomUUID();
+    const bucketName = 'recipe-for-success-images';
+    const bucket = storage.bucket(bucketName);
 
-const image_UUID = crypto.randomUUID();
-const bucketName = 'recipe-for-success-images';
-const bucket = storage.bucket(bucketName);
+    // Assuming the image is sent as a base64 encoded string in the request body
+    // You need to convert it to a Buffer before saving it locally
+    const imageBuffer = Buffer.from(req.body.image, 'base64');
+    const localFilePath = path.join(__dirname, `uploads/${image_UUID}.jpeg`);
+    fs.writeFileSync(localFilePath, imageBuffer);
 
-// Sending the upload request
-bucket.upload(
-    path.join(__dirname, `${image_UUID}.jpeg`),
-    function (err, file) {
-        if (err) {
-        console.error(`Error uploading image ${image_UUID}.jpeg: ${err}`)
-        } else {
-        console.log(`Image ${image_UUID}.jpeg uploaded to ${bucketName}.`)
-
-            // Making file public to the internet
-            file.makePublic(async function (err) {
+    // Sending the upload request
+    bucket.upload(
+        localFilePath,
+        function (err, file) {
             if (err) {
-            console.error(`Error making file public: ${err}`)
+            console.error(`Error uploading image ${image_UUID}.jpeg: ${err}`)
             } else {
-            console.log(`File ${file.name} is now public.`)
-            const publicUrl = file.publicUrl()
-            console.log(`Public URL for ${file.name}: ${publicUrl}`)
-            }
-        })
+            console.log(`Image ${image_UUID}.jpeg uploaded to ${bucketName}.`)
 
+                // Making file public to the internet
+                file.makePublic(async function (err) {
+                if (err) {
+                console.error(`Error making file public: ${err}`)
+                } else {
+                console.log(`File ${file.name} is now public.`)
+                const publicUrl = file.publicUrl()
+                console.log(`Public URL for ${file.name}: ${publicUrl}`)
+
+                    // Save the recipe with the image URL
+                    const recipe = new Recipe({
+                        title: req.body.title,
+                        desc: req.body.desc,
+                        total_time: req.body.total_time,
+                        yields: req.body.yields,
+                        steps: req.body.steps,
+                        ingredients: req.body.ingredients,
+                        image: publicUrl,
+                        cuisine: req.body.cuisine,
+                        category: req.body.category,
+                        link: req.body.link,
+                        keywords: keywords,
+                        allergies: req.body.allergies,
+                    })
+                    await recipe.save();
+                    if (req.body.email) {
+                        const user = await User.findOne({ email: req.body.email });
+                        console.log(recipe._id);
+                        console.log(user.email);
+                        user.created_recipes.push(recipe._id);
+                        await user.save();
+                        res.json(user);
+                    }
+                    res.json(recipe);
+                }
+            })
         }
-    }
-)
-
-    // const recipe = new Recipe({
-    //     title: req.body.title,
-    //     desc: req.body.desc,
-    //     total_time: req.body.total_time,
-    //     yields: req.body.yields,
-    //     steps: req.body.steps,
-    //     ingredients: req.body.ingredients,
-    //     image: publicUrl,
-    //     cuisine: req.body.cuisine,
-    //     category: req.body.category,
-    //     link: req.body.link,
-    //     keywords: keywords,
-    //     allergies: req.body.allergies,
-    // })
-    // recipe.save();
-    // if (req.body.email) {
-    //     const user = await User.findOne({ email: req.body.email });
-    //     console.log(recipe._id);
-    //     console.log(user.email);
-    //     user.created_recipes.push(recipe._id);
-    //     await user.save();
-    //     res.json(user);
-    // }
-    // res.json(recipe);
-});  
+    })
+});
 
 app.delete('/'+process.env.API_TOKEN+'/recipe/delete/:id', async (req, res) => {
   const recipe = await Recipe.findByIdAndDelete(req.params.id);

@@ -11,6 +11,7 @@ import SignInModal from '../Components/SignInModal';
 import { Context } from '../Context';
 import { useNavigation } from '@react-navigation/core';
 import ChangePasswordModal from '../Components/ChangePasswordModal';
+import LoadingModal from '../Components/LoadingModal';
 import MessageModal from '../Components/MessageModal';
 import Test from './Test';
 
@@ -44,12 +45,12 @@ const allergenMapping = [
 
 export default function Profile() {
   const [activeSections, setActiveSections] = useState([]);
-  const {username,setUsername,email,setEmail,setChangePasswordModalVisible, profileAllergies, setProfileAllergies} = useContext(Context);
+  const {username,setUsername,email,setEmail,setChangePasswordModalVisible, profileAllergies, setProfileAllergies, isLoadingModalVisible, setLoadingModalVisible} = useContext(Context);
   const [newEmail, setNewEmail] = useState(email);
   const navigation = useNavigation();
   const [isProfileModified, setIsProfileModified] = useState(false);
   const [isMessageModalVisible, setMessageModalVisible] = useState(false);
-  const [loading, setLoading] = useState(true); // Add a loading state
+  const [loading, setLoading] = useState(false); // Add a loading state
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
@@ -96,44 +97,72 @@ export default function Profile() {
 
 
   useEffect(() => {
-    const getProfileAllergies = async () => {
-      try {
-        const response = await fetch(`${API_BASE}/user/get/${email}`, {
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          method: "GET"
-        });
-        const data = await response.json();
-        const allergies = data[0].allergies;
-        setProfileAllergies(allergies);
-        setLoading(false); // Set loading to false after fetching and setting allergies
-      } catch (error) {
-        console.error(error);
-      }
-    };
+    if (email === 'Guest') {
+      // If the email is 'Guest', do not fetch allergies
+      return;
+   }
+
+   const getProfileAllergies = async () => {
+    setLoading(true);
+    setLoadingModalVisible(true);
+  try {
+     const response = await fetch(`${API_BASE}/user/get/${email}`, {
+       headers: {
+         'Accept': 'application/json',
+         'Content-Type': 'application/json'
+       },
+       method: "GET"
+     });
+     const data = await response.json();
+     const allergies = data[0].allergies;
+     // Convert the strings to booleans based on the allergenMapping
+     const booleanAllergies = allergenMapping.map(allergen => allergies.includes(allergen));
+     setProfileAllergies(booleanAllergies);
+     setLoading(false); // Set loading to false after fetching and setting allergies
+     setLoadingModalVisible(false); // Hide the loading modal
+  } catch (error) {
+     console.error(error);
+     setLoading(false);
+     setLoadingModalVisible(false); // Hide the loading modal in case of an error
+  }
+  };
     getProfileAllergies();
   }, [email, setProfileAllergies]);
 
   useEffect(() => {
-    //console.log(profileAllergies);
    }, [profileAllergies]);
 
 
-  const updateProfileAllergies = async () => {
+   const updateProfileAllergies = async () => {
+    // Map the profileAllergies array to include only allergen names from allergenMapping
+    const selectedAllergens = profileAllergies
+      .map((isSelected, index) => isSelected ? allergenMapping[index] : null)
+      .filter(Boolean); // Filter out null values
+    // Make API call with selected allergens
     const data = await fetch(API_BASE + "/user/update-user-allergies", {
-       headers: {
-         Accept: "application/json",
-         "Content-Type": "application/json",
-       },
-       method: "POST",
-       body: JSON.stringify({ email: email, allergies: profileAllergies }),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({ email: email, allergies: selectedAllergens }),
     });
     // Handle the response from the server
-   };
+  };
+  
+  if (loading && email !== 'Guest') {
+    return (
+      <View style={global.whiteBackground}>
+        <View style={global.grayForeground}>
+          <LoadingModal></LoadingModal>
+        </View>
+      </View>
+    );
+ }
+   
 
   const renderContent = (section) => {
+
     let contentText = '';
 
     // Conditionally set the content text based on the section title
@@ -142,10 +171,6 @@ export default function Profile() {
     } else if (section.title === 'Select Widgets') {
       contentText = 'Any selected widgets will be shown on the home screen.';
     }
-    
-    if (!profileAllergies) {
-      return <Text>Loading...</Text>; // Or any loading indicator you prefer
-   }
 
     return (
       <View>
@@ -172,27 +197,12 @@ export default function Profile() {
     setActiveSections(activeSections);
   };
 
-  if (loading) {
-    return <Text>Loading...</Text>; // Render a loading indicator while loading
- }
 
   return (
     <View style={global.whiteBackground}>
       <BannerTitle title="Profile" />
+      {email === 'Guest' ? <SignInModal blurb="In order to use this feature, you have to be signed in!" /> : <View></View>}
       <ScrollView>
-      
-
-      {/* <View style={global.grayForeground}>
-          <Text style={global.titleText}>Testy Model</Text>
-          <Pressable
-            style={global.buttonMinor}
-            onPress={() => {
-              navigation.navigate('Test');
-            }}>
-                <Text style={styles.guestText}>Testy Model</Text>
-          </Pressable>
-        </View> */}
-
         <View style={global.grayForeground}>
           <Text style={global.titleText}>Preferences</Text>
             <Accordion
@@ -280,7 +290,6 @@ export default function Profile() {
         </View>
 
       </ScrollView>
-      {email === 'Guest' ? <SignInModal blurb="In order to use this feature, you have to be signed in!" /> : <View></View>}
       <Footer />
     </View>
   );

@@ -38,6 +38,7 @@ export default function App() {
   const [isIngInstructionsModelVisible, setIngInstructionsModelVisible] = useState(false);
   const [isRecipeAllergiesModalVisible, setRecipeAllergiesModalVisible] = useState(true);
   const [searchResults, setSearchResults] = useState([]);
+  const [isLoadingModalVisible, setLoadingModalVisible] = useState(false);
 
   let [fontsLoaded, fontError] = useFonts({
     Cairo_500Medium,
@@ -68,6 +69,7 @@ export default function App() {
         searchResults, setSearchResults,
         setRecipePageState,
         isRecipeAllergiesModalVisible, setRecipeAllergiesModalVisible, 
+        isLoadingModalVisible, setLoadingModalVisible,
       }}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{
