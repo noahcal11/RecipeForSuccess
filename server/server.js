@@ -60,6 +60,42 @@ app.post('/'+process.env.API_TOKEN+'/recipe/get',async (req,res) => {
     res.json(recipes);
 });
 
+app.post('/'+process.env.API_TOKEN+'/recipe/get-by-allergies', async (req, res) => {
+    const userAllergies = req.body.allergies;
+    const total_time = req.body.total_time;
+    const cuisine = req.body.cuisine;
+    const category = req.body.category;
+    const title = req.body.title;
+
+    if (!Array.isArray(userAllergies) || userAllergies.length === 0) {
+        return res.status(400).json({ error: 'Allergies array is required and must not be empty.' });
+    }
+
+    // Initialize the query object
+    const query = {
+        allergies: { $nin: userAllergies }
+    };
+
+    // Add additional filters if provided
+    if (total_time) {
+        query.total_time = { $lte: total_time };
+    }
+    if (cuisine) {
+        query.cuisine = new RegExp(`\\b${cuisine}\\b`, "i");
+    }
+    if (category) {
+        query.category = new RegExp(`\\b${category}\\b`, "i");
+    }
+    if (title) {
+        query.title = new RegExp(`\\b${title}\\b`, "i");
+    }
+
+    // Find recipes that match the filters
+    const recipes = await Recipe.find(query);
+
+    res.json(recipes);
+});
+
 app.get('/'+process.env.API_TOKEN+'/recipe/get/all',async (req,res) => {
     const recipes = await Recipe.find({});
     res.json(recipes);
