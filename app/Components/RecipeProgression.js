@@ -220,13 +220,13 @@ const RecipeProgression = ({ingredients, directions, title}) => {
                 return <Pressable
                  style={styles.keyword}
                  onPress={(() => {setSelKey(word); setIngInstructionsModelVisible(true);})}>
-                    <Text style={{ ...global.centeredText, textDecorationLine: 'underline'}}>{word}</Text>
+                    <Text style={styles.keywordText}>{word}</Text>
                 </Pressable>
                 // If not match, keep the word as-is
             } else return word + " "
         })
         // Display the resulting array of objects
-        return <Text>
+        return <Text style={styles.output}>
             {objects.map(item => {
                 return item
             })}
@@ -323,6 +323,16 @@ const styles=EStyleSheet.create({
     },
     keyword: {
         
+    },
+    keywordText: {
+        fontSize: '1.25rem',
+        fontFamily: 'Cairo_500Medium',
+        textDecorationLine: 'underline',
+        paddingRight: '0.25rem',
+        marginBottom: '0.5rem',
+    },
+    output: {
+        marginVertical: '1rem'
     },
     container: {
         flex: 1,
