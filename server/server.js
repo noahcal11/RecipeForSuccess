@@ -180,8 +180,8 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
                     }
                     res.json(recipe);
                 }
-            }
-        })
+            })
+        }
     })
 });
 
