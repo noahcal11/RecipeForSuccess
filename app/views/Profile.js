@@ -1,5 +1,5 @@
 import Footer from '../Components/Footer';
-import React, { useContext, useState } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { Text, View, ScrollView, Pressable, TextInput, Modal } from "react-native";
 import EStyleSheet from 'react-native-extended-stylesheet';
 import global from '../Genstyle';
@@ -11,6 +11,7 @@ import SignInModal from '../Components/SignInModal';
 import { Context } from '../Context';
 import { useNavigation } from '@react-navigation/core';
 import ChangePasswordModal from '../Components/ChangePasswordModal';
+import LoadingModal from '../Components/LoadingModal';
 import MessageModal from '../Components/MessageModal';
 import Test from './Test';
 
@@ -36,13 +37,20 @@ const SECTIONS = [
   },
 ];
 
+const allergenMapping = [
+  'Dairy', 'Eggs', 'Fish', 'Shellfish',
+  'Tree Nuts', 'Peanuts', 'Wheat', 'Soybeans',
+  'Chicken', 'Pork', 'Red Meat', 'Gluten',
+];
+
 export default function Profile() {
   const [activeSections, setActiveSections] = useState([]);
-  const {username,setUsername,email,setEmail,setChangePasswordModalVisible} = useContext(Context);
+  const {username,setUsername,email,setEmail,setChangePasswordModalVisible, profileAllergies, setProfileAllergies, isLoadingModalVisible, setLoadingModalVisible} = useContext(Context);
   const [newEmail, setNewEmail] = useState(email);
   const navigation = useNavigation();
   const [isProfileModified, setIsProfileModified] = useState(false);
   const [isMessageModalVisible, setMessageModalVisible] = useState(false);
+  const [loading, setLoading] = useState(true); // Add a loading state
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
@@ -87,7 +95,41 @@ export default function Profile() {
     );
   };
 
-  const {profileAllergies, setProfileAllergies} = useContext(Context)
+
+  useEffect(() => {
+
+    if (email === 'Guest') {
+      // If the email is 'Guest', do not fetch allergies
+      return;
+   }
+
+    const getProfileAllergies = async () => {
+      setLoadingModalVisible(true)
+      setLoading(true);
+      try {
+        const response = await fetch(`${API_BASE}/user/get/${email}`, {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          method: "GET"
+        });
+        const data = await response.json();
+        const allergies = data[0].allergies;
+        setProfileAllergies(allergies);
+        setLoading(false); // Set loading to false after fetching and setting allergies
+        setLoadingModalVisible(false)
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getProfileAllergies();
+  }, [email, setProfileAllergies]);
+
+  useEffect(() => {
+    //console.log(profileAllergies);
+   }, [profileAllergies]);
+
 
   const updateProfileAllergies = async () => {
     const data = await fetch(API_BASE + "/user/update-user-allergies", {
@@ -101,7 +143,10 @@ export default function Profile() {
     // Handle the response from the server
    };
 
+   
+
   const renderContent = (section) => {
+
     let contentText = '';
 
     // Conditionally set the content text based on the section title
@@ -110,7 +155,6 @@ export default function Profile() {
     } else if (section.title === 'Select Widgets') {
       contentText = 'Any selected widgets will be shown on the home screen.';
     }
-    
 
     return (
       <View>
@@ -119,6 +163,7 @@ export default function Profile() {
           <View style={global.horizontal} key={index}>
             <Text style={global.bodyText}>{item.title}</Text>
             <SwitchComp name={item.title} index={index} state={profileAllergies[index]}> </SwitchComp>
+
           </View>
         ))}
         <Pressable
@@ -136,23 +181,21 @@ export default function Profile() {
     setActiveSections(activeSections);
   };
 
+  if (loading && email !== 'Guest') {
+    return (
+      <View style={global.whiteBackground}>
+        <View style={global.grayForeground}>
+          <LoadingModal></LoadingModal>
+        </View>
+      </View>
+    );
+ }
+
   return (
     <View style={global.whiteBackground}>
       <BannerTitle title="Profile" />
+      {email === 'Guest' ? <SignInModal blurb="In order to use this feature, you have to be signed in!" /> : <View></View>}
       <ScrollView>
-      
-
-      {/* <View style={global.grayForeground}>
-          <Text style={global.titleText}>Testy Model</Text>
-          <Pressable
-            style={global.buttonMinor}
-            onPress={() => {
-              navigation.navigate('Test');
-            }}>
-                <Text style={styles.guestText}>Testy Model</Text>
-          </Pressable>
-        </View> */}
-
         <View style={global.grayForeground}>
           <Text style={global.titleText}>Preferences</Text>
             <Accordion
@@ -240,7 +283,6 @@ export default function Profile() {
         </View>
 
       </ScrollView>
-      {email === 'Guest' ? <SignInModal blurb="In order to use this feature, you have to be signed in!" /> : <View></View>}
       <Footer />
     </View>
   );

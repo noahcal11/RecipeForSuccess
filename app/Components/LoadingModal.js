@@ -10,32 +10,13 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'; // Import
 
 EStyleSheet.build();
 
-const IngInstructionsModel = ({word}) => {
+const LoadingModal = () => {
   const [def, setDef] = useState("");
   const {isIngInstructionsModelVisible, setIngInstructionsModelVisible} = useContext(Context);
   const navigation = useNavigation();
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN;
 
-  const getInfo = async () => {
-    const keyData = await fetch(API_BASE+"/keyword/get", {
-       headers: {
-         'Accept': 'application/json',
-         'Content-Type': 'application/json'
-       },
-       method: "POST",
-       body: JSON.stringify({key: word})
-    }).then(res => res.json())
-    .then(data => {
-       console.log('Data received:', data); // Log the entire data object
-       console.log(data.definition)
-       setDef(data.definition)
-    })
-    .catch(err => console.error(err));
-   }
-
-  useEffect(() => {
-    getInfo();
-  }, [])
+  const {isLoadingModalVisible, setLoadingModalVisible} = useContext(Context);
 
   return (
     <GestureHandlerRootView>
@@ -43,25 +24,13 @@ const IngInstructionsModel = ({word}) => {
       <Modal
         animationType="slide"
         transparent={true}
-        visible={isIngInstructionsModelVisible}
+        visible={isLoadingModalVisible}
         onRequestClose={() => {
-          setIngInstructionsModelVisible(!isIngInstructionsModelVisible);
+          setLoadingModalVisible(!isLoadingModalVisible);
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={global.titleText}>{word}</Text>
-
-            <ScrollView>
-            <View style={styles.instructionsContainer}>
-              <Text style={global.bodyText}>{def}</Text>
-            </View>
-            </ScrollView>
-
-            <Pressable
-              style={global.buttonMinor}
-              onPress={() => {setIngInstructionsModelVisible(!isIngInstructionsModelVisible)}}>
-              <Text style={global.buttonMinorText}>Close</Text>
-            </Pressable>
+            <Text style={global.titleText}>Please wait while the app loads</Text>
           </View>
         </View>
       </Modal>
@@ -90,7 +59,7 @@ const styles = EStyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     width: '22.5rem',
-    height: '35rem',
+    height: '10rem',
   },
   instructionsContainer: {
     //height: '2.1rem', // Set the desired height for the instructions container
@@ -98,4 +67,4 @@ const styles = EStyleSheet.create({
   }
 });
 
-export default IngInstructionsModel
+export default LoadingModal

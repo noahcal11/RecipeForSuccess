@@ -37,3 +37,26 @@ Content-Type: application/json
 {
     "title": "help me", "desc": "", "total_time": 10, "yields": 10, "steps": ["a"], "ingredients": ["A"], "cuisine": "cusine", "category": "category", "link": "yourmo.com", "email": "ray.com"
 }
+###
+POST http://localhost:8080/54pgn7tCy42af5pTRz92ZF2Piu92CQeWsx7cZSW5owfTasAJ3HqGwwvU3yNNqoAo9sy8VmETrnZ8UkVLgyUoxRtU2CCjZCJafFCViAVf93ceLW8ex6yFXsc79kqNWjBK/keyword/get/
+Content-Type: application/json
+
+{
+    "key": "roasted"
+}
+###
+POST http://localhost:8080/54pgn7tCy42af5pTRz92ZF2Piu92CQeWsx7cZSW5owfTasAJ3HqGwwvU3yNNqoAo9sy8VmETrnZ8UkVLgyUoxRtU2CCjZCJafFCViAVf93ceLW8ex6yFXsc79kqNWjBK/recipe/get/filterAllergies
+Content-Type: application/json
+
+{
+  "allergies": ["Wheat", "Dairy"]
+}
+###
+POST http://localhost:8080/54pgn7tCy42af5pTRz92ZF2Piu92CQeWsx7cZSW5owfTasAJ3HqGwwvU3yNNqoAo9sy8VmETrnZ8UkVLgyUoxRtU2CCjZCJafFCViAVf93ceLW8ex6yFXsc79kqNWjBK/recipe/get-by-allergies
+Content-Type: application/json
+
+{
+ "allergies": ["Dairy"],
+ "title": "chicken",
+ "category": "dinner"
+}
