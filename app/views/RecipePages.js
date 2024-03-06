@@ -78,7 +78,7 @@ export default function RecipePages({ navigation, route }) {
 
   useEffect(() => {
     setRecipeAllergiesModalVisible(true);
-   }, [recipe]);
+   }, [recipe,route]);
 
   function displayRating(rating) {
     let star2, star3, star4, star5 = new Object;
@@ -142,13 +142,13 @@ export default function RecipePages({ navigation, route }) {
           <View style={[global.grayForeground, { padding:   20 }]}>
             {/* Your app content */}
             {
-              (isRecipeAllergiesModalVisible && email !== "Guest") ? (
-                <RecipeAllergiesModal
-                  visible={isRecipeAllergiesModalVisible}
-                  setVisible={setRecipeAllergiesModalVisible}
-                  recipeAllergies={recipe.allergies} // Pass the allergies directly from the recipe state
-                  profileAllergies={profileAllergies}
-                />
+              (isRecipeAllergiesModalVisible && email !== "Guest" && profileAllergies.some(allergy => allergy)) ? (
+                  <RecipeAllergiesModal
+                    visible={isRecipeAllergiesModalVisible}
+                    setVisible={setRecipeAllergiesModalVisible}
+                    recipeAllergies={recipe.allergies} // Pass the allergies directly from the recipe state
+                    profileAllergies={profileAllergies}
+                  />
               ) : null
             }
 
