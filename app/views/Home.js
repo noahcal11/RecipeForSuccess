@@ -86,7 +86,7 @@ export default function Home({ navigation, route }) {
     }, [email, setProfileAllergies]);
 
     useEffect(() => {
-        //console.log(profileAllergies);
+        
     }, [profileAllergies]);
 
 
