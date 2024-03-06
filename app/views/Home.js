@@ -3,7 +3,7 @@ import { Text, Image, View, ScrollView, TextInput, FlatList, Pressable, Dimensio
 import Banner from '../Components/Banner';
 import Footer from '../Components/Footer';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Context } from '../Context';
 import global from '../Genstyle';
 import FilterIcon from '../assets/svg/filter';
@@ -24,7 +24,7 @@ export default function Home({ navigation, route }) {
     const [italianRecs, setItalianRecs] = useState([]);
     const [chineseRecs, setChineseRecs] = useState([]);
     const [surpriseRecs, setSurpriseRecs] = useState([]);
-    const { username, setUsername, email, setEmail, isHomeFiltersModalVisible, setHomeFiltersModalVisible, visibleWidgets, setVisibleWidgets, searchFilter, setSearchFilter } = useContext(Context)
+    const { username, setUsername, email, setEmail, isHomeFiltersModalVisible, setHomeFiltersModalVisible, visibleWidgets, setVisibleWidgets, searchFilter, setSearchFilter, profileAllergies, setProfileAllergies } = useContext(Context)
 
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/" + process.env.REACT_APP_API_TOKEN
 

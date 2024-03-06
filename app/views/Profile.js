@@ -1,6 +1,6 @@
 import Footer from '../Components/Footer';
 import React, { useEffect, useContext, useState } from 'react';
-import { Text, View, ScrollView, Pressable, TextInput, Modal } from "react-native";
+import { Text, View, ScrollView, Pressable, TextInput, Modal, Linking } from "react-native";
 import EStyleSheet from 'react-native-extended-stylesheet';
 import global from '../Genstyle';
 import SwitchComp from '../Components/UpdateAllergyPrefSwitch';
@@ -290,6 +290,14 @@ export default function Profile() {
           {/* <MessageModel blurb="Account Settings Updated" /> */}
 
         </View>
+
+        <Pressable
+          style={global.buttonMinor}
+          onPress={() => {
+            Linking.openURL('https://forms.gle/44SFCg1Q2UJFYxzZ8');
+          }}>
+            <Text style={styles.guestText}>UAT Survey</Text>
+        </Pressable>
 
       </ScrollView>
       <Footer />
