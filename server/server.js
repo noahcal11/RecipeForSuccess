@@ -137,7 +137,7 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
     fs.writeFileSync(localFilePath, imageBuffer);
 
     // Sending the upload request
-    bucket.upload(
+    await bucket.upload(
         localFilePath,
         function (err, file) {
             if (err) {
@@ -155,7 +155,7 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
                 console.log(`Public URL for ${file.name}: ${publicUrl}`)
 
                     // Save the recipe with the image URL
-                    const recipe = new Recipe({
+                    const recipe = await new Recipe({
                         title: req.body.title,
                         desc: req.body.desc,
                         total_time: req.body.total_time,
