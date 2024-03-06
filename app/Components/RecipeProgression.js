@@ -103,13 +103,16 @@ const RecipeProgression = ({ingredients, directions, title}) => {
             );
         } else { // Displays the directions in order
             return (
-                <ScrollView style={{ flex: 1 }}>
+                <View style={{flex: 1}}>
+                {/* <ScrollView style={{ flex: 1 }}> */}
                     <Text style={global.titleText}>Step {stepNum}:</Text>
                     {/* TODO: Make keywords display as buttons */}
+                    <ScrollView style={{ flex: 1 }}>
                     <Text style={global.centeredText}>
                         {parseStep(directions[stepNum - 1])}
                         {/* {directions[stepNum - 1]} */}
                     </Text>
+                    </ScrollView>
                     {/* Definition Modal */}
                     {isIngInstructionsModelVisible ?
                         <DefinitionModal word={selKey} />
@@ -144,7 +147,8 @@ const RecipeProgression = ({ingredients, directions, title}) => {
                             :<Text style={global.subText}>Resume</Text>}
                         </Pressable>
                     </View>
-                </ScrollView>
+                {/* </ScrollView> */}
+                </View>
             );
         }
     }
@@ -208,29 +212,35 @@ const RecipeProgression = ({ingredients, directions, title}) => {
         // Create a new array with both text and pressables
         let objects = words.map((word, index) => {
             // Conform the word to match the format of the keywords
-            let newWord = word.slice(0,1).toUpperCase() + word.slice(1, word.length);
-            if(newWord.includes(".") || newWord.includes(",")) {
-                newWord = newWord.slice(0, newWord.length - 1)
-            }
+            let newWord = formatWord(word);
             // Compare the word to the list of keywords
             // TODO: Add an API call that gets keywords.suffixes for all keywords
             const match = keywords.find((keyword) => keyword === newWord)
             if(typeof match !== "undefined") {
                 // If a match is found, turn the word into a pressable
-                return <Pressable
-                 style={styles.keyword}
-                 onPress={(() => {setSelKey(word); setIngInstructionsModelVisible(true);})}>
-                    <Text style={{ ...global.centeredText, textDecorationLine: 'underline'}}>{word}</Text>
-                </Pressable>
+                // NOTE: Text doesn't align properly if made into a pressable, might break on web
+                return <Text><Text
+                 style={styles.keywordText}
+                 onPress={(() => {setSelKey(formatWord(word)); setIngInstructionsModelVisible(true);})}>
+                    {word}
+                </Text><Text> </Text></Text>
                 // If not match, keep the word as-is
             } else return word + " "
         })
         // Display the resulting array of objects
-        return <Text>
+        return <Text style={styles.output}>
             {objects.map(item => {
                 return item
             })}
         </Text>
+    }
+
+    function formatWord(word) {
+        let newWord = word.slice(0,1).toUpperCase() + word.slice(1, word.length);
+        if(newWord.includes(".") || newWord.includes(",")) {
+            newWord = newWord.slice(0, newWord.length - 1)
+        }
+        return newWord;
     }
 
     return (
@@ -247,7 +257,7 @@ export default RecipeProgression;
 
 const styles=EStyleSheet.create({
     timer: {
-        flex: 1,
+        flex: 0.3,
         borderRadius: 25,
         borderWidth: 1,
         borderColor: 'black',
@@ -321,8 +331,15 @@ const styles=EStyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    keyword: {
-        
+    keywordText: {
+        fontSize: '1.25rem',
+        fontFamily: 'Cairo_500Medium',
+        textDecorationLine: 'underline',
+        paddingHorizontal: '0.25rem',
+        marginBottom: '0.5rem',
+    },
+    output: {
+        marginVertical: '1rem'
     },
     container: {
         flex: 1,
