@@ -51,18 +51,29 @@ export default function Home({ navigation, route }) {
                 const data = await response.json();
                 const allergies = data[0].allergies;
                 setProfileAllergies(allergies);
-                setLoadingModalVisible(true);
+                setLoadingModalVisible(false);
                 setLoading(false); // Set loading to false after fetching and setting allergies
             } catch (error) {
                 console.error(error);
             }
         };
         getProfileAllergies();
-        console.log(profileAllergies)
+        getPopular();
+        getBreakfast();
+        getLunch();
+        getDinner();
+        getDessert();
+        getChicken();
+        getSalad();
+        getAmerican();
+        getMexican();
+        getItalian();
+        getChinese();
+        getSurprise();
     }, [email, setProfileAllergies]);
 
     useEffect(() => {
-        //console.log(profileAllergies);
+        console.log(profileAllergies);
     }, [profileAllergies]);
 
 
@@ -91,7 +102,9 @@ export default function Home({ navigation, route }) {
             body: JSON.stringify({ cuisine: "American", allergies: profileAllergies })
         })
             .then(res => res.json())
-            .then(data => setPopularRecs(getRandom(data, 8)))
+            .then(data => {
+                setPopularRecs(getRandom(data, 8));
+            })
             .catch(error => console.error(error));
     }
 
