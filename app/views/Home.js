@@ -58,11 +58,11 @@ export default function Home({ navigation, route }) {
             }
         };
         getProfileAllergies();
-        console.log(profileAllergies)
+        //console.log(profileAllergies)
     }, [email, setProfileAllergies]);
 
     useEffect(() => {
-        //console.log(profileAllergies);
+        console.log(profileAllergies);
     }, [profileAllergies]);
 
 
@@ -92,6 +92,7 @@ export default function Home({ navigation, route }) {
         })
             .then(res => res.json())
             .then(data => setPopularRecs(getRandom(data, 8)))
+            .then(console.log(data))
             .catch(error => console.error(error));
     }
 
