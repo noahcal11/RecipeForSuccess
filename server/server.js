@@ -165,7 +165,6 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
                         yields: req.body.yields,
                         steps: req.body.steps,
                         ingredients: req.body.ingredients,
-                        image: publicUrl,
                         cuisine: req.body.cuisine,
                         category: req.body.category,
                         link: req.body.link,
