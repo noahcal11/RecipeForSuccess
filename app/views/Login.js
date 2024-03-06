@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar'; 
 import { StyleSheet, Text, Image, View, Pressable, TextInput, Keyboard, ScrollView } from 'react-native';
-import { useContext, useState} from 'react';
+import { useContext, useState, useEffect } from 'react';
 import bcrypt from 'bcryptjs';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { Context } from '../Context';
@@ -28,6 +28,12 @@ export default function Login({navigation}) {
 
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
+
+  useEffect(() => {
+    setUsername("");
+    setEmail("");
+    setPassword("");
+}, []);
 
   const createUser = async (email,username,password) => {
     setNotification("")
@@ -73,7 +79,6 @@ export default function Login({navigation}) {
                 // message will be sent
                 setNotification('Wrong Password');
                 setPassword("");
-                setUsername("");
             }
       });
     }
