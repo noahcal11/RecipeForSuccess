@@ -28,6 +28,44 @@ export default function Home({ navigation, route }) {
 
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/" + process.env.REACT_APP_API_TOKEN
 
+    useEffect(() => {
+
+        if (email === 'Guest') {
+            // If the email is 'Guest', do not fetch allergies
+            return;
+        }
+
+        const getProfileAllergies = async () => {
+            // setLoadingModalVisible(true)
+            // setLoading(true);
+            try {
+                const response = await fetch(`${API_BASE}/user/get/${email}`, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    method: "GET"
+                });
+                const data = await response.json();
+                console.log(data)
+                const allergies = data[0].allergies;
+                console.log(allergies)
+                setProfileAllergies(allergies);
+                // setLoading(false); // Set loading to false after fetching and setting allergies
+                // setLoadingModalVisible(false)
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        getProfileAllergies();
+    }, [email, setProfileAllergies]);
+
+    const allergenMapping = [
+        'Dairy', 'Eggs', 'Fish', 'Shellfish',
+        'Tree Nuts', 'Peanuts', 'Wheat', 'Soybeans',
+        'Chicken', 'Pork', 'Red Meat', 'Gluten',
+    ];
+
     // https://stackoverflow.com/questions/19269545/how-to-get-a-number-of-random-elements-from-an-array
     function getRandom(arr, n) {
         var result = new Array(n),
