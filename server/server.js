@@ -167,7 +167,7 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
                         ingredients: req.body.ingredients,
                         cuisine: req.body.cuisine,
                         category: req.body.category,
-                        link: req.body.link,
+                        link: publicUrl,
                         keywords: keywords,
                         allergies: req.body.allergies,
                     })
@@ -185,7 +185,7 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
             })
         }
     })
-});
+}).catch(err => console.error(err));
 
 app.delete('/'+process.env.API_TOKEN+'/recipe/delete/:id', async (req, res) => {
   const recipe = await Recipe.findByIdAndDelete(req.params.id);
