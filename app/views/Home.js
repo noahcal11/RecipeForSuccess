@@ -73,7 +73,7 @@ export default function Home({ navigation, route }) {
     }, [email, setProfileAllergies]);
 
     useEffect(() => {
-        console.log(profileAllergies);
+        //console.log(profileAllergies);
     }, [profileAllergies]);
 
 
@@ -102,9 +102,7 @@ export default function Home({ navigation, route }) {
             body: JSON.stringify({ cuisine: "American", allergies: profileAllergies })
         })
             .then(res => res.json())
-            .then(data => {
-                setPopularRecs(getRandom(data, 8));
-            })
+            .then(data => setPopularRecs(getRandom(data, 8)))
             .catch(error => console.error(error));
     }
 
