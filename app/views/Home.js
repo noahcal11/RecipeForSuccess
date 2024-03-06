@@ -31,7 +31,8 @@ export default function Home({ navigation, route }) {
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/" + process.env.REACT_APP_API_TOKEN
 
     useEffect(() => {
-
+        setLoading(true);
+        setLoadingModalVisible(true);
         if (email === 'Guest') {
             // If the email is 'Guest', do not fetch allergies
             setProfileAllergies([]);
@@ -47,33 +48,47 @@ export default function Home({ navigation, route }) {
             getItalian();
             getChinese();
             getSurprise();
+            setLoading(false);
+            setLoadingModalVisible(false);
             return;
         }
 
         if (email !== 'Guest'){
-            setLoading(true);
-            setLoadingModalVisible(true);
-            getProfileAllergies();
-            getPopular();
-            getBreakfast();
-            getLunch();
-            getDinner();
-            getDessert();
-            getChicken();
-            getSalad();
-            getAmerican();
-            getMexican();
-            getItalian();
-            getChinese();
-            getSurprise();
-            setLoading(false);
-            setLoadingModalVisible(false);
+            fetchData();
         }
     }, [email, setProfileAllergies]);
 
     useEffect(() => {
-        
     }, [profileAllergies]);
+
+
+    const fetchData = async () => {
+        try {
+            // Fetch all the necessary data here
+            // For example:
+            await getProfileAllergies();
+            await getPopular();
+            await getBreakfast();
+            await getLunch();
+            await getDinner();
+            await getDessert();
+            await getChicken();
+            await getSalad();
+            await getAmerican();
+            await getMexican();
+            await getItalian();
+            await getChinese();
+            await getSurprise();
+            // ... other fetch calls
+        } catch (error) {
+            console.error(error);
+        } finally {
+            // Set loading state to false and hide the loading modal once all data is fetched
+            setLoading(false);
+            setLoadingModalVisible(false);
+        }
+    };
+
 
     const getProfileAllergies = async () => {
         try {
@@ -86,11 +101,9 @@ export default function Home({ navigation, route }) {
             });
             const data = await response.json();
             const allergies = data[0].allergies;
-            console.log(allergies)
             setProfileAllergies(allergies);
         } catch (error) {
             console.error(error);
-             // Hide the loading modal in case of an error
         }
     };
 
