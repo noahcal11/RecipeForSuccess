@@ -137,6 +137,9 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
     }
     const imageBuffer = Buffer.from(req.body.image, 'base64');
     const localFilePath = path.join(__dirname, `uploads/${image_UUID}.jpeg`);
+
+    // Ensure the uploads directory exists before writing the file
+    fs.mkdirSync(path.dirname(localFilePath), { recursive: true });
     fs.writeFileSync(localFilePath, imageBuffer);
 
     // Sending the upload request
@@ -165,9 +168,9 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
                         yields: req.body.yields,
                         steps: req.body.steps,
                         ingredients: req.body.ingredients,
+                        image: publicUrl,
                         cuisine: req.body.cuisine,
                         category: req.body.category,
-                        link: publicUrl,
                         keywords: keywords,
                         allergies: req.body.allergies,
                     })
@@ -185,7 +188,7 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
             })
         }
     })
-}).catch(err => console.error(err));
+});
 
 app.delete('/'+process.env.API_TOKEN+'/recipe/delete/:id', async (req, res) => {
   const recipe = await Recipe.findByIdAndDelete(req.params.id);
