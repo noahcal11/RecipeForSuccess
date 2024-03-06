@@ -34,6 +34,19 @@ export default function Home({ navigation, route }) {
 
         if (email === 'Guest') {
             // If the email is 'Guest', do not fetch allergies
+            setProfileAllergies([]);
+            getPopular();
+            getBreakfast();
+            getLunch();
+            getDinner();
+            getDessert();
+            getChicken();
+            getSalad();
+            getAmerican();
+            getMexican();
+            getItalian();
+            getChinese();
+            getSurprise();
             return;
         }
 
@@ -266,21 +279,6 @@ export default function Home({ navigation, route }) {
             return title.substring(0, 25) + "...";
         } else return title;
     }
-
-    useState(() => {
-        getPopular();
-        getDessert();
-        getBreakfast();
-        getChicken();
-        getDinner();
-        getLunch();
-        getSalad();
-        getAmerican();
-        getMexican();
-        getItalian();
-        getChinese();
-        getSurprise();
-    }, []);
 
     const WIDGETS = [
         { title: 'Popular Recipes', data: popularRecs },
