@@ -73,8 +73,13 @@ const RecipeAllergiesModal = ({ recipeAllergies }) => {
                     <>
                       
                       <Text style={global.subheaderText}>
-                        This recipe contains the following allergies: {matchingRecipeAllergies.slice(0, -1).join(', ') + (matchingRecipeAllergies.length > 1 ? ',' : '')} & {matchingRecipeAllergies[matchingRecipeAllergies.length - 1]}.
+                        This recipe contains{matchingRecipeAllergies.length > 1 ? ' the following allergies: ' : ' the following allergy: '} 
+                        {matchingRecipeAllergies.length > 1 ? 
+                          matchingRecipeAllergies.slice(0, -1).join(', ') + ', & ' : ''}
+                        {matchingRecipeAllergies[matchingRecipeAllergies.length - 1]}.
                       </Text>
+
+
 
                     </>
                   ) : (
