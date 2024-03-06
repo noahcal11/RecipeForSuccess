@@ -30,6 +30,7 @@ export default function RecipePages({ navigation, route }) {
   // Until rating is added to the database, this test variable is used
   const [dummyRating, setDummyRating] = useState(3.5);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [recipeAllergies, setRecipeAllergies] = useState([]);
   const {profileAllergies, setProfileAllergies, recipePageState, setRecipePageState, username,setUsername, email,setEmail, favorited,setFavorited,isRecipeAllergiesModalVisible, setRecipeAllergiesModalVisible } = useContext(Context);
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
@@ -48,6 +49,19 @@ export default function RecipePages({ navigation, route }) {
         setRecipe(data)
       })
       .catch(error => console.error(error));
+  }
+
+  const getRecipeAllergies = async () => {
+    const response = await fetch(API_BASE+"/recipe/get/", {
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+          },
+          method: "POST",
+          body: JSON.stringify({id: route.params._id})
+  })
+    const data = await response.json();
+    setRecipeAllergies(data.allergies);
   }
 
   // Set isFavorite based on whether or not the current recipe is in the user's list of favorites
@@ -77,6 +91,7 @@ export default function RecipePages({ navigation, route }) {
 
 
   useEffect(() => {
+    getRecipeAllergies();
     setRecipeAllergiesModalVisible(true);
    }, [recipe,route]);
 
@@ -134,6 +149,8 @@ export default function RecipePages({ navigation, route }) {
     getFavorite();
   }, []);
 
+  
+
   switch(recipePageState) {
     case 'details':
       return (
@@ -146,7 +163,7 @@ export default function RecipePages({ navigation, route }) {
                   <RecipeAllergiesModal
                     visible={isRecipeAllergiesModalVisible}
                     setVisible={setRecipeAllergiesModalVisible}
-                    recipeAllergies={recipe.allergies} // Pass the allergies directly from the recipe state
+                    recipeAllergies={recipeAllergies} // Pass the allergies directly from the recipe state
                     profileAllergies={profileAllergies}
                   />
               ) : null

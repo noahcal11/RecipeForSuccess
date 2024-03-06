@@ -9,48 +9,42 @@ import { useNavigation } from '@react-navigation/native';
 EStyleSheet.build();
 
 const RecipeAllergiesModal = ({ recipeAllergies }) => {
-  const [def, setDef] = useState("");
+  console.log("recipe allergies " + recipeAllergies)
   const { isRecipeAllergiesModalVisible, setRecipeAllergiesModalVisible, profileAllergies, setProfileAllergies, email } = useContext(Context);
   const navigation = useNavigation();
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/" + process.env.REACT_APP_API_TOKEN;
 
-  const allergenMapping = [
-    'Dairy', 'Eggs', 'Fish', 'Shellfish',
-    'Tree Nuts', 'Peanuts', 'Wheat', 'Soybeans',
-    'Chicken', 'Pork', 'Red Meat', 'Gluten',
-  ];
 
   useEffect(() => {
-    const getProfileAllergies = async () => {
-      try {
-        const response = await fetch(`${API_BASE}/user/get/${email}`, {
+    getProfileAllergies();
+}, []);
+
+const getProfileAllergies = async () => {
+  try {
+      const response = await fetch(`${API_BASE}/user/get/${email}`, {
           headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
           },
           method: "GET"
-        });
-        const data = await response.json();
-        const allergies = data[0].allergies;
-        setProfileAllergies(allergies);
-      } catch (error) {
-        console.error(error);
+      });
+      const data = await response.json();
+      const allergies = data[0].allergies;
+      setProfileAllergies(allergies);
+      console.log("profile allergies " + profileAllergies);
+
+      // Only show the modal if there are matching allergies
+      if (matchingAllergens.length > 0) {
+          setRecipeAllergiesModalVisible(true);
       }
-    };
-    getProfileAllergies();
-  }, []);
-
-  
-
-  const matchingAllergens = allergenMapping.filter((_, index) => profileAllergies && profileAllergies[index]);
-
-  // Filter the recipeAllergies array against matchingAllergens
-  const matchingRecipeAllergies = recipeAllergies ? recipeAllergies.filter(allergy => matchingAllergens.includes(allergy)) : [];
-
-  if (matchingRecipeAllergies.length === 0) {
-    setRecipeAllergiesModalVisible(false);
+  } catch (error) {
+      console.error(error);
   }
- 
+};
+
+
+const matchingAllergens = recipeAllergies.filter(recipeAllergies => profileAllergies.includes(recipeAllergies));
+console.log("matching allergies " + matchingAllergens);
 
   return (
     <GestureHandlerRootView>
@@ -69,17 +63,15 @@ const RecipeAllergiesModal = ({ recipeAllergies }) => {
                       </Text>
               <ScrollView>
                 <View style={styles.instructionsContainer}>
-                  {matchingRecipeAllergies.length > 0 ? (
+                  {matchingAllergens.length > 0 ? (
                     <>
                       
                       <Text style={global.subheaderText}>
-                        This recipe contains{matchingRecipeAllergies.length > 1 ? ' the following allergies: ' : ' the following allergy: '} 
-                        {matchingRecipeAllergies.length > 1 ? 
-                          matchingRecipeAllergies.slice(0, -1).join(', ') + ', & ' : ''}
-                        {matchingRecipeAllergies[matchingRecipeAllergies.length - 1]}.
+                        This recipe contains{matchingAllergens.length > 1 ? ' the following allergies: ' : ' the following allergy: '} 
+                        {matchingAllergens.length > 1 ? 
+                          matchingAllergens.slice(0, -1).join(', ') + ', & ' : ''}
+                        {matchingAllergens[matchingAllergens.length - 1]}.
                       </Text>
-
-
 
                     </>
                   ) : (
