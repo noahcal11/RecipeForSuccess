@@ -47,12 +47,9 @@ export default function Home({ navigation, route }) {
                     method: "GET"
                 });
                 const data = await response.json();
-                console.log(data)
                 const allergies = data[0].allergies;
-                console.log(allergies)
                 setProfileAllergies(allergies);
                 // setLoading(false); // Set loading to false after fetching and setting allergies
-                // setLoadingModalVisible(false)
             } catch (error) {
                 console.error(error);
             }
@@ -60,11 +57,9 @@ export default function Home({ navigation, route }) {
         getProfileAllergies();
     }, [email, setProfileAllergies]);
 
-    const allergenMapping = [
-        'Dairy', 'Eggs', 'Fish', 'Shellfish',
-        'Tree Nuts', 'Peanuts', 'Wheat', 'Soybeans',
-        'Chicken', 'Pork', 'Red Meat', 'Gluten',
-    ];
+    useEffect(() => {
+        //console.log(profileAllergies);
+    }, [profileAllergies]);
 
     // https://stackoverflow.com/questions/19269545/how-to-get-a-number-of-random-elements-from-an-array
     function getRandom(arr, n) {
