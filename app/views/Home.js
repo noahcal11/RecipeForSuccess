@@ -50,47 +50,49 @@ export default function Home({ navigation, route }) {
             return;
         }
 
-        const getProfileAllergies = async () => {
+        if (email !== 'Guest'){
             setLoading(true);
-            setLoadingModalVisible(true)
-            console.log(loading);
-            try {
-                const response = await fetch(`${API_BASE}/user/get/${email}`, {
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    method: "GET"
-                });
-                const data = await response.json();
-                const allergies = data[0].allergies;
-                setProfileAllergies(allergies);
-                setLoading(false); // Set loading to false after fetching and setting allergies
-                setLoadingModalVisible(false);
-            } catch (error) {
-                console.error(error);
-                setLoading(false);
-                setLoadingModalVisible(false); // Hide the loading modal in case of an error
-            }
-        };
-        getProfileAllergies();
-        getPopular();
-        getBreakfast();
-        getLunch();
-        getDinner();
-        getDessert();
-        getChicken();
-        getSalad();
-        getAmerican();
-        getMexican();
-        getItalian();
-        getChinese();
-        getSurprise();
+            setLoadingModalVisible(true);
+            getProfileAllergies();
+            getPopular();
+            getBreakfast();
+            getLunch();
+            getDinner();
+            getDessert();
+            getChicken();
+            getSalad();
+            getAmerican();
+            getMexican();
+            getItalian();
+            getChinese();
+            getSurprise();
+            setLoading(false);
+            setLoadingModalVisible(false);
+        }
     }, [email, setProfileAllergies]);
 
     useEffect(() => {
         
     }, [profileAllergies]);
+
+    const getProfileAllergies = async () => {
+        try {
+            const response = await fetch(`${API_BASE}/user/get/${email}`, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "GET"
+            });
+            const data = await response.json();
+            const allergies = data[0].allergies;
+            console.log(allergies)
+            setProfileAllergies(allergies);
+        } catch (error) {
+            console.error(error);
+             // Hide the loading modal in case of an error
+        }
+    };
 
 
     // https://stackoverflow.com/questions/19269545/how-to-get-a-number-of-random-elements-from-an-array
@@ -118,8 +120,11 @@ export default function Home({ navigation, route }) {
             body: JSON.stringify({ cuisine: "American", allergies: profileAllergies })
         })
             .then(res => res.json())
-            .then(data => setPopularRecs(getRandom(data, 8)))
-            .catch(error => console.error(error));
+            .then(data => {
+                //console.log(data); // Log the data here
+                setPopularRecs(getRandom(data, 8));
+            })
+                    .catch(error => console.error(error));
     }
 
     const getDessert = async () => {
@@ -185,7 +190,7 @@ export default function Home({ navigation, route }) {
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({ category: "Dinner" })
+            body: JSON.stringify({ category: "Lunch", allergies: profileAllergies })
         })
             .then(res => res.json())
             .then(data => setDinnerRecs(getRandom(data, 4)))
@@ -283,7 +288,7 @@ export default function Home({ navigation, route }) {
         } else return title;
     }
 
-    if (loading && email !== 'Guest') {
+    if (loading) {
         return (
           <View style={global.whiteBackground}>
             <View style={global.grayForeground}>
