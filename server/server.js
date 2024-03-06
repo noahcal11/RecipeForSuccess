@@ -68,9 +68,9 @@ app.post('/'+process.env.API_TOKEN+'/recipe/get-by-allergies', async (req, res) 
     const category = req.body.category;
     const title = req.body.title;
 
-    if (!Array.isArray(userAllergies) || userAllergies.length === 0) {
-        return res.status(400).json({ error: 'Allergies array is required and must not be empty.' });
-    }
+    // if (!Array.isArray(userAllergies) || userAllergies.length === 0) {
+    //     return res.status(400).json({ error: 'Allergies array is required and must not be empty.' });
+    // }
 
     // Initialize the query object
     const query = {
