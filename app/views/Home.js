@@ -3,7 +3,7 @@ import { Text, Image, View, ScrollView, TextInput, FlatList, Pressable, Dimensio
 import Banner from '../Components/Banner';
 import Footer from '../Components/Footer';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Context } from '../Context';
 import global from '../Genstyle';
 import FilterIcon from '../assets/svg/filter';
@@ -24,9 +24,42 @@ export default function Home({ navigation, route }) {
     const [italianRecs, setItalianRecs] = useState([]);
     const [chineseRecs, setChineseRecs] = useState([]);
     const [surpriseRecs, setSurpriseRecs] = useState([]);
-    const { username, setUsername, email, setEmail, isHomeFiltersModalVisible, setHomeFiltersModalVisible, visibleWidgets, setVisibleWidgets, searchFilter, setSearchFilter } = useContext(Context)
+    const { username, setUsername, email, setEmail, isHomeFiltersModalVisible, setHomeFiltersModalVisible, visibleWidgets, setVisibleWidgets, searchFilter, setSearchFilter, profileAllergies, setProfileAllergies } = useContext(Context)
 
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/" + process.env.REACT_APP_API_TOKEN
+
+    useEffect(() => {
+
+        if (email === 'Guest') {
+            // If the email is 'Guest', do not fetch allergies
+            return;
+        }
+
+        const getProfileAllergies = async () => {
+            // setLoadingModalVisible(true)
+            // setLoading(true);
+            try {
+                const response = await fetch(`${API_BASE}/user/get/${email}`, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    method: "GET"
+                });
+                const data = await response.json();
+                const allergies = data[0].allergies;
+                setProfileAllergies(allergies);
+                // setLoading(false); // Set loading to false after fetching and setting allergies
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        getProfileAllergies();
+    }, [email, setProfileAllergies]);
+
+    useEffect(() => {
+        //console.log(profileAllergies);
+    }, [profileAllergies]);
 
     // https://stackoverflow.com/questions/19269545/how-to-get-a-number-of-random-elements-from-an-array
     function getRandom(arr, n) {
