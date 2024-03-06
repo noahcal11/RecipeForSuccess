@@ -88,7 +88,7 @@ const styles = EStyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     width: '22.5rem',
-    height: '35rem',
+    height: '20rem',
   },
   instructionsContainer: {
     //height: '2.1rem', // Set the desired height for the instructions container
