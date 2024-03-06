@@ -8,6 +8,7 @@ import { Context } from '../Context';
 import global from '../Genstyle';
 import FilterIcon from '../assets/svg/filter';
 import HomeFiltersModal from '../Components/HomeFiltersModal';
+import LoadingModal from '../Components/LoadingModal';
 
 EStyleSheet.build();
 
@@ -24,7 +25,8 @@ export default function Home({ navigation, route }) {
     const [italianRecs, setItalianRecs] = useState([]);
     const [chineseRecs, setChineseRecs] = useState([]);
     const [surpriseRecs, setSurpriseRecs] = useState([]);
-    const { username, setUsername, email, setEmail, isHomeFiltersModalVisible, setHomeFiltersModalVisible, visibleWidgets, setVisibleWidgets, searchFilter, setSearchFilter, profileAllergies, setProfileAllergies } = useContext(Context)
+    const [loading, setLoading] = useState(false); // Add a loading state
+    const { username, setUsername, email, setEmail, isHomeFiltersModalVisible, setHomeFiltersModalVisible, visibleWidgets, setVisibleWidgets, searchFilter, setSearchFilter, profileAllergies, setProfileAllergies, isLoadingModalVisible, setLoadingModalVisible } = useContext(Context)
 
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/" + process.env.REACT_APP_API_TOKEN
 
@@ -32,12 +34,25 @@ export default function Home({ navigation, route }) {
 
         if (email === 'Guest') {
             // If the email is 'Guest', do not fetch allergies
+            setProfileAllergies([]);
+            getPopular();
+            getBreakfast();
+            getLunch();
+            getDinner();
+            getDessert();
+            getChicken();
+            getSalad();
+            getAmerican();
+            getMexican();
+            getItalian();
+            getChinese();
+            getSurprise();
             return;
         }
 
         const getProfileAllergies = async () => {
-            // setLoadingModalVisible(true)
-            // setLoading(true);
+            setLoadingModalVisible(true)
+            setLoading(true);
             try {
                 const response = await fetch(`${API_BASE}/user/get/${email}`, {
                     headers: {
@@ -49,17 +64,31 @@ export default function Home({ navigation, route }) {
                 const data = await response.json();
                 const allergies = data[0].allergies;
                 setProfileAllergies(allergies);
-                // setLoading(false); // Set loading to false after fetching and setting allergies
+                setLoadingModalVisible(false);
+                setLoading(false); // Set loading to false after fetching and setting allergies
             } catch (error) {
                 console.error(error);
             }
         };
         getProfileAllergies();
+        getPopular();
+        getBreakfast();
+        getLunch();
+        getDinner();
+        getDessert();
+        getChicken();
+        getSalad();
+        getAmerican();
+        getMexican();
+        getItalian();
+        getChinese();
+        getSurprise();
     }, [email, setProfileAllergies]);
 
     useEffect(() => {
-        //console.log(profileAllergies);
+        
     }, [profileAllergies]);
+
 
     // https://stackoverflow.com/questions/19269545/how-to-get-a-number-of-random-elements-from-an-array
     function getRandom(arr, n) {
@@ -77,13 +106,13 @@ export default function Home({ navigation, route }) {
     }
 
     const getPopular = async () => {
-        const response = await fetch(API_BASE + "/recipe/get/", {
+        const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({ cuisine: "American" })
+            body: JSON.stringify({ cuisine: "American", allergies: profileAllergies })
         })
             .then(res => res.json())
             .then(data => setPopularRecs(getRandom(data, 8)))
@@ -91,13 +120,13 @@ export default function Home({ navigation, route }) {
     }
 
     const getDessert = async () => {
-        const response = await fetch(API_BASE + "/recipe/get/", {
+        const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({ category: "Dessert" })
+            body: JSON.stringify({ category: "Dessert", allergies: profileAllergies })
         })
             .then(res => res.json())
             .then(data => setDessertRecs(getRandom(data, 4)))
@@ -105,13 +134,13 @@ export default function Home({ navigation, route }) {
     }
 
     const getBreakfast = async () => {
-        const response = await fetch(API_BASE + "/recipe/get/", {
+        const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({ category: "Breakfast" })
+            body: JSON.stringify({ category: "Breakfast", allergies: profileAllergies })
         })
             .then(res => res.json())
             .then(data => setBreakfastRecs(getRandom(data, 4)))
@@ -119,13 +148,13 @@ export default function Home({ navigation, route }) {
     }
 
     const getChicken = async () => {
-        const response = await fetch(API_BASE + "/recipe/get/", {
+        const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({ title: "Chicken" })
+            body: JSON.stringify({ title: "Chicken", allergies: profileAllergies })
         })
             .then(res => res.json())
             .then(data => setChickenRecs(getRandom(data, 8)))
@@ -133,13 +162,13 @@ export default function Home({ navigation, route }) {
     }
 
     const getLunch = async () => {
-        const response = await fetch(API_BASE + "/recipe/get/", {
+        const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({ category: "Lunch" })
+            body: JSON.stringify({ category: "Lunch", allergies: profileAllergies })
         })
             .then(res => res.json())
             .then(data => setLunchRecs(getRandom(data, 4)))
@@ -147,7 +176,7 @@ export default function Home({ navigation, route }) {
     }
 
     const getDinner = async () => {
-        const response = await fetch(API_BASE + "/recipe/get/", {
+        const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -161,13 +190,13 @@ export default function Home({ navigation, route }) {
     }
 
     const getSalad = async () => {
-        const response = await fetch(API_BASE + "/recipe/get/", {
+        const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({ title: "Salad" })
+            body: JSON.stringify({ title: "Salad", allergies: profileAllergies })
         })
             .then(res => res.json())
             .then(data => setSaladRecs(getRandom(data, 4)))
@@ -175,13 +204,13 @@ export default function Home({ navigation, route }) {
     }
 
     const getAmerican = async () => {
-        const response = await fetch(API_BASE + "/recipe/get/", {
+        const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({ cuisine: "American" })
+            body: JSON.stringify({ cuisine: "American", allergies: profileAllergies })
         })
             .then(res => res.json())
             .then(data => setAmericanRecs(getRandom(data, 4)))
@@ -189,13 +218,13 @@ export default function Home({ navigation, route }) {
     }
 
     const getMexican = async () => {
-        const response = await fetch(API_BASE + "/recipe/get/", {
+        const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({ cuisine: "Mexican" })
+            body: JSON.stringify({ cuisine: "Mexican", allergies: profileAllergies })
         })
             .then(res => res.json())
             .then(data => setMexicanRecs(getRandom(data, 4)))
@@ -203,13 +232,13 @@ export default function Home({ navigation, route }) {
     }
 
     const getItalian = async () => {
-        const response = await fetch(API_BASE + "/recipe/get/", {
+        const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({ cuisine: "Italian" })
+            body: JSON.stringify({ cuisine: "Italian", allergies: profileAllergies })
         })
             .then(res => res.json())
             .then(data => setItalianRecs(getRandom(data, 4)))
@@ -217,13 +246,13 @@ export default function Home({ navigation, route }) {
     }
 
     const getChinese = async () => {
-        const response = await fetch(API_BASE + "/recipe/get/", {
+        const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({ cuisine: "Chinese" })
+            body: JSON.stringify({ cuisine: "Chinese", allergies: profileAllergies })
         })
             .then(res => res.json())
             .then(data => setChineseRecs(getRandom(data, 4)))
@@ -231,13 +260,13 @@ export default function Home({ navigation, route }) {
     }
 
     const getSurprise = async () => {
-        const response = await fetch(API_BASE + "/recipe/get/", {
+        const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({})
+            body: JSON.stringify({ allergies: profileAllergies })
         })
             .then(res => res.json())
             .then(data => setSurpriseRecs(getRandom(data, 4)))
@@ -250,21 +279,6 @@ export default function Home({ navigation, route }) {
             return title.substring(0, 25) + "...";
         } else return title;
     }
-
-    useState(() => {
-        getPopular();
-        getDessert();
-        getBreakfast();
-        getChicken();
-        getDinner();
-        getLunch();
-        getSalad();
-        getAmerican();
-        getMexican();
-        getItalian();
-        getChinese();
-        getSurprise();
-    }, []);
 
     const WIDGETS = [
         { title: 'Popular Recipes', data: popularRecs },
@@ -280,6 +294,16 @@ export default function Home({ navigation, route }) {
         { title: 'Chinese', data: chineseRecs },
         { title: 'Surprise Me!', data: surpriseRecs },
     ]
+
+    if (loading && email !== 'Guest') {
+        return (
+          <View style={global.whiteBackground}>
+            <View style={global.grayForeground}>
+              <LoadingModal></LoadingModal>
+            </View>
+          </View>
+        );
+     }
 
     return (
         <View style={global.whiteBackground}>
