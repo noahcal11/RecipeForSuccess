@@ -69,27 +69,27 @@ const SearchFilterModal = ({ blurb }) => {
         setSearchResults(searchResults.map((recipe, index) => {
             // we first check if recipe has already been hidden by filterCookTime
             if (recipe.visibility) {
-                if (recipe.cuisine='African') return {
+                if (recipe.cuisine==='African') return {
                     ...recipe,
                     ...recipe.visibility = searchFilter[4]
                 };
-                else if (recipe.cuisine='American') return {
+                else if (recipe.cuisine==='American') return {
                     ...recipe,
                     ...recipe.visibility = searchFilter[5]
                 };
-                else if (recipe.cuisine='Asian') return {
+                else if (recipe.cuisine==='Asian') return {
                     ...recipe,
                     ...recipe.visibility = searchFilter[6]
                 };
-                else if (recipe.cuisine='Italian') return {
+                else if (recipe.cuisine==='Italian') return {
                     ...recipe,
                     ...recipe.visibility = searchFilter[7]
                 };
-                else if (recipe.cuisine='Mexican') return {
+                else if (recipe.cuisine==='Mexican') return {
                     ...recipe,
                     ...recipe.visibility = searchFilter[8]
                 };
-                else if (recipe.cuisine='Spanish') return {
+                else if (recipe.cuisine==='Spanish') return {
                     ...recipe,
                     ...recipe.visibility = searchFilter[9]
                 };
