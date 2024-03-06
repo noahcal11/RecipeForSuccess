@@ -51,6 +51,7 @@ export default function Home({ navigation, route }) {
                 const data = await response.json();
                 const allergies = data[0].allergies;
                 setProfileAllergies(allergies);
+                setLoadingModalVisible(true);
                 setLoading(false); // Set loading to false after fetching and setting allergies
             } catch (error) {
                 console.error(error);
@@ -64,15 +65,6 @@ export default function Home({ navigation, route }) {
         //console.log(profileAllergies);
     }, [profileAllergies]);
 
-    if (loading && email !== 'Guest') {
-        return (
-          <View style={global.whiteBackground}>
-            <View style={global.grayForeground}>
-              <LoadingModal></LoadingModal>
-            </View>
-          </View>
-        );
-     }
 
     // https://stackoverflow.com/questions/19269545/how-to-get-a-number-of-random-elements-from-an-array
     function getRandom(arr, n) {
@@ -293,6 +285,16 @@ export default function Home({ navigation, route }) {
         { title: 'Chinese', data: chineseRecs },
         { title: 'Surprise Me!', data: surpriseRecs },
     ]
+
+    if (loading && email !== 'Guest') {
+        return (
+          <View style={global.whiteBackground}>
+            <View style={global.grayForeground}>
+              <LoadingModal></LoadingModal>
+            </View>
+          </View>
+        );
+     }
 
     return (
         <View style={global.whiteBackground}>
