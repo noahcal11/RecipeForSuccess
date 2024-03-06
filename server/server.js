@@ -132,6 +132,9 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
 
     // Assuming the image is sent as a base64 encoded string in the request body
     // You need to convert it to a Buffer before saving it locally
+    if (!req.body.image) {
+        return res.status(400).json({ error: 'Image is required.' });
+    }
     const imageBuffer = Buffer.from(req.body.image, 'base64');
     const localFilePath = path.join(__dirname, `uploads/${image_UUID}.jpeg`);
     fs.writeFileSync(localFilePath, imageBuffer);
@@ -162,10 +165,9 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
                         yields: req.body.yields,
                         steps: req.body.steps,
                         ingredients: req.body.ingredients,
-                        image: publicUrl,
                         cuisine: req.body.cuisine,
                         category: req.body.category,
-                        link: req.body.link,
+                        link: publicUrl,
                         keywords: keywords,
                         allergies: req.body.allergies,
                     })
@@ -183,7 +185,7 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
             })
         }
     })
-});
+}).catch(err => console.error(err));
 
 app.delete('/'+process.env.API_TOKEN+'/recipe/delete/:id', async (req, res) => {
   const recipe = await Recipe.findByIdAndDelete(req.params.id);
