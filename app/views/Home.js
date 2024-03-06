@@ -51,8 +51,9 @@ export default function Home({ navigation, route }) {
         }
 
         const getProfileAllergies = async () => {
-            setLoadingModalVisible(true)
             setLoading(true);
+            setLoadingModalVisible(true)
+            console.log(loading);
             try {
                 const response = await fetch(`${API_BASE}/user/get/${email}`, {
                     headers: {
@@ -64,10 +65,12 @@ export default function Home({ navigation, route }) {
                 const data = await response.json();
                 const allergies = data[0].allergies;
                 setProfileAllergies(allergies);
-                setLoadingModalVisible(false);
                 setLoading(false); // Set loading to false after fetching and setting allergies
+                setLoadingModalVisible(false);
             } catch (error) {
                 console.error(error);
+                setLoading(false);
+                setLoadingModalVisible(false); // Hide the loading modal in case of an error
             }
         };
         getProfileAllergies();
@@ -280,6 +283,16 @@ export default function Home({ navigation, route }) {
         } else return title;
     }
 
+    if (loading && email !== 'Guest') {
+        return (
+          <View style={global.whiteBackground}>
+            <View style={global.grayForeground}>
+              <LoadingModal></LoadingModal>
+            </View>
+          </View>
+        );
+     }
+
     const WIDGETS = [
         { title: 'Popular Recipes', data: popularRecs },
         { title: 'Breakfast Creations', data: breakfastRecs },
@@ -294,16 +307,6 @@ export default function Home({ navigation, route }) {
         { title: 'Chinese', data: chineseRecs },
         { title: 'Surprise Me!', data: surpriseRecs },
     ]
-
-    if (loading && email !== 'Guest') {
-        return (
-          <View style={global.whiteBackground}>
-            <View style={global.grayForeground}>
-              <LoadingModal></LoadingModal>
-            </View>
-          </View>
-        );
-     }
 
     return (
         <View style={global.whiteBackground}>
