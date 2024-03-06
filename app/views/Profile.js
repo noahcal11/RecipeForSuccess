@@ -88,7 +88,7 @@ export default function Profile() {
 
   const renderHeader = (section) => {
     return (
-      <View style={global.horizontal}>
+      <View style={{...global.horizontal, marginBottom: '5%'}}>
         <Text style={global.bodyText}>{section.title}</Text>
         <DownArrowIcon style={styles.arrowIcon}></DownArrowIcon>
       </View>
@@ -187,7 +187,7 @@ export default function Profile() {
                     onPress={() => {
                       updateProfileAllergies();
                     }}>
-                        <Text style={styles.guestText}>Save</Text>
+                        <Text style={global.buttonText}>Save</Text>
           </Pressable>
       </View>
     );
@@ -221,21 +221,21 @@ export default function Profile() {
                     onPress={() => {
                       navigation.navigate('Created');
                     }}>
-                        <Text style={styles.guestText}>Created</Text>
+                        <Text style={global.buttonMinorText}>Created</Text>
           </Pressable>
           <Pressable
                     style={global.buttonMinor}
                     onPress={() => {
                       navigation.navigate('Completed');
                     }}>
-                        <Text style={styles.guestText}>Completed</Text>
+                        <Text style={global.buttonMinorText}>Completed</Text>
           </Pressable>
           <Pressable
                     style={global.button}
                     onPress={() => {
                       navigation.navigate('Upload');
                     }}>
-                        <Text style={styles.guestText}>Upload</Text>
+                        <Text style={global.buttonText}>Upload</Text>
           </Pressable>
 
         </View>
@@ -254,7 +254,7 @@ export default function Profile() {
                 handleUpdateAccount();
                 setMessageModalVisible(true);
               }} >
-              <Text style={styles.guestText}>Update Account</Text>
+              <Text style={global.buttonMinorText}>Update Account</Text>
             </Pressable>
           )}
 
@@ -271,7 +271,7 @@ export default function Profile() {
                     onPress={() => {
                       handleDeleteAccount()
                     }}>
-                        <Text style={styles.guestText}>Delete Account </Text>
+                        <Text style={global.buttonMinorText}>Delete Account </Text>
           </Pressable>
 
           <Pressable
@@ -281,7 +281,7 @@ export default function Profile() {
                       setEmail('');
                       setUsername('');
                     }}>
-                        <Text style={styles.guestText}>Logout</Text>
+                        <Text style={global.buttonMinorText}>Logout</Text>
           </Pressable>
           
           <ChangePasswordModal blurb="Change Password"/>
