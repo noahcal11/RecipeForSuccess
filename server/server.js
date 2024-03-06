@@ -130,11 +130,14 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
     const bucketName = 'recipe-for-success-images';
     const bucket = storage.bucket(bucketName);
 
+    // Assuming the image is sent as a base64 encoded string in the request body
+    // You need to convert it to a Buffer before saving it locally
+    const imageBuffer = Buffer.from(req.body.image, 'base64');
     const localFilePath = path.join(__dirname, `uploads/${image_UUID}.jpeg`);
-    fs.writeFileSync(localFilePath, req.body.image, 'binary');
+    fs.writeFileSync(localFilePath, imageBuffer);
 
     // Sending the upload request
-    bucket.upload(
+    await bucket.upload(
         localFilePath,
         function (err, file) {
             if (err) {
@@ -152,7 +155,7 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
                 console.log(`Public URL for ${file.name}: ${publicUrl}`)
 
                     // Save the recipe with the image URL
-                    const recipe = new Recipe({
+                    const recipe = await new Recipe({
                         title: req.body.title,
                         desc: req.body.desc,
                         total_time: req.body.total_time,

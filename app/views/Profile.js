@@ -50,7 +50,7 @@ export default function Profile() {
   const navigation = useNavigation();
   const [isProfileModified, setIsProfileModified] = useState(false);
   const [isMessageModalVisible, setMessageModalVisible] = useState(false);
-  const [loading, setLoading] = useState(true); // Add a loading state
+  const [loading, setLoading] = useState(false); // Add a loading state
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
@@ -96,41 +96,41 @@ export default function Profile() {
   };
 
 
-  // useEffect(() => {
+  useEffect(() => {
+    if (email === 'Guest') {
+      // If the email is 'Guest', do not fetch allergies
+      return;
+   }
 
-  //   if (email === 'Guest') {
-  //     // If the email is 'Guest', do not fetch allergies
-  //     return;
-  //  }
+   const getProfileAllergies = async () => {
+    setLoading(true);
+    setLoadingModalVisible(true);
+  try {
+     const response = await fetch(`${API_BASE}/user/get/${email}`, {
+       headers: {
+         'Accept': 'application/json',
+         'Content-Type': 'application/json'
+       },
+       method: "GET"
+     });
+     const data = await response.json();
+     const allergies = data[0].allergies;
+     // Convert the strings to booleans based on the allergenMapping
+     const booleanAllergies = allergenMapping.map(allergen => allergies.includes(allergen));
+     setProfileAllergies(booleanAllergies);
+     setLoading(false); // Set loading to false after fetching and setting allergies
+     setLoadingModalVisible(false); // Hide the loading modal
+  } catch (error) {
+     console.error(error);
+     setLoading(false);
+     setLoadingModalVisible(false); // Hide the loading modal in case of an error
+  }
+  };
+    getProfileAllergies();
+  }, [email, setProfileAllergies]);
 
-  //   const getProfileAllergies = async () => {
-  //     setLoadingModalVisible(true)
-  //     setLoading(true);
-  //     try {
-  //       const response = await fetch(`${API_BASE}/user/get/${email}`, {
-  //         headers: {
-  //           'Accept': 'application/json',
-  //           'Content-Type': 'application/json'
-  //         },
-  //         method: "GET"
-  //       });
-  //       const data = await response.json();
-  //       console.log(data)
-  //       const allergies = data[0].allergies;
-  //       console.log(allergies)
-  //       setProfileAllergies(allergies);
-  //       setLoading(false); // Set loading to false after fetching and setting allergies
-  //       setLoadingModalVisible(false)
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-  //   getProfileAllergies();
-  // }, [email, setProfileAllergies]);
-
-  // useEffect(() => {
-    
-  //  }, [profileAllergies]);
+  useEffect(() => {
+   }, [profileAllergies]);
 
 
    const updateProfileAllergies = async () => {
@@ -138,7 +138,6 @@ export default function Profile() {
     const selectedAllergens = profileAllergies
       .map((isSelected, index) => isSelected ? allergenMapping[index] : null)
       .filter(Boolean); // Filter out null values
-      console.log("Selected Allergens:", selectedAllergens); // Log the selected allergen names
     // Make API call with selected allergens
     const data = await fetch(API_BASE + "/user/update-user-allergies", {
       headers: {
@@ -151,7 +150,15 @@ export default function Profile() {
     // Handle the response from the server
   };
   
-
+  if (loading && email !== 'Guest') {
+    return (
+      <View style={global.whiteBackground}>
+        <View style={global.grayForeground}>
+          <LoadingModal></LoadingModal>
+        </View>
+      </View>
+    );
+ }
    
 
   const renderContent = (section) => {
@@ -190,15 +197,6 @@ export default function Profile() {
     setActiveSections(activeSections);
   };
 
-//   if (loading && email !== 'Guest') {
-//     return (
-//       <View style={global.whiteBackground}>
-//         <View style={global.grayForeground}>
-//           <LoadingModal></LoadingModal>
-//         </View>
-//       </View>
-//     );
-//  }
 
   return (
     <View style={global.whiteBackground}>
