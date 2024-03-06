@@ -54,6 +54,7 @@ export default function Home({ navigation, route }) {
         }
 
         if (email !== 'Guest'){
+            getProfileAllergies();
             fetchData();
         }
     }, [email, setProfileAllergies]);
@@ -66,7 +67,7 @@ export default function Home({ navigation, route }) {
         try {
             // Fetch all the necessary data here
             // For example:
-            await getProfileAllergies();
+            //await getProfileAllergies();
             await getPopular();
             await getBreakfast();
             await getLunch();
