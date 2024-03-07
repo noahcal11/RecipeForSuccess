@@ -146,10 +146,6 @@ export default function Home({ navigation, route }) {
                 })
                 .catch(error => console.error(error));
         }
-        else {
-            // Optionally, you can handle the case where profileAllergies is empty
-            console.log("profileAllergies is empty. Skipping API call.");
-        }
     }
 
     const getDessert = async () => {
@@ -181,10 +177,6 @@ export default function Home({ navigation, route }) {
                     setDessertRecs(getRandom(data, 8));
                 })
                 .catch(error => console.error(error));
-        }
-        else {
-            // Optionally, you can handle the case where profileAllergies is empty
-            console.log("profileAllergies is empty. Skipping API call.");
         }
     }
 
@@ -220,10 +212,6 @@ export default function Home({ navigation, route }) {
                 })
                 .catch(error => console.error(error));
         }
-        else {
-            // Optionally, you can handle the case where profileAllergies is empty
-            console.log("profileAllergies is empty. Skipping API call.");
-        }
     }
 
     const getChicken = async () => {
@@ -257,10 +245,6 @@ export default function Home({ navigation, route }) {
                     setChickenRecs(getRandom(data, 8));
                 })
                 .catch(error => console.error(error));
-        }
-        else {
-            // Optionally, you can handle the case where profileAllergies is empty
-            console.log("profileAllergies is empty. Skipping API call.");
         }
     }
 
@@ -296,10 +280,6 @@ export default function Home({ navigation, route }) {
                 })
                 .catch(error => console.error(error));
         }
-        else {
-            // Optionally, you can handle the case where profileAllergies is empty
-            console.log("profileAllergies is empty. Skipping API call.");
-        }
     }
 
     const getDinner = async () => {
@@ -333,10 +313,6 @@ export default function Home({ navigation, route }) {
                     setDinnerRecs(getRandom(data, 8));
                 })
                 .catch(error => console.error(error));
-        }
-        else {
-            // Optionally, you can handle the case where profileAllergies is empty
-            console.log("profileAllergies is empty. Skipping API call.");
         }
     }
 
@@ -372,10 +348,6 @@ export default function Home({ navigation, route }) {
                 })
                 .catch(error => console.error(error));
         }
-        else {
-            // Optionally, you can handle the case where profileAllergies is empty
-            console.log("profileAllergies is empty. Skipping API call.");
-        }
     }
 
     const getAmerican = async () => {
@@ -409,10 +381,6 @@ export default function Home({ navigation, route }) {
                     setAmericanRecs(getRandom(data, 8));
                 })
                 .catch(error => console.error(error));
-        }
-        else {
-            // Optionally, you can handle the case where profileAllergies is empty
-            console.log("profileAllergies is empty. Skipping API call.");
         }
     }
 
@@ -448,10 +416,6 @@ export default function Home({ navigation, route }) {
                 })
                 .catch(error => console.error(error));
         }
-        else {
-            // Optionally, you can handle the case where profileAllergies is empty
-            console.log("profileAllergies is empty. Skipping API call.");
-        }
     }
 
     const getItalian = async () => {
@@ -485,10 +449,6 @@ export default function Home({ navigation, route }) {
                     setItalianRecs(getRandom(data, 8));
                 })
                 .catch(error => console.error(error));
-        }
-        else {
-            // Optionally, you can handle the case where profileAllergies is empty
-            console.log("profileAllergies is empty. Skipping API call.");
         }
     }
 
@@ -524,10 +484,6 @@ export default function Home({ navigation, route }) {
                 })
                 .catch(error => console.error(error));
         }
-        else {
-            // Optionally, you can handle the case where profileAllergies is empty
-            console.log("profileAllergies is empty. Skipping API call.");
-        }
     }
 
     const getSurprise = async () => {
@@ -561,10 +517,6 @@ export default function Home({ navigation, route }) {
                     setSurpriseRecs(getRandom(data, 8));
                 })
                 .catch(error => console.error(error));
-        }
-        else {
-            // Optionally, you can handle the case where profileAllergies is empty
-            console.log("profileAllergies is empty. Skipping API call.");
         }
     }
 

@@ -45,7 +45,7 @@ const allergenMapping = [
 
 export default function Profile() {
   const [activeSections, setActiveSections] = useState([]);
-  const {username,setUsername,email,setEmail,setChangePasswordModalVisible, profileAllergies, setProfileAllergies, isLoadingModalVisible, setLoadingModalVisible} = useContext(Context);
+  const {username,setUsername,email,setEmail,setChangePasswordModalVisible, profileAllergies, setProfileAllergies, booleanAllergies, setBooleanAllergies, isLoadingModalVisible, setLoadingModalVisible} = useContext(Context);
   const [newEmail, setNewEmail] = useState(email);
   const navigation = useNavigation();
   const [isProfileModified, setIsProfileModified] = useState(false);
@@ -142,8 +142,8 @@ export default function Profile() {
      const data = await response.json();
      const allergies = data[0].allergies;
      // Convert the strings to booleans based on the allergenMapping
-     const booleanAllergies = allergenMapping.map(allergen => allergies.includes(allergen));
-     setProfileAllergies(booleanAllergies);
+     const booleanLoadAllergies = allergenMapping.map(allergen => allergies.includes(allergen));
+     setBooleanAllergies(booleanLoadAllergies);
   } catch (error) {
      console.error(error);
   }
@@ -152,9 +152,11 @@ export default function Profile() {
 
    const updateProfileAllergies = async () => {
     // Map the profileAllergies array to include only allergen names from allergenMapping
-    const selectedAllergens = profileAllergies
+    const selectedAllergens = booleanAllergies
       .map((isSelected, index) => isSelected ? allergenMapping[index] : null)
       .filter(Boolean); // Filter out null values
+      selectedAllergens.push('Test');
+      console.log(selectedAllergens);
     // Make API call with selected allergens
     const data = await fetch(API_BASE + "/user/update-user-allergies", {
       headers: {
@@ -195,7 +197,7 @@ export default function Profile() {
         {section.content.map((item, index) => (
           <View style={global.horizontal} key={index}>
             <Text style={global.bodyText}>{item.title}</Text>
-            <SwitchComp name={item.title} index={index} state={profileAllergies[index]}> </SwitchComp>
+            <SwitchComp name={item.title} index={index} state={booleanAllergies[index]}> </SwitchComp>
 
           </View>
         ))}
