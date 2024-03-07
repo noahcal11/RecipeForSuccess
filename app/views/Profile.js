@@ -156,7 +156,6 @@ export default function Profile() {
       .map((isSelected, index) => isSelected ? allergenMapping[index] : null)
       .filter(Boolean); // Filter out null values
       selectedAllergens.push('Test');
-      console.log(selectedAllergens);
     // Make API call with selected allergens
     const data = await fetch(API_BASE + "/user/update-user-allergies", {
       headers: {
@@ -167,6 +166,7 @@ export default function Profile() {
       body: JSON.stringify({ email: email, allergies: selectedAllergens }),
     });
     // Handle the response from the server
+    setProfileAllergies(selectedAllergens);
   };
   
   if (loading && email !== 'Guest') {

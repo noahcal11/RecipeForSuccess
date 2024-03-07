@@ -49,11 +49,10 @@ export default function Home({ navigation, route }) {
         }
         
         if (email !== 'Guest') {
-            if (profileAllergies.length <= 0)
+            if (profileAllergies.length === 0)
             {
                 getProfileAllergies();
             }
-            console.log("profile allergies " + profileAllergies);
             fetchData();
         }
     }, [profileAllergies]);
