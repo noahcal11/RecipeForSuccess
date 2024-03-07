@@ -30,44 +30,53 @@ export default function Home({ navigation, route }) {
 
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/" + process.env.REACT_APP_API_TOKEN
 
+
     useEffect(() => {
-        setLoading(true);
-        setLoadingModalVisible(true);
         if (email === 'Guest') {
             // If the email is 'Guest', do not fetch allergies
             setProfileAllergies([]);
-            getPopular();
-            getBreakfast();
-            getLunch();
-            getDinner();
-            getDessert();
-            getChicken();
-            getSalad();
-            getAmerican();
-            getMexican();
-            getItalian();
-            getChinese();
-            getSurprise();
-            setLoading(false);
-            setLoadingModalVisible(false);
-            return;
         }
 
         if (email !== 'Guest'){
             getProfileAllergies();
-            fetchData();
+            console.log("profile allergies " + profileAllergies);
         }
-    }, [email, setProfileAllergies]);
+    }, []);
 
     useEffect(() => {
+        setLoading(true);
+        setLoadingModalVisible(true);
+        if (email === 'Guest') {
+            console.log("profile allergies " + profileAllergies);
+            fetchData();
+        }
+
+        
+        if (email !== 'Guest') {
+            console.log("profile allergies " + profileAllergies);
+            fetchData();
+        }
     }, [profileAllergies]);
 
-
-    const fetchData = async () => {
+    const getProfileAllergies = async () => {
         try {
-            // Fetch all the necessary data here
-            // For example:
-            //await getProfileAllergies();
+            const response = await fetch(`${API_BASE}/user/get/${email}`, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "GET"
+            });
+            const data = await response.json();
+            const allergies = data[0].allergies;
+            await setProfileAllergies(allergies);
+        } catch (error) {
+            console.error(error);
+        }
+      };
+
+      const fetchData = async () => {
+        try {
             await getPopular();
             await getBreakfast();
             await getLunch();
@@ -89,25 +98,6 @@ export default function Home({ navigation, route }) {
             setLoadingModalVisible(false);
         }
     };
-
-
-    const getProfileAllergies = async () => {
-        try {
-            const response = await fetch(`${API_BASE}/user/get/${email}`, {
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                method: "GET"
-            });
-            const data = await response.json();
-            const allergies = data[0].allergies;
-            setProfileAllergies(allergies);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
 
     // https://stackoverflow.com/questions/19269545/how-to-get-a-number-of-random-elements-from-an-array
     function getRandom(arr, n) {
