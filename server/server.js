@@ -132,12 +132,18 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
 
     // Assuming the image is sent as a base64 encoded string in the request body
     // You need to convert it to a Buffer before saving it locally
+    if (!req.body.image) {
+        return res.status(400).json({ error: 'Image is required.' });
+    }
     const imageBuffer = Buffer.from(req.body.image, 'base64');
     const localFilePath = path.join(__dirname, `uploads/${image_UUID}.jpeg`);
+
+    // Ensure the uploads directory exists before writing the file
+    fs.mkdirSync(path.dirname(localFilePath), { recursive: true });
     fs.writeFileSync(localFilePath, imageBuffer);
 
     // Sending the upload request
-    await bucket.upload(
+    bucket.upload(
         localFilePath,
         function (err, file) {
             if (err) {
@@ -155,7 +161,7 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
                 console.log(`Public URL for ${file.name}: ${publicUrl}`)
 
                     // Save the recipe with the image URL
-                    const recipe = await new Recipe({
+                    const recipe = new Recipe({
                         title: req.body.title,
                         desc: req.body.desc,
                         total_time: req.body.total_time,
@@ -165,7 +171,6 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
                         image: publicUrl,
                         cuisine: req.body.cuisine,
                         category: req.body.category,
-                        link: req.body.link,
                         keywords: keywords,
                         allergies: req.body.allergies,
                     })

@@ -26,7 +26,7 @@ const LoadingModal = () => {
         transparent={true}
         visible={isLoadingModalVisible}
         onRequestClose={() => {
-          setLoadingModalVisible(!isLoadingModalVisible);
+          setLoadingModalVisible(false);
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>

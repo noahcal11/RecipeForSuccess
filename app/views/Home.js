@@ -30,65 +30,74 @@ export default function Home({ navigation, route }) {
 
     const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/" + process.env.REACT_APP_API_TOKEN
 
-    useEffect(() => {
 
+    useEffect(() => {
         if (email === 'Guest') {
             // If the email is 'Guest', do not fetch allergies
             setProfileAllergies([]);
-            getPopular();
-            getBreakfast();
-            getLunch();
-            getDinner();
-            getDessert();
-            getChicken();
-            getSalad();
-            getAmerican();
-            getMexican();
-            getItalian();
-            getChinese();
-            getSurprise();
-            return;
         }
 
-        const getProfileAllergies = async () => {
-            setLoadingModalVisible(true)
-            setLoading(true);
-            try {
-                const response = await fetch(`${API_BASE}/user/get/${email}`, {
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    method: "GET"
-                });
-                const data = await response.json();
-                const allergies = data[0].allergies;
-                setProfileAllergies(allergies);
-                setLoadingModalVisible(false);
-                setLoading(false); // Set loading to false after fetching and setting allergies
-            } catch (error) {
-                console.error(error);
-            }
-        };
-        getProfileAllergies();
-        getPopular();
-        getBreakfast();
-        getLunch();
-        getDinner();
-        getDessert();
-        getChicken();
-        getSalad();
-        getAmerican();
-        getMexican();
-        getItalian();
-        getChinese();
-        getSurprise();
-    }, [email, setProfileAllergies]);
+        if (email !== 'Guest'){
+            getProfileAllergies();
+            console.log("profile allergies " + profileAllergies);
+        }
+    }, []);
 
     useEffect(() => {
+        setLoading(true);
+        setLoadingModalVisible(true);
+        if (email === 'Guest') {
+            console.log("profile allergies " + profileAllergies);
+            fetchData();
+        }
+
         
+        if (email !== 'Guest') {
+            console.log("profile allergies " + profileAllergies);
+            fetchData();
+        }
     }, [profileAllergies]);
 
+    const getProfileAllergies = async () => {
+        try {
+            const response = await fetch(`${API_BASE}/user/get/${email}`, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "GET"
+            });
+            const data = await response.json();
+            const allergies = data[0].allergies;
+            await setProfileAllergies(allergies);
+        } catch (error) {
+            console.error(error);
+        }
+      };
+
+      const fetchData = async () => {
+        try {
+            await getPopular();
+            await getBreakfast();
+            await getLunch();
+            await getDinner();
+            await getDessert();
+            await getChicken();
+            await getSalad();
+            await getAmerican();
+            await getMexican();
+            await getItalian();
+            await getChinese();
+            await getSurprise();
+            // ... other fetch calls
+        } catch (error) {
+            console.error(error);
+        } finally {
+            // Set loading state to false and hide the loading modal once all data is fetched
+            setLoading(false);
+            setLoadingModalVisible(false);
+        }
+    };
 
     // https://stackoverflow.com/questions/19269545/how-to-get-a-number-of-random-elements-from-an-array
     function getRandom(arr, n) {
@@ -115,8 +124,11 @@ export default function Home({ navigation, route }) {
             body: JSON.stringify({ cuisine: "American", allergies: profileAllergies })
         })
             .then(res => res.json())
-            .then(data => setPopularRecs(getRandom(data, 8)))
-            .catch(error => console.error(error));
+            .then(data => {
+                //console.log(data); // Log the data here
+                setPopularRecs(getRandom(data, 8));
+            })
+                    .catch(error => console.error(error));
     }
 
     const getDessert = async () => {
@@ -182,7 +194,7 @@ export default function Home({ navigation, route }) {
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({ category: "Dinner" })
+            body: JSON.stringify({ category: "Lunch", allergies: profileAllergies })
         })
             .then(res => res.json())
             .then(data => setDinnerRecs(getRandom(data, 4)))
@@ -280,6 +292,16 @@ export default function Home({ navigation, route }) {
         } else return title;
     }
 
+    if (loading) {
+        return (
+          <View style={global.whiteBackground}>
+            <View style={global.grayForeground}>
+              <LoadingModal></LoadingModal>
+            </View>
+          </View>
+        );
+     }
+
     const WIDGETS = [
         { title: 'Popular Recipes', data: popularRecs },
         { title: 'Breakfast Creations', data: breakfastRecs },
@@ -294,16 +316,6 @@ export default function Home({ navigation, route }) {
         { title: 'Chinese', data: chineseRecs },
         { title: 'Surprise Me!', data: surpriseRecs },
     ]
-
-    if (loading && email !== 'Guest') {
-        return (
-          <View style={global.whiteBackground}>
-            <View style={global.grayForeground}>
-              <LoadingModal></LoadingModal>
-            </View>
-          </View>
-        );
-     }
 
     return (
         <View style={global.whiteBackground}>

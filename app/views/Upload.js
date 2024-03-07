@@ -28,7 +28,7 @@ export default function Upload() {
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({title: title, desc: desc, total_time: prepTime, yields: servings, steps: steps, ingredients: handleIngredientObjectToString, cuisine: cusine, category: category, link: "yourmom.com", allergies: uploadAllergies, email: email})
+            body: JSON.stringify({title: title, desc: desc, total_time: prepTime, yields: servings, steps: steps, ingredients: handleIngredientObjectToString, cuisine: cusine, category: category, image: image, allergies: uploadAllergies, email: email})
             }).then(navigation.navigate('Profile'));
         }
         
@@ -88,6 +88,7 @@ export default function Upload() {
           });      
           if (!result.canceled) {
             setImage(result.assets[0].uri);
+            console.log(result.assets[0].uri);
           }
         };
 
@@ -426,10 +427,11 @@ const styles = EStyleSheet.create({
         flex: 5,
         backgroundColor: '#D1D1D1',
         borderRadius: '2rem',
-        fontSize: '1.5rem',
+        fontSize: '1.2rem',
         fontFamily: 'Cairo_500Medium',
         width: '20rem',
         paddingLeft: '1rem',
+        paddingVertical: '0.5rem',
         marginBottom: '1rem',
         alignSelf: 'center'
       },
@@ -437,10 +439,11 @@ const styles = EStyleSheet.create({
         flex: 5,
         backgroundColor: '#D1D1D1',
         borderRadius: '2rem',
-        fontSize: '1.5rem',
+        fontSize: '1.2rem',
         fontFamily: 'Cairo_500Medium',
         width: 200,
         marginBottom: '1rem',
+        paddingTop: '0.7rem',
         alignSelf: 'center',
         textAlign: 'center',
       },
@@ -448,7 +451,7 @@ const styles = EStyleSheet.create({
         flex: 5,
         backgroundColor: '#D1D1D1',
         borderRadius: '2rem',
-        fontSize: '1rem',
+        fontSize: '0.9rem',
         fontFamily: 'Cairo_500Medium',
         height: '8rem',
         paddingLeft: '1rem',

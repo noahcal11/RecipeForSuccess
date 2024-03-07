@@ -88,7 +88,7 @@ export default function Profile() {
 
   const renderHeader = (section) => {
     return (
-      <View style={global.horizontal}>
+      <View style={{...global.horizontal, marginBottom: '5%'}}>
         <Text style={global.bodyText}>{section.title}</Text>
         <DownArrowIcon style={styles.arrowIcon}></DownArrowIcon>
       </View>
@@ -97,14 +97,40 @@ export default function Profile() {
 
 
   useEffect(() => {
+    setLoading(true);
+    setLoadingModalVisible(true);
     if (email === 'Guest') {
       // If the email is 'Guest', do not fetch allergies
+      setLoading(false);
+      setLoadingModalVisible(false);
       return;
    }
 
-   const getProfileAllergies = async () => {
-    setLoading(true);
-    setLoadingModalVisible(true);
+   if (email !== 'Guest') {
+    // If the email is 'Guest', do not fetch allergies
+    fetchData();
+ }
+  }, [email, setProfileAllergies]);
+
+  useEffect(() => {
+   }, [profileAllergies]);
+
+   const fetchData = async () => {
+    try {
+        // Fetch all the necessary data here
+        // For example:
+        await getProfileAllergies();
+        // ... other fetch calls
+    } catch (error) {
+        console.error(error);
+    } finally {
+        // Set loading state to false and hide the loading modal once all data is fetched
+        setLoading(false);
+        setLoadingModalVisible(false);
+    }
+};
+
+  const getProfileAllergies = async () => {
   try {
      const response = await fetch(`${API_BASE}/user/get/${email}`, {
        headers: {
@@ -118,19 +144,10 @@ export default function Profile() {
      // Convert the strings to booleans based on the allergenMapping
      const booleanAllergies = allergenMapping.map(allergen => allergies.includes(allergen));
      setProfileAllergies(booleanAllergies);
-     setLoading(false); // Set loading to false after fetching and setting allergies
-     setLoadingModalVisible(false); // Hide the loading modal
   } catch (error) {
      console.error(error);
-     setLoading(false);
-     setLoadingModalVisible(false); // Hide the loading modal in case of an error
   }
   };
-    getProfileAllergies();
-  }, [email, setProfileAllergies]);
-
-  useEffect(() => {
-   }, [profileAllergies]);
 
 
    const updateProfileAllergies = async () => {
@@ -187,7 +204,7 @@ export default function Profile() {
                     onPress={() => {
                       updateProfileAllergies();
                     }}>
-                        <Text style={styles.guestText}>Save</Text>
+                        <Text style={global.buttonText}>Save</Text>
           </Pressable>
       </View>
     );
@@ -221,21 +238,21 @@ export default function Profile() {
                     onPress={() => {
                       navigation.navigate('Created');
                     }}>
-                        <Text style={styles.guestText}>Created</Text>
+                        <Text style={global.buttonMinorText}>Created</Text>
           </Pressable>
           <Pressable
                     style={global.buttonMinor}
                     onPress={() => {
                       navigation.navigate('Completed');
                     }}>
-                        <Text style={styles.guestText}>Completed</Text>
+                        <Text style={global.buttonMinorText}>Completed</Text>
           </Pressable>
           <Pressable
                     style={global.button}
                     onPress={() => {
                       navigation.navigate('Upload');
                     }}>
-                        <Text style={styles.guestText}>Upload</Text>
+                        <Text style={global.buttonText}>Upload</Text>
           </Pressable>
 
         </View>
@@ -254,7 +271,7 @@ export default function Profile() {
                 handleUpdateAccount();
                 setMessageModalVisible(true);
               }} >
-              <Text style={styles.guestText}>Update Account</Text>
+              <Text style={global.buttonMinorText}>Update Account</Text>
             </Pressable>
           )}
 
@@ -271,7 +288,7 @@ export default function Profile() {
                     onPress={() => {
                       handleDeleteAccount()
                     }}>
-                        <Text style={styles.guestText}>Delete Account </Text>
+                        <Text style={global.buttonMinorText}>Delete Account </Text>
           </Pressable>
 
           <Pressable
@@ -281,7 +298,7 @@ export default function Profile() {
                       setEmail('');
                       setUsername('');
                     }}>
-                        <Text style={styles.guestText}>Logout</Text>
+                        <Text style={global.buttonMinorText}>Logout</Text>
           </Pressable>
           
           <ChangePasswordModal blurb="Change Password"/>

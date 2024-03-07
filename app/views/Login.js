@@ -29,7 +29,7 @@ export default function Login({navigation}) {
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
-  useEffect(() => {
+  useState(() => {
     setUsername("");
     setEmail("");
     setPassword("");
