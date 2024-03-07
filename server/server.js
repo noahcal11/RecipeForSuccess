@@ -223,11 +223,15 @@ app.post('/'+process.env.API_TOKEN+'/user/new', (req,res) => {
             if (err) {
                 return console.log('Cannot encrypt');
             }
+
+            const allergies = []; // Use existing allergies if provided, otherwise start with an empty array
+            allergies.push('Test');
     
             const user = new User({
                 email: req.body.email,
                 username: req.body.username,
-                hash: hash
+                hash: hash,
+                allergies: allergies
             })
             await user.save();
             res.json(user);

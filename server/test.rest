@@ -15,7 +15,7 @@ POST http://localhost:8080/54pgn7tCy42af5pTRz92ZF2Piu92CQeWsx7cZSW5owfTasAJ3HqGw
 Content-Type: application/json
 
 {
-    "email": "sunhawkgaming@gmail.com", "username": "tester", "password": "password"
+    "email": "rayt@gmail.com", "username": "rayt", "password": "Password1!"
 }
 
 ###
