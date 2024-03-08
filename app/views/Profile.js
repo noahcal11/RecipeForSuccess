@@ -69,7 +69,7 @@ export default function Profile() {
         'Content-Type': 'application/json'
       },
       method: "POST",
-      body: JSON.stringify({oldEmail: email, newEmail: newEmail, username: username})
+      body: JSON.stringify({oldEmail: email, newEmail: newEmail, username: username, allergies: profileAllergies})
     })
     setEmail(newEmail);
     setIsProfileModified(false);

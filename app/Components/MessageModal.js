@@ -24,7 +24,7 @@ const MessageModal = ({blurb}) => {
             <Text style={global.titleText}>{blurb}</Text>
             <Pressable
               style={global.buttonMinor}
-              onPress={() => {setModalVisible(!modalVisible); navigation.navigate('Profile');}}>
+              onPress={() => {setModalVisible(!modalVisible);}}>
               <Text style={global.buttonMinorText}>Close</Text>
             </Pressable>
           </View>

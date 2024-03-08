@@ -89,7 +89,6 @@ export default function App() {
           <Stack.Screen name="Completed" component={Completed}/>
           <Stack.Screen name="Upload" component={Upload}/>
           <Stack.Screen name="Preview" component={Preview}/>
-          <Stack.Screen name="Test" component={Test}/>
         </Stack.Navigator>
       </NavigationContainer>
     </Context.Provider>
