@@ -6,17 +6,17 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 EStyleSheet.build();
 
 const SwitchComp = ({ name, index, state }) => {
-  const { profileAllergies, setProfileAllergies } = useContext(Context);
+  const { booleanAllergies, setBooleanAllergies } = useContext(Context);
   const [isEnabled, setIsEnabled] = useState(state);
 
   const toggleSwitch = () => {
     const newState = !isEnabled;
     setIsEnabled(newState);
-    updateProfileAllergies(index, newState);
+    updateBooleanAllergies(index, newState);
   };
 
-  function updateProfileAllergies(index, value) {
-    const toggleToggle = profileAllergies.map((c, i) => {
+  function updateBooleanAllergies(index, value) {
+    const toggleToggle = booleanAllergies.map((c, i) => {
       if (i === index) {
         // Flip the true/false value
         return value;
@@ -25,7 +25,7 @@ const SwitchComp = ({ name, index, state }) => {
         return c;
       }
     });
-    setProfileAllergies(toggleToggle);
+    setBooleanAllergies(toggleToggle);
   }
 
   return (

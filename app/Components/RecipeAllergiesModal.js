@@ -9,14 +9,12 @@ import { useNavigation } from '@react-navigation/native';
 EStyleSheet.build();
 
 const RecipeAllergiesModal = ({ recipeAllergies }) => {
-  console.log("receipe allergies modal - recipe allergies " + recipeAllergies)
   const { isRecipeAllergiesModalVisible, setRecipeAllergiesModalVisible, profileAllergies, setProfileAllergies, email } = useContext(Context);
   const navigation = useNavigation();
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/" + process.env.REACT_APP_API_TOKEN;
 
 
 const matchingAllergens = recipeAllergies.filter(recipeAllergies => profileAllergies.includes(recipeAllergies));
-console.log("recipe allergies modal - matching allergies " + matchingAllergens);
 
 if (matchingAllergens.length === 0) {
   return null;

@@ -34,6 +34,7 @@ export default function App() {
   const [visibleWidgets, setVisibleWidgets] = useState([true, true, true, true, true, true, true, true, true, true, true, true]);
   const [uploadAllergies, setUploadAllergies] = useState([]);
   const [profileAllergies, setProfileAllergies] = useState([]);
+  const [booleanAllergies, setBooleanAllergies] = useState([false, false, false, false, false, false, false, false, false, false, false, false]);
   const [searchFilter, setSearchFilter] = useState([true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]);
   const [isIngInstructionsModelVisible, setIngInstructionsModelVisible] = useState(false);
   const [isRecipeAllergiesModalVisible, setRecipeAllergiesModalVisible] = useState(true);
@@ -70,6 +71,7 @@ export default function App() {
         setRecipePageState,
         isRecipeAllergiesModalVisible, setRecipeAllergiesModalVisible, 
         isLoadingModalVisible, setLoadingModalVisible,
+        booleanAllergies, setBooleanAllergies,
       }}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{
@@ -87,7 +89,6 @@ export default function App() {
           <Stack.Screen name="Completed" component={Completed}/>
           <Stack.Screen name="Upload" component={Upload}/>
           <Stack.Screen name="Preview" component={Preview}/>
-          <Stack.Screen name="Test" component={Test}/>
         </Stack.Navigator>
       </NavigationContainer>
     </Context.Provider>

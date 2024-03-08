@@ -31,7 +31,7 @@ const UserSchema = new Schema({
     favorited_recipes: {type:Array, default: []},
     created_recipes: {type:Array, default: []},
     widgets: {type:Array, default:[true, true, true, true, true, true, true, true, true, true, true, true]},
-    allergies: {type:Array, default: []}
+    allergies: {type:Array, default: ["Test"]}
 })
 
 const keywords = new Schema({

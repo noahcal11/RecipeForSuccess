@@ -36,10 +36,8 @@ export default function Home({ navigation, route }) {
             // If the email is 'Guest', do not fetch allergies
             setProfileAllergies([]);
         }
-
         if (email !== 'Guest'){
             getProfileAllergies();
-            console.log("profile allergies " + profileAllergies);
         }
     }, []);
 
@@ -47,13 +45,14 @@ export default function Home({ navigation, route }) {
         setLoading(true);
         setLoadingModalVisible(true);
         if (email === 'Guest') {
-            console.log("profile allergies " + profileAllergies);
             fetchData();
         }
-
         
         if (email !== 'Guest') {
-            console.log("profile allergies " + profileAllergies);
+            if (profileAllergies.length === 0)
+            {
+                getProfileAllergies();
+            }
             fetchData();
         }
     }, [profileAllergies]);
@@ -115,174 +114,409 @@ export default function Home({ navigation, route }) {
     }
 
     const getPopular = async () => {
-        const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify({ cuisine: "American", allergies: profileAllergies })
-        })
-            .then(res => res.json())
-            .then(data => {
-                //console.log(data); // Log the data here
-                setPopularRecs(getRandom(data, 8));
+        // Check if profileAllergies is not empty
+        if (email !== 'Guest' && profileAllergies && profileAllergies.length > 0) {
+
+            const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({ cuisine: "American", allergies: profileAllergies })
             })
-                    .catch(error => console.error(error));
+                .then(res => res.json())
+                .then(data => {
+                    setPopularRecs(getRandom(data, 8));
+                })
+                .catch(error => console.error(error));
+        } if (email === 'Guest') {
+            const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({ cuisine: "American", allergies: profileAllergies })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setPopularRecs(getRandom(data, 8));
+                })
+                .catch(error => console.error(error));
+        }
     }
 
     const getDessert = async () => {
-        const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify({ category: "Dessert", allergies: profileAllergies })
-        })
-            .then(res => res.json())
-            .then(data => setDessertRecs(getRandom(data, 4)))
-            .catch(error => console.error(error));
+        // Check if profileAllergies is not empty
+        if (email !== 'Guest' && profileAllergies && profileAllergies.length > 0) {
+            const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({ category: "Dessert", allergies: profileAllergies })})
+                .then(res => res.json())
+                .then(data => {
+                    setDessertRecs(getRandom(data, 8));
+                })
+                .catch(error => console.error(error));
+        } if (email === 'Guest') {
+            const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({ category: "Dessert", allergies: profileAllergies })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setDessertRecs(getRandom(data, 8));
+                })
+                .catch(error => console.error(error));
+        }
     }
 
     const getBreakfast = async () => {
-        const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify({ category: "Breakfast", allergies: profileAllergies })
-        })
-            .then(res => res.json())
-            .then(data => setBreakfastRecs(getRandom(data, 4)))
-            .catch(error => console.error(error));
+        // Check if profileAllergies is not empty
+        if (email !== 'Guest' && profileAllergies && profileAllergies.length > 0) {
+
+            const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({ category: "Breakfast", allergies: profileAllergies })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setBreakfastRecs(getRandom(data, 8));
+                })
+                .catch(error => console.error(error));
+        } if (email === 'Guest') {
+            const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({ category: "Breakfast", allergies: profileAllergies })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setBreakfastRecs(getRandom(data, 8));
+                })
+                .catch(error => console.error(error));
+        }
     }
 
     const getChicken = async () => {
-        const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify({ title: "Chicken", allergies: profileAllergies })
-        })
-            .then(res => res.json())
-            .then(data => setChickenRecs(getRandom(data, 8)))
-            .catch(error => console.error(error));
+        // Check if profileAllergies is not empty
+        if (email !== 'Guest' && profileAllergies && profileAllergies.length > 0) {
+
+            const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({ title: "Chicken", allergies: profileAllergies })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setChickenRecs(getRandom(data, 8));
+                })
+                .catch(error => console.error(error));
+        } if (email === 'Guest') {
+            const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({ title: "Chicken", allergies: profileAllergies })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setChickenRecs(getRandom(data, 8));
+                })
+                .catch(error => console.error(error));
+        }
     }
 
     const getLunch = async () => {
-        const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify({ category: "Lunch", allergies: profileAllergies })
-        })
-            .then(res => res.json())
-            .then(data => setLunchRecs(getRandom(data, 4)))
-            .catch(error => console.error(error));
+        // Check if profileAllergies is not empty
+        if (email !== 'Guest' && profileAllergies && profileAllergies.length > 0) {
+
+            const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({ category: "Lunch", allergies: profileAllergies })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setLunchRecs(getRandom(data, 8));
+                })
+                .catch(error => console.error(error));
+        } if (email === 'Guest') {
+            const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({ category: "Lunch", allergies: profileAllergies })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setLunchRecs(getRandom(data, 8));
+                })
+                .catch(error => console.error(error));
+        }
     }
 
     const getDinner = async () => {
-        const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify({ category: "Lunch", allergies: profileAllergies })
-        })
-            .then(res => res.json())
-            .then(data => setDinnerRecs(getRandom(data, 4)))
-            .catch(error => console.error(error));
+        // Check if profileAllergies is not empty
+        if (email !== 'Guest' && profileAllergies && profileAllergies.length > 0) {
+
+            const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({ category: "Dinner", allergies: profileAllergies })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setDinnerRecs(getRandom(data, 8));
+                })
+                .catch(error => console.error(error));
+        } if (email === 'Guest') {
+            const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({ category: "Dinner", allergies: profileAllergies })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setDinnerRecs(getRandom(data, 8));
+                })
+                .catch(error => console.error(error));
+        }
     }
 
     const getSalad = async () => {
-        const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify({ title: "Salad", allergies: profileAllergies })
-        })
-            .then(res => res.json())
-            .then(data => setSaladRecs(getRandom(data, 4)))
-            .catch(error => console.error(error));
+        // Check if profileAllergies is not empty
+        if (email !== 'Guest' && profileAllergies && profileAllergies.length > 0) {
+
+            const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({ title: "Salad", allergies: profileAllergies })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setSaladRecs(getRandom(data, 8));
+                })
+                .catch(error => console.error(error));
+        } if (email === 'Guest') {
+            const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({ title: "Salad", allergies: profileAllergies })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setSaladRecs(getRandom(data, 8));
+                })
+                .catch(error => console.error(error));
+        }
     }
 
     const getAmerican = async () => {
-        const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify({ cuisine: "American", allergies: profileAllergies })
-        })
-            .then(res => res.json())
-            .then(data => setAmericanRecs(getRandom(data, 4)))
-            .catch(error => console.error(error));
+        // Check if profileAllergies is not empty
+        if (email !== 'Guest' && profileAllergies && profileAllergies.length > 0) {
+
+            const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({cuisine: "American", allergies: profileAllergies })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setAmericanRecs(getRandom(data, 8));
+                })
+                .catch(error => console.error(error));
+        } if (email === 'Guest') {
+            const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({ cuisine: "American", allergies: profileAllergies })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setAmericanRecs(getRandom(data, 8));
+                })
+                .catch(error => console.error(error));
+        }
     }
 
     const getMexican = async () => {
-        const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify({ cuisine: "Mexican", allergies: profileAllergies })
-        })
-            .then(res => res.json())
-            .then(data => setMexicanRecs(getRandom(data, 4)))
-            .catch(error => console.error(error));
+        // Check if profileAllergies is not empty
+        if (email !== 'Guest' && profileAllergies && profileAllergies.length > 0) {
+
+            const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({cuisine: "Mexican", allergies: profileAllergies })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setMexicanRecs(getRandom(data, 8));
+                })
+                .catch(error => console.error(error));
+        } if (email === 'Guest') {
+            const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({ cuisine: "Mexican", allergies: profileAllergies })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setMexicanRecs(getRandom(data, 8));
+                })
+                .catch(error => console.error(error));
+        }
     }
 
     const getItalian = async () => {
-        const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify({ cuisine: "Italian", allergies: profileAllergies })
-        })
-            .then(res => res.json())
-            .then(data => setItalianRecs(getRandom(data, 4)))
-            .catch(error => console.error(error));
+        // Check if profileAllergies is not empty
+        if (email !== 'Guest' && profileAllergies && profileAllergies.length > 0) {
+
+            const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({cuisine: "Italian", allergies: profileAllergies })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setItalianRecs(getRandom(data, 8));
+                })
+                .catch(error => console.error(error));
+        } if (email === 'Guest') {
+            const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({ cuisine: "Italian", allergies: profileAllergies })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setItalianRecs(getRandom(data, 8));
+                })
+                .catch(error => console.error(error));
+        }
     }
 
     const getChinese = async () => {
-        const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify({ cuisine: "Chinese", allergies: profileAllergies })
-        })
-            .then(res => res.json())
-            .then(data => setChineseRecs(getRandom(data, 4)))
-            .catch(error => console.error(error));
+        // Check if profileAllergies is not empty
+        if (email !== 'Guest' && profileAllergies && profileAllergies.length > 0) {
+
+            const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({cuisine: "Chinese", allergies: profileAllergies })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setChineseRecs(getRandom(data, 8));
+                })
+                .catch(error => console.error(error));
+        } if (email === 'Guest') {
+            const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({ cuisine: "Chinese", allergies: profileAllergies })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setChineseRecs(getRandom(data, 8));
+                })
+                .catch(error => console.error(error));
+        }
     }
 
     const getSurprise = async () => {
-        const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify({ allergies: profileAllergies })
-        })
-            .then(res => res.json())
-            .then(data => setSurpriseRecs(getRandom(data, 4)))
-            .catch(error => console.error(error));
+        // Check if profileAllergies is not empty
+        if (email !== 'Guest' && profileAllergies && profileAllergies.length > 0) {
+
+            const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({allergies: profileAllergies })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setSurpriseRecs(getRandom(data, 8));
+                })
+                .catch(error => console.error(error));
+        } if (email === 'Guest') {
+            const response = await fetch(API_BASE + "/recipe/get-by-allergies/", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({allergies: profileAllergies })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setSurpriseRecs(getRandom(data, 8));
+                })
+                .catch(error => console.error(error));
+        }
     }
 
     // Shortens longer titles so any given recipe title only takes up two lines
