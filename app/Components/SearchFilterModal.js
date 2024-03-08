@@ -66,7 +66,7 @@ const SearchFilterModal = ({ blurb }) => {
     }
 
     function filterCuisine() {
-        setSearchResults(searchResults.map((recipe, index) => {
+        setSearchResults(searchResults.map((recipe) => {
             // we first check if recipe has already been hidden by filterCookTime
             if (recipe.visibility) {
                 if (recipe.cuisine==='African') return {
@@ -98,7 +98,7 @@ const SearchFilterModal = ({ blurb }) => {
     }
 
     function filterMealType() {
-        setSearchResults(searchResults.map((recipe, index) => {
+        setSearchResults(searchResults.map((recipe) => {
             // we first check if recipe has already been hidden by filterCookTime or filterCuisine
             if (recipe.visibility) {
                 if (recipe.category='Appetizer') return {
