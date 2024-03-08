@@ -37,13 +37,14 @@ export default function Login({navigation}) {
 
   const createUser = async (email,username,password) => {
     setNotification("")
+    const allergiesTest = ["Test"];
     const data = await fetch(API_BASE+"/user/new", {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       method: "POST",
-      body: JSON.stringify({email: email, username: username, password: password})
+      body: JSON.stringify({email: email, username: username, password: password, allergies: allergiesTest})
     }).then(navigation.navigate('Home'));
   }
 

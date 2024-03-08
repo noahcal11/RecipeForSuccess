@@ -137,7 +137,7 @@ export default function Home({ navigation, route }) {
                     'Content-Type': 'application/json'
                 },
                 method: "POST",
-                body: JSON.stringify({ cuisine: "American", allergies: [] })
+                body: JSON.stringify({ cuisine: "American", allergies: profileAllergies })
             })
                 .then(res => res.json())
                 .then(data => {
@@ -169,7 +169,7 @@ export default function Home({ navigation, route }) {
                     'Content-Type': 'application/json'
                 },
                 method: "POST",
-                body: JSON.stringify({ category: "Dessert", allergies: [] })
+                body: JSON.stringify({ category: "Dessert", allergies: profileAllergies })
             })
                 .then(res => res.json())
                 .then(data => {
@@ -203,7 +203,7 @@ export default function Home({ navigation, route }) {
                     'Content-Type': 'application/json'
                 },
                 method: "POST",
-                body: JSON.stringify({ category: "Breakfast", allergies: [] })
+                body: JSON.stringify({ category: "Breakfast", allergies: profileAllergies })
             })
                 .then(res => res.json())
                 .then(data => {
@@ -237,7 +237,7 @@ export default function Home({ navigation, route }) {
                     'Content-Type': 'application/json'
                 },
                 method: "POST",
-                body: JSON.stringify({ title: "Chicken", allergies: [] })
+                body: JSON.stringify({ title: "Chicken", allergies: profileAllergies })
             })
                 .then(res => res.json())
                 .then(data => {
@@ -271,7 +271,7 @@ export default function Home({ navigation, route }) {
                     'Content-Type': 'application/json'
                 },
                 method: "POST",
-                body: JSON.stringify({ category: "Lunch", allergies: [] })
+                body: JSON.stringify({ category: "Lunch", allergies: profileAllergies })
             })
                 .then(res => res.json())
                 .then(data => {
@@ -305,7 +305,7 @@ export default function Home({ navigation, route }) {
                     'Content-Type': 'application/json'
                 },
                 method: "POST",
-                body: JSON.stringify({ category: "Dinner", allergies: [] })
+                body: JSON.stringify({ category: "Dinner", allergies: profileAllergies })
             })
                 .then(res => res.json())
                 .then(data => {
@@ -339,7 +339,7 @@ export default function Home({ navigation, route }) {
                     'Content-Type': 'application/json'
                 },
                 method: "POST",
-                body: JSON.stringify({ title: "Salad", allergies: [] })
+                body: JSON.stringify({ title: "Salad", allergies: profileAllergies })
             })
                 .then(res => res.json())
                 .then(data => {
@@ -373,7 +373,7 @@ export default function Home({ navigation, route }) {
                     'Content-Type': 'application/json'
                 },
                 method: "POST",
-                body: JSON.stringify({ cuisine: "American", allergies: [] })
+                body: JSON.stringify({ cuisine: "American", allergies: profileAllergies })
             })
                 .then(res => res.json())
                 .then(data => {
@@ -407,7 +407,7 @@ export default function Home({ navigation, route }) {
                     'Content-Type': 'application/json'
                 },
                 method: "POST",
-                body: JSON.stringify({ cuisine: "Mexican", allergies: [] })
+                body: JSON.stringify({ cuisine: "Mexican", allergies: profileAllergies })
             })
                 .then(res => res.json())
                 .then(data => {
@@ -441,7 +441,7 @@ export default function Home({ navigation, route }) {
                     'Content-Type': 'application/json'
                 },
                 method: "POST",
-                body: JSON.stringify({ cuisine: "Italian", allergies: [] })
+                body: JSON.stringify({ cuisine: "Italian", allergies: profileAllergies })
             })
                 .then(res => res.json())
                 .then(data => {
@@ -475,7 +475,7 @@ export default function Home({ navigation, route }) {
                     'Content-Type': 'application/json'
                 },
                 method: "POST",
-                body: JSON.stringify({ cuisine: "Chinese", allergies: [] })
+                body: JSON.stringify({ cuisine: "Chinese", allergies: profileAllergies })
             })
                 .then(res => res.json())
                 .then(data => {
@@ -509,7 +509,7 @@ export default function Home({ navigation, route }) {
                     'Content-Type': 'application/json'
                 },
                 method: "POST",
-                body: JSON.stringify({allergies: [] })
+                body: JSON.stringify({allergies: profileAllergies })
             })
                 .then(res => res.json())
                 .then(data => {
