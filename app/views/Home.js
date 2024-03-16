@@ -670,7 +670,8 @@ export default function Home({ navigation, route }) {
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("searchResults")
+                                    setSearchFilter([true, true, true, true, true, true, true, true, true, true, false, false, true, false, false, false])
+                                    navigation.navigate("searchResults", { searchTerm: "" })
                                 }}
 
                                 style={({ pressed }) => [
@@ -708,7 +709,8 @@ export default function Home({ navigation, route }) {
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("searchResults")
+                                    setSearchFilter([true, true, true, true, true, true, true, true, true, true, false, false, false, true, false, false])
+                                    navigation.navigate("searchResults", { searchTerm: "" })
                                 }}
 
                                 style={({ pressed }) => [
@@ -746,7 +748,8 @@ export default function Home({ navigation, route }) {
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("searchResults")
+                                    setSearchFilter([true, true, true, true, true, true, true, true, true, true, false, false, false, false, true, false])
+                                    navigation.navigate("searchResults", { searchTerm: "" })
                                 }}
 
                                 style={({ pressed }) => [
@@ -784,7 +787,8 @@ export default function Home({ navigation, route }) {
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("searchResults")
+                                    setSearchFilter([true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true])
+                                    navigation.navigate("searchResults", { searchTerm: "Chicken" })
                                 }}
 
                                 style={({ pressed }) => [
@@ -822,7 +826,8 @@ export default function Home({ navigation, route }) {
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("searchResults")
+                                    setSearchFilter([true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true])
+                                    navigation.navigate("searchResults", { searchTerm: "Salad" })
                                 }}
 
                                 style={({ pressed }) => [
@@ -860,7 +865,8 @@ export default function Home({ navigation, route }) {
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("searchResults")
+                                    setSearchFilter([true, true, true, true, false, true, false, false, false, false, true, true, true, true, true, true])
+                                    navigation.navigate("searchResults", { searchTerm: "" })
                                 }}
 
                                 style={({ pressed }) => [
@@ -898,7 +904,8 @@ export default function Home({ navigation, route }) {
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("searchResults")
+                                    setSearchFilter([true, true, true, true, false, false, false, false, true, false, true, true, true, true, true, true])
+                                    navigation.navigate("searchResults", { searchTerm: "" })
                                 }}
 
                                 style={({ pressed }) => [
@@ -936,7 +943,8 @@ export default function Home({ navigation, route }) {
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("searchResults")
+                                    setSearchFilter([true, true, true, true, false, false, false, true, false, false, true, true, true, true, true, true])
+                                    navigation.navigate("searchResults", { searchTerm: "" })
                                 }}
 
                                 style={({ pressed }) => [
@@ -974,7 +982,8 @@ export default function Home({ navigation, route }) {
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("searchResults")
+                                    setSearchFilter([true, true, true, true, false, false, true, false, false, false, true, true, true, true, true, true])
+                                    navigation.navigate("searchResults", { searchTerm: "" })
                                 }}
 
                                 style={({ pressed }) => [
@@ -1012,7 +1021,8 @@ export default function Home({ navigation, route }) {
                         ListFooterComponent={
                             <Pressable
                                 onPress={() => {
-                                    navigation.navigate("searchResults")
+                                    setSearchFilter([true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true])
+                                    navigation.navigate("searchResults", { searchTerm: "" })
                                 }}
 
                                 style={({ pressed }) => [
