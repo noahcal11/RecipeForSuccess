@@ -28,7 +28,7 @@ export default function Upload() {
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({title: title, desc: desc, total_time: prepTime, yields: servings, steps: steps, ingredients: handleIngredientObjectToString, cuisine: cusine, category: category, link: "yourmom.com", allergies: uploadAllergies, email: email})
+            body: JSON.stringify({title: title, desc: desc, total_time: prepTime, yields: servings, steps: steps, ingredients: handleIngredientObjectToString, cuisine: cusine, category: category, image: image, allergies: uploadAllergies, email: email})
             }).then(navigation.navigate('Profile'));
         }
         
@@ -84,9 +84,11 @@ export default function Upload() {
             allowsEditing: true,
             aspect: [4, 3],
             quality: 1,
+            base64: true
           });      
           if (!result.canceled) {
             setImage(result.assets[0].uri);
+            console.log(result.assets[0].uri);
           }
         };
 

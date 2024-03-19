@@ -1,6 +1,6 @@
 import Footer from '../Components/Footer';
 import React, { useEffect, useContext, useState } from 'react';
-import { Text, View, ScrollView, Pressable, TextInput, Modal } from "react-native";
+import { Text, View, ScrollView, Pressable, TextInput, Modal, Linking } from "react-native";
 import EStyleSheet from 'react-native-extended-stylesheet';
 import global from '../Genstyle';
 import SwitchComp from '../Components/UpdateAllergyPrefSwitch';
@@ -45,7 +45,7 @@ const allergenMapping = [
 
 export default function Profile() {
   const [activeSections, setActiveSections] = useState([]);
-  const {username,setUsername,email,setEmail,setChangePasswordModalVisible, profileAllergies, setProfileAllergies, isLoadingModalVisible, setLoadingModalVisible} = useContext(Context);
+  const {username,setUsername,email,setEmail,setChangePasswordModalVisible, profileAllergies, setProfileAllergies, booleanAllergies, setBooleanAllergies, isLoadingModalVisible, setLoadingModalVisible} = useContext(Context);
   const [newEmail, setNewEmail] = useState(email);
   const navigation = useNavigation();
   const [isProfileModified, setIsProfileModified] = useState(false);
@@ -69,7 +69,7 @@ export default function Profile() {
         'Content-Type': 'application/json'
       },
       method: "POST",
-      body: JSON.stringify({oldEmail: email, newEmail: newEmail, username: username})
+      body: JSON.stringify({oldEmail: email, newEmail: newEmail, username: username, allergies: profileAllergies})
     })
     setEmail(newEmail);
     setIsProfileModified(false);
@@ -97,14 +97,40 @@ export default function Profile() {
 
 
   useEffect(() => {
+    setLoading(true);
+    setLoadingModalVisible(true);
     if (email === 'Guest') {
       // If the email is 'Guest', do not fetch allergies
+      setLoading(false);
+      setLoadingModalVisible(false);
       return;
    }
 
-   const getProfileAllergies = async () => {
-    setLoading(true);
-    setLoadingModalVisible(true);
+   if (email !== 'Guest') {
+    // If the email is 'Guest', do not fetch allergies
+    fetchData();
+ }
+  }, [email, setProfileAllergies]);
+
+  useEffect(() => {
+   }, [profileAllergies]);
+
+   const fetchData = async () => {
+    try {
+        // Fetch all the necessary data here
+        // For example:
+        await getProfileAllergies();
+        // ... other fetch calls
+    } catch (error) {
+        console.error(error);
+    } finally {
+        // Set loading state to false and hide the loading modal once all data is fetched
+        setLoading(false);
+        setLoadingModalVisible(false);
+    }
+};
+
+  const getProfileAllergies = async () => {
   try {
      const response = await fetch(`${API_BASE}/user/get/${email}`, {
        headers: {
@@ -116,28 +142,20 @@ export default function Profile() {
      const data = await response.json();
      const allergies = data[0].allergies;
      // Convert the strings to booleans based on the allergenMapping
-     const booleanAllergies = allergenMapping.map(allergen => allergies.includes(allergen));
-     setProfileAllergies(booleanAllergies);
-     setLoading(false); // Set loading to false after fetching and setting allergies
-     setLoadingModalVisible(false); // Hide the loading modal
+     const booleanLoadAllergies = allergenMapping.map(allergen => allergies.includes(allergen));
+     setBooleanAllergies(booleanLoadAllergies);
   } catch (error) {
      console.error(error);
-     setLoading(false);
-     setLoadingModalVisible(false); // Hide the loading modal in case of an error
   }
   };
-    getProfileAllergies();
-  }, [email, setProfileAllergies]);
-
-  useEffect(() => {
-   }, [profileAllergies]);
 
 
    const updateProfileAllergies = async () => {
     // Map the profileAllergies array to include only allergen names from allergenMapping
-    const selectedAllergens = profileAllergies
+    const selectedAllergens = booleanAllergies
       .map((isSelected, index) => isSelected ? allergenMapping[index] : null)
       .filter(Boolean); // Filter out null values
+      selectedAllergens.push('Test');
     // Make API call with selected allergens
     const data = await fetch(API_BASE + "/user/update-user-allergies", {
       headers: {
@@ -148,6 +166,7 @@ export default function Profile() {
       body: JSON.stringify({ email: email, allergies: selectedAllergens }),
     });
     // Handle the response from the server
+    setProfileAllergies(selectedAllergens);
   };
   
   if (loading && email !== 'Guest') {
@@ -178,7 +197,7 @@ export default function Profile() {
         {section.content.map((item, index) => (
           <View style={global.horizontal} key={index}>
             <Text style={global.bodyText}>{item.title}</Text>
-            <SwitchComp name={item.title} index={index} state={profileAllergies[index]}> </SwitchComp>
+            <SwitchComp name={item.title} index={index} state={booleanAllergies[index]}> </SwitchComp>
 
           </View>
         ))}
@@ -288,6 +307,14 @@ export default function Profile() {
           {/* <MessageModel blurb="Account Settings Updated" /> */}
 
         </View>
+
+        <Pressable
+          style={global.buttonMinor}
+          onPress={() => {
+            Linking.openURL('https://forms.gle/44SFCg1Q2UJFYxzZ8');
+          }}>
+            <Text style={styles.guestText}>UAT Survey</Text>
+        </Pressable>
 
       </ScrollView>
       <Footer />

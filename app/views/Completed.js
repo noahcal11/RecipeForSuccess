@@ -21,7 +21,6 @@ export default function Completed( {navigation, route} ) {
             const response = await fetch(API_BASE + '/user/get/' + email);
             const data = await response.json();
             const recipeIds = data[0].completed_recipes;
-            console.log(recipeIds);
     
             // Make a POST request to the /recipe/get endpoint with the recipe IDs in the request body
             const recipeResponse = await fetch(API_BASE + '/recipe/get', {

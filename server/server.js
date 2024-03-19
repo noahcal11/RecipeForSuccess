@@ -68,9 +68,9 @@ app.post('/'+process.env.API_TOKEN+'/recipe/get-by-allergies', async (req, res) 
     const category = req.body.category;
     const title = req.body.title;
 
-    if (!Array.isArray(userAllergies) || userAllergies.length === 0) {
-        return res.status(400).json({ error: 'Allergies array is required and must not be empty.' });
-    }
+    // if (!Array.isArray(userAllergies) || userAllergies.length === 0) {
+    //     return res.status(400).json({ error: 'Allergies array is required and must not be empty.' });
+    // }
 
     // Initialize the query object
     const query = {
@@ -132,8 +132,14 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
 
     // Assuming the image is sent as a base64 encoded string in the request body
     // You need to convert it to a Buffer before saving it locally
+    if (!req.body.image) {
+        return res.status(400).json({ error: 'Image is required.' });
+    }
     const imageBuffer = Buffer.from(req.body.image, 'base64');
     const localFilePath = path.join(__dirname, `uploads/${image_UUID}.jpeg`);
+
+    // Ensure the uploads directory exists before writing the file
+    fs.mkdirSync(path.dirname(localFilePath), { recursive: true });
     fs.writeFileSync(localFilePath, imageBuffer);
 
     // Sending the upload request
@@ -165,7 +171,6 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
                         image: publicUrl,
                         cuisine: req.body.cuisine,
                         category: req.body.category,
-                        link: req.body.link,
                         keywords: keywords,
                         allergies: req.body.allergies,
                     })
@@ -218,11 +223,15 @@ app.post('/'+process.env.API_TOKEN+'/user/new', (req,res) => {
             if (err) {
                 return console.log('Cannot encrypt');
             }
+
+            const allergies = []; // Use existing allergies if provided, otherwise start with an empty array
+            allergies.push('Test');
     
             const user = new User({
                 email: req.body.email,
                 username: req.body.username,
-                hash: hash
+                hash: hash,
+                allergies: allergies
             })
             await user.save();
             res.json(user);

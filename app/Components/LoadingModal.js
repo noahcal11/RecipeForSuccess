@@ -11,9 +11,6 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'; // Import
 EStyleSheet.build();
 
 const LoadingModal = () => {
-  const [def, setDef] = useState("");
-  const {isIngInstructionsModelVisible, setIngInstructionsModelVisible} = useContext(Context);
-  const navigation = useNavigation();
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN;
 
   const {isLoadingModalVisible, setLoadingModalVisible} = useContext(Context);
@@ -26,7 +23,7 @@ const LoadingModal = () => {
         transparent={true}
         visible={isLoadingModalVisible}
         onRequestClose={() => {
-          setLoadingModalVisible(!isLoadingModalVisible);
+          setLoadingModalVisible(false);
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>

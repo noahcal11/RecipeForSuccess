@@ -26,8 +26,6 @@ const IngInstructionsModel = ({word}) => {
        body: JSON.stringify({key: word})
     }).then(res => res.json())
     .then(data => {
-       console.log('Data received:', data); // Log the entire data object
-       console.log(data.definition)
        setDef(data.definition)
     })
     .catch(err => console.error(err));
