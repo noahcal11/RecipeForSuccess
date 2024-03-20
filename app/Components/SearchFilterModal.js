@@ -42,25 +42,26 @@ const SearchFilterModal = ({ blurb }) => {
         filterCuisine();
         filterMealType();
     }
+    
 
     function filterCookTime() {
         setSearchResults(searchResults.map((recipe) => {
             // we run filterCookTime first, so we do not check if recipe is already hidden - this "resets" the filter
-            if (recipe.total_time < 15) return {
-                ...recipe,
-                ...recipe.visibility = searchFilter[0]
+            if (recipe.total_time < 15) {
+                recipe.visibility = searchFilter[0]
+                return recipe
             }
-            if (recipe.total_time <= 30) return {
-                ...recipe,
-                ...recipe.visibility = searchFilter[1]
+            if (recipe.total_time <= 30) {
+                recipe.visibility = searchFilter[1]
+                return recipe
             }
-            if (recipe.total_time <= 60) return {
-                ...recipe,
-                ...recipe.visibility = searchFilter[2]
+            if (recipe.total_time <= 60) {
+                recipe.visibility = searchFilter[2]
+                return recipe
             }
-            return {
-                ...recipe,
-                ...recipe.visibility = searchFilter[3]
+            else {
+                recipe.visibility = searchFilter[3]
+                return recipe
             };
         }))
     }
@@ -68,64 +69,72 @@ const SearchFilterModal = ({ blurb }) => {
     function filterCuisine() {
         setSearchResults(searchResults.map((recipe) => {
             // we first check if recipe has already been hidden by filterCookTime
-            if (recipe.visibility) {
-                if (recipe.cuisine==='African') return {
-                    ...recipe,
-                    ...recipe.visibility = searchFilter[4]
-                };
-                else if (recipe.cuisine==='American') return {
-                    ...recipe,
-                    ...recipe.visibility = searchFilter[5]
-                };
-                else if (recipe.cuisine==='Asian') return {
-                    ...recipe,
-                    ...recipe.visibility = searchFilter[6]
-                };
-                else if (recipe.cuisine==='Italian') return {
-                    ...recipe,
-                    ...recipe.visibility = searchFilter[7]
-                };
-                else if (recipe.cuisine==='Mexican') return {
-                    ...recipe,
-                    ...recipe.visibility = searchFilter[8]
-                };
-                else if (recipe.cuisine==='Spanish') return {
-                    ...recipe,
-                    ...recipe.visibility = searchFilter[9]
-                };
-            } else return recipe;
+                if (recipe.cuisine==='African') {
+                    recipe.visibility = searchFilter[4]
+                    return recipe
+                }
+                if (recipe.cuisine==='American') {
+                    recipe.visibility = searchFilter[5]
+                    return recipe
+                }
+                if (recipe.cuisine==='Asian') {
+                    recipe.visibility = searchFilter[6]
+                    return recipe
+                }
+                if (recipe.cuisine==='Italian') {
+                    recipe.visibility = searchFilter[7]
+                    return recipe
+                }
+                if (recipe.cuisine==='Mexican') {
+                    recipe.visibility = searchFilter[8]
+                    return recipe
+                }
+                if (recipe.cuisine==='Spanish') {
+                    recipe.visibility = searchFilter[9]
+                    return recipe
+                }
+                else {
+                    return recipe
+                }
         }))
     }
 
     function filterMealType() {
         setSearchResults(searchResults.map((recipe) => {
             // we first check if recipe has already been hidden by filterCookTime or filterCuisine
-            if (recipe.visibility) {
-                if (recipe.category='Appetizer') return {
-                    ...recipe,
-                    ...recipe.visibility = searchFilter[10]
-                };
-                else if (recipe.category='Breakfast') return {
-                    ...recipe,
-                    ...recipe.visibility = searchFilter[11]
-                };
-                else if (recipe.category='Lunch') return {
-                    ...recipe,
-                    ...recipe.visibility = searchFilter[12]
-                };
-                else if (recipe.category='Dinner') return {
-                    ...recipe,
-                    ...recipe.visibility = searchFilter[13]
-                };
-                else if (recipe.category='Dessert') return {
-                    ...recipe,
-                    ...recipe.visibility = searchFilter[14]
-                };
-                else if (recipe.category='Snack') return {
-                    ...recipe,
-                    ...recipe.visibility = searchFilter[15]
-                }; 
-            } else return recipe;
+            try {
+                recipe.category.includes("");
+            }
+            catch {
+                return recipe
+            }
+            if (recipe.category.includes('Appetizer')) {
+                recipe.visibility = searchFilter[10]
+                return recipe
+            }
+            if (recipe.category.includes('Breakfast')) {
+                recipe.visibility = searchFilter[11]
+                return recipe
+            }
+            if (recipe.category.includes('Lunch')) {
+                recipe.visibility = searchFilter[12]
+                return recipe
+            }
+            if (recipe.category.includes('Dinner')) {
+                recipe.visibility = searchFilter[13]
+                return recipe
+            }
+            if (recipe.category.includes('Dessert')) {
+                recipe.visibility = searchFilter[14]
+                return recipe
+            }
+            if (recipe.category.includes('Snack')) {
+                recipe.visibility = searchFilter[15]
+                return recipe
+            }
+            else {
+                return recipe
+            }
         }))
     }
 
