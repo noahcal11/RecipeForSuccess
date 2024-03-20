@@ -93,6 +93,7 @@ export default function RecipePages({ navigation, route }) {
   useEffect(() => {
     getRecipeAllergies();
     setRecipeAllergiesModalVisible(true);
+    setRecipePageState('details');
    }, [recipe,route]);
 
   function displayRating(rating) {

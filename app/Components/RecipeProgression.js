@@ -4,6 +4,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import CheckBox from 'expo-checkbox';
 import { useState, useContext, useEffect } from 'react';
 import { Context } from '../Context';
+import { useNavigation } from '@react-navigation/native';
 import DefinitionModal from './IngInstructionModel';
 import Banner from './Banner';
 import Footer from '../Components/Footer';
@@ -11,6 +12,7 @@ import global from '../Genstyle';
 
 // TODO: Make buttons go to the bottom of the page, add a timer
 const RecipeProgression = ({ingredients, directions, title}) => {
+    const navigation = useNavigation()
     // Variables
     const [stepNum, setStepNum] = useState(0);
     // Variables for Checkbox section
@@ -120,7 +122,10 @@ const RecipeProgression = ({ingredients, directions, title}) => {
                     {/* Next button */}
                     {stepNum == directions.length ?
                         <Pressable // If on the last step, button sends user to the survey page
-                            onPress={() => {setRecipePageState('survey')}}
+                            onPress={() => {
+                                if(username === "Guest") {navigation.navigate('Home')}
+                                setRecipePageState('survey')
+                            }}
                             style={global.button}>
                                 <Text style={global.buttonText}>Finish!</Text>
                         </Pressable>
