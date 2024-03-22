@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from 'react';
-import { Alert, Modal, StyleSheet, Text, Pressable, View, TextInput } from 'react-native';
+import { Alert, Modal, StyleSheet, Text, Pressable, View, TextInput, Image } from 'react-native';
 import global from '../Genstyle';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useNavigation } from '@react-navigation/native';
@@ -27,7 +27,8 @@ const LoadingModal = () => {
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={global.titleText}>Please wait while the app loads</Text>
+            <Image source={require('../assets/loading.gif')} alt="loading..." />
+            <Text style={global.centeredText}>Loading...</Text>
           </View>
         </View>
       </Modal>
@@ -56,7 +57,8 @@ const styles = EStyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     width: '22.5rem',
-    height: '10rem',
+    height: '14rem',
+    justifyContent: 'center'
   },
   instructionsContainer: {
     //height: '2.1rem', // Set the desired height for the instructions container
