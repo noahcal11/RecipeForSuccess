@@ -84,7 +84,7 @@ const RecipeProgression = ({ingredients, directions, title}) => {
                             <Pressable
                                 onPress={() => {{
                                     setStepNum(stepNum + 1)
-                                    setIsActive(true)
+                                    // setIsActive(true)
                                 }}}
                                 style={styles.nextButton}>
                                     <Text style={styles.buttonText}>Let's Begin!</Text>
@@ -144,13 +144,31 @@ const RecipeProgression = ({ingredients, directions, title}) => {
                     {/* Timer */}
                     <View style={styles.timer}>
                         <Text style={global.centeredText}>{time}</Text>
-                        <Pressable
-                            onPress={() => {setIsActive(!isActive)}}
-                            style={global.buttonAlt}>
+                        <View style={{flexDirection: 'row', marginBottom: '5%'}}>
+                            <Pressable
+                                onPress={() => {setIsActive(!isActive)}}
+                                style={{...global.buttonAlt, width: '40%', marginRight: '2%'}}>
+                                {isActive ?
+                                <Text style={global.subText}>Pause</Text>
+                                :<View>
+                                    {time == "00:00:00" ?
+                                    <Text style={global.subText}>Start</Text>
+                                    :<Text style={global.subText}>Resume</Text>}
+                                </View>}
+                            </Pressable>
                             {isActive ?
-                            <Text style={global.subText}>Pause</Text>
-                            :<Text style={global.subText}>Resume</Text>}
-                        </Pressable>
+                            <Pressable onPress={() => {}}
+                                style={{...global.buttonInactive, width: '40%', marginLeft: '2%'}}>
+                                <Text style={global.subText}>Reset</Text>
+                            </Pressable>
+                            :<Pressable onPress={() => {
+                                    setTime("00:00:00");
+                                    setPassedTime(0);
+                                }}
+                                style={{...global.buttonAlt, width: '40%', marginLeft: '2%'}}>
+                                <Text style={global.subText}>Reset</Text>
+                            </Pressable>}
+                        </View>
                     </View>
                 {/* </ScrollView> */}
                 </View>
