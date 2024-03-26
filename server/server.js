@@ -7,10 +7,11 @@ const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const { Storage } = require('@google-cloud/storage');
-const fs = require('fs')
+const fs = require('fs');
 const multer = require('multer');
 const path = require('path');
-const credentials = path.resolve("server/recipe-396801-55fbaba7e4c9.json");
+const fullPath = path.resolve("server/recipe-396801-55fbaba7e4c9.json");
+const credentials = fs.readJson(fullPath);
 require('dotenv').config();
 
 const app = express();
