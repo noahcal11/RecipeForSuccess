@@ -10,6 +10,7 @@ const { Storage } = require('@google-cloud/storage');
 const fs = require('fs')
 const multer = require('multer');
 const path = require('path');
+const credentials = require('server\recipe-396801-55fbaba7e4c9.json')
 require('dotenv').config();
 
 const app = express();
@@ -123,7 +124,7 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
 
     // Initialize storage
     const storage = new Storage({
-      credentials: process.env.CLOUD_SERVICE_KEY,
+      credentials: credentials,
     })
 
     const image_UUID = crypto.randomUUID();
