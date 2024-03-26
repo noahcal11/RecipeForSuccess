@@ -10,8 +10,13 @@ const { Storage } = require('@google-cloud/storage');
 const fs = require('fs');
 const multer = require('multer');
 const path = require('path');
-const fullPath = path.resolve("server/recipe-396801-55fbaba7e4c9.json");
-const credentials = fs.readJson(fullPath);
+fs.readFile("server/recipe-396801-55fbaba7e4c9.json", "utf8", (error, data) => {
+    if (error) {
+      console.log(error);
+      return;
+    }
+    credentials = JSON.parse(data);
+});
 require('dotenv').config();
 
 const app = express();
