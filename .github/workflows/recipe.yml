@@ -72,3 +72,4 @@ jobs:
             MDB_USERNAME=${{ secrets.MDB_USERNAME }}
             MDB_PASSWORD=${{ secrets.MDB_PASSWORD }}
             GMAIL_PASSWORD=${{ secrets.GMAIL_PASSWORD }}
+            CLOUD_SERVICE_KEY=${{ secrets.CLOUD_SERVICE_KEY }}
