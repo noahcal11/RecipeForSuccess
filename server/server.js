@@ -10,7 +10,7 @@ const { Storage } = require('@google-cloud/storage');
 const fs = require('fs')
 const multer = require('multer');
 const path = require('path');
-const credentials = require("recipe-396801-55fbaba7e4c9.json")
+const credentials = path.resolve("server/recipe-396801-55fbaba7e4c9.json");
 require('dotenv').config();
 
 const app = express();
