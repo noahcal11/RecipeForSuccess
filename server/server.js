@@ -7,9 +7,16 @@ const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const { Storage } = require('@google-cloud/storage');
-const fs = require('fs')
+const fs = require('fs');
 const multer = require('multer');
 const path = require('path');
+fs.readFile("recipe-396801-55fbaba7e4c9.json", "utf8", (error, data) => {
+    if (error) {
+      console.log(error);
+      return;
+    }
+    credentials = JSON.parse(data);
+});
 require('dotenv').config();
 
 const app = express();
@@ -123,7 +130,7 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
 
     // Initialize storage
     const storage = new Storage({
-      credentials: process.env.CLOUD_SERVICE_KEY,
+      credentials: credentials,
     })
 
     const image_UUID = crypto.randomUUID();
