@@ -183,6 +183,7 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
                         allergies: req.body.allergies,
                     })
                     await recipe.save();
+                    res.json(recipe);
                     if (req.body.email) {
                         const user = await User.findOne({ email: req.body.email });
                         console.log(recipe._id);
@@ -191,7 +192,6 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
                         await user.save();
                         res.json(user);
                     }
-                    res.json(recipe);
                 }
             })
         }

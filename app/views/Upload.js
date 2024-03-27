@@ -85,11 +85,11 @@ export default function Upload() {
             selectionLimit: 1,
             aspect: [4, 3],
             quality: 1,
-            base64: true
+            type: 'image/jpeg'
           });      
           if (!result.canceled) {
             setImage(result.assets[0].uri);
-            console.log(result.assets[0].uri);
+            console.log(result.assets[0]);
           }
         };
 
