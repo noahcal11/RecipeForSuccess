@@ -142,6 +142,7 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
     if (!req.body.image) {
         return res.status(400).json({ error: 'Image is required.' });
     }
+    console.log(req.body.image);
     const imageBuffer = Buffer.from(req.body.image, 'base64');
     const localFilePath = path.join(__dirname, `uploads/${image_UUID}.jpeg`);
 

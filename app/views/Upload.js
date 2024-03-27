@@ -80,8 +80,9 @@ export default function Upload() {
         const pickImage = async () => {
           // No permissions request is necessary for launching the image library
           let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            mediaTypes: ImagePicker.MediaTypeOptions.Image,
             allowsEditing: true,
+            selectionLimit: 1,
             aspect: [4, 3],
             quality: 1,
             base64: true
