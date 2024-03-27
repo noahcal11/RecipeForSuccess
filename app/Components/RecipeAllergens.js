@@ -54,8 +54,8 @@ const RecipeAllergens = ({ allergies }) => {
   return (
      <View style={styles.container}>
        {allergies.map((allergy, index) => (
-        <Pressable style={styles.button}>
-          <Text key={index} style={global.buttonText}>{allergy}</Text>
+        <Pressable key={index} style={styles.button}>
+          <Text style={global.buttonText}>{allergy}</Text>
         </Pressable>
          
        ))}
@@ -74,7 +74,7 @@ const styles = EStyleSheet.create({
         marginTop: 10,
     },
     button: {
-        backgroundColor: '#f56c42',
+        backgroundColor: '#F67D7D',
         borderRadius: 10,
         width: (Dimensions.get('window').width - 60) / 3, // Adjusting the width dynamically for 3 buttons per row
         height:  50, // Adjust height as needed

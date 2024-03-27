@@ -11,7 +11,7 @@ import {AutoGrowingTextInput} from 'react-native-autogrow-textinput';
 EStyleSheet.build();
 
 export default function Login({navigation}) {
-  const [user, setUser] = useState("");
+  //const [user, setUser] = useState("");
   const [popupActive,setPopupActive] = useState(true);
   const [popupType, setPopupType] = useState('Login');
   const [password, setPassword] = useState('');
@@ -29,7 +29,7 @@ export default function Login({navigation}) {
 
   const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
 
-  useState(() => {
+  useEffect(() => {
     setUsername("");
     setEmail("");
     setPassword("");
