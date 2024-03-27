@@ -54,8 +54,8 @@ const RecipeAllergens = ({ allergies }) => {
   return (
      <View style={styles.container}>
        {allergies.map((allergy, index) => (
-        <Pressable style={styles.button}>
-          <Text key={index} style={global.buttonText}>{allergy}</Text>
+        <Pressable key={index} style={styles.button}>
+          <Text style={global.buttonText}>{allergy}</Text>
         </Pressable>
          
        ))}

@@ -242,7 +242,7 @@ const RecipeProgression = ({ingredients, directions, title}) => {
             if(typeof match !== "undefined") {
                 // If a match is found, turn the word into a pressable
                 // NOTE: Text doesn't align properly if made into a pressable, might break on web
-                return <Text><Text
+                return <Text key={index}><Text
                  style={styles.keywordText}
                  onPress={(() => {setSelKey(formatWord(word)); setIngInstructionsModelVisible(true);})}>
                     {word}
@@ -252,7 +252,7 @@ const RecipeProgression = ({ingredients, directions, title}) => {
         })
         // Display the resulting array of objects
         return <Text style={styles.output}>
-            {objects.map(item => {
+            {objects.map((item, index) => {
                 return item
             })}
         </Text>
