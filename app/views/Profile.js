@@ -14,6 +14,7 @@ import ChangePasswordModal from '../Components/ChangePasswordModal';
 import LoadingModal from '../Components/LoadingModal';
 import MessageModal from '../Components/MessageModal';
 import Test from './Test';
+import ConfirmDeleteModal from '../Components/ConfirmDeleteModal';
 
 EStyleSheet.build();
 
@@ -45,7 +46,7 @@ const allergenMapping = [
 
 export default function Profile() {
   const [activeSections, setActiveSections] = useState([]);
-  const {username,setUsername,email,setEmail,setChangePasswordModalVisible, profileAllergies, setProfileAllergies, booleanAllergies, setBooleanAllergies, isLoadingModalVisible, setLoadingModalVisible} = useContext(Context);
+  const {username,setUsername,email,setEmail,setChangePasswordModalVisible, profileAllergies, setProfileAllergies, booleanAllergies, setBooleanAllergies, isLoadingModalVisible, setLoadingModalVisible, isDeleteModalVisible, setDeleteModalVisible} = useContext(Context);
   const [newEmail, setNewEmail] = useState(email);
   const navigation = useNavigation();
   const [isProfileModified, setIsProfileModified] = useState(false);
@@ -259,6 +260,9 @@ export default function Profile() {
 
         </View>
 
+        <View style={{ alignItems: 'center' }}>
+          {isDeleteModalVisible ? <ConfirmDeleteModal /> : null}
+        </View>
 
         <View style={global.grayForeground}>
           <Text style={global.titleText}>Account Settings</Text>
@@ -288,7 +292,7 @@ export default function Profile() {
           <Pressable
                     style={global.buttonMinor}
                     onPress={() => {
-                      handleDeleteAccount()
+                      setDeleteModalVisible(true);
                     }}>
                         <Text style={global.buttonMinorText}>Delete Account </Text>
           </Pressable>
@@ -307,14 +311,6 @@ export default function Profile() {
           {/* <MessageModel blurb="Account Settings Updated" /> */}
 
         </View>
-
-        <Pressable
-          style={global.buttonMinor}
-          onPress={() => {
-            Linking.openURL('https://forms.gle/44SFCg1Q2UJFYxzZ8');
-          }}>
-            <Text style={styles.guestText}>UAT Survey</Text>
-        </Pressable>
 
       </ScrollView>
       <Footer />
