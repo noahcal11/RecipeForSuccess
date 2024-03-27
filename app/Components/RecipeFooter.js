@@ -10,7 +10,7 @@ const RecipeFooter = () => {
     return (
       <View style={styles.footerContainer}>
         <Pressable
-          style={global.buttonAlt}
+          style={{...global.buttonAlt, backgroundColor: "#f56c42"}}
           onPress={() => {setRecipePageState('progress')}}>
           <Text style={global.buttonText}>Start Recipe!</Text>
         </Pressable>
@@ -23,7 +23,7 @@ const RecipeFooter = () => {
 
   const styles = EStyleSheet.create({
     footerContainer: {
-      backgroundColor: 'transparent', // #F67D7D
+      backgroundColor: 'transparent', // #f56c42
       padding: 10,
       alignItems: 'center',
       height: '8%',
