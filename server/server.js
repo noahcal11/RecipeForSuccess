@@ -10,6 +10,7 @@ const { Storage } = require('@google-cloud/storage');
 const fs = require('fs');
 const multer = require('multer');
 const path = require('path');
+
 fs.readFile("recipe-396801-55fbaba7e4c9.json", "utf8", (error, data) => {
     if (error) {
       console.log(error);
@@ -142,8 +143,9 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
     if (!req.body.image) {
         return res.status(400).json({ error: 'Image is required.' });
     }
-    console.log(req.body.image);
+    console.log("printing image" + req.body.image);
     const imageBuffer = Buffer.from(req.body.image, 'base64');
+    console.log("printing image buffer" + imageBuffer)
     const localFilePath = path.join(__dirname, `uploads/${image_UUID}.jpeg`);
 
     // Ensure the uploads directory exists before writing the file

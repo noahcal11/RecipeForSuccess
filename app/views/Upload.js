@@ -19,6 +19,7 @@ export default function Upload() {
 
         const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
         
+        const maxSize = 2 * 1024 * 1024;
 
         const uploadRecipe = async () => {
             handleIngredientObjectToString
@@ -89,7 +90,7 @@ export default function Upload() {
           });      
           if (!result.canceled) {
             setImage(result.assets[0].uri);
-            console.log(result.assets[0]);
+            //console.log(result.assets[0]);
           }
         };
 
