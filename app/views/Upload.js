@@ -11,6 +11,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import * as ImagePicker from 'expo-image-picker';
 import AllergySwitchComp from '../Components/UploadAllergySwitch';
 import {AutoGrowingTextInput} from 'react-native-autogrow-textinput';
+import RNFS from 'react-native-fs';
 
 
 EStyleSheet.build();
@@ -89,7 +90,10 @@ export default function Upload() {
             type: 'image/jpeg'
           });      
           if (!result.canceled) {
-            setImage(result.assets[0].uri);
+            //setImage(result.assets[0].uri);
+            const base64Image = await RNFS.readFile(result.uri, 'base64');
+            console.log(base64Image);
+            setImage(base64Image);
             //console.log(result.assets[0]);
           }
         };

@@ -143,9 +143,8 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
     if (!req.body.image) {
         return res.status(400).json({ error: 'Image is required.' });
     }
-    console.log("printing image" + req.body.image);
+
     const imageBuffer = Buffer.from(req.body.image, 'base64');
-    console.log("printing image buffer" + imageBuffer)
     const localFilePath = path.join(__dirname, `uploads/${image_UUID}.jpeg`);
 
     // Ensure the uploads directory exists before writing the file
@@ -155,6 +154,11 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
     // Sending the upload request
     bucket.upload(
         localFilePath,
+        {
+            metadata: { 
+                contentType: 'image/jpeg',
+            },
+        },
         function (err, file) {
             if (err) {
             console.error(`Error uploading image ${image_UUID}.jpeg: ${err}`)
