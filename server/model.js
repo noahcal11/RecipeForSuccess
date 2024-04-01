@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const RecipeSchema = new Schema({
     title: {type: String, required: true},
-    desc: {type: String},
+    desc: {type: String, required: true},
     total_time: {type: Number, required: true},
     yields: {type: String, required: true},
     steps: {type:Array, required: true},
