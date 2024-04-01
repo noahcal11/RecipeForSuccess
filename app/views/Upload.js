@@ -17,6 +17,24 @@ EStyleSheet.build();
 
 export default function Upload() {
 
+
+    const navigation = useNavigation();
+    const [title, setTitle] = useState('');
+    const [desc, setDesc] = useState('');
+    const [base64Image, setBase64Image] = useState('');
+    const [ingredients, setIngredients] = useState([{ ingredient: '', qty: '', unit: '' }]);
+    const [steps, setSteps] = useState([]);
+    const [prepTime, setPrepTime] = useState('')
+    const [servings, setServings] = useState('')
+    const [category, setCategory] = useState('category')
+    const [cusine, setCusine] = useState('cusine')
+    const [previewInfo, setPreviewInfo] = useState([]); 
+    const [titleError, setTitleError] = useState('');
+    const [descError, setDescError] = useState('');
+    const [stepError, setStepError] = useState('');
+    const [prepError, setPrepError] = useState('');
+    const [servingError, setServingError] = useState('');
+    
         const API_BASE = "https://recipe-api-maamobyhea-uc.a.run.app/"+process.env.REACT_APP_API_TOKEN
         
         const maxSize = 2 * 1024 * 1024;
@@ -90,27 +108,13 @@ export default function Upload() {
             type: 'image/jpeg'
           });      
           if (!result.canceled) {
-            //setImage(result.assets[0].uri);
-            const base64Image = result.assets[0].base64;
+            setImage(result.assets[0].uri);
+            setBase64Image(result.assets[0].base64);
             console.log(base64Image);
           }
         };
 
-    const navigation = useNavigation();
-    const [title, setTitle] = useState('')
-    const [desc, setDesc] = useState('')
-    const [ingredients, setIngredients] = useState([{ ingredient: '', qty: '', unit: '' }]);
-    const [steps, setSteps] = useState([]);
-    const [prepTime, setPrepTime] = useState('')
-    const [servings, setServings] = useState('')
-    const [category, setCategory] = useState('category')
-    const [cusine, setCusine] = useState('cusine')
-    const [previewInfo, setPreviewInfo] = useState([]); 
-    const [titleError, setTitleError] = useState('');
-    const [descError, setDescError] = useState('');
-    const [stepError, setStepError] = useState('');
-    const [prepError, setPrepError] = useState('');
-    const [servingError, setServingError] = useState('');
+
 
 
     const handleAddIngredient = () => {

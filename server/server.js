@@ -110,7 +110,7 @@ app.get('/'+process.env.API_TOKEN+'/recipe/get/all',async (req,res) => {
     res.json(recipes);
 });
 
-app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
+/* app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
     let keywords = [];
     try {
         keywords.push(req.body.title.split(" "));
@@ -134,23 +134,35 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
       credentials: credentials,
     })
 
-    const image_UUID = crypto.randomUUID();
-    const bucketName = 'recipe-for-success-images';
-    const bucket = storage.bucket(bucketName);
-
     // Assuming the image is sent as a base64 encoded string in the request body
     // You need to convert it to a Buffer before saving it locally
     if (!req.body.image) {
         return res.status(400).json({ error: 'Image is required.' });
     }
     const base64Image = req.body.image;
+    console.log(base64Image);
     const imageBuffer = Buffer.from(base64Image, 'base64');
-    const fileName = `uploads/${image_UUID}.jpeg`;
+    console.log(imageBuffer);
     //const localFilePath = path.join(__dirname, `uploads/${image_UUID}.jpeg`);
+
+    const image_UUID = crypto.randomUUID();
+    const bucketName = 'recipe-for-success-images';
+    const bucket = storage.bucket(bucketName);
+    const fileName = `uploads/${image_UUID}.jpeg`;
+    const file = bucket.file(fileName);
 
     // Ensure the uploads directory exists before writing the file
     // fs.mkdirSync(path.dirname(localFilePath), { recursive: true });
     // fs.writeFileSync(localFilePath, imageBuffer);
+
+    const writeStream = file.createWriteStream({
+        metadata: {
+            contentType: 'image/jpeg',
+        },
+    });
+    writeStream.write(imageBuffer);
+    writeStream.end();
+
 
     // Sending the upload request
     bucket.upload(
@@ -204,6 +216,99 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
             })
         }
     })
+}); */
+
+app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req, res) => {
+    let keywords = [];
+    try {
+        keywords.push(req.body.title.split(" "));
+    } catch {
+        // no keywords
+    }
+    try {
+        keywords.push(req.body.cuisine.split(" "));
+    } catch {
+        // no keywords
+    }
+    try {
+        keywords.push(req.body.category.split(" "));
+    } catch {
+        // no keywords
+    }
+    keywords = keywords.flat(1);
+
+    // Initialize storage
+    const storage = new Storage({
+      credentials: credentials,
+    })
+    
+    // Extract the base64Image from the request body
+    const base64Image = req.body.image;
+
+    // Convert the base64Image back into a Buffer
+    const imageBuffer = Buffer.from(base64Image, 'base64');
+
+    // Define the file name and path
+    const image_UUID = crypto.randomUUID();
+    const bucketName = 'recipe-for-success-images';
+    const bucket = storage.bucket(bucketName);
+    const fileName = `${image_UUID}.jpeg`;
+
+    // Create a file reference
+    const file = bucket.file(fileName);
+
+    // Create a write stream for the file
+    const writeStream = file.createWriteStream({
+        metadata: {
+            contentType: 'image/jpeg',
+        },
+    });
+
+    // Write the Buffer to the file
+    writeStream.write(imageBuffer);
+    writeStream.end();
+
+    // Handle the 'finish' event to know when the upload is complete
+    writeStream.on('finish', async () => {
+        console.log(`Image ${fileName} uploaded to ${bucketName}.`);
+
+        // Making file public to the internet
+        await file.makePublic();
+        console.log(`File ${file.name} is now public.`);
+        const publicUrl = `https://storage.googleapis.com/${bucketName}/${fileName}`;
+        console.log(`Public URL for ${file.name}: ${publicUrl}`);
+
+        // Save the recipe with the image URL
+        const recipe = new Recipe({
+            title: req.body.title,
+            desc: req.body.desc,
+            total_time: req.body.total_time,
+            yields: req.body.yields,
+            steps: req.body.steps,
+            ingredients: req.body.ingredients,
+            image: publicUrl,
+            cuisine: req.body.cuisine,
+            category: req.body.category,
+            keywords: keywords,
+            allergies: req.body.allergies,
+        });
+        await recipe.save();
+        res.json(recipe);
+        if (req.body.email) {
+            const user = await User.findOne({ email: req.body.email });
+            console.log(recipe._id);
+            console.log(user.email);
+            user.created_recipes.push(recipe._id);
+            await user.save();
+            res.json(user);
+        }
+    });
+
+    // Handle errors
+    writeStream.on('error', (err) => {
+        console.error(`Error uploading image ${fileName}: ${err}`);
+        res.status(500).json({ error: 'Error uploading image.' });
+    });
 });
 
 app.delete('/'+process.env.API_TOKEN+'/recipe/delete/:id', async (req, res) => {
