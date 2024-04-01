@@ -143,21 +143,23 @@ app.post('/'+process.env.API_TOKEN+'/recipe/new', async (req,res) => {
     if (!req.body.image) {
         return res.status(400).json({ error: 'Image is required.' });
     }
-
-    const imageBuffer = Buffer.from(req.body.image, 'base64');
-    const localFilePath = path.join(__dirname, `uploads/${image_UUID}.jpeg`);
+    const base64Image = req.body.image;
+    const imageBuffer = Buffer.from(base64Image, 'base64');
+    const fileName = `uploads/${image_UUID}.jpeg`;
+    //const localFilePath = path.join(__dirname, `uploads/${image_UUID}.jpeg`);
 
     // Ensure the uploads directory exists before writing the file
-    fs.mkdirSync(path.dirname(localFilePath), { recursive: true });
-    fs.writeFileSync(localFilePath, imageBuffer);
+    // fs.mkdirSync(path.dirname(localFilePath), { recursive: true });
+    // fs.writeFileSync(localFilePath, imageBuffer);
 
     // Sending the upload request
     bucket.upload(
-        localFilePath,
+        imageBuffer,
         {
             metadata: { 
                 contentType: 'image/jpeg',
             },
+            destination: fileName,
         },
         function (err, file) {
             if (err) {

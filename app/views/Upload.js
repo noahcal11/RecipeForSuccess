@@ -11,7 +11,6 @@ import RNPickerSelect from 'react-native-picker-select';
 import * as ImagePicker from 'expo-image-picker';
 import AllergySwitchComp from '../Components/UploadAllergySwitch';
 import {AutoGrowingTextInput} from 'react-native-autogrow-textinput';
-import RNFS from 'react-native-fs';
 
 
 EStyleSheet.build();
@@ -30,7 +29,7 @@ export default function Upload() {
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({title: title, desc: desc, total_time: prepTime, yields: servings, steps: steps, ingredients: handleIngredientObjectToString, cuisine: cusine, category: category, image: image, allergies: uploadAllergies, email: email})
+            body: JSON.stringify({title: title, desc: desc, total_time: prepTime, yields: servings, steps: steps, ingredients: handleIngredientObjectToString, cuisine: cusine, category: category, image: base64Image, allergies: uploadAllergies, email: email})
             }).then(navigation.navigate('Profile'));
         }
         
@@ -87,14 +86,13 @@ export default function Upload() {
             selectionLimit: 1,
             aspect: [4, 3],
             quality: 1,
+            base64: true,
             type: 'image/jpeg'
           });      
           if (!result.canceled) {
             //setImage(result.assets[0].uri);
-            const base64Image = await RNFS.readFile(result.uri, 'base64');
+            const base64Image = result.assets[0].base64;
             console.log(base64Image);
-            setImage(base64Image);
-            //console.log(result.assets[0]);
           }
         };
 
