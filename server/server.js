@@ -410,9 +410,10 @@ app.post('/'+process.env.API_TOKEN+'/user/update-skills/:email', async (req,res)
         } else {
             updated[i] = 0
         }
+        console.log(user.skill_levels[i]);
     } 
     user.skill_levels = updated
-    user.save()
+    user.save();
     res.json(user);
 })
 
