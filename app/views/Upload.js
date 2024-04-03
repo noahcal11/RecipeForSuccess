@@ -11,6 +11,8 @@ import RNPickerSelect from 'react-native-picker-select';
 import * as ImagePicker from 'expo-image-picker';
 import AllergySwitchComp from '../Components/UploadAllergySwitch';
 import {AutoGrowingTextInput} from 'react-native-autogrow-textinput';
+import DropDownPicker from 'react-native-dropdown-picker';
+
 
 
 EStyleSheet.build();
@@ -23,7 +25,7 @@ export default function Upload() {
     const [desc, setDesc] = useState('');
     const [base64Image, setBase64Image] = useState('');
     const [ingredients, setIngredients] = useState([{ ingredient: '', qty: '', unit: '' }]);
-    const [steps, setSteps] = useState([]);
+    const [steps, setSteps] = useState(['']);
     const [prepTime, setPrepTime] = useState('')
     const [servings, setServings] = useState('')
     const [category, setCategory] = useState('category')
@@ -116,9 +118,13 @@ export default function Upload() {
 
 
 
-    const handleAddIngredient = () => {
-        setIngredients(prevIngredients => [...prevIngredients, { ingredient: '', qty: '', unit: '' }]);
-    };
+        const handleAddIngredient = () => {
+            setIngredients(prevIngredients => {
+                const updatedIngredients = [...prevIngredients, { ingredient: '', qty: '', unit: '' }];
+                handleInputChange('ingredients', updatedIngredients);
+                return updatedIngredients;
+            });
+        };
 
     const handleRemoveIngredient = () => {
         setIngredients(prevIngredients => {
@@ -132,6 +138,7 @@ export default function Upload() {
         setIngredients(prevIngredients => {
             const updatedIngredients = [...prevIngredients];
             updatedIngredients[index][field] = value;
+            handleInputChange('ingredients', updatedIngredients); // Update fieldValidity
             return updatedIngredients;
         });
     };
@@ -151,7 +158,11 @@ export default function Upload() {
     }
 
     const handleAddStep = () => {
-        setSteps(prevSteps => [...prevSteps, '']);
+        setSteps(prevSteps => {
+            const updatedSteps = [...prevSteps, ''];
+            handleInputChange('steps', updatedSteps);
+            return updatedSteps;
+        });
     };
 
     const handleRemoveStep = () => {
@@ -166,10 +177,27 @@ export default function Upload() {
         setSteps(prevSteps => {
             const updatedSteps = [...prevSteps];
             updatedSteps[index] = value;
+            handleInputChange('steps', updatedSteps); // Update fieldValidity
             return updatedSteps;
         });
     };
 
+
+    // const [open, setOpen] = useState(false);
+    // const [value, setValue] = useState(null);
+    // const [units, setUnits] = useState([
+    //     { label: 'Count', value: 'Count'},
+    //     { label: 'Teaspoon', value: 'Teaspoon' },
+    //     { label: 'Tablespoon', value: 'Tablespoon' },
+    //     { label: 'Fluid ounce', value: 'Fluid ounce' },
+    //     { label: 'Cup', value: 'Cup' },
+    //     { label: 'Pint', value: 'Pint' },
+    //     { label: 'Quart', value: 'Quart' },
+    //     { label: 'Gallon', value: 'Gallon' },
+    //     { label: 'Pinch', value: 'Pinch' },
+    //     { label: 'Pound', value: 'Pound' },
+    //     { label: 'Ounce', value: 'Ounce' },
+    // ]);
     const units = [
         { label: 'Count', value: 'Count'},
         { label: 'Teaspoon', value: 'Teaspoon' },
@@ -207,6 +235,34 @@ export default function Upload() {
         { label: 'Middle Eastern', value: 'Middle Eastern' },
     ];
 
+    const [fieldValidity, setFieldValidity] = useState({
+        title: false,
+        desc: false,
+        ingredients: false,
+        steps: false,
+        prep: false,
+        servings: false,
+    });
+
+    const handleInputChange = (field, value) => {
+        let isValid = false;
+        if (field === 'ingredients' || field === 'steps') {
+            // Check if the array has at least one item
+            isValid = value.length > 0;
+        } else {
+            // For other fields, check if the value is not empty
+            isValid = value.trim() !== '';
+        }
+    
+        setFieldValidity(prevState => ({
+            ...prevState,
+            [field]: isValid,
+        }));
+    };
+
+    const allFieldsValid = Object.values(fieldValidity).every(valid => valid);
+    
+
 
     return(
         
@@ -222,7 +278,13 @@ export default function Upload() {
                 </View>
 
                     <View style={global.grayForeground}>
-                        <Text style={styles.titleText}>Title</Text>
+
+                        <View style={styles.titleContainer}>
+                            <Text style={styles.titleText}>Title</Text>
+                            <Text style={styles.asterisk}>*</Text>
+                        </View>
+                        
+
                         <AutoGrowingTextInput
                             style={styles.input}  
                             maxLength={50}
@@ -235,13 +297,17 @@ export default function Upload() {
                                     setTitleError('');
                                 }       
                                 setTitle(text);
+                                handleInputChange('title',text);
                             }}
                         />
                         {titleError ? <Text style={{ ...styles.bodyText, color: 'red' }}>{titleError}</Text> : null}
 
               
 
-                        <Text style={styles.titleText}>Description</Text>
+                            <View style={styles.titleContainer}>
+                                <Text style={styles.titleText}>Description</Text>
+                                <Text style={styles.asterisk}>*</Text>
+                            </View>
                         <AutoGrowingTextInput  
                             style={styles.input} 
                             maxLength={250}
@@ -254,13 +320,20 @@ export default function Upload() {
                                     setDescError('');
                                 }       
                                 setDesc(text);
+                                handleInputChange('desc',text);
                             }}
                         />
                         {descError ? <Text style={{ ...styles.bodyText, color: 'red' }}>{descError}</Text> : null}
                     </View>
                     
                     <View style={global.grayForeground}> 
-                        <Text style={styles.titleText}>Ingredients</Text>
+                        
+
+                        <View style={styles.titleContainer}>
+                                <Text style={styles.titleText}>Ingredients</Text>
+                                <Text style={styles.asterisk}>*</Text>
+                        </View>
+
                         {ingredients.map((ingredient, index) => (
                             <View key={index} style={{flexDirection: 'row'}}> 
                                 <AutoGrowingTextInput 
@@ -284,12 +357,22 @@ export default function Upload() {
                                     useNativeAndroidPickerStyle={false}
                                     style={{
                                         inputIOS: {...styles.QtyUnits, color: 'black', width:100},
-                                        inputAndroid: {...styles.QtyUnits, color: 'black', width:100},
-                                        placeholder: {...styles.QtyUnits, color: 'black', width:100},
+                                        inputAndroid: {...styles.QtyUnits, color: "#000000", fontSize:20, width:100},
+                                        placeholder: {...styles.QtyUnits, color: "#000000", fontSize:20, width:100},
                                     }}
                                     placeholder={{ label: "Select", value: null }}
                                     value={ingredient.unit  || ''}
                                 />
+
+                                {/* <DropDownPicker
+                                    containerStyle={{...styles.QtyUnits, color: 'black', width:50, height: 50}}
+                                    open={open}
+                                    value={value}
+                                    items={units}
+                                    setOpen={setOpen}
+                                    setValue={setValue}
+                                    setItems={setUnits}
+                                /> */}
                             </View>
                         ))}
                         
@@ -305,7 +388,10 @@ export default function Upload() {
                 </View>
 
                 <View style={global.grayForeground}> 
-                    <Text style={styles.titleText}>Steps</Text>                            
+                    <View style={styles.titleContainer}>
+                                <Text style={styles.titleText}>Steps</Text>
+                                <Text style={styles.asterisk}>*</Text>
+                    </View>
                     {steps.map((step, index) => (
                         <View key={index} style={{flexDirection: 'row'}}> 
                         <Text style={styles.bodyText}>{index + 1}</Text>
@@ -339,7 +425,10 @@ export default function Upload() {
                 </View>
 
                 <View style={global.grayForeground}> 
-                    <Text style={styles.titleText}>Prep Time</Text>
+                    <View style={styles.titleContainer}>
+                        <Text style={styles.titleText}>Prep Time</Text>
+                        <Text style={styles.asterisk}>*</Text>
+                    </View>                    
                     <TextInput 
                         style={styles.prepServ} 
                         maxLength={5}
@@ -353,10 +442,15 @@ export default function Upload() {
                                 setPrepError('');
                             }       
                             setPrepTime(text);
+                            handleInputChange('prep',text);
+
                         }}
                     />
                     {prepError ? <Text style={{ ...styles.bodyText, color: 'red' }}>{prepError}</Text> : null}
-                    <Text style={styles.titleText}>Servings</Text>
+                    <View style={styles.titleContainer}>
+                            <Text style={styles.titleText}>Servings</Text>
+                            <Text style={styles.asterisk}>*</Text>
+                    </View>
                     <TextInput 
                         style={styles.prepServ} 
                         maxLength={5}
@@ -370,6 +464,8 @@ export default function Upload() {
                                 setServingError('');
                             }       
                             setServings(text);
+                            handleInputChange('servings',text);
+
                         }}
                     />
                     {servingError ? <Text style={{ ...styles.bodyText, color: 'red' }}>{servingError}</Text> : null}
@@ -410,11 +506,22 @@ export default function Upload() {
                     <Text>Preview</Text>
                 </Pressable>
 
-                <Pressable onPress={uploadRecipe} style={global.button }>
-                    <Text>Submit</Text>                  
-                </Pressable>
-
-
+                
+                <View>
+                    {allFieldsValid ? (
+                        <Pressable onPress={uploadRecipe} style={global.button}>
+                            <Text>Submit</Text>
+                        </Pressable>
+                    ) : (
+                        <>
+                            <Pressable onPress={() => {}} style={global.buttonInactive}>
+                                <Text>Submit</Text>
+                            </Pressable>
+                            {/* Add this Text component right after the Pressable component */}
+                            <Text style={{...styles.asterisk2, marginBottom: 10}}>Complete all required fields</Text>
+                        </>
+                    )}
+                </View>
                 </ScrollView> 
             <Footer/>
         </View>
@@ -422,6 +529,23 @@ export default function Upload() {
 }
 
 const styles = EStyleSheet.create({
+    titleContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        alignSelf: 'center',
+    },
+    asterisk: {
+        color: 'red',
+        fontFamily: 'Manrope_700Bold',
+        fontSize: '1.6rem',
+        alignSelf: 'center',
+    },
+    asterisk2: {
+        color: 'red',
+        fontFamily: 'Cairo_500Medium',
+        fontSize: '1rem',
+        alignSelf: 'center',
+    },
     titleText: {
         fontSize: '1.6rem',
         color: 'black',
