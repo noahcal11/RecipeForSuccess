@@ -22,6 +22,7 @@ export default function SearchResults({ navigation, route }) {
     const [showDropdown, setShowDropdown] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null); //No initial option selected
     const [searchResultsExists, setSearchResultsExists] = useState(true);
+    const [sortedRecs, setSortedRecs] = useState([]);
     const sortOptions = ['A to Z', 'Z to A']; // Your sorting options
 
     const setSearchResultsState = (results, callback) => {
@@ -52,6 +53,7 @@ export default function SearchResults({ navigation, route }) {
 
             setSearchResults(resultsWithVis);
             setSearchResultsExists(data.length > 0);  // Set searchResultsExists based on the length of data
+            sortBest(resultsWithVis, searchTerm);
         } catch (error) {
             console.error(error);
             setSearchResultsExists(false);  // Set searchResultsExists to false in case of an error
@@ -79,6 +81,21 @@ export default function SearchResults({ navigation, route }) {
     const sortZA = (data) => {
         data.sort((a, b) => (a.title < b.title) ? 1 : -1);
         setSearchResults(data);
+    }
+
+    const sortBest = (data, searchTerm) => {
+        console.log(searchTerm);
+        data.map((recipe) => {
+            console.log(recipe.title);
+            if (recipe.title.includes(searchTerm)) {
+                console.log("success!")
+                setSortedRecs([...sortedRecs, recipe]);
+                data = data.filter(rec => rec !== recipe);
+                console.log("mid sortedRecs: " + sortedRecs)
+            }
+        });
+        console.log("sortedRecs: " + sortedRecs);
+        setSearchResults(sortedRecs);
     }
 
     useState(() => {
