@@ -129,7 +129,13 @@ const RecipeSurvey = ({directions, title, id}) => {
         return (
             <View style={global.horizontal}>
                 <Pressable
-                    style={buttonStyles.leftButton}
+                    //style={buttonStyles.leftButton}
+                    style={({ pressed }) => [
+                        buttonStyles.leftButton, 
+                        {
+                          opacity: pressed ? 0.2 : 1,
+                        },
+                     ]}
                     onPress={() => {
                         setAllSelected(true);
                         // Increment the relevant skill
@@ -156,7 +162,13 @@ const RecipeSurvey = ({directions, title, id}) => {
                     <Text style={global.buttonText}>Good</Text>
                 </Pressable>
                 <Pressable
-                    style={buttonStyles.middleButton}
+                    //style={buttonStyles.middleButton}
+                    style={({ pressed }) => [
+                        buttonStyles.middleButton, 
+                        {
+                          opacity: pressed ? 0.2 : 1,
+                        },
+                     ]}
                     onPress={() => {
                         setAllSelected(true)
                         // Adjust the relevant skill
@@ -183,7 +195,13 @@ const RecipeSurvey = ({directions, title, id}) => {
                     <Text style={global.buttonText}>Okay</Text>
                 </Pressable>
                 <Pressable
-                    style={buttonStyles.rightButton}
+                    //style={buttonStyles.rightButton}
+                    style={({ pressed }) => [
+                        buttonStyles.rightButton, 
+                        {
+                          opacity: pressed ? 0.2 : 1,
+                        },
+                     ]}
                     onPress={() => {
                         setAllSelected(true)
                         // Decrement the relevant skill
@@ -325,13 +343,25 @@ const RecipeSurvey = ({directions, title, id}) => {
             {/* This button will redirect to the skills page and show your improvement */}
             {allSelected ?
                 <Pressable
-                    style={global.button}
+                    //style={global.button}
+                    style={({ pressed }) => [
+                        global.button, 
+                        {
+                          opacity: pressed ? 0.2 : 1,
+                        },
+                     ]}
                     onPress={() => {updateRating(); addCompleted(); updateSkills()}}>
                         <Text style={styles.buttonText}>Submit</Text>
                 </Pressable>
                 :
                 <Pressable
-                    style={global.buttonInactive}
+                    //style={global.buttonInactive}
+                    style={({ pressed }) => [
+                        global.buttonInactive, 
+                        {
+                          opacity: pressed ? 0.2 : 1,
+                        },
+                     ]}
                     onPress={() => {}}>
                         <Text style={styles.buttonText}>Submit</Text>
                 </Pressable>

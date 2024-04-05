@@ -56,7 +56,14 @@ export default function Preview({ navigation, route }) {
                             <View style={{ position: 'relative' }}>
                                 <Image source={{ uri: info[4] }} style={styles.image} />
                                 <Pressable
-                                    style={{ position: 'absolute', marginTop: '15%', marginLeft: '75%' }}
+                                    //style={{ position: 'absolute', marginTop: '15%', marginLeft: '75%' }}
+                                    style={({ pressed }) => [
+                                        global.button, 
+                                        {
+                                          position: 'absolute', marginTop: '15%', marginLeft: '75%',
+                                          opacity: pressed ? 0.2 : 1,
+                                        },
+                                     ]}
                                     onPress={() => { email !== "Guest" ? setFavorite() : <View></View> }}>
                                     {isFavorite ?
                                         <FilledHeart width='40' height='40' fill='red' />
@@ -94,7 +101,13 @@ export default function Preview({ navigation, route }) {
                 {/* Footer component */}
                 <View style={styles.footerContainer}>
                     <Pressable
-                        style={global.buttonAlt}
+                        //style={global.buttonAlt}
+                        style={({ pressed }) => [
+                            global.buttonAlt, 
+                            {
+                              opacity: pressed ? 0.2 : 1,
+                            },
+                         ]}
                         onPress={() => { navigation.navigate('Upload') }}>
                         <Text style={global.buttonText}>Return</Text>
                     </Pressable>

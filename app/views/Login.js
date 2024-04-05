@@ -166,7 +166,13 @@ export default function Login({navigation}) {
             />
             {maxPasswordError ? <Text style={{ ...styles.bodyText, color: 'red' }}>{maxPasswordError}</Text> : null}
             <Pressable
-              style={global.button}
+              //style={global.button}
+              style={({ pressed }) => [
+                global.button, 
+                {
+                  opacity: pressed ? 0.2 : 1,
+                },
+             ]}
               onPress={() => {
                 getUser(email,password)
               }}
@@ -250,7 +256,13 @@ export default function Login({navigation}) {
               placeholder="Email"
             />
             <Pressable
-              style={global.button}
+              //style={global.button}
+              style={({ pressed }) => [
+                global.button, 
+                {
+                  opacity: pressed ? 0.2 : 1,
+                },
+             ]}
               onPress={() => {
                 resetPassword(email)
               }}
@@ -282,7 +294,13 @@ export default function Login({navigation}) {
               secureTextEntry={true}
             />
             <Pressable
-              style={global.button}
+              //style={global.button}
+              style={({ pressed }) => [
+                global.button, 
+                {
+                  opacity: pressed ? 0.2 : 1,
+                },
+             ]}
               onPress={() => {
                 takeToken(email,token,password)
               }}
@@ -315,7 +333,13 @@ export default function Login({navigation}) {
                             <Text style={styles.createText}>Login</Text>
                           </Pressable> :
                           <Pressable
-                              style={styles.createAcct}
+                              //style={styles.createAcct}
+                              style={({ pressed }) => [
+                                styles.createAcct, 
+                                {
+                                  opacity: pressed ? 0.2 : 1,
+                                },
+                             ]}
                               onPress={() => {
                               setPopupType('Create')
                           }}>
@@ -323,14 +347,26 @@ export default function Login({navigation}) {
                           </Pressable> }
                           {popupType === "Forgot" ?
                           <Pressable
-                              style={styles.createAcct}
+                              //style={styles.createAcct}
+                              style={({ pressed }) => [
+                                styles.createAcct, 
+                                {
+                                  opacity: pressed ? 0.2 : 1,
+                                },
+                             ]}
                               onPress={() => {
                               setPopupType('Login')
                           }}>
                             <Text style={styles.createText}>Login</Text>
                           </Pressable> :
                           <Pressable
-                              style={styles.createAcct}
+                              //style={styles.createAcct}
+                              style={({ pressed }) => [
+                                styles.createAcct, 
+                                {
+                                  opacity: pressed ? 0.2 : 1,
+                                },
+                             ]}
                               onPress={() => {
                               setPopupType('Forgot')
                           }}>
@@ -339,7 +375,13 @@ export default function Login({navigation}) {
                       </View>
                       <Text style={global.centeredText}>Don't have an account?</Text>
                       <Pressable
-                      style={global.buttonMinor}
+                      //style={global.buttonMinor}
+                      style={({ pressed }) => [
+                        global.buttonMinor, 
+                        {
+                          opacity: pressed ? 0.2 : 1,
+                        },
+                     ]}
                       onPress={() => {
                         navigation.navigate('Home');
                         setUsername("Guest");

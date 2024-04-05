@@ -23,7 +23,13 @@ export default function Test() {
                     <ScrollView styles={{ flex: 1 }}>
                             
                     <Pressable
-                        style={global.buttonMinor}
+                        //style={global.buttonMinor}
+                        style={({ pressed }) => [
+                            global.buttonMinor, 
+                            {
+                              opacity: pressed ? 0.2 : 1,
+                            },
+                         ]}
                         onPress={() => {
                             setIngInstructionsModelVisible(true)
 

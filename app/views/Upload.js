@@ -376,12 +376,25 @@ export default function Upload() {
                             </View>
                         ))}
                         
-                    <Pressable style={global.button} onPress={handleAddIngredient}>
+                    <Pressable
+                    style={({ pressed }) => [
+                        global.button, 
+                        {
+                          opacity: pressed ? 0.2 : 1,
+                        },
+                     ]}
+                    onPress={handleAddIngredient}>
                         <Text>Add ingredient</Text>
                     </Pressable>
 
                     {ingredients.length > 1 && (
-                        <Pressable style={global.button} onPress={handleRemoveIngredient}>
+                        <Pressable 
+                        style={({ pressed }) => [
+                            global.button, 
+                            {
+                              opacity: pressed ? 0.2 : 1,
+                            },
+                         ]} onPress={handleRemoveIngredient}>
                             <Text>Remove last ingredient</Text>
                         </Pressable>
                     )}
@@ -414,11 +427,21 @@ export default function Upload() {
                         </View>
                     ))}
                     <View>{stepError ? <Text style={{ ...styles.bodyText, color: 'red' }}>{stepError}</Text> : null}</View>
-                    <Pressable style={global.button} onPress={handleAddStep}>
+                    <Pressable style={({ pressed }) => [
+                        global.button, 
+                        {
+                        opacity: pressed ? 0.2 : 1,
+                        },
+                    ]} onPress={handleAddStep}>
                         <Text>Add step</Text>
                     </Pressable>
                         {steps.length > 1 && (
-                        <Pressable style={global.button} onPress={handleRemoveStep}>
+                        <Pressable style={({ pressed }) => [
+                            global.button, 
+                            {
+                            opacity: pressed ? 0.2 : 1,
+                            },
+                        ]} onPress={handleRemoveStep}>
                             <Text>Remove last step</Text>
                     </Pressable>
                     )}
@@ -502,19 +525,35 @@ export default function Upload() {
                     {renderAllergyContent()}
                 </View>
 
-                <Pressable style={global.button} onPress={preview}> 
+                <Pressable style={({ pressed }) => [
+                    global.button, 
+                    {
+                    opacity: pressed ? 0.2 : 1,
+                    },
+                ]} onPress={preview}> 
                     <Text>Preview</Text>
                 </Pressable>
 
                 
                 <View>
                     {allFieldsValid ? (
-                        <Pressable onPress={uploadRecipe} style={global.button}>
+                        <Pressable onPress={uploadRecipe} style={({ pressed }) => [
+                            global.button, 
+                            {
+                            opacity: pressed ? 0.2 : 1,
+                            },
+                        ]}>
                             <Text>Submit</Text>
                         </Pressable>
                     ) : (
                         <>
-                            <Pressable onPress={() => {}} style={global.buttonInactive}>
+                            <Pressable onPress={() => {}} 
+                            style={({ pressed }) => [
+                                global.buttonInactive, 
+                                {
+                                opacity: pressed ? 0.2 : 1,
+                                },
+                            ]}>
                                 <Text>Submit</Text>
                             </Pressable>
                             {/* Add this Text component right after the Pressable component */}

@@ -557,7 +557,15 @@ export default function Home({ navigation, route }) {
             <ScrollView styles={{ flex: 1 }}>
 
                 <Pressable
-                    style={{ ...global.buttonMinor, position: 'relative', marginLeft: '70%', marginTop: '5%', width: 60 }}
+                    //style={{ ...global.buttonMinor, position: 'relative', marginLeft: '70%', marginTop: '5%', width: 60 }}
+
+                    style={({ pressed }) => [
+                        global.buttonMinor, 
+                        {
+                          position: 'relative', marginLeft: '70%', marginTop: '5%', width: 60,
+                          opacity: pressed ? 0.2 : 1,
+                        },
+                     ]}
                     onPress={() => {
                         setHomeFiltersModalVisible(true);
                     }} >

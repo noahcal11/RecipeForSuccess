@@ -203,7 +203,13 @@ export default function Profile() {
           </View>
         ))}
         <Pressable
-                    style={global.button}
+                    //style={global.button}
+                    style={({ pressed }) => [
+                      global.button, 
+                      {
+                        opacity: pressed ? 0.2 : 1,
+                      },
+                   ]}
                     onPress={() => {
                       updateProfileAllergies();
                     }}>
@@ -237,21 +243,39 @@ export default function Profile() {
         <View style={global.grayForeground}>
           <Text style={global.titleText}>Your Recipes</Text>
           <Pressable
-                    style={global.buttonMinor}
+                    //style={global.buttonMinor}
+                    style={({ pressed }) => [
+                      global.buttonMinor, 
+                      {
+                        opacity: pressed ? 0.2 : 1,
+                      },
+                   ]}
                     onPress={() => {
                       navigation.navigate('Created');
                     }}>
                         <Text style={global.buttonMinorText}>Created</Text>
           </Pressable>
           <Pressable
-                    style={global.buttonMinor}
+                    //style={global.buttonMinor}
+                    style={({ pressed }) => [
+                      global.buttonMinor, 
+                      {
+                        opacity: pressed ? 0.2 : 1,
+                      },
+                   ]}
                     onPress={() => {
                       navigation.navigate('Completed');
                     }}>
                         <Text style={global.buttonMinorText}>Completed</Text>
           </Pressable>
           <Pressable
-                    style={global.button}
+                    //style={global.button}
+                    style={({ pressed }) => [
+                      global.button, 
+                      {
+                        opacity: pressed ? 0.2 : 1,
+                      },
+                   ]}
                     onPress={() => {
                       navigation.navigate('Upload');
                     }}>
@@ -272,7 +296,13 @@ export default function Profile() {
           <TextInput style={global.input} value={username} onChangeText={handleUsernameChange}></TextInput>
           {isProfileModified && (
             <Pressable
-              style={global.button}
+              //style={global.button}
+              style={({ pressed }) => [
+                global.button, 
+                {
+                  opacity: pressed ? 0.2 : 1,
+                },
+             ]}
               onPress={() => {
                 handleUpdateAccount();
                 setMessageModalVisible(true);
@@ -290,7 +320,13 @@ export default function Profile() {
           </Pressable> */}
 
           <Pressable
-                    style={global.buttonMinor}
+                    //style={global.buttonMinor}
+                    style={({ pressed }) => [
+                      global.buttonMinor, 
+                      {
+                        opacity: pressed ? 0.2 : 1,
+                      },
+                   ]}
                     onPress={() => {
                       setDeleteModalVisible(true);
                     }}>
@@ -298,7 +334,13 @@ export default function Profile() {
           </Pressable>
 
           <Pressable
-                    style={global.buttonMinor}
+                    //style={global.buttonMinor}
+                    style={({ pressed }) => [
+                      global.buttonMinor, 
+                      {
+                        opacity: pressed ? 0.2 : 1,
+                      },
+                   ]}
                     onPress={() => {
                       navigation.navigate('Login');
                       setEmail('');

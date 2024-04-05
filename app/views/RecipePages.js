@@ -181,7 +181,13 @@ export default function RecipePages({ navigation, route }) {
                   <View style={{ position: 'relative' }}>
                     <Image source={{uri:item.image}} style={styles.image} />
                     <Pressable
-                      style={{position: 'absolute', marginTop:'15%', marginLeft: '75%'}}
+                      //style={{position: 'absolute', marginTop:'15%', marginLeft: '75%'}}
+                      style={({ pressed }) => [
+                        {
+                          position: 'absolute', marginTop:'15%', marginLeft: '75%',
+                          opacity: pressed ? 0.2 : 1,
+                        },
+                     ]}
                       onPress={() => {email !== "Guest"? setFavorite():<View></View>}}>
                       {isFavorite?
                         <FilledHeart width='40' height='40' fill='red' />

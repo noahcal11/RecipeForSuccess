@@ -179,7 +179,13 @@ const SearchFilterModal = ({ blurb }) => {
                         </ScrollView>
 
                         <Pressable
-                            style={global.button}
+                            //style={global.button}
+                            style={({ pressed }) => [
+                                global.button, 
+                                {
+                                  opacity: pressed ? 0.2 : 1,
+                                },
+                             ]}
                             onPress={() => {
                                 filterSearch();
                                 setSearchFilterModalVisible(!isSearchFilterModalVisible);

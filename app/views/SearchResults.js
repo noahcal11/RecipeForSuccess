@@ -107,7 +107,14 @@ export default function SearchResults({ navigation, route }) {
                     {/* Sort By Dropdown */}
 
                     <View style={styles.sortByContainer}>
-                        <Pressable onPress={handleSortToggle} style={styles.sortButton}>
+                        <Pressable onPress={handleSortToggle} 
+                        style={({ pressed }) => [
+                            styles.sortButton, 
+                            {
+                              opacity: pressed ? 0.2 : 1,
+                            },
+                         ]}
+                        >
                             <Text style={styles.sortByText}>
                                 Sort By: {selectedOption}
                             </Text>
@@ -120,7 +127,13 @@ export default function SearchResults({ navigation, route }) {
                                     <Pressable
                                         key={index}
                                         onPress={() => handleSortSelect(option)}
-                                        style={styles.dropdownOption}
+                                        //style={styles.dropdownOption}
+                                        style={({ pressed }) => [
+                                            styles.dropdownOption, 
+                                            {
+                                              opacity: pressed ? 0.2 : 1,
+                                            },
+                                         ]}
                                     >
                                         <Text style={styles.dropdownOptionText}>{option}</Text>
                                     </Pressable>

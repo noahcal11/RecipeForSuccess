@@ -27,7 +27,13 @@ const SearchBar = () => {
     <Pressable style={{ flex: 1 }} onPress={Keyboard.dismiss}>
       <View style={styles.searchContainer}>
         <View>
-          <Pressable onPress={openSearchBar}>
+          <Pressable onPress={openSearchBar}
+          style={({ pressed }) => [
+            {
+              opacity: pressed ? 0.2 : 1,
+            },
+         ]}
+          >
             {!isTextInputVisible ? (
               <SearchIcon style={styles.icon}></SearchIcon>
             ) : null}
@@ -42,7 +48,12 @@ const SearchBar = () => {
               autoFocus
               onSubmitEditing={({ nativeEvent: { text } }) => {navigation.navigate("Favorites"); closeSearchBar();}}
             />
-            <Pressable onPress={closeSearchBar}>
+            <Pressable onPress={closeSearchBar}
+            style={({ pressed }) => [
+              {
+                opacity: pressed ? 0.2 : 1,
+              },
+           ]}>
               <View style={styles.xBox}> 
                 <Text>X</Text>
               </View>

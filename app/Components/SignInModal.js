@@ -23,13 +23,25 @@ const SignInModal = ({blurb}) => {
           <View style={styles.modalView}>
             <Text style={global.titleText}>{blurb}</Text>
             <Pressable
-              style={global.button}
+              //style={global.button}
+              style={({ pressed }) => [
+                global.button, 
+                {
+                  opacity: pressed ? 0.2 : 1,
+                },
+             ]}
               onPress={() => {setModalVisible(!modalVisible); navigation.navigate('Login');}}>
               <Text style={global.buttonText}>Sign In / Register</Text>
             </Pressable>
             
             <Pressable
-              style={global.buttonMinor}
+              //style={global.buttonMinor}
+              style={({ pressed }) => [
+                global.buttonMinor, 
+                {
+                  opacity: pressed ? 0.2 : 1,
+                },
+             ]}
               onPress={() => {setModalVisible(!modalVisible); navigation.navigate('Home');}}>
               <Text style={global.buttonMinorText}>Return Home</Text>
             </Pressable>
