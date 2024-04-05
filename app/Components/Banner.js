@@ -42,9 +42,17 @@ const BannerTitle = ({ title }) => {
           </View>
           <Text style={styles.bannerTitle}>{title}</Text>
           <View style={styles.search}>
-            <Pressable onPress={toggleSearchBar} style={styles.searchIcon}>
-              <SearchIcon />
-            </Pressable>
+          <Pressable
+            onPress={toggleSearchBar}
+            style={({ pressed }) => [
+                styles.searchIcon, // Assuming styles.searchIcon contains the existing styles for the Pressable
+                {
+                  opacity: pressed ? 0.2 : 1,
+                },
+            ]}
+            >
+            <SearchIcon />
+          </Pressable>
           </View>
         </>
       ) : (

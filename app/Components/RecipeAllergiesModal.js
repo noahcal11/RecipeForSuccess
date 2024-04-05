@@ -57,7 +57,12 @@ if (matchingAllergens.length === 0) {
               </ScrollView>
 
               <Pressable
-                style={global.buttonMinor}
+                style={({ pressed }) => [
+                  global.buttonMinor,
+                  {
+                    opacity: pressed ? 0.2 : 1,
+                  },
+               ]}
                 onPress={() => { setRecipeAllergiesModalVisible(!isRecipeAllergiesModalVisible); }}>
                 <Text style={global.buttonMinorText}>Close</Text>
               </Pressable>

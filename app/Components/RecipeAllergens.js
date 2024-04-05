@@ -54,7 +54,14 @@ const RecipeAllergens = ({ allergies }) => {
   return (
      <View style={styles.container}>
        {allergies.map((allergy, index) => (
-        <Pressable key={index} style={styles.button}>
+        <Pressable key={index}
+          style={({ pressed }) => [
+            styles.button,
+            {
+              opacity: pressed ? 0.2 : 1,
+            },
+        ]}
+        >
           <Text style={global.buttonText}>{allergy}</Text>
         </Pressable>
          

@@ -10,7 +10,14 @@ const RecipeFooter = () => {
     return (
       <View style={styles.footerContainer}>
         <Pressable
-          style={{...global.buttonAlt, backgroundColor: "#f56c42"}}
+          style={({ pressed }) => [
+            global.buttonAlt,
+            {
+              opacity: pressed ? 0.2 : 1,
+              backgroundColor: "#f56c42"
+            },
+         ]}
+
           onPress={() => {setRecipePageState('progress')}}>
           <Text style={global.buttonText}>Start Recipe!</Text>
         </Pressable>

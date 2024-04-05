@@ -36,13 +36,23 @@ const ConfirmDeleteModal = ({ blurb }) => {
                     <View style={styles.modalView}>
                         <Text style={global.subheaderText}>Are you sure you want to delete your account? This action is not reversible!</Text>
                         <Pressable
-                            style={global.button}
+                            style={({ pressed }) => [
+                                global.button, // Assuming styles.searchIcon contains the existing styles for the Pressable
+                                {
+                                  opacity: pressed ? 0.2 : 1,
+                                },
+                             ]}
                             onPress={() => {setDeleteModalVisible(!isDeleteModalVisible); handleDeleteAccount(); }}>
                             <Text style={global.buttonText}>Delete</Text>
                         </Pressable>
 
                         <Pressable
-                            style={global.buttonMinor}
+                            style={({ pressed }) => [
+                                global.buttonMinor, // Assuming styles.searchIcon contains the existing styles for the Pressable
+                                {
+                                  opacity: pressed ? 0.2 : 1,
+                                },
+                             ]}
                             onPress={() => { setDeleteModalVisible(!isDeleteModalVisible); }}>
                             <Text style={global.buttonMinorText}>Cancel</Text>
                         </Pressable>

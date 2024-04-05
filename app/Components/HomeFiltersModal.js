@@ -63,7 +63,12 @@ const HomeFiltersModal = () => {
             </ScrollView>
 
             <Pressable
-              style={global.button}
+              style={({ pressed }) => [
+                global.button, // Assuming styles.searchIcon contains the existing styles for the Pressable
+                {
+                  opacity: pressed ? 0.2 : 1,
+                },
+             ]}
               onPress={() => {
                 setHomeFiltersModalVisible(!isHomeFiltersModalVisible);
                 setHomeFiltersModalVisible(false);

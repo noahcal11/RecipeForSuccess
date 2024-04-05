@@ -86,18 +86,34 @@ const RecipeProgression = ({ingredients, directions, title}) => {
                                     setStepNum(stepNum + 1)
                                     // setIsActive(true)
                                 }}}
-                                style={styles.nextButton}>
+                                style={({ pressed }) => [
+                                    styles.nextButton,
+                                    {
+                                    opacity: pressed ? 0.2 : 1,
+                                    },
+                                ]}>
                                     <Text style={styles.buttonText}>Let's Begin!</Text>
                             </Pressable>
                             :<Pressable // Otherwise, display a gray button that does nothing
                                 onPress={() => {}}
-                                style={styles.grayButton}>
+                                style={({ pressed }) => [
+                                    styles.grayButton,
+                                    {
+                                    opacity: pressed ? 0.2 : 1,
+                                    },
+                                ]}>
+                                
                                     <Text style={styles.buttonText}>Let's Begin!</Text>
                             </Pressable>
                         }
                         <Pressable
                             onPress={() => {setRecipePageState('details')}}
-                            style={global.buttonMinor}>
+                                style={({ pressed }) => [
+                                    global.buttonMinor,
+                                    {
+                                    opacity: pressed ? 0.2 : 1,
+                                    },
+                                ]}>
                             <Text style={global.subText}>Go Back</Text>
                         </Pressable>
                     </View>
@@ -126,19 +142,34 @@ const RecipeProgression = ({ingredients, directions, title}) => {
                                 if(username === "Guest") {navigation.navigate('Home')}
                                 setRecipePageState('survey')
                             }}
-                            style={global.button}>
+                                style={({ pressed }) => [
+                                    global.button,
+                                    {
+                                    opacity: pressed ? 0.2 : 1,
+                                    },
+                                ]}>
                                 <Text style={global.buttonText}>Finish!</Text>
                         </Pressable>
                         :<Pressable // Otherwise, button just leads to the next step
                             onPress={() => {setStepNum(stepNum + 1)}}
-                            style={global.button}>
+                                style={({ pressed }) => [
+                                    global.button,
+                                    {
+                                    opacity: pressed ? 0.2 : 1,
+                                    },
+                                ]}>
                                 <Text style={global.buttonText}>Next</Text>
                         </Pressable>
                     }
                     {/* Back button */}
                     <Pressable // Decrement step count when going back
                         onPress={() => {setStepNum(stepNum - 1)}}
-                        style={global.buttonMinor}>
+                        style={({ pressed }) => [
+                                global.buttonMinor,
+                                {
+                                opacity: pressed ? 0.2 : 1,
+                                },
+                            ]}>
                             <Text style={global.subText}>Go Back</Text>
                     </Pressable>
                     {/* Timer */}
@@ -147,7 +178,16 @@ const RecipeProgression = ({ingredients, directions, title}) => {
                         <View style={{flexDirection: 'row', marginBottom: '5%'}}>
                             <Pressable
                                 onPress={() => {setIsActive(!isActive)}}
-                                style={{...global.buttonAlt, width: '40%', marginRight: '2%'}}>
+                                //style={{...global.buttonAlt,  }}>
+
+                                style={({ pressed }) => [
+                                    global.buttonAlt,
+                                    {
+                                        marginRight: '2%',
+                                        width: '40%',
+                                        opacity: pressed ? 0.2 : 1,
+                                    },
+                                ]}>
                                 {isActive ?
                                 <Text style={global.subText}>Pause</Text>
                                 :<View>
@@ -158,14 +198,28 @@ const RecipeProgression = ({ingredients, directions, title}) => {
                             </Pressable>
                             {isActive ?
                             <Pressable onPress={() => {}}
-                                style={{...global.buttonInactive, width: '40%', marginLeft: '2%'}}>
+                                style={({ pressed }) => [
+                                    global.buttonInactive,
+                                    {
+                                        marginLeft: '2%',
+                                        width: '40%',
+                                        opacity: pressed ? 0.2 : 1,
+                                    },
+                                ]}>
                                 <Text style={global.subText}>Reset</Text>
                             </Pressable>
                             :<Pressable onPress={() => {
                                     setTime("00:00:00");
                                     setPassedTime(0);
                                 }}
-                                style={{...global.buttonAlt, width: '40%', marginLeft: '2%'}}>
+                                style={({ pressed }) => [
+                                    global.buttonAlt,
+                                    {
+                                        marginLeft: '2%',
+                                        width: '40%',
+                                        opacity: pressed ? 0.2 : 1,
+                                    },
+                                ]}>
                                 <Text style={global.subText}>Reset</Text>
                             </Pressable>}
                         </View>

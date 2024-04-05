@@ -56,7 +56,12 @@ const IngInstructionsModel = ({word}) => {
             </ScrollView>
 
             <Pressable
-              style={global.buttonMinor}
+              style={({ pressed }) => [
+                global.buttonMinor, // Assuming styles.searchIcon contains the existing styles for the Pressable
+                {
+                  opacity: pressed ? 0.2 : 1,
+                },
+             ]}
               onPress={() => {setIngInstructionsModelVisible(!isIngInstructionsModelVisible)}}>
               <Text style={global.buttonMinorText}>Close</Text>
             </Pressable>

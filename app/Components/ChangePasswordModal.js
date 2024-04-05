@@ -100,16 +100,28 @@ const ChangePasswordModal = ({ blurb }) => {
               <Text style={[global.centerBodyText, {flex: 0, margin: '0%',color: 'red'}]}>{confirmPasswordErrorMessage}</Text>
             )}
             <Pressable
-              style={isButtonActive ? global.button : global.buttonInactive}
-              onPress={handlePasswordChange}>
-              <Text style={global.buttonText}>Change Password </Text>
+                style={({ pressed }) => [
+                    isButtonActive ? global.button : global.buttonInactive, // Assuming these are the existing styles for the Pressable
+                    {
+                      opacity: pressed ? 0.2 : 1,
+                    },
+                ]}
+                onPress={handlePasswordChange}
+                >
+                <Text style={global.buttonText}>Change Password </Text>
             </Pressable>
             <Pressable
-              style={global.buttonMinor}
+              style={({ pressed }) => [
+                  global.buttonMinor, // Assuming this is the existing style for the Pressable
+                  {
+                    opacity: pressed ? 0.2 : 1,
+                  },
+              ]}
               onPress={() => {
-                setChangePasswordModalVisible(!isChangePasswordModalVisible);
-                navigation.navigate('Profile');
-              }}>
+                  setChangePasswordModalVisible(!isChangePasswordModalVisible);
+                  navigation.navigate('Profile');
+              }}
+              >
               <Text style={global.buttonMinorText}>Cancel</Text>
             </Pressable>
           </View>
